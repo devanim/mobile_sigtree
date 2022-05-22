@@ -1,0 +1,45 @@
+{
+  "Routes": [
+    //Document APIDocument
+    {
+      "DownstreamPathTemplate": "/api/v1/document/upload",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "document.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/document/upload",
+      "UpstreamHttpMethod": [ "POST", "PUT" ],
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/document/get",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "document.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/document/get",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/document/download",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "document.api",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/document/download",
+      "UpstreamHttpMethod": [ "GET" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://document.api:5010"
+  }
+}
