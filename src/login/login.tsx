@@ -19,7 +19,7 @@ import Text from "components/Text";
 import Container from "components/Container";
 import useLayout from "hooks/useLayout";
 
-const Login = (props: LoginProps) => {
+const Login = (props: LoginProps): JSX.Element => {
   const { top, bottom, width, height } = useLayout();
   const theme = useTheme();
   const styles = useStyleSheet(themedStyles);

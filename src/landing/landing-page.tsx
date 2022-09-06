@@ -9,10 +9,10 @@ import { RootStackParamList } from "../../navigation/type";
 import AdMob from "components/AdMob";
 import Login from "../login/login";
 
-const LandingPage = () => {
+const LandingPage = (): JSX.Element => {
   const [selectedRealm, setSelectedRealm] = useState("");
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
-  //TODO - get this from back-end
+  //TODO - get this from AsyncStorage
   const realmsList = [
     {children: "KeycloackRealm1", onPress: () => setSelectedRealm("KeycloackRealm1")},
     {children: "KeycloackRealm2", onPress: () => setSelectedRealm("KeycloackRealm2")},
