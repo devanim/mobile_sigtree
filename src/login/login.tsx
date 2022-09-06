@@ -74,6 +74,7 @@ const Login = (props: LoginProps) => {
 
             <View style={styles.bottomLayout}>
               <Button style={styles.button} size="large" children="Sign In" />
+              <Button style={styles.button} size="large" children="Show Realms" onPress={() => props.toggleRealmsCallback()}/>
             </View>
           </View>
         </Layout>
@@ -86,6 +87,7 @@ export default Login;
 
 interface LoginProps {
   realmName: string;
+  toggleRealmsCallback: Function;
 }
 
 const themedStyles = StyleService.create({

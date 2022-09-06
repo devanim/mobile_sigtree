@@ -29,17 +29,28 @@ const LandingPage = () => {
     );
   }, []);
 
-  return (
-    <Container style={styles.container}>
-      <FlatList
+  const resetSelectedRealm = () => {
+    setSelectedRealm("");
+  }
+
+  const togglePageData = () => {
+    if (selectedRealm.length === 0) {
+      return <FlatList
         data={realmsList || []}
         renderItem={renderItem}
         keyExtractor={(i, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         contentContainerStyle={styles.contentContainerStyle}
-      />
-      {selectedRealm.length > 0 ? <Login realmName={selectedRealm}/> : <AdMob marginTop={8} />}
+      />;
+    }
+
+    return <Login realmName={selectedRealm} toggleRealmsCallback={resetSelectedRealm}/>;
+  }
+
+  return (
+    <Container style={styles.container}>
+      {togglePageData()}
     </Container>
   );
 };
