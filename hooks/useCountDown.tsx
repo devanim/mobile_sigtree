@@ -8,6 +8,7 @@ const useCountDown = (initValue: number): [number, () => void] => {
     timeRef.current = setInterval(() => {
       decrementTime();
     }, 1000);
+    
     return () => {
       clearInterval(timeRef.current);
     };

@@ -14,6 +14,13 @@ const Intro = memo(() => {
 
   const data = [
     {
+      children: "Sigtree Entry Point",
+      onPress: () => navigate("LandingPage", { screen: "Onboarding" }),
+    },
+    {
+      ads: true
+    },
+    {
       children: "OnBoarding",
       onPress: () => navigate("Onbroading", { screen: "Onboarding" }),
     },

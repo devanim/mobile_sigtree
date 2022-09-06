@@ -17,6 +17,7 @@ import Term from "screens/intro/Term";
 import EducationStackNavigator from "./EducationStackNavigator";
 import CryptoStackNavigator from "./CryptoStackNavigator";
 import DeliveryStackNavigator from "./DeliveryStackNavigator";
+import LandingPage from "../src/landing/landing-page";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -31,6 +32,7 @@ const AppContainer = () => {
       >
         <Stack.Screen name="Term" component={Term} />
         <Stack.Screen name="Intro" component={Intro} />
+        <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="Onbroading" component={OnboardingNavigator} />
         <Stack.Screen name="Auth" component={AuthNavigator} />
         <Stack.Screen name="Social" component={SocialNavigator} />

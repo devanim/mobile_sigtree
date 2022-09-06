@@ -1,6 +1,7 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 
 export type RootStackParamList = {
+  LandingPage: NavigatorScreenParams<OnboardingParamList>;
   Intro: undefined;
   Term: undefined;
   Onbroading: NavigatorScreenParams<OnboardingParamList>;

@@ -10,5 +10,6 @@ export default () => {
     signIn,
     signOut,
   } = React.useContext(AuthContext);
+  
   return { isInitialized, isSignedIn, isIntro, signIn, signOut };
 };

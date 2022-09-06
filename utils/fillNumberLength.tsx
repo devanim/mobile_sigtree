@@ -1,4 +1,4 @@
-const fillNumberLength = (input: string, inputLength: number) => {
+const fillNumberLength = (input: string, inputLength: number): string => {
   const cardNumber = input.replace(/\D/g, "");
 
   // Trim the remaining input to ten characters, to preserve phone number format

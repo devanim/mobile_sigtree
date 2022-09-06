@@ -71,10 +71,7 @@ const useImagePicker = () => {
     }
   };
 
-  const choosePhoto = async (
-    callback?: ImagePickerCallBack,
-    aspect?: [number, number]
-  ) => {
+  const choosePhoto = async ( callback?: ImagePickerCallBack, aspect?: [number, number]) => {
     if (Platform.OS !== "web") {
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -96,6 +93,7 @@ const useImagePicker = () => {
         callback(await resize(result.uri, result.width, result.height));
     }
   };
+
   return [takePhoto, choosePhoto];
 };
 

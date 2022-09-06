@@ -20,46 +20,50 @@ patchFlatListProps();
 
 export default function App() {
   const [theme, setTheme] = React.useState<"light" | "dark">("dark");
+
   React.useEffect(() => {
     AsyncStorage.getItem("theme").then((value) => {
       if (value === "light" || value === "dark") setTheme(value);
     });
   }, []);
+
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
     AsyncStorage.setItem("theme", nextTheme).then(() => {
       setTheme(nextTheme);
     });
   };
+
   const isLoadingComplete = useCachedResources();
+
   if (!isLoadingComplete) {
     return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
-          <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
-          <ApplicationProvider
-            {...eva}
-            theme={
-              theme === "light"
-                ? { ...eva.light, ...customTheme, ...lightTheme }
-                : { ...eva.dark, ...customTheme, ...darkTheme }
-            }
-            /* @ts-ignore */
-            customMapping={customMapping}
-          >
-            <SafeAreaProvider>
-              <StatusBar
-                style={theme === "light" ? "dark" : "light"}
-                translucent={true}
-                backgroundColor={"#00000000"}
-              />
-              <AppContainer />
-            </SafeAreaProvider>
-          </ApplicationProvider>
-        </ThemeContext.Provider>
-      </SafeAreaProvider>
-    );
   }
+
+  return (
+    <SafeAreaProvider>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
+        <ApplicationProvider
+          {...eva}
+          theme={
+            theme === "light"
+              ? { ...eva.light, ...customTheme, ...lightTheme }
+              : { ...eva.dark, ...customTheme, ...darkTheme }
+          }
+          /* @ts-ignore */
+          customMapping={customMapping}
+        > 
+          <SafeAreaProvider>
+            <StatusBar
+              style={theme === "light" ? "dark" : "light"}
+              translucent={true}
+              backgroundColor={"#00000000"}
+            />
+            <AppContainer />
+          </SafeAreaProvider>
+        </ApplicationProvider>
+      </ThemeContext.Provider>
+    </SafeAreaProvider>
+  );
 }
