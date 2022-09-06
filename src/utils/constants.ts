@@ -1,0 +1,1 @@
+export const REALMS_KEY = "subscribed-realms";

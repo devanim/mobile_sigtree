@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, FlatList } from "react-native";
 import { Button } from "@ui-kitten/components";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
@@ -8,6 +8,8 @@ import Container from "components/Container";
 import { RootStackParamList } from "../../navigation/type";
 import AdMob from "components/AdMob";
 import Login from "../login/login";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { REALMS_KEY } from "src/utils/constants";
 
 const LandingPage = (): JSX.Element => {
   const [selectedRealm, setSelectedRealm] = useState("");
@@ -20,6 +22,13 @@ const LandingPage = (): JSX.Element => {
     {children: "KeycloackRealm4", onPress: () => setSelectedRealm("KeycloackRealm4")},
     {children: "Add new realm", onPress: () => navigate("Auth", { screen: "Home" })},
   ];
+
+  //TODO - uncomment this when we have data saved
+  // useEffect(() => {
+  //   AsyncStorage.getItem(REALMS_KEY).then((value) => {
+  //     realmsList = value;
+  //   });
+  // });
 
   const renderItem = React.useCallback(({ item }) => {
     return item.ads ? (
