@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FlatList } from "react-native";
 import { Button } from "@ui-kitten/components";
-import { BarcodeReadPayload } from "src/realm-selector/realm-selector";
 
 import Container from "components/Container";
 
@@ -9,8 +8,9 @@ import AdMob from "components/AdMob";
 import Login from "../login/login";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REALMS_KEY } from "src/utils/constants";
-import RealmSelector from "../realm-selector/realm-selector";
+import RealmSelector, { BarcodeReadPayload } from "../realm-selector/realm-selector";
 import { landingPageStyles } from "./landing-page-styles";
+import RealmDetails from "../realm-selector/realm-details";
 
 const LandingPage = (): JSX.Element => {
   const [selectedRealm, setSelectedRealm] = useState("");
@@ -49,7 +49,14 @@ const LandingPage = (): JSX.Element => {
   }
 
   const onBarcodeReadCallback = (payload: BarcodeReadPayload) => {
-    alert(`Bar code with type ${payload.type} and data ${payload.data} has been scanned!`);
+    const barcodeData = new RealmDetails(payload.data);
+
+    if (!barcodeData.sucesfullyParsed) {
+      alert(`Error: ${barcodeData.parsingError}`);
+      return;
+    }
+
+    alert(`Bar code with keycloakUrl ${barcodeData.keycloakUrl} and backendUrl ${barcodeData.backendUrl}!`);
   }
 
   const toggleRealmSelectorComponent = () => {
