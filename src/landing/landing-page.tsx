@@ -10,9 +10,11 @@ import AdMob from "components/AdMob";
 import Login from "../login/login";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REALMS_KEY } from "src/utils/constants";
+import RealmSelector from "../realm-selector/realm-selector";
 
 const LandingPage = (): JSX.Element => {
   const [selectedRealm, setSelectedRealm] = useState("");
+  const [showRealmSelector, setShowRealmSelector] = useState(false);
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   //TODO - get this from AsyncStorage
   const realmsList = [
@@ -20,7 +22,7 @@ const LandingPage = (): JSX.Element => {
     {children: "KeycloackRealm2", onPress: () => setSelectedRealm("KeycloackRealm2")},
     {children: "KeycloackRealm3", onPress: () => setSelectedRealm("KeycloackRealm3")},
     {children: "KeycloackRealm4", onPress: () => setSelectedRealm("KeycloackRealm4")},
-    {children: "Add new realm", onPress: () => navigate("Auth", { screen: "Home" })},
+    {children: "Add new realm", onPress: () => setShowRealmSelector(true)},
   ];
 
   //TODO - uncomment this when we have data saved
@@ -42,6 +44,14 @@ const LandingPage = (): JSX.Element => {
     setSelectedRealm("");
   }
 
+  const toggleRealmSelectorComponent = () => {
+    if (showRealmSelector === true) {
+      return <RealmSelector />
+    }
+
+    return togglePageData();
+  }
+
   const togglePageData = () => {
     if (selectedRealm.length === 0) {
       return <FlatList
@@ -59,7 +69,7 @@ const LandingPage = (): JSX.Element => {
 
   return (
     <Container style={styles.container}>
-      {togglePageData()}
+      {toggleRealmSelectorComponent()}
     </Container>
   );
 };
