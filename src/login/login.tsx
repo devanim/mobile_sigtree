@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import {
   useTheme,
-  StyleService,
   useStyleSheet,
   Icon,
   Layout,
@@ -18,11 +17,11 @@ import {
 import Text from "components/Text";
 import Container from "components/Container";
 import useLayout from "hooks/useLayout";
+import { loginStyles } from "./login-styles";
 
 const Login = (props: LoginProps): JSX.Element => {
   const { top, bottom, width, height } = useLayout();
   const theme = useTheme();
-  const styles = useStyleSheet(themedStyles);
   const [hide, setHide] = React.useState(false);
   const handleCard = React.useCallback(() => {}, []);
   const [user, setUser] = React.useState("");
@@ -30,17 +29,17 @@ const Login = (props: LoginProps): JSX.Element => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container style={styles.container} level="1">
+      <Container style={loginStyles.container} level="1">
         <Layout
           level="4"
           style={[
-            styles.layout,
+            loginStyles.layout,
             {
               paddingTop: top,
             },
           ]}
         >
-          <View style={styles.topView}>
+          <View style={loginStyles.topView}>
             <Text marginTop={12} marginBottom={16} category="title3">
               Login into {props.realmName} realm
             </Text>
@@ -72,9 +71,9 @@ const Login = (props: LoginProps): JSX.Element => {
               )}
             />
 
-            <View style={styles.bottomLayout}>
-              <Button style={styles.button} size="large" children="Sign In" />
-              <Button style={styles.button} size="large" children="Show Realms" onPress={() => props.toggleRealmsCallback()}/>
+            <View style={loginStyles.bottomLayout}>
+              <Button style={loginStyles.button} size="large" children="Sign In" />
+              <Button style={loginStyles.button} size="large" children="Show Realms" onPress={() => props.toggleRealmsCallback()}/>
             </View>
           </View>
         </Layout>
@@ -89,49 +88,3 @@ interface LoginProps {
   realmName: string;
   toggleRealmsCallback: Function;
 }
-
-const themedStyles = StyleService.create({
-  container: {
-    flex: 1,
-    paddingTop: 0,
-  },
-  flatList: {
-    alignItems: "center",
-    paddingTop: 16,
-  },
-  btnBottom: {
-    paddingBottom: 16,
-  },
-  bottomLayout: {
-    flexDirection: "row",
-    marginVertical: 24,
-    alignItems: "center",
-  },
-  layout: {
-    borderBottomRightRadius: 24,
-    borderBottomLeftRadius: 24,
-  },
-  topView: {
-    marginHorizontal: 24,
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-  },
-  content: {
-    flexWrap: "wrap",
-    flex: 1,
-    alignSelf: "center",
-    marginTop: 16,
-  },
-  button: {
-    flex: 1,
-    marginRight: 8,
-    marginLeft: 28,
-  },
-  icon: {
-    width: 48,
-    height: 48,
-  },
-  topIcon: {
-    tintColor: "icon-basic-color",
-  },
-});

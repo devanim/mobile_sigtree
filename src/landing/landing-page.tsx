@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList } from "react-native";
+import React, { useState } from "react";
+import { FlatList } from "react-native";
 import { Button } from "@ui-kitten/components";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { BarcodeReadPayload } from "src/realm-selector/realm-selector";
 
 import Container from "components/Container";
 
@@ -10,6 +10,7 @@ import Login from "../login/login";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REALMS_KEY } from "src/utils/constants";
 import RealmSelector from "../realm-selector/realm-selector";
+import { landingPageStyles } from "./landing-page-styles";
 
 const LandingPage = (): JSX.Element => {
   const [selectedRealm, setSelectedRealm] = useState("");
@@ -35,7 +36,7 @@ const LandingPage = (): JSX.Element => {
     return item.ads ? (
       <AdMob marginTop={8} />
     ) : (
-      <Button style={styles.button} {...item} size={'small'}/>
+      <Button style={landingPageStyles.button} {...item} size={'small'}/>
     );
   }, []);
 
@@ -47,7 +48,7 @@ const LandingPage = (): JSX.Element => {
     setShowRealmSelector(false);
   }
 
-  const onBarcodeReadCallback = (payload: any) => {
+  const onBarcodeReadCallback = (payload: BarcodeReadPayload) => {
     alert(`Bar code with type ${payload.type} and data ${payload.data} has been scanned!`);
   }
 
@@ -67,7 +68,7 @@ const LandingPage = (): JSX.Element => {
         keyExtractor={(i, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
-        contentContainerStyle={styles.contentContainerStyle}
+        contentContainerStyle={landingPageStyles.contentContainerStyle}
       />;
     }
 
@@ -75,28 +76,10 @@ const LandingPage = (): JSX.Element => {
   }
 
   return (
-    <Container style={styles.container}>
+    <Container style={landingPageStyles.container}>
       {toggleRealmSelectorComponent()}
     </Container>
   );
 };
 
 export default LandingPage;
-
-const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 0,
-  },
-  contentContainerStyle: {
-    paddingHorizontal: 32,
-    paddingBottom: 60,
-  },
-  image: {
-    alignSelf: "center",
-    marginBottom: 8,
-    transform: [{ scale: 0.7 }],
-  },
-  button: {
-    marginTop: 8,
-  },
-});

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { realmSelectorStyles } from "./realm-selector-styles";
 
 const RealmSelector = (props: RealmSelectorProps): JSX.Element => {
   const [hasPermission, setHasPermission] = useState(false);
@@ -28,7 +29,7 @@ const RealmSelector = (props: RealmSelectorProps): JSX.Element => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={realmSelectorStyles.container}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
@@ -41,7 +42,7 @@ const RealmSelector = (props: RealmSelectorProps): JSX.Element => {
 
 export default RealmSelector;
 
-interface BarcodeReadPayload {
+export interface BarcodeReadPayload {
   type: string;
   data: any;
 }
@@ -50,11 +51,3 @@ interface RealmSelectorProps {
   onDataRead: Function;
   onCancel: Function;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-});
