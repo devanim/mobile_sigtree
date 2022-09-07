@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-const RealmSelector = (): JSX.Element => {
+const RealmSelector = (props: RealmSelectorProps): JSX.Element => {
   const [hasPermission, setHasPermission] = useState(false);
   const [scanned, setScanned] = useState(false);
 
@@ -17,7 +17,7 @@ const RealmSelector = (): JSX.Element => {
 
   const handleBarCodeScanned = (payload: BarcodeReadPayload) => {
     setScanned(true);
-    alert(`Bar code with type ${payload.type} and data ${payload.data} has been scanned!`);
+    props.onDataRead(payload);
   };
 
   if (hasPermission === null) {
@@ -34,6 +34,7 @@ const RealmSelector = (): JSX.Element => {
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      <Button title={'Go back!'} onPress={() => props.onCancel()} />
     </View>
   );
 };
@@ -41,8 +42,13 @@ const RealmSelector = (): JSX.Element => {
 export default RealmSelector;
 
 interface BarcodeReadPayload {
-  type: any;
+  type: string;
   data: any;
+}
+
+interface RealmSelectorProps {
+  onDataRead: Function;
+  onCancel: Function;
 }
 
 const styles = StyleSheet.create({

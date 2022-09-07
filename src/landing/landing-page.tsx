@@ -5,7 +5,6 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 import Container from "components/Container";
 
-import { RootStackParamList } from "../../navigation/type";
 import AdMob from "components/AdMob";
 import Login from "../login/login";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,7 +14,7 @@ import RealmSelector from "../realm-selector/realm-selector";
 const LandingPage = (): JSX.Element => {
   const [selectedRealm, setSelectedRealm] = useState("");
   const [showRealmSelector, setShowRealmSelector] = useState(false);
-  const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
+
   //TODO - get this from AsyncStorage
   const realmsList = [
     {children: "KeycloackRealm1", onPress: () => setSelectedRealm("KeycloackRealm1")},
@@ -44,9 +43,17 @@ const LandingPage = (): JSX.Element => {
     setSelectedRealm("");
   }
 
+  const resetRealmSelectorComponent = () => {
+    setShowRealmSelector(false);
+  }
+
+  const onBarcodeReadCallback = (payload: any) => {
+    alert(`Bar code with type ${payload.type} and data ${payload.data} has been scanned!`);
+  }
+
   const toggleRealmSelectorComponent = () => {
     if (showRealmSelector === true) {
-      return <RealmSelector />
+      return <RealmSelector onDataRead={onBarcodeReadCallback} onCancel={resetRealmSelectorComponent}/>
     }
 
     return togglePageData();
