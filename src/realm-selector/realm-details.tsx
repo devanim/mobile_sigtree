@@ -3,12 +3,14 @@ export default class RealmDetails {
   public backendUrl: string;
   public parsingError: unknown;
   public sucesfullyParsed: boolean;
+  private originalPayload: string;
 
   constructor(payload: string) {
     this.parsePayload(payload);
   }
 
   private parsePayload = (payload: string): void => {
+    this.originalPayload = payload;
     this.sucesfullyParsed = false;
     this.keycloakUrl = "";
     this.backendUrl = "";
@@ -27,5 +29,9 @@ export default class RealmDetails {
     } catch (error) {
       this.parsingError = error;
     }
+  }
+
+  public toString = (): string => {
+    return this.originalPayload;
   }
 }

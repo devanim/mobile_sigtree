@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { Button } from "@ui-kitten/components";
 
@@ -6,15 +6,15 @@ import Container from "components/Container";
 
 import AdMob from "components/AdMob";
 import Login from "../login/login";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { REALMS_KEY } from "src/utils/constants";
 import RealmSelector, { BarcodeReadPayload } from "../realm-selector/realm-selector";
 import { landingPageStyles } from "./landing-page-styles";
 import RealmDetails from "../realm-selector/realm-details";
+import { RealmStorage } from "./realm-storage";
 
 const LandingPage = (): JSX.Element => {
   const [selectedRealm, setSelectedRealm] = useState("");
   const [showRealmSelector, setShowRealmSelector] = useState(false);
+  const storage = new RealmStorage();
 
   //TODO - get this from AsyncStorage
   const realmsList = [
@@ -25,12 +25,9 @@ const LandingPage = (): JSX.Element => {
     {children: "Add new realm", onPress: () => setShowRealmSelector(true)},
   ];
 
-  //TODO - uncomment this when we have data saved
-  // useEffect(() => {
-  //   AsyncStorage.getItem(REALMS_KEY).then((value) => {
-  //     realmsList = value;
-  //   });
-  // });
+  useEffect(() => {
+    storage.readStoredRealms();
+  });
 
   const renderItem = React.useCallback(({ item }) => {
     return item.ads ? (
@@ -49,14 +46,19 @@ const LandingPage = (): JSX.Element => {
   }
 
   const onBarcodeReadCallback = (payload: BarcodeReadPayload) => {
-    const barcodeData = new RealmDetails(payload.data);
+    const realmData = new RealmDetails(payload.data);
 
-    if (!barcodeData.sucesfullyParsed) {
-      alert(`Error: ${barcodeData.parsingError}`);
+    if (!realmData.sucesfullyParsed) {
+      alert(`Error: ${realmData.parsingError}`);
       return;
     }
 
-    alert(`Bar code with keycloakUrl ${barcodeData.keycloakUrl} and backendUrl ${barcodeData.backendUrl}!`);
+    if (storage.containsKey(realmData.keycloakUrl)) {
+      alert(`Realm ${realmData.keycloakUrl} is already configured on this device`);
+      return;
+    }
+    storage.saveRealm(realmData);
+    alert(`Bar code with keycloakUrl ${realmData.keycloakUrl} and backendUrl ${realmData.backendUrl}!`);
   }
 
   const toggleRealmSelectorComponent = () => {
