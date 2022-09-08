@@ -8,7 +8,7 @@ export class RealmStorage {
   public readStoredRealms = (): void => {
     AsyncStorage.getItem(REALMS_KEY).then((value) => {
       if (!value) {
-        alert(`Key ${REALMS_KEY} could not be read from async storage`);
+        this.storedRealms = [];
         return;
       }
       
