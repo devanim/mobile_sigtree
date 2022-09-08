@@ -18,11 +18,11 @@ const LandingPage = (): JSX.Element => {
 
   //TODO - get this from AsyncStorage
   const realmsList = [
+    {children: "Add new realm", onPress: () => setShowRealmSelector(true)},
     {children: "KeycloackRealm1", onPress: () => setSelectedRealm("KeycloackRealm1")},
     {children: "KeycloackRealm2", onPress: () => setSelectedRealm("KeycloackRealm2")},
     {children: "KeycloackRealm3", onPress: () => setSelectedRealm("KeycloackRealm3")},
-    {children: "KeycloackRealm4", onPress: () => setSelectedRealm("KeycloackRealm4")},
-    {children: "Add new realm", onPress: () => setShowRealmSelector(true)},
+    {children: "KeycloackRealm4", onPress: () => setSelectedRealm("KeycloackRealm4")}
   ];
 
   useEffect(() => {
@@ -30,11 +30,8 @@ const LandingPage = (): JSX.Element => {
   });
 
   const renderItem = React.useCallback(({ item }) => {
-    return item.ads ? (
-      <AdMob marginTop={8} />
-    ) : (
-      <Button style={landingPageStyles.button} {...item} size={'small'}/>
-    );
+    return item.ads ? (<AdMob marginTop={8} />) : 
+      (<Button style={landingPageStyles.button} {...item} size={'small'}/>);
   }, []);
 
   const resetSelectedRealm = () => {
@@ -58,7 +55,7 @@ const LandingPage = (): JSX.Element => {
       return;
     }
     storage.saveRealm(realmData);
-    alert(`Bar code with keycloakUrl ${realmData.keycloakUrl} and backendUrl ${realmData.backendUrl}!`);
+    alert(`Bar code with name ${realmData.name} keycloakUrl ${realmData.keycloakUrl} and backendUrl ${realmData.backendUrl}!`);
   }
 
   const toggleRealmSelectorComponent = () => {
@@ -72,13 +69,13 @@ const LandingPage = (): JSX.Element => {
   const togglePageData = () => {
     if (selectedRealm.length === 0) {
       return <FlatList
-        data={realmsList || []}
-        renderItem={renderItem}
-        keyExtractor={(i, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        contentContainerStyle={landingPageStyles.contentContainerStyle}
-      />;
+          data={realmsList || []}
+          renderItem={renderItem}
+          keyExtractor={(i, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={16}
+          contentContainerStyle={landingPageStyles.contentContainerStyle}
+        />;
     }
 
     return <Login realmName={selectedRealm} toggleRealmsCallback={resetSelectedRealm}/>;
