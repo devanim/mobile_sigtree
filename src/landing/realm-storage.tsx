@@ -17,8 +17,16 @@ export class RealmStorage {
   }
 
   public saveRealm = (value: RealmDetails): void => {
-    this.storedRealms.push(value);
-    AsyncStorage.setItem(REALMS_KEY, JSON.stringify(this.storedRealms));
+    AsyncStorage.getItem(REALMS_KEY).then((realmValues) => {
+      if (!realmValues) {
+        this.storedRealms = [];
+        return;
+      }
+      
+      this.storedRealms = JSON.parse(realmValues);
+      this.storedRealms.push(value);
+      AsyncStorage.setItem(REALMS_KEY, JSON.stringify(this.storedRealms));
+    });
   }
 
   public containsKey = (key: string): boolean => {
