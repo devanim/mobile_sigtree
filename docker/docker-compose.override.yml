@@ -1,40 +1,32 @@
-version: '3.4'
-
-services:
-  keycloakdb:
-    image: postgres:${POSTGRES_VERSION}
-    ports:
-      - "6433:6432"
-    environment:
-      - POSTGRES_USER=${KEYCLOAK_DATABASE_USER}
-      - POSTGRES_PASSWORD=${KEYCLOAK_DATABASE_PASSWORD}
-      - POSTGRES_DB=${KEYCLOAK_DATABASE_NAME}
-    volumes:
-      - keycloak-postgres:/var/lib/postgresql/data
-    networks:
-      internal:
-
-  keycloak:
-    image: jboss/keycloak:${KEYCLOAK_VERSION}
-    ports:
-      - "8024:8080"
-    volumes: 
-      - ./sigtree/:/opt/jboss/keycloak/themes/sigtree/
-    environment:
-      - KEYCLOAK_USER=${KEYCLOAK_USER}
-      - KEYCLOAK_PASSWORD=${KEYCLOAK_PASSWORD}
-      - DB_DATABASE=${KEYCLOAK_DATABASE_NAME}
-      - DB_USER=${KEYCLOAK_DATABASE_USER}
-      - DB_PASSWORD=${KEYCLOAK_DATABASE_PASSWORD}
-      - DB_ADDR=${KEYCLOAK_DATABASE_HOST}
-      - DB_VENDOR=${KEYCLOAK_DATABASE_VENDOR}
-    networks:
-      internal:
-    depends_on:
-      - keycloakdb
+version: '3'
 
 volumes:
-  keycloak-postgres:
- 
-networks:
-  internal: 
+  postgres_data:
+      driver: local
+
+services:
+  postgres:
+      image: postgres
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      environment:
+        POSTGRES_DB: keycloak
+        POSTGRES_USER: keycloak
+        POSTGRES_PASSWORD: password
+  keycloak:
+      image: quay.io/keycloak/keycloak:legacy
+      environment:
+        DB_VENDOR: POSTGRES
+        DB_ADDR: postgres
+        DB_DATABASE: keycloak
+        DB_USER: keycloak
+        DB_SCHEMA: public
+        DB_PASSWORD: password
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: Pa55w0rd
+        # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+        #JDBC_PARAMS: "ssl=true"
+      ports:
+        - 8080:8080
+      depends_on:
+        - postgres
