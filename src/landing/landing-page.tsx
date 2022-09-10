@@ -70,11 +70,13 @@ const LandingPage = (): JSX.Element => {
       alert(`Realm ${realmData.keycloakUrl} is already configured on this device`);
       return;
     }
+
     storage.saveRealm(realmData);
     const newRealms = realms;
     newRealms.push({children: realmData.name, onPress: () => setSelectedRealm(realmData.name)});
     setRealms(newRealms);
-    alert(`Bar code with name ${realmData.name} keycloakUrl ${realmData.keycloakUrl} and backendUrl ${realmData.backendUrl}!`);
+    setShowRealmSelector(false);
+    alert(`Bar code with name ${realmData.name} keycloakUrl ${realmData.keycloakUrl} and backendUrl ${realmData.backendUrl} was added!`);
   }
 
   const toggleRealmSelectorComponent = () => {
