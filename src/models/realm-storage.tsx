@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import RealmDetails from "../realm-selector/realm-details";
+import RealmDetails from "./realm-details";
 import { REALMS_KEY } from "../utils/constants";
 
 export class RealmStorage {

@@ -8,10 +8,10 @@ import AdMob from "components/AdMob";
 import Login from "../login/login";
 import RealmSelector, { BarcodeReadPayload } from "../realm-selector/realm-selector";
 import { landingPageStyles } from "./landing-page-styles";
-import RealmDetails from "../realm-selector/realm-details";
-import { RealmStorage } from "./realm-storage";
+import RealmDetails from "../../models/realm-details";
+import { RealmStorage } from "../../models/realm-storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { REALMS_KEY } from "../utils/constants";
+import { REALMS_KEY } from "../../utils/constants";
 
 const LandingPage = (): JSX.Element => {
   const emptyRealmDetails: LandingPageRealms[] = [];

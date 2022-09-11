@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import {
   useTheme,
-  useStyleSheet,
   Icon,
   Layout,
   Input,
