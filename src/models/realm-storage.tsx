@@ -5,16 +5,16 @@ import { REALMS_KEY } from "../utils/constants";
 export class RealmStorage {
   public storedRealms: RealmDetails[] = [];
 
-  public readStoredRealms = (): void => {
-    AsyncStorage.getItem(REALMS_KEY).then((value) => {
-      if (!value) {
-        this.storedRealms = [];
-        return;
-      }
+  // public readStoredRealms = (): void => {
+  //   AsyncStorage.getItem(REALMS_KEY).then((value) => {
+  //     if (!value) {
+  //       this.storedRealms = [];
+  //       return;
+  //     }
       
-      this.storedRealms = JSON.parse(value);
-    });
-  }
+  //     this.storedRealms = JSON.parse(value);
+  //   });
+  // }
 
   public saveRealm = (value: RealmDetails): void => {
     AsyncStorage.getItem(REALMS_KEY).then((realmValues) => {
@@ -30,12 +30,18 @@ export class RealmStorage {
   }
 
   public containsKey = (key: string): boolean => {
-    const existingKey = this.storedRealms.find(item => item.keycloakUrl === key);
+    const existingKey = this.storedRealms.find(item => item.name === key);
 
     if (existingKey) {
       return true;
     } else {
       return false;
     }
+  }
+
+  public getRealmByKey = (key: string): RealmDetails => {
+    const realm = this.storedRealms.find(item => item.name === key);
+
+    return realm;
   }
 }

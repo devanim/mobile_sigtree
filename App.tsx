@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
@@ -15,11 +15,14 @@ import AssetIconsPack from "assets/AssetIconsPack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ThemeContext from "./src/context/ThemeContext";
 import { patchFlatListProps } from "react-native-web-refresh-control";
+import RealmContext from "src/context/RealmContext";
+import RealmDetails from "src/models/realm-details";
 
 patchFlatListProps();
 
-export default function App() {
-  const [theme, setTheme] = React.useState<"light" | "dark">("dark");
+export default App = () =>  {
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [selectedRealm, setSelectedRealm] = useState<RealmDetails | null>(null);
 
   React.useEffect(() => {
     AsyncStorage.getItem("theme").then((value) => {
@@ -34,6 +37,10 @@ export default function App() {
     });
   };
 
+  const setRealm = (realm: RealmDetails) => {
+    setSelectedRealm(realm);
+  }
+
   const isLoadingComplete = useCachedResources();
 
   if (!isLoadingComplete) {
@@ -42,28 +49,30 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
-        <ApplicationProvider
-          {...eva}
-          theme={
-            theme === "light"
-              ? { ...eva.light, ...customTheme, ...lightTheme }
-              : { ...eva.dark, ...customTheme, ...darkTheme }
-          }
-          /* @ts-ignore */
-          customMapping={customMapping}
-        > 
-          <SafeAreaProvider>
-            <StatusBar
-              style={theme === "light" ? "dark" : "light"}
-              translucent={true}
-              backgroundColor={"#00000000"}
-            />
-            <AppContainer />
-          </SafeAreaProvider>
-        </ApplicationProvider>
-      </ThemeContext.Provider>
+      <RealmContext.Provider value={{realmData: selectedRealm, setRealm}}>
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+          <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
+          <ApplicationProvider
+            {...eva}
+            theme={
+              theme === "light"
+                ? { ...eva.light, ...customTheme, ...lightTheme }
+                : { ...eva.dark, ...customTheme, ...darkTheme }
+            }
+            /* @ts-ignore */
+            customMapping={customMapping}
+          > 
+            <SafeAreaProvider>
+              <StatusBar
+                style={theme === "light" ? "dark" : "light"}
+                translucent={true}
+                backgroundColor={"#00000000"}
+              />
+              <AppContainer />
+            </SafeAreaProvider>
+          </ApplicationProvider>
+        </ThemeContext.Provider>
+      </RealmContext.Provider>
     </SafeAreaProvider>
   );
 }

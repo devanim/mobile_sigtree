@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { Button } from "@ui-kitten/components";
 
@@ -12,11 +12,12 @@ import RealmDetails from "../../models/realm-details";
 import { RealmStorage } from "../../models/realm-storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REALMS_KEY } from "../../utils/constants";
+import RealmContext from "src/context/RealmContext";
 
 const LandingPage = (): JSX.Element => {
   const emptyRealmDetails: LandingPageRealms[] = [];
   const [realms, setRealms] = useState(emptyRealmDetails);
-  const [selectedRealm, setSelectedRealm] = useState("");
+  const {realmData: data, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
   const storage = new RealmStorage();
 
@@ -44,7 +45,7 @@ const LandingPage = (): JSX.Element => {
   }, []);
 
   const resetSelectedRealm = () => {
-    setSelectedRealm("");
+    setRealm(null);
   }
 
   const resetRealmSelectorComponent = () => {
@@ -67,7 +68,7 @@ const LandingPage = (): JSX.Element => {
     storage.saveRealm(realmData);
 
     const newRealms = realms;
-    newRealms.push({children: realmData.name, onPress: () => setSelectedRealm(realmData.name)});
+    newRealms.push({children: realmData.name, onPress: () => setRealm(realmData)});
     setRealms(newRealms);
 
     setShowRealmSelector(false);
@@ -83,7 +84,7 @@ const LandingPage = (): JSX.Element => {
   }
 
   const togglePageData = () => {
-    if (selectedRealm.length === 0) {
+    if (data?.keycloakUrl.length  === 0) {
       return <FlatList
           data={realms || []}
           renderItem={renderItem}
@@ -94,7 +95,7 @@ const LandingPage = (): JSX.Element => {
         />;
     }
 
-    return <Login realmName={selectedRealm} toggleRealmsCallback={resetSelectedRealm}/>;
+    return <Login toggleRealmsCallback={resetSelectedRealm}/>;
   }
 
   return (<Container style={landingPageStyles.container}>

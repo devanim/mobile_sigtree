@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -6,7 +6,6 @@ import {
   Keyboard,
 } from "react-native";
 import {
-  useTheme,
   Icon,
   Layout,
   Input,
@@ -17,38 +16,25 @@ import Text from "components/Text";
 import Container from "components/Container";
 import useLayout from "hooks/useLayout";
 import { loginStyles } from "./login-styles";
+import RealmContext from "src/context/RealmContext";
 
 const Login = (props: LoginProps): JSX.Element => {
-  const { top, bottom, width, height } = useLayout();
-  const theme = useTheme();
-  const [hide, setHide] = React.useState(false);
-  const handleCard = React.useCallback(() => {}, []);
-  const [user, setUser] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const { top } = useLayout();
+  const [hide, setHide] = useState(false);
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+  const {realmData: data, setRealm} = useContext(RealmContext);
+
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container style={loginStyles.container} level="1">
-        <Layout
-          level="4"
-          style={[
-            loginStyles.layout,
-            {
-              paddingTop: top,
-            },
-          ]}
-        >
+        <Layout level="4" style={[ loginStyles.layout, { paddingTop: top } ]}>
           <View style={loginStyles.topView}>
             <Text marginTop={12} marginBottom={16} category="title3">
-              Login into {props.realmName} realm
+              Login into {data?.name ?? ""} realm
             </Text>
-            <Input
-              status="basic"
-              placeholder="Username"
-              value={user}
-              onChangeText={setUser}
-              style={{ marginBottom: 16 }}
-            />
+            <Input status="basic" placeholder="Username" value={user} onChangeText={setUser} style={{ marginBottom: 16 }} />
             <Input
               secureTextEntry={hide}
               value={password}
@@ -56,16 +42,8 @@ const Login = (props: LoginProps): JSX.Element => {
               status="basic"
               placeholder="Password"
               accessoryRight={(props) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    setHide(!hide);
-                  }}
-                >
-                  <Icon
-                    {...props}
-                    pack="assets"
-                    name={hide ? "eye" : "eyeHide"}
-                  />
+                <TouchableOpacity onPress={() => { setHide(!hide); }}>
+                  <Icon {...props} pack="assets" name={hide ? "eye" : "eyeHide"} />
                 </TouchableOpacity>
               )}
             />
@@ -84,6 +62,5 @@ const Login = (props: LoginProps): JSX.Element => {
 export default Login;
 
 interface LoginProps {
-  realmName: string;
   toggleRealmsCallback: Function;
 }

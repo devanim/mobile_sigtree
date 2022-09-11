@@ -1,29 +1,20 @@
+/* eslint-disable no-prototype-builtins */
 export default class RealmDetails {
-  public name: string;
-  public keycloakUrl: string;
-  public backendUrl: string;
+  public name = "";
+  public keycloakUrl = "";
+  public backendUrl = "";
   public parsingError: unknown;
-  public sucesfullyParsed: boolean;
-  private originalPayload: string;
+  public sucesfullyParsed = false;
 
   constructor(payload: string) {
     this.parsePayload(payload);
   }
 
   private parsePayload = (payload: string): void => {
-    this.originalPayload = payload;
-    this.sucesfullyParsed = false;
-    this.name = "";
-    this.keycloakUrl = "";
-    this.backendUrl = "";
-    
     try {
       const parsedPayload = JSON.parse(payload);
-      const isProperlyDefined = parsedPayload.hasOwnProperty("keycloakUrl") &&
-      parsedPayload.hasOwnProperty("backendUrl") &&
-      parsedPayload.hasOwnProperty("name");
 
-      if (!isProperlyDefined) {
+      if (!this.payloadHasProperties(parsedPayload)) {
         this.sucesfullyParsed = false;
         this.parsingError = "QR Code does not contain needed properties";
       }
@@ -37,7 +28,9 @@ export default class RealmDetails {
     }
   }
 
-  public toString = (): string => {
-    return this.originalPayload;
+  private payloadHasProperties = (payload: any) => {
+    return payload.hasOwnProperty("keycloakUrl") &&
+              payload.hasOwnProperty("backendUrl") &&
+              payload.hasOwnProperty("name");
   }
 }
