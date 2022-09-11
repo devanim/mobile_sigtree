@@ -11,14 +11,16 @@ export class RealmStorage {
         this.storedRealms = [];
         return;
       }
-      
+
       this.storedRealms = JSON.parse(realmValues);
       this.storedRealms.push(value);
+
       AsyncStorage.setItem(REALMS_KEY, JSON.stringify(this.storedRealms));
     });
   }
 
   public containsKey = (key: string): boolean => {
+    alert(`storage realms ${this.storedRealms.length}`);
     const existingKey = this.storedRealms.find(item => item.name === key);
 
     if (existingKey) {

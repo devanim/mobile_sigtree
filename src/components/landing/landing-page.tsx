@@ -15,33 +15,37 @@ import { REALMS_KEY } from "../../utils/constants";
 import RealmContext from "../../context/RealmContext";
 
 const LandingPage = (): JSX.Element => {
-  const emptyRealmDetails: LandingPageRealms[] = [];
-  const [realms, setRealms] = useState(emptyRealmDetails);
+  // const storage = new RealmStorage();
+  const [realms, setRealms] = useState<LandingPageRealms[]>([]);
+  const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
-  const storage = new RealmStorage();
 
 
   useEffect(() => {
     AsyncStorage.getItem(REALMS_KEY).then((value) => {
       if (!value) {
-        setRealms(emptyRealmDetails);
+        setRealms([]);
         return;
       }
       
       const parsed: RealmDetails[] = JSON.parse(value);
+      setStoredRealms(parsed);
+      const tempRealms: LandingPageRealms[] = [];
       
-      const realms: LandingPageRealms[] = [];
       parsed.forEach((item: RealmDetails) => {
-        realms.push({children: item.name, onPress: () => setShowRealmSelector(true)});
+        tempRealms.push({children: item.name, onPress: () => {
+          setRealm(item);
+          setShowRealmSelector(true);
+        }});
       });
-      setRealms(realms);
+      
+      setRealms(tempRealms);
     });
-  }, [realms]);
+  }, []);
 
   const renderItem = React.useCallback(({ item }) => {
-    return item.ads ? (<AdMob marginTop={8} />) : 
-      (<Button style={landingPageStyles.button} {...item} size={'small'}/>);
+    return item.ads ? (<AdMob marginTop={8} />) : (<Button style={landingPageStyles.button} {...item} size={'small'}/>);
   }, []);
 
   const resetSelectedRealm = () => {
@@ -59,13 +63,25 @@ const LandingPage = (): JSX.Element => {
       alert(`Error: ${parsedRealmDetails.parsingError}`);
       return;
     }
+    //storage.saveRealm(parsedRealmDetails);
+    AsyncStorage.getItem(REALMS_KEY).then((realmValues) => {
+      if (!realmValues) {
+        setStoredRealms([]);
+        return;
+      }
 
-    if (storage.containsKey(parsedRealmDetails.name)) {
+      const parsedRealms = JSON.parse(realmValues);
+      parsedRealms.push(parsedRealmDetails);
+      setStoredRealms(parsedRealms);
+
+      AsyncStorage.setItem(REALMS_KEY, JSON.stringify(parsedRealms));
+    });
+
+    if (containsKey(parsedRealmDetails.name)) {
       alert(`Realm ${parsedRealmDetails.name} is already configured on this device`);
       return;
     }
 
-    storage.saveRealm(parsedRealmDetails);
 
     const newRealms = realms;
     newRealms.push({children: parsedRealmDetails.name, onPress: () => setRealm(parsedRealmDetails)});
@@ -83,7 +99,19 @@ const LandingPage = (): JSX.Element => {
     return togglePageData();
   }
 
+  const containsKey = (key: string): boolean => {
+    // alert(`storage realms ${tstoredRealms.length}`);
+    const existingKey = storedRealms.find(item => item.name === key);
+
+    if (existingKey) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   const togglePageData = () => {
+    //alert(realmData);
     if (realmData == null || realmData?.keycloakUrl.length  === 0) {
       return <FlatList
           data={realms || []}

@@ -50,8 +50,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isInitialized, isSignedIn, isIntro, signIn, signOut }}
-    >
+      value={{ isInitialized, isSignedIn, isIntro, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
