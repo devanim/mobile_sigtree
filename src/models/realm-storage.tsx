@@ -5,17 +5,6 @@ import { REALMS_KEY } from "../utils/constants";
 export class RealmStorage {
   public storedRealms: RealmDetails[] = [];
 
-  // public readStoredRealms = (): void => {
-  //   AsyncStorage.getItem(REALMS_KEY).then((value) => {
-  //     if (!value) {
-  //       this.storedRealms = [];
-  //       return;
-  //     }
-      
-  //     this.storedRealms = JSON.parse(value);
-  //   });
-  // }
-
   public saveRealm = (value: RealmDetails): void => {
     AsyncStorage.getItem(REALMS_KEY).then((realmValues) => {
       if (!realmValues) {
@@ -37,11 +26,5 @@ export class RealmStorage {
     } else {
       return false;
     }
-  }
-
-  public getRealmByKey = (key: string): RealmDetails => {
-    const realm = this.storedRealms.find(item => item.name === key);
-
-    return realm;
   }
 }

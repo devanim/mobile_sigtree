@@ -12,12 +12,12 @@ import RealmDetails from "../../models/realm-details";
 import { RealmStorage } from "../../models/realm-storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REALMS_KEY } from "../../utils/constants";
-import RealmContext from "src/context/RealmContext";
+import RealmContext from "../../context/RealmContext";
 
 const LandingPage = (): JSX.Element => {
   const emptyRealmDetails: LandingPageRealms[] = [];
   const [realms, setRealms] = useState(emptyRealmDetails);
-  const {realmData: data, setRealm} = useContext(RealmContext);
+  const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
   const storage = new RealmStorage();
 
@@ -53,26 +53,26 @@ const LandingPage = (): JSX.Element => {
   }
 
   const onBarcodeReadCallback = (payload: BarcodeReadPayload) => {
-    const realmData = new RealmDetails(payload.data);
+    const parsedRealmDetails = new RealmDetails(payload.data);
 
-    if (!realmData.sucesfullyParsed) {
-      alert(`Error: ${realmData.parsingError}`);
+    if (!parsedRealmDetails.sucesfullyParsed) {
+      alert(`Error: ${parsedRealmDetails.parsingError}`);
       return;
     }
 
-    if (storage.containsKey(realmData.keycloakUrl)) {
-      alert(`Realm ${realmData.keycloakUrl} is already configured on this device`);
+    if (storage.containsKey(parsedRealmDetails.name)) {
+      alert(`Realm ${parsedRealmDetails.name} is already configured on this device`);
       return;
     }
 
-    storage.saveRealm(realmData);
+    storage.saveRealm(parsedRealmDetails);
 
     const newRealms = realms;
-    newRealms.push({children: realmData.name, onPress: () => setRealm(realmData)});
+    newRealms.push({children: parsedRealmDetails.name, onPress: () => setRealm(parsedRealmDetails)});
     setRealms(newRealms);
 
     setShowRealmSelector(false);
-    alert(`Bar code with name ${realmData.name} keycloakUrl ${realmData.keycloakUrl} and backendUrl ${realmData.backendUrl} was added!`);
+    alert(`Bar code with name ${parsedRealmDetails.name} keycloakUrl ${parsedRealmDetails.keycloakUrl} and backendUrl ${parsedRealmDetails.backendUrl} was added!`);
   }
 
   const toggleRealmSelectorComponent = () => {
@@ -84,7 +84,7 @@ const LandingPage = (): JSX.Element => {
   }
 
   const togglePageData = () => {
-    if (data?.keycloakUrl.length  === 0) {
+    if (realmData == null || realmData?.keycloakUrl.length  === 0) {
       return <FlatList
           data={realms || []}
           renderItem={renderItem}

@@ -15,8 +15,8 @@ import AssetIconsPack from "assets/AssetIconsPack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ThemeContext from "./src/context/ThemeContext";
 import { patchFlatListProps } from "react-native-web-refresh-control";
-import RealmContext from "src/context/RealmContext";
-import RealmDetails from "src/models/realm-details";
+import RealmContext from "./src/context/RealmContext";
+import RealmDetails from "./src/models/realm-details";
 
 patchFlatListProps();
 
@@ -37,7 +37,7 @@ export default App = () =>  {
     });
   };
 
-  const setRealm = (realm: RealmDetails) => {
+  const setRealm = (realm: RealmDetails | null) => {
     setSelectedRealm(realm);
   }
 

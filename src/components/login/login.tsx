@@ -16,7 +16,7 @@ import Text from "components/Text";
 import Container from "components/Container";
 import useLayout from "hooks/useLayout";
 import { loginStyles } from "./login-styles";
-import RealmContext from "src/context/RealmContext";
+import RealmContext from "../../context/RealmContext";
 
 const Login = (props: LoginProps): JSX.Element => {
   const { top } = useLayout();

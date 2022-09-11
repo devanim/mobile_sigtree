@@ -8,5 +8,5 @@ type Realm = {
 
 export default React.createContext<Realm>({
   realmData: null,
-  setRealm: (value: RealmDetails | null) => {alert(value)},
+  setRealm: (value: RealmDetails | null) => { alert(value); },
 });
