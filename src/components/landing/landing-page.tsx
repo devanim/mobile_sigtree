@@ -9,18 +9,15 @@ import Login from "../login/login";
 import RealmSelector, { BarcodeReadPayload } from "../realm-selector/realm-selector";
 import { landingPageStyles } from "./landing-page-styles";
 import RealmDetails from "../../models/realm-details";
-import { RealmStorage } from "../../models/realm-storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REALMS_KEY } from "../../utils/constants";
 import RealmContext from "../../context/RealmContext";
 
 const LandingPage = (): JSX.Element => {
-  // const storage = new RealmStorage();
   const [realms, setRealms] = useState<LandingPageRealms[]>([]);
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
-
 
   useEffect(() => {
     AsyncStorage.getItem(REALMS_KEY).then((value) => {
@@ -36,7 +33,6 @@ const LandingPage = (): JSX.Element => {
       parsed.forEach((item: RealmDetails) => {
         tempRealms.push({children: item.name, onPress: () => {
           setRealm(item);
-          setShowRealmSelector(true);
         }});
       });
       
@@ -100,7 +96,6 @@ const LandingPage = (): JSX.Element => {
   }
 
   const containsKey = (key: string): boolean => {
-    // alert(`storage realms ${tstoredRealms.length}`);
     const existingKey = storedRealms.find(item => item.name === key);
 
     if (existingKey) {
