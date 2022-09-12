@@ -14,7 +14,6 @@ import { REALMS_KEY } from "../../utils/constants";
 import RealmContext from "../../context/RealmContext";
 
 const LandingPage = (): JSX.Element => {
-  const [realms, setRealms] = useState<LandingPageRealms[]>([]);
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
@@ -22,21 +21,12 @@ const LandingPage = (): JSX.Element => {
   useEffect(() => {
     AsyncStorage.getItem(REALMS_KEY).then((value) => {
       if (!value) {
-        setRealms([]);
+        setStoredRealms([]);
         return;
       }
       
       const parsed: RealmDetails[] = JSON.parse(value);
       setStoredRealms(parsed);
-      const tempRealms: LandingPageRealms[] = [];
-      
-      parsed.forEach((item: RealmDetails) => {
-        tempRealms.push({children: item.name, onPress: () => {
-          setRealm(item);
-        }});
-      });
-      
-      setRealms(tempRealms);
     });
   }, []);
 
@@ -59,7 +49,12 @@ const LandingPage = (): JSX.Element => {
       alert(`Error: ${parsedRealmDetails.parsingError}`);
       return;
     }
-    //storage.saveRealm(parsedRealmDetails);
+
+    if (containsKey(parsedRealmDetails.name)) {
+      alert(`Realm ${parsedRealmDetails.name} is already configured on this device`);
+      return;
+    }
+
     AsyncStorage.getItem(REALMS_KEY).then((realmValues) => {
       if (!realmValues) {
         setStoredRealms([]);
@@ -72,16 +67,6 @@ const LandingPage = (): JSX.Element => {
 
       AsyncStorage.setItem(REALMS_KEY, JSON.stringify(parsedRealms));
     });
-
-    if (containsKey(parsedRealmDetails.name)) {
-      alert(`Realm ${parsedRealmDetails.name} is already configured on this device`);
-      return;
-    }
-
-
-    const newRealms = realms;
-    newRealms.push({children: parsedRealmDetails.name, onPress: () => setRealm(parsedRealmDetails)});
-    setRealms(newRealms);
 
     setShowRealmSelector(false);
     alert(`Bar code with name ${parsedRealmDetails.name} keycloakUrl ${parsedRealmDetails.keycloakUrl} and backendUrl ${parsedRealmDetails.backendUrl} was added!`);
@@ -106,10 +91,17 @@ const LandingPage = (): JSX.Element => {
   }
 
   const togglePageData = () => {
-    //alert(realmData);
+    const tempRealms: LandingPageRealms[] = [];
+      
+    storedRealms.forEach((item: RealmDetails) => {
+      tempRealms.push({children: item.name, onPress: () => {
+        setRealm(item);
+      }});
+    });
+
     if (realmData == null || realmData?.keycloakUrl.length  === 0) {
       return <FlatList
-          data={realms || []}
+          data={tempRealms || []}
           renderItem={renderItem}
           keyExtractor={(i, index) => index.toString()}
           showsVerticalScrollIndicator={false}
