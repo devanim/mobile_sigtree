@@ -30,10 +30,6 @@ const LandingPage = (): JSX.Element => {
     });
   }, []);
 
-  const renderItem = React.useCallback(({ item }) => {
-    return item.ads ? (<AdMob marginTop={8} />) : (<Button style={landingPageStyles.button} {...item} size={'small'}/>);
-  }, []);
-
   const resetSelectedRealm = () => {
     setRealm(null);
   }
@@ -112,6 +108,10 @@ const LandingPage = (): JSX.Element => {
 
     return <Login toggleRealmsCallback={resetSelectedRealm}/>;
   }
+
+  const renderItem = React.useCallback(({ item }) => {
+    return item.ads ? (<AdMob marginTop={8} />) : (<Button style={landingPageStyles.button} {...item} size={'small'}/>);
+  }, []);
 
   return (<Container style={landingPageStyles.container}>
     <Button style={landingPageStyles.button} children={"Add new realm"} onPress={() => setShowRealmSelector(true)} size={'small'}/>

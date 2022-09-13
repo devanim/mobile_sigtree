@@ -1,6 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { ReactNativeKeycloakProvider } from "@react-keycloak/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 
 import useCachedResources from "./hooks/useCachedResources";
 import AppContainer from "./navigation/AppContainer";
@@ -8,15 +12,13 @@ import * as eva from "@eva-design/eva";
 import { default as darkTheme } from "constants/theme/dark.json";
 import { default as lightTheme } from "constants/theme/light.json";
 import { default as customTheme } from "constants/theme/appTheme.json";
-import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { default as customMapping } from "./constants/theme/mapping.json";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import AssetIconsPack from "assets/AssetIconsPack";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import ThemeContext from "./src/context/ThemeContext";
 import { patchFlatListProps } from "react-native-web-refresh-control";
 import RealmContext from "./src/context/RealmContext";
 import RealmDetails from "./src/models/realm-details";
+import keycloak from "./src/utils/keycloak";
 
 patchFlatListProps();
 
@@ -48,6 +50,7 @@ export default App = () =>  {
   }
 
   return (
+  <ReactNativeKeycloakProvider authClient={keycloak} initOptions={{ redirectUri: 'myapp://Homepage'}}>
     <SafeAreaProvider>
       <RealmContext.Provider value={{realmData: selectedRealm, setRealm}}>
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -74,5 +77,6 @@ export default App = () =>  {
         </ThemeContext.Provider>
       </RealmContext.Provider>
     </SafeAreaProvider>
+  </ReactNativeKeycloakProvider>
   );
 }
