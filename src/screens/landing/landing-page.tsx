@@ -5,8 +5,8 @@ import { Button } from "@ui-kitten/components";
 import Container from "components/Container";
 
 import AdMob from "components/AdMob";
-import Login from "../login/login";
-import RealmSelector, { BarcodeReadPayload } from "../realm-selector/realm-selector";
+import Login from "../../components/login/login";
+import RealmSelector, { BarcodeReadPayload } from "../../components/realm-selector/realm-selector";
 import { landingPageStyles } from "./landing-page-styles";
 import RealmDetails from "../../models/realm-details";
 import AsyncStorage from "@react-native-async-storage/async-storage";

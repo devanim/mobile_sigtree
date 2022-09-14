@@ -19,6 +19,7 @@ import { patchFlatListProps } from "react-native-web-refresh-control";
 import RealmContext from "./src/context/RealmContext";
 import RealmDetails from "./src/models/realm-details";
 import keycloak from "./src/utils/keycloak";
+import RoutingContainer from "./src/routing/routing-container";
 
 patchFlatListProps();
 

@@ -17,8 +17,8 @@ import Term from "screens/intro/Term";
 import EducationStackNavigator from "./EducationStackNavigator";
 import CryptoStackNavigator from "./CryptoStackNavigator";
 import DeliveryStackNavigator from "./DeliveryStackNavigator";
-import LandingPage from "../src/components/landing/landing-page";
-import DashboardPage from "../src/components/dashboard/dashboard";
+import LandingPage from "../src/screens/landing/landing-page";
+import DashboardPage from "../src/screens/dashboard/dashboard";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
