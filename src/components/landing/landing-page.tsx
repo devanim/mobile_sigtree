@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, View, Text } from "react-native";
 import { Button } from "@ui-kitten/components";
 
 import Container from "components/Container";
@@ -12,11 +12,13 @@ import RealmDetails from "../../models/realm-details";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REALMS_KEY } from "../../utils/constants";
 import RealmContext from "../../context/RealmContext";
+import { useKeycloak } from "@react-keycloak/native";
 
 const LandingPage = (): JSX.Element => {
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
+  const {keycloak, initialized} = useKeycloak();
 
   useEffect(() => {
     AsyncStorage.getItem(REALMS_KEY).then((value) => {
@@ -115,6 +117,14 @@ const LandingPage = (): JSX.Element => {
 
   return (<Container style={landingPageStyles.container}>
     <Button style={landingPageStyles.button} children={"Add new realm"} onPress={() => setShowRealmSelector(true)} size={'small'}/>
+    <View>
+      <Text>
+        {`Keycloak is ${initialized} User is ${!keycloak?.authenticated ? 'NOT ' : ''}authenticated`}
+      </Text>
+
+      {!!keycloak?.authenticated && (<Button onPress={() => keycloak.logout().catch()} children={"Logout"}/>)}
+    </View>
+    <Button onPress={() => keycloak?.login().catch()} children={"Login"}/>
     {toggleRealmSelectorComponent()}
   </Container>);
 };

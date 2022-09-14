@@ -50,7 +50,7 @@ export default App = () =>  {
   }
 
   return (
-  <ReactNativeKeycloakProvider authClient={keycloak} initOptions={{ redirectUri: 'myapp://Homepage'}}>
+    <ReactNativeKeycloakProvider authClient={keycloak} initOptions={{ onLoad: 'login-required'}}>
     <SafeAreaProvider>
       <RealmContext.Provider value={{realmData: selectedRealm, setRealm}}>
         <ThemeContext.Provider value={{ theme, toggleTheme }}>

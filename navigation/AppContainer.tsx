@@ -18,6 +18,7 @@ import EducationStackNavigator from "./EducationStackNavigator";
 import CryptoStackNavigator from "./CryptoStackNavigator";
 import DeliveryStackNavigator from "./DeliveryStackNavigator";
 import LandingPage from "../src/components/landing/landing-page";
+import DashboardPage from "../src/components/dashboard/dashboard";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -30,9 +31,11 @@ const AppContainer = () => {
         }}
         initialRouteName="Intro"
       >
+        <Stack.Screen name="LandingPage" component={LandingPage} />
+        <Stack.Screen name="DashboardPage" component={DashboardPage} />
+
         <Stack.Screen name="Term" component={Term} />
         <Stack.Screen name="Intro" component={Intro} />
-        <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="Onbroading" component={OnboardingNavigator} />
         <Stack.Screen name="Auth" component={AuthNavigator} />
         <Stack.Screen name="Social" component={SocialNavigator} />
