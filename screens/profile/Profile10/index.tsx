@@ -21,7 +21,7 @@ import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import { Images } from "assets/images";
 import Header from "./Header";
 import ProgressBar from "components/ProgressBar";

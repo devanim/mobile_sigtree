@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { FlatList, View, Text } from "react-native";
 import { Button } from "@ui-kitten/components";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 
 import AdMob from "components/AdMob";
 import Login from "../../components/login/login";

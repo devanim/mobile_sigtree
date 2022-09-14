@@ -5,7 +5,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../src/components/Container";
 import Transaction from "components/Transaction";
 import CurrencyText from "components/CurrencyText";
 import NavigationAction from "components/NavigationAction";

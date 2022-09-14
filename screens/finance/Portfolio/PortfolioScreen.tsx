@@ -7,7 +7,7 @@ import useLayout from "hooks/useLayout";
 import Asset from "./Asset";
 import Text from "components/Text";
 import Statistic from "./Statistic";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import CurrencyText from "components/CurrencyText";
 import NavigationAction from "components/NavigationAction";
 

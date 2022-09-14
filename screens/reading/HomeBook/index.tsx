@@ -9,7 +9,7 @@ import {
 } from "@ui-kitten/components";
 import useLayout from "hooks/useLayout";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import { Images } from "assets/images";
 import NavigationAction from "components/NavigationAction";
 import TabBar from "./TabBar";

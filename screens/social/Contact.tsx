@@ -13,7 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import NewFeedList from "./NewFeedList";
 import { DATA_HOME } from "./NewFeed";

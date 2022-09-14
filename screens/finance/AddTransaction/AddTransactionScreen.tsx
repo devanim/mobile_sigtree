@@ -14,7 +14,7 @@ import useLayout from "hooks/useLayout";
 import Text from "components/Text";
 import InputSelect from "./InputSelect";
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import CurrencyText from "components/CurrencyText";
 import NavigationAction from "components/NavigationAction";
 

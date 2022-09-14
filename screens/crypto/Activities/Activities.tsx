@@ -6,7 +6,7 @@ import {
 } from "@ui-kitten/components";
 
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import { Images } from "assets/images";
 import Activity from "./Activity";

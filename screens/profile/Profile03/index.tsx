@@ -11,7 +11,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import { Images } from "assets/images";
 import useToggle from "hooks/useToggle";

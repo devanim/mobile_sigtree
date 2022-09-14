@@ -21,7 +21,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../src/components/Container";
 import { Images } from "assets/images";
 import { SceneMap, TabView } from "react-native-tab-view";
 import TabBar from "components/TabBar";

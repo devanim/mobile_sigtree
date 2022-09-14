@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../src/components/Container";
 import { Images } from "assets/images";
 import Animated, {
   useAnimatedScrollHandler,

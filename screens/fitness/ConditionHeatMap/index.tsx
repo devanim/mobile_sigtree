@@ -6,7 +6,7 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import { Images } from "assets/images";
 import NavigationAction from "components/NavigationAction";
 import dayjs from "dayjs";

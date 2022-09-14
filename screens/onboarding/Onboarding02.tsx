@@ -3,7 +3,7 @@ import { ScrollView, TouchableOpacity } from "react-native";
 import { View, Image, StyleSheet } from "react-native";
 import {Button,Icon,StyleService,TopNavigation,useStyleSheet} from "@ui-kitten/components";
 import { Images } from "assets/images";
-import Container from "src/components/Container";
+import Container from "../../src/components/Container";
 import Text from "components/Text";
 import { useNavigation } from "@react-navigation/native";
 import Animated, {

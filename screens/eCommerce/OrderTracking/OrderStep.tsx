@@ -15,7 +15,7 @@ import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import Checkbox from "components/Checkbox";
 
 interface Props {

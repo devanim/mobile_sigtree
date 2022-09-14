@@ -14,7 +14,7 @@ import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import TabBar from "./TabBar";
 import Recent from "./Recent";

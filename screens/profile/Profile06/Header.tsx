@@ -15,7 +15,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import { Images } from "assets/images";
 

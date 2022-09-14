@@ -9,7 +9,7 @@ import {
 } from "@ui-kitten/components";
 import useLayout from "hooks/useLayout";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import Header from "./Header";
 import BestSeller from "./BestSeller";

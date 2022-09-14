@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import CardID from "./CardID";
 import { Images } from "assets/images";

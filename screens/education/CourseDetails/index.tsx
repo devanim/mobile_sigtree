@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import BasicHeader from "../Component/BasicHeader";
 import { Images } from "assets/images";
 import DetailsCard from "../Component/DetailsCard";

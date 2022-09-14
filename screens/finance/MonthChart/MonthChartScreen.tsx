@@ -8,7 +8,7 @@ import Income from "./Income";
 import Expense from "./Expense";
 import Segment from "./Segment";
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 
 import { FinanceStackParamList } from "navigation/type";

@@ -11,7 +11,7 @@ import {
   useStyleSheet,
 } from "@ui-kitten/components";
 import NavigationAction from "components/NavigationAction";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import Content from "components/Content";
 import HStack, { HStackProps } from "components/HStack";
 

@@ -6,7 +6,7 @@ import {
   Button,
 } from "@ui-kitten/components";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import MapView, { Polyline, PROVIDER_GOOGLE } from "react-native-maps";
 import CustomPin from "./CustomPin";

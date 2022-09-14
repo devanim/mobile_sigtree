@@ -5,7 +5,7 @@ import { TopNavigation, ViewPager } from "@ui-kitten/components";
 import Page from "./Page";
 import Text from "components/Text";
 import FrequencyTab from "./FrequencyTab";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 
 import { ReportType } from "./type";

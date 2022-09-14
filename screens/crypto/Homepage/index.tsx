@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import BasicHeader from "screens/education/Component/BasicHeader";
 import { Images } from "assets/images";
 import Market from "./Market";

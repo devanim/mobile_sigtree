@@ -7,7 +7,7 @@ import {
   useStyleSheet,
 } from "@ui-kitten/components";
 import { Images } from "assets/images";
-import Container from "src/components/Container";
+import Container from "../../src/components/Container";
 import { View, Image, TouchableOpacity, ScrollView } from "react-native";
 import Text from "components/Text";
 import { useNavigation } from "@react-navigation/native";

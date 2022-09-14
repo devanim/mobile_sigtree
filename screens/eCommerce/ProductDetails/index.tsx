@@ -12,7 +12,7 @@ import {
 } from "@ui-kitten/components";
 import useLayout from "hooks/useLayout";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import Text from "components/Text";
 import NavigationAction from "components/NavigationAction";
 import { Images } from "assets/images";

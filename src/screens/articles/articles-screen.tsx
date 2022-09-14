@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "react-native";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import { articlesScreenStyles } from "./articles-screen-styles";
 
 const ArticleScreen = (): JSX.Element => {

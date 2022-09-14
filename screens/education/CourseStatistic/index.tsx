@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
 
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import { Images } from "assets/images";
 import ProgressCard from "./ProgressCard";
 import BasicHeader from "../Component/BasicHeader";

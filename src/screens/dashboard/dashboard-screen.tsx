@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout } from "@ui-kitten/components";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import { dashboardStyles } from "./dashboard-screen-styles";
 import NavigationAction from "components/NavigationAction";
 import useLayout from "../../hooks/useLayout";

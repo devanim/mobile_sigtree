@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import ItemBook from "./ItemBook";
 import { Images } from "assets/images";

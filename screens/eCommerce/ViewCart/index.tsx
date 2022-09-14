@@ -10,7 +10,7 @@ import {
 } from "@ui-kitten/components";
 import useLayout from "hooks/useLayout";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import TabBar from "./TabBar";
 import { Images } from "assets/images";
 import { useNavigation } from "@react-navigation/native";

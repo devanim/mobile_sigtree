@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { FlatList } from "react-native";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import DeliveryHeader from "../Component/DeliveryHeader";
 import CourseSearch from "components/CourseSearch";
 import { Images } from "assets/images";

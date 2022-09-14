@@ -19,7 +19,7 @@ import useLayout from "hooks/useLayout";
 import Wallet from "./Wallet";
 import Text from "components/Text";
 import Transaction from "./Transaction";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 
 import keyExtractor from "utils/keyExtractor";
 import { Images } from "assets/images";

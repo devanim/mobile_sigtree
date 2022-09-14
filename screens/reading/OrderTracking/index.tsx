@@ -11,7 +11,7 @@ import {
 import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import NavigationAction from "components/NavigationAction";
 import Handle from "./Handle";

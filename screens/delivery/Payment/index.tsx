@@ -9,7 +9,7 @@ import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import DeliveryHeader from "../Component/DeliveryHeader";
 import ShippingTo from "./ShippingTo";
 import PaymentMethod from "./PaymentMethod";

@@ -1,7 +1,7 @@
 import { userScreenStyle } from "./user-screen-style";
 import { Text } from "react-native";
 
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 
 const UserScreen = (): JSX.Element => {
   return (<Container style={userScreenStyle.container}>

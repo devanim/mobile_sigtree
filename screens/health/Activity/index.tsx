@@ -10,7 +10,7 @@ import {
 import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
-import Container from "src/components/Container";
+import Container from "../../../src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import { Images } from "assets/images";
 import AnimatedAppearance from "components/AnimatedAppearance";
