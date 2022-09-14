@@ -72,7 +72,7 @@ export default App = () =>  {
                 translucent={true}
                 backgroundColor={"#00000000"}
               />
-              <AppContainer />
+              <RoutingContainer />
             </SafeAreaProvider>
           </ApplicationProvider>
         </ThemeContext.Provider>
