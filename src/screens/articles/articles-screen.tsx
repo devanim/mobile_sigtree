@@ -4,7 +4,7 @@ import { Text } from "react-native";
 import Container from "../../../src/components/Container";
 import { articlesScreenStyles } from "./articles-screen-styles";
 
-const ArticleScreen = (): JSX.Element => {
+const ArticlesScreen = (): JSX.Element => {
   return (<Container style={articlesScreenStyles.container}>
     <Text>
       {"Articles list placeholder here"}
@@ -12,4 +12,4 @@ const ArticleScreen = (): JSX.Element => {
   </Container>);
 }
 
-export default ArticleScreen;
+export default ArticlesScreen;

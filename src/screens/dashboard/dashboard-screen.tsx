@@ -29,7 +29,7 @@ const DashboardScreen = (): JSX.Element => {
         <Gallery />
       </ScrollView>
     <Layout level="2" style={[dashboardStyles.bottomTab, { paddingBottom: layoutData.bottom  }]}>
-      <NavigationAction icon="calendar" status="snow" size="medium" onPress={() => navigate("LandingPage")} />
+      <NavigationAction icon="calendar" status="snow" size="medium" onPress={() => navigate("HomeScreen")} />
       <NavigationAction icon="beachHouse" status="snow" size="medium" />
       <NavigationAction icon="fire" status="snow" size="medium" />
       <NavigationAction icon="user" status="primary" size="medium" />

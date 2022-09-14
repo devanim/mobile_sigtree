@@ -12,8 +12,8 @@ const RoutingContainer = (): ReactElement => {
   return (<NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Intro">
         <Stack.Screen name="Intro" component={Intro} />
-        <Stack.Screen name="LandingPage" component={HomeScreen} />
-        <Stack.Screen name="DashboardPage" component={DashboardScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

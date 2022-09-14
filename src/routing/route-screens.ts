@@ -1,16 +1,19 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 
 export type AppStackParamList = {
-  LandingPage: NavigatorScreenParams<UnauthorizedParamList>;
-  DashboardPage: NavigatorScreenParams<AuthorizedParamList>;
+  HomeScreen: NavigatorScreenParams<UnauthenticatedParamList>;
+  DashboardScreen: NavigatorScreenParams<AuthenticatedParamList>;
   Intro: undefined;
 };
 
-export type AuthorizedParamList = {
-  Dashboard: undefined;
-  Articles: undefined;
+export type AuthenticatedParamList = {
+  DashboardScreen: undefined;
+  ArticlesScreen: undefined;
+  TicketsScreen: undefined;
+  UserScreen: undefined;
+  NotificationsScreen: undefined;
 };
 
-export type UnauthorizedParamList = {
-  Landing: undefined;
+export type UnauthenticatedParamList = {
+  HomeScreen: undefined;
 }

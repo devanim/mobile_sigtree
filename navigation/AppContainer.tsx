@@ -31,8 +31,8 @@ const AppContainer = () => {
         }}
         initialRouteName="Intro"
       >
-        <Stack.Screen name="LandingPage" component={HomeScreen} />
-        <Stack.Screen name="DashboardPage" component={DashboardScreen} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
 
         <Stack.Screen name="Term" component={Term} />
         <Stack.Screen name="Intro" component={Intro} />
