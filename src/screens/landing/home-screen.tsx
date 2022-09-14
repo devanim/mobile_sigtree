@@ -7,14 +7,14 @@ import Container from "src/components/Container";
 import AdMob from "components/AdMob";
 import Login from "../../components/login/login";
 import RealmSelector, { BarcodeReadPayload } from "../../components/realm-selector/realm-selector";
-import { landingPageStyles } from "./landing-page-styles";
+import { landingPageStyles } from "./home-screen-styles";
 import RealmDetails from "../../models/realm-details";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REALMS_KEY } from "../../utils/constants";
 import RealmContext from "../../context/RealmContext";
 import { useKeycloak } from "@react-keycloak/native";
 
-const LandingPage = (): JSX.Element => {
+const HomeScreen = (): JSX.Element => {
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
@@ -134,4 +134,4 @@ interface LandingPageRealms {
   onPress: Function;
 }
 
-export default LandingPage;
+export default HomeScreen;

@@ -2,7 +2,7 @@ import React from "react";
 import { Layout } from "@ui-kitten/components";
 
 import Container from "src/components/Container";
-import { dashboardStyles } from "./dashboard-styles";
+import { dashboardStyles } from "./dashboard-screen-styles";
 import NavigationAction from "components/NavigationAction";
 import useLayout from "../../hooks/useLayout";
 import { ScrollView } from "react-native";
@@ -14,7 +14,7 @@ import Gallery from "screens/eCommerce/ECommerceHome/Gallery";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "src/routing/route-screens";
 
-const DashboardPage = (): JSX.Element => {
+const DashboardScreen = (): JSX.Element => {
   const layoutData = useLayout();
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
 
@@ -37,4 +37,4 @@ const DashboardPage = (): JSX.Element => {
   </Container>)
 };
 
-export default DashboardPage;
+export default DashboardScreen;

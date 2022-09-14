@@ -17,8 +17,8 @@ import Term from "screens/intro/Term";
 import EducationStackNavigator from "./EducationStackNavigator";
 import CryptoStackNavigator from "./CryptoStackNavigator";
 import DeliveryStackNavigator from "./DeliveryStackNavigator";
-import LandingPage from "../src/screens/landing/landing-page";
-import DashboardPage from "../src/screens/dashboard/dashboard";
+import HomeScreen from "../src/screens/landing/home-screen";
+import DashboardScreen from "../src/screens/dashboard/dashboard-screen";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -31,8 +31,8 @@ const AppContainer = () => {
         }}
         initialRouteName="Intro"
       >
-        <Stack.Screen name="LandingPage" component={LandingPage} />
-        <Stack.Screen name="DashboardPage" component={DashboardPage} />
+        <Stack.Screen name="LandingPage" component={HomeScreen} />
+        <Stack.Screen name="DashboardPage" component={DashboardScreen} />
 
         <Stack.Screen name="Term" component={Term} />
         <Stack.Screen name="Intro" component={Intro} />
