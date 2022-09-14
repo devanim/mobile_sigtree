@@ -6,7 +6,7 @@ import Container from "../../../src/components/Container";
 const UserScreen = (): JSX.Element => {
   return (<Container style={userScreenStyle.container}>
     <Text>
-      {"Articles list placeholder here"}
+      {"User placeholder here"}
     </Text>
   </Container>);
 };

@@ -6,7 +6,7 @@ import Container from "../../../src/components/Container";
 const TicketsScreen = (): JSX.Element => {
   return (<Container style={ticketsScreenStyle.container}>
     <Text>
-      {"Articles list placeholder here"}
+      {"Tickets list placeholder here"}
     </Text>
   </Container>);
 };
