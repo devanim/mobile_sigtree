@@ -17,7 +17,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import { Images } from "assets/images";
 import NewFeedList from "./NewFeedList";

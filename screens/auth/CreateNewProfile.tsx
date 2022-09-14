@@ -4,7 +4,7 @@ import { Button, Input, TopNavigation, useTheme } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import AnimatedStep from "components/AnimatedStep";
 import NavigationAction from "components/NavigationAction";
 import { SceneMap, TabView } from "react-native-tab-view";

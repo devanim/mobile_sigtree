@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
 
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import ItemBookMark from "./ItemBookMark";
 import { Images } from "assets/images";
 import NavigationAction from "components/NavigationAction";

@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Layout } from "@ui-kitten/components";
+import { Layout } from "@ui-kitten/components";
 
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { dashboardStyles } from "./dashboard-styles";
 import NavigationAction from "components/NavigationAction";
 import useLayout from "../../hooks/useLayout";
@@ -11,11 +11,12 @@ import { RefreshControl } from "react-native-web-refresh-control";
 import Header from "screens/eCommerce/ECommerceHome/Header";
 import BestSeller from "screens/eCommerce/ECommerceHome/BestSeller";
 import Gallery from "screens/eCommerce/ECommerceHome/Gallery";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { AppStackParamList } from "src/routing/route-screens";
 
 const DashboardPage = (): JSX.Element => {
   const layoutData = useLayout();
-  const navigation = useNavigation();
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
 
   return (<Container style={dashboardStyles.container}>
     <ScrollView
@@ -28,7 +29,7 @@ const DashboardPage = (): JSX.Element => {
         <Gallery />
       </ScrollView>
     <Layout level="2" style={[dashboardStyles.bottomTab, { paddingBottom: layoutData.bottom  }]}>
-      <NavigationAction icon="calendar" status="snow" size="medium" />
+      <NavigationAction icon="calendar" status="snow" size="medium" onPress={() => navigate("LandingPage")} />
       <NavigationAction icon="beachHouse" status="snow" size="medium" />
       <NavigationAction icon="fire" status="snow" size="medium" />
       <NavigationAction icon="user" status="primary" size="medium" />

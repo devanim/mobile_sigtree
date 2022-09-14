@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import {
   Bubble,
   Composer,

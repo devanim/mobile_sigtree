@@ -9,7 +9,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import { Images } from "assets/images";
 import ExploreItem from "components/ExploreItem";

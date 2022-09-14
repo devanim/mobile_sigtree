@@ -9,7 +9,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import useTimer from "hooks/useTimer";
 import { Images } from "assets/images";
 import useLayout from "hooks/useLayout";

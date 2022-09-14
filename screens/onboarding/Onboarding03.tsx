@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { Images } from "assets/images";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, {

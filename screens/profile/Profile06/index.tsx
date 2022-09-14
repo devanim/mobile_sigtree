@@ -8,7 +8,7 @@ import {
 } from "@ui-kitten/components";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import Container from "components/Container";
+import Container from "src/components/Container";
 import Text from "components/Text";
 import { Images } from "assets/images";
 import TabBarProfile from "components/TabBarProfile";

@@ -11,7 +11,7 @@ import {
 } from "@ui-kitten/components";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { Images } from "assets/images";
 import { useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";

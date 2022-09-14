@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@ui-kitten/components";
 import { Images } from "assets/images";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import {
   View,

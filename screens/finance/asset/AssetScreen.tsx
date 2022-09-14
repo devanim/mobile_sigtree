@@ -6,7 +6,7 @@ import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
 import Transaction from "./Transaction";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import CurrencyText from "components/CurrencyText";
 import NavigationAction from "components/NavigationAction";
 

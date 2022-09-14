@@ -3,7 +3,7 @@ import React, { memo } from "react";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
 
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { Images } from "assets/images";
 import DeliveryHeader from "../Component/DeliveryHeader";
 import CourseSearch from "components/CourseSearch";

@@ -9,7 +9,7 @@ import {
 import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import BasicHeader from "screens/education/Component/BasicHeader";
 import CryptoTabBar from "../Component/CryptoTabBar";
 import BottomTab from "../Component/BottomTab";

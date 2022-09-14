@@ -2,7 +2,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { RootStackParamList } from "navigation/type";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { Button, TopNavigation } from "@ui-kitten/components";
 import NavigationAction from "components/NavigationAction";
 import Content from "components/Content";

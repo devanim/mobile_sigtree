@@ -9,7 +9,7 @@ import Chart from "./Chart";
 import Friend from "./Friend";
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import CurrencyText from "components/CurrencyText";
 import NavigationAction from "components/NavigationAction";
 

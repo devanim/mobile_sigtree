@@ -8,7 +8,7 @@ import {
 import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { Images } from "assets/images";
 import keyExtractor from "utils/keyExtractor";
 import PlanItem from "./PlanItem";

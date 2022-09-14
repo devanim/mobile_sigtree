@@ -21,7 +21,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { Images } from "assets/images";
 import CardSignIn from "components/CardSignIn";
 import useLayout from "hooks/useLayout";

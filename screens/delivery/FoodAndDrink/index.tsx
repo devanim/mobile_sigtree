@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
 
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import DeliveryHeader from "../Component/DeliveryHeader";
 import CourseSearch from "components/CourseSearch";
 import LinearBottom from "components/LinearBottom";

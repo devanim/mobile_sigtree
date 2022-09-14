@@ -11,7 +11,7 @@ import {
 } from "@ui-kitten/components";
 import useLayout from "hooks/useLayout";
 
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import Animated, {
   Extrapolate,

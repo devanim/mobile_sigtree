@@ -6,7 +6,7 @@ import {
   useStyleSheet,
   useTheme,
 } from "@ui-kitten/components";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import React from "react";
 import Text from "components/Text";

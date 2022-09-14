@@ -4,7 +4,7 @@ import { TopNavigation, Button } from "@ui-kitten/components";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import { RootStackParamList } from "navigation/type";
 import AdMob from "components/AdMob";

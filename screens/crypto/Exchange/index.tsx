@@ -7,7 +7,7 @@ import {
   ViewPager,
 } from "@ui-kitten/components";
 
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import keyExtractor from "utils/keyExtractor";
 import ExchangeTab from "./ExchangeTab";

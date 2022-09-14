@@ -3,7 +3,7 @@ import { FlatList, StyleSheet } from "react-native";
 import { Button, TopNavigation } from "@ui-kitten/components";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import keyExtractor from "utils/keyExtractor";
 import { DeliveryStackParamList } from "navigation/type";

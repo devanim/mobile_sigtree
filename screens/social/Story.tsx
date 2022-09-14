@@ -15,7 +15,7 @@ import {
 } from "@ui-kitten/components";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import Dots from "components/Dots";
 import { Images } from "assets/images";
 import Animated, {

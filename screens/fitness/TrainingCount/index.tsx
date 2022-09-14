@@ -10,7 +10,7 @@ import {
 
 import useLayout from "hooks/useLayout";
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { Video } from "expo-av";
 
 import NavigationAction from "components/NavigationAction";

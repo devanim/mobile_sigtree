@@ -13,7 +13,7 @@ import {
 } from "@ui-kitten/components";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import useLayout from "hooks/useLayout";
 import { loginStyles } from "./login-styles";
 import RealmContext from "../../context/RealmContext";

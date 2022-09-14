@@ -10,7 +10,7 @@ import {
 import useLayout from "hooks/useLayout";
 
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 import { Images } from "assets/images";
 import CardCals from "../HomeHealth/CardCals";

@@ -12,7 +12,7 @@ import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import BasicHeader from "../Component/BasicHeader";
 import Carousel from "react-native-snap-carousel";
 import keyExtractor from "utils/keyExtractor";

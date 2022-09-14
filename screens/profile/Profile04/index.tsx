@@ -18,7 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import NavigationAction from "components/NavigationAction";
 
 import { Images } from "assets/images";

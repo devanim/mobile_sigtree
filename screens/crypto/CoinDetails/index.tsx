@@ -10,7 +10,7 @@ import {
 import useLayout from "hooks/useLayout";
 import Text from "components/Text";
 import BasicHeader from "screens/education/Component/BasicHeader";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import CryptoTabBar from "../Component/CryptoTabBar";
 import keyExtractor from "utils/keyExtractor";
 import ChartCoin from "./ChartCoin";

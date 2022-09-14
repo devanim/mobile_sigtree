@@ -17,7 +17,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import {
   DataProvider,
   LayoutProvider,

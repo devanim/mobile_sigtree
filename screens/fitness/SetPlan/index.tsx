@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 
 import Text from "components/Text";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Line from "components/Line";
 import useLayout from "hooks/useLayout";

@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { StyleService, useStyleSheet } from "@ui-kitten/components";
 
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import CourseSearch from "components/CourseSearch";
 import { Transition } from "react-native-reanimated";
 import AnimatedAppearance from "components/AnimatedAppearance";

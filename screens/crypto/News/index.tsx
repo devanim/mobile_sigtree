@@ -24,7 +24,7 @@ import useLayout from "hooks/useLayout";
 
 import Text from "components/Text";
 import Content from "components/Content";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import { Images } from "assets/images";
 import keyExtractor from "utils/keyExtractor";
 import CryptoTabBar from "../Component/CryptoTabBar";

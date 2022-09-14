@@ -3,7 +3,7 @@ import {
   TopNavigation,
   useStyleSheet,
 } from "@ui-kitten/components";
-import Container from "components/Container";
+import Container from "src/components/Container";
 import Content from "components/Content";
 import NavigationAction from "components/NavigationAction";
 import _ from "lodash";

@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { FlatList } from "react-native";
 import { StyleService, useStyleSheet, ViewPager } from "@ui-kitten/components";
 
-import Container from "components/Container";
+import Container from "src/components/Container";
 import CourseSearch from "components/CourseSearch";
 import CourseTab from "../Component/CourseTab";
 import PageDesign from "./PageDesign";
