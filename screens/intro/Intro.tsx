@@ -19,7 +19,7 @@ const Intro = memo(() => {
     },
     {
       children: "Sigtree Dashboard",
-      onPress: () => navigate("DashboardScreen", { screen: "Onboarding" }),
+      onPress: () => navigate("DashboardNavigator", { screen: "DashboardScreen" }),
     },
     {
       ads: true

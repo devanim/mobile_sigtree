@@ -18,7 +18,7 @@ import EducationStackNavigator from "./EducationStackNavigator";
 import CryptoStackNavigator from "./CryptoStackNavigator";
 import DeliveryStackNavigator from "./DeliveryStackNavigator";
 import HomeScreen from "../src/screens/landing/home-screen";
-import DashboardScreen from "../src/screens/dashboard/dashboard-screen";
+import DashboardNavigator from "../src/routing/dashboard-navigator";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -32,7 +32,7 @@ const AppContainer = () => {
         initialRouteName="Intro"
       >
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
+        <Stack.Screen name="DashboardNavigator" component={DashboardNavigator} />
 
         <Stack.Screen name="Term" component={Term} />
         <Stack.Screen name="Intro" component={Intro} />

@@ -2,7 +2,7 @@ import { NavigatorScreenParams } from "@react-navigation/native";
 
 export type AppStackParamList = {
   HomeScreen: NavigatorScreenParams<UnauthenticatedParamList>;
-  DashboardScreen: NavigatorScreenParams<AuthenticatedParamList>;
+  DashboardNavigator: NavigatorScreenParams<AuthenticatedParamList>;
   Intro: undefined;
 };
 

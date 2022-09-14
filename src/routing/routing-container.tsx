@@ -13,7 +13,7 @@ const RoutingContainer = (): ReactElement => {
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Intro">
         <Stack.Screen name="Intro" component={Intro} />
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="DashboardScreen" component={DashboardNavigator} />
+        <Stack.Screen name="DashboardNavigator" component={DashboardNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );

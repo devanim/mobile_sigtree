@@ -12,11 +12,11 @@ import Header from "screens/eCommerce/ECommerceHome/Header";
 import BestSeller from "screens/eCommerce/ECommerceHome/BestSeller";
 import Gallery from "screens/eCommerce/ECommerceHome/Gallery";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { AuthenticatedParamList } from "../../routing/route-screens";
+import { AppStackParamList, AuthenticatedParamList } from "../../routing/route-screens";
 
 const DashboardScreen = (): JSX.Element => {
   const layoutData = useLayout();
-  const { navigate } = useNavigation<NavigationProp<AuthenticatedParamList>>();
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
 
   return (<Container style={dashboardStyles.container}>
     <ScrollView
@@ -29,11 +29,11 @@ const DashboardScreen = (): JSX.Element => {
         <Gallery />
       </ScrollView>
     <Layout level="2" style={[dashboardStyles.bottomTab, { paddingBottom: layoutData.bottom  }]}>
-      <NavigationAction icon="settings" status="primary" size="medium" onPress={() => navigate("ArticlesScreen")} />
-      <NavigationAction icon="calendar" status="snow" size="medium" onPress={() => navigate("ArticlesScreen")} />
-      <NavigationAction icon="beachHouse" status="snow" size="medium" onPress={() => navigate("TicketsScreen")}/>
-      <NavigationAction icon="fire" status="snow" size="medium" onPress={() => navigate("UserScreen")}/>
-      <NavigationAction icon="user" status="snow" size="medium" onPress={() => navigate("NotificationsScreen")}/>
+      <NavigationAction icon="settings" status="primary" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "DashboardScreen"})} />
+      <NavigationAction icon="calendar" status="snow" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "ArticlesScreen"})} />
+      <NavigationAction icon="beachHouse" status="snow" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "TicketsScreen"})}/>
+      <NavigationAction icon="fire" status="snow" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "UserScreen"})}/>
+      <NavigationAction icon="user" status="snow" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "NotificationsScreen"})}/>
     </Layout>
   </Container>)
 };

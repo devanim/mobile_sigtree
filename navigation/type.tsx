@@ -1,8 +1,9 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
+import { AuthenticatedParamList } from "src/routing/route-screens";
 
 export type RootStackParamList = {
   HomeScreen: NavigatorScreenParams<OnboardingParamList>;
-  DashboardScreen: NavigatorScreenParams<OnboardingParamList>;
+  DashboardNavigator: NavigatorScreenParams<AuthenticatedParamList>;
   Intro: undefined;
   Term: undefined;
   Onbroading: NavigatorScreenParams<OnboardingParamList>;
