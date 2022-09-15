@@ -2,10 +2,10 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TopNavigation } from "@ui-kitten/components";
 import NavigationAction from "components/NavigationAction";
 import React from "react";
-import { Text } from "react-native";
 import { AppStackParamList } from "src/routing/route-screens";
 
 import Container from "../../../src/components/Container";
+import ArticlesList from "./articles-list";
 import { articlesScreenStyles } from "./articles-screen-styles";
 
 const ArticlesScreen = (): JSX.Element => {
@@ -13,9 +13,7 @@ const ArticlesScreen = (): JSX.Element => {
 
   return (<Container style={articlesScreenStyles.container}>
     <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title="Articles"/>
-    <Text>
-      {"Articles list placeholder here"}
-    </Text>
+    <ArticlesList />
   </Container>);
 }
 
