@@ -9,6 +9,8 @@ const cardStyles = StyleSheet.create({
   },
   image: {
     borderRadius: 16,
+    width: 50,
+    height: 50,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

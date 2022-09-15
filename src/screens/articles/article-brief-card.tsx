@@ -1,27 +1,39 @@
-import { Text } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 
-import Card from "../../components/Card";
+import { GestureResponderEvent, Pressable, View } from "react-native";
+import Text from "../../components/Text";
+
 import ArticleBrief from "src/models/article/article-brief";
-import { Images } from "assets/images";
 
 const ArticleBriefCard = (props: ArticleBriefCardProps): JSX.Element => {
-  const translationX = useSharedValue(0);
-  const articleBrief = {
-    id: props.articleBrief.id,
-    title: props.articleBrief.title,
-    description: props.articleBrief.excerpt,
-    image: Images.shield, //change this to use actual image data
-    color: "#4B9BAE"
-  };
+  const onArticlePress = (articleId: number) => {
+    alert(`Pressed article with value ${articleId}`);
+  }
 
+  //return (<Card animationShared={translationX} details={articleBrief}></Card>);
   return (
-    <Card animationShared={translationX} details={articleBrief}></Card>
-  );
+    <Pressable onPress={() => onArticlePress(props.articleBrief.id)}>
+      <View>
+        <Text marginTop={48} category="title1">
+          {props.articleBrief.title}
+        </Text>
+        <Text marginTop={8} category="call-out" status="placeholder">
+          {props.articleBrief.id}
+        </Text>
+        <Text marginTop={8} category="call-out" status="placeholder">
+          {props.articleBrief.excerpt}
+        </Text>
+        <Text marginTop={8} category="call-out" status="placeholder">
+          {props.articleBrief.tags}
+        </Text>
+        <Text marginTop={8} category="call-out" status="placeholder">
+          {props.articleBrief.timestamp}
+        </Text>
+      </View>
+    </Pressable>
+  )
 };
-/*<Text>
-      {`Article Brief Details: id-${article.id}, title-${article.title}`}
-    </Text>*/
+
 interface ArticleBriefCardProps {
   articleBrief: ArticleBrief;
 }

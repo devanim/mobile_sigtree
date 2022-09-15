@@ -38,7 +38,7 @@ const Card = ({details: { color, title, description, image, id }, animationShare
         style={[
           {
             width: widthItem,
-            height: height / 2.2,
+            height: height / 2000,
             paddingRight: 16,
           },
         ]}
