@@ -52,32 +52,32 @@ export default App = () =>  {
 
   return (
     <ReactNativeKeycloakProvider authClient={keycloak} initOptions={{ onLoad: 'login-required'}}>
-    <SafeAreaProvider>
-      <RealmContext.Provider value={{realmData: selectedRealm, setRealm}}>
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
-          <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
-          <ApplicationProvider
-            {...eva}
-            theme={
-              theme === "light"
-                ? { ...eva.light, ...customTheme, ...lightTheme }
-                : { ...eva.dark, ...customTheme, ...darkTheme }
-            }
-            /* @ts-ignore */
-            customMapping={customMapping}
-          > 
-            <SafeAreaProvider>
-              <StatusBar
-                style={theme === "light" ? "dark" : "light"}
-                translucent={true}
-                backgroundColor={"#00000000"}
-              />
-              <RoutingContainer />
-            </SafeAreaProvider>
-          </ApplicationProvider>
-        </ThemeContext.Provider>
-      </RealmContext.Provider>
-    </SafeAreaProvider>
-  </ReactNativeKeycloakProvider>
+      <SafeAreaProvider>
+        <RealmContext.Provider value={{realmData: selectedRealm, setRealm}}>
+          <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
+            <ApplicationProvider
+              {...eva}
+              theme={
+                theme === "light"
+                  ? { ...eva.light, ...customTheme, ...lightTheme }
+                  : { ...eva.dark, ...customTheme, ...darkTheme }
+              }
+              /* @ts-ignore */
+              customMapping={customMapping}
+            > 
+              <SafeAreaProvider>
+                <StatusBar
+                  style={theme === "light" ? "dark" : "light"}
+                  translucent={true}
+                  backgroundColor={"#00000000"}
+                />
+                <RoutingContainer />
+              </SafeAreaProvider>
+            </ApplicationProvider>
+          </ThemeContext.Provider>
+        </RealmContext.Provider>
+      </SafeAreaProvider>
+    </ReactNativeKeycloakProvider>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import ArticleBrief from "src/models/article/article-brief";
 import ArticleListPayload from "src/models/article/article-payload";
 import ArticleBriefCard from "./article-brief-card";
@@ -21,14 +21,14 @@ const ArticlesList = (): JSX.Element => {
 
   const mapArticles = () => {
     return articles?.map(article => {
-      return <ArticleBriefCard articleBrief={article}/>
+      return <ArticleBriefCard key={article.id} articleBrief={article}/>
     });
   }
 
   return (
-    <View>
+    <ScrollView>
       {mapArticles()}
-    </View>
+    </ScrollView>
   );
 };
 

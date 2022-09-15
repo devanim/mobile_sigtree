@@ -27,7 +27,7 @@ const DashboardScreen = (): JSX.Element => {
         <Header />
         <BestSeller />
         <Gallery />
-      </ScrollView>
+    </ScrollView>
     <Layout level="2" style={[dashboardStyles.bottomTab, { paddingBottom: layoutData.bottom  }]}>
       <NavigationAction icon="settings" status="primary" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "DashboardScreen"})} />
       <NavigationAction icon="calendar" status="snow" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "ArticlesScreen"})} />
