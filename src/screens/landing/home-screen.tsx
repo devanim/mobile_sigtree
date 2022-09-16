@@ -67,7 +67,7 @@ const HomeScreen = (): JSX.Element => {
     });
 
     setShowRealmSelector(false);
-    alert(`Bar code with name ${parsedRealmDetails.name} keycloakUrl ${parsedRealmDetails.keycloakUrl} and backendUrl ${parsedRealmDetails.backendUrl} was added!`);
+    alert(`Bar code with name ${parsedRealmDetails.name} keycloakUrl ${parsedRealmDetails.keycloakUrl} and backendUrl ${parsedRealmDetails.clientId} was added!`);
   }
 
   const toggleRealmSelectorComponent = () => {
@@ -117,14 +117,6 @@ const HomeScreen = (): JSX.Element => {
 
   return (<Container style={landingPageStyles.container}>
     <Button style={landingPageStyles.button} children={"Add new realm"} onPress={() => setShowRealmSelector(true)} size={'small'}/>
-    <View>
-      <Text>
-        {`Keycloak is ${initialized} User is ${!keycloak?.authenticated ? 'NOT ' : ''}authenticated`}
-      </Text>
-
-      {!!keycloak?.authenticated && (<Button onPress={() => keycloak.logout().catch()} children={"Logout"}/>)}
-    </View>
-    <Button onPress={() => keycloak?.login().catch()} children={"Login"}/>
     {toggleRealmSelectorComponent()}
   </Container>);
 };

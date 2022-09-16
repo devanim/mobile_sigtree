@@ -1,6 +1,4 @@
-import { useSharedValue } from "react-native-reanimated";
-
-import { GestureResponderEvent, Pressable, View } from "react-native";
+import {  Pressable, View } from "react-native";
 import Text from "../../components/Text";
 
 import ArticleBrief from "src/models/article/article-brief";

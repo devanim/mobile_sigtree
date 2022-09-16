@@ -2,7 +2,7 @@
 export default class RealmDetails {
   public name = "";
   public keycloakUrl = "";
-  public backendUrl = "";
+  public clientId = "";
   public parsingError: unknown;
   public sucesfullyParsed = false;
 
@@ -21,7 +21,7 @@ export default class RealmDetails {
 
       this.name = parsedPayload.name;
       this.keycloakUrl = parsedPayload.keycloakUrl;
-      this.backendUrl = parsedPayload.backendUrl;
+      this.clientId = parsedPayload.backendUrl;
       this.sucesfullyParsed = true;
     } catch (error) {
       this.parsingError = error;
@@ -30,7 +30,7 @@ export default class RealmDetails {
 
   private payloadHasProperties = (payload: any) => {
     return payload.hasOwnProperty("keycloakUrl") &&
-              payload.hasOwnProperty("backendUrl") &&
+              payload.hasOwnProperty("clientId") &&
               payload.hasOwnProperty("name");
   }
 }
