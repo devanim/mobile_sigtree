@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { ScrollView } from "react-native-gesture-handler";
 import ArticleBrief from "src/models/article/article-brief";
+import { ResponseStatus } from "src/utils/response-status-enum";
 import ArticleBriefCard from "./article-brief-card";
 import { mockArticles } from "./mock-articles";
 
@@ -12,7 +13,7 @@ const ArticlesList = (props: ArticleListProps): JSX.Element => {
     //TODO - replace with axios call to back-end
     const requestResponse = mockArticles;
 
-    if (requestResponse.status !== "ok") {
+    if (requestResponse.status === ResponseStatus.fail) {
       alert("Could not retrieve data from back-end");
     }
 
