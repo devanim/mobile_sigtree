@@ -5,7 +5,7 @@ import React from "react";
 import { AppStackParamList } from "src/routing/route-screens";
 
 import Container from "../../../src/components/Container";
-import ArticlesList from "./articles-list";
+import ArticleContainer from "./article-container";
 import { articlesScreenStyles } from "./articles-screen-styles";
 
 const ArticlesScreen = (): JSX.Element => {
@@ -13,7 +13,7 @@ const ArticlesScreen = (): JSX.Element => {
 
   return (<Container style={articlesScreenStyles.container}>
     <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title="Articles"/>
-    <ArticlesList />
+    <ArticleContainer />
   </Container>);
 }
 

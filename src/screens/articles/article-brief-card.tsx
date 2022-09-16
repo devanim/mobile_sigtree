@@ -8,7 +8,6 @@ const ArticleBriefCard = (props: ArticleBriefCardProps): JSX.Element => {
     alert(`Pressed article with value ${articleId}`);
   }
 
-  //return (<Card animationShared={translationX} details={articleBrief}></Card>);
   return (
     <Pressable onPress={() => onArticlePress(props.articleBrief.id)}>
       <View>
@@ -29,7 +28,7 @@ const ArticleBriefCard = (props: ArticleBriefCardProps): JSX.Element => {
         </Text>
       </View>
     </Pressable>
-  )
+  );
 };
 
 interface ArticleBriefCardProps {
