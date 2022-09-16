@@ -5,7 +5,7 @@ import ArticleBrief from "src/models/article/article-brief";
 import ArticleBriefCard from "./article-brief-card";
 import { mockArticles } from "./mock-articles";
 
-const ArticlesList = (): JSX.Element => {
+const ArticlesList = (props: ArticleListProps): JSX.Element => {
   const [articles, setArticles] = useState<ArticleBrief[] | undefined>(undefined);
 
   useEffect(() => {
@@ -19,9 +19,13 @@ const ArticlesList = (): JSX.Element => {
     setArticles(requestResponse.data?.articles);
   }, []);
 
+  const onArticleSelected = (articleId: number) => {
+    props.onArticleSelected(articleId);
+  }
+
   const mapArticles = () => {
     return articles?.map(article => {
-      return <ArticleBriefCard key={article.id} articleBrief={article}/>
+      return <ArticleBriefCard key={article.id} articleBrief={article} onArticleSelected={onArticleSelected}/>
     });
   }
 
@@ -31,5 +35,9 @@ const ArticlesList = (): JSX.Element => {
     </ScrollView>
   );
 };
+
+interface ArticleListProps {
+  onArticleSelected: Function;
+}
 
 export default ArticlesList;

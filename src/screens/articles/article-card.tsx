@@ -3,6 +3,7 @@ import Article from "../../models/article/article";
 import Text from "../../components/Text";
 import { useEffect, useState } from "react";
 import { mockIndividualArticlesList } from "./mock-articles";
+import { Button } from "@ui-kitten/components";
 
 const ArticleCard = (props: ArticleCardProps): JSX.Element => {
   const [article, setArticle] = useState<Article | undefined>(undefined);
@@ -20,6 +21,7 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
 
   return (
     <View>
+      <Button children={"Close"} onPress={() => props.onArticleClosed()}></Button>
       <Text marginTop={48} category="title1">
         {`Title: ${article?.title}`}
       </Text>
@@ -47,6 +49,7 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
 
 interface ArticleCardProps {
   articleId: number;
+  onArticleClosed: Function;
 }
 
 export default ArticleCard;
