@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { ScrollView } from "react-native-gesture-handler";
-import ArticleBrief from "src/models/article/article-brief";
-import { ResponseStatus } from "src/utils/response-status-enum";
+import ArticleBrief from "../../models/article/article-brief";
+import { ResponseStatus } from "../../utils/response-status-enum";
 import ArticleBriefCard from "./article-brief-card";
 import { mockArticles } from "./mock-articles";
 
