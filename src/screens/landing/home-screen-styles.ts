@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const landingPageStyles = StyleSheet.create({
+export const homeScreenStyles = StyleSheet.create({
   container: {
     paddingBottom: 0,
   },

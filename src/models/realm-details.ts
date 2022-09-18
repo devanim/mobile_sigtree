@@ -21,7 +21,7 @@ export default class RealmDetails {
 
       this.name = parsedPayload.name;
       this.keycloakUrl = parsedPayload.keycloakUrl;
-      this.clientId = parsedPayload.backendUrl;
+      this.clientId = parsedPayload.clientId;
       this.sucesfullyParsed = true;
     } catch (error) {
       this.parsingError = error;
