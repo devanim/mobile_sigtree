@@ -39,6 +39,13 @@ const HomeScreen = (): JSX.Element => {
     setRealm(realmDetails)
   }
 
+  const onRemoveRealmCallback = (realmName: string) => {
+    const newRealms = storedRealms.filter((realm: RealmDetails) => realm.name !== realmName);
+
+    setStoredRealms(newRealms);
+    AsyncStorage.setItem(REALMS_KEY, JSON.stringify(newRealms));
+  }
+
   const onBarcodeReadCallback = (payload: BarcodeReadPayload) => {
     const parsedRealmDetails = new RealmDetails(payload.data);
     
@@ -54,12 +61,11 @@ const HomeScreen = (): JSX.Element => {
 
     const currentRealms = storedRealms;
     currentRealms.push(parsedRealmDetails);
+
     setStoredRealms(currentRealms);
-    
     AsyncStorage.setItem(REALMS_KEY, JSON.stringify(currentRealms));
     
     setShowRealmSelector(false);
-    alert(`Bar code with name ${parsedRealmDetails.name} keycloakUrl ${parsedRealmDetails.keycloakUrl} and clientId ${parsedRealmDetails.clientId} was added!`);
   }
 
   const toggleRealmSelectorComponent = () => {
@@ -67,7 +73,7 @@ const HomeScreen = (): JSX.Element => {
       return <RealmSelector onDataRead={onBarcodeReadCallback} onCancel={resetRealmSelectorComponent}/>
     }
 
-    return <RealmList storedRealms={storedRealms} onRealmSelected={onRealmSelectedCallback}/>;
+    return <RealmList storedRealms={storedRealms} onRealmSelected={onRealmSelectedCallback} onRemoveRealm={onRemoveRealmCallback}/>;
   }
 
   const containsKey = (key: string): boolean => {

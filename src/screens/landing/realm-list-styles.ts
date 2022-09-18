@@ -8,4 +8,9 @@ export const realmListStyles = StyleSheet.create({
   button: {
     marginTop: 8,
   },
+  horizontalView: {
+    flex: 2,
+    flexDirection: "row" ,
+    marginLeft:20
+  }
 });
