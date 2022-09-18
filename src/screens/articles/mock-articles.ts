@@ -1,9 +1,10 @@
 import Article from "../../models/article/article";
-import ArticleListPayload from "../../models/article/article-payload";
+import ArticleListPayload from "../../models/article/article-list-payload";
 
 export const mockArticles: ArticleListPayload = {
   status: "ok",
   message: "A message for the user",
+  error: "",
   data: {
     articles: [
       {
