@@ -3,11 +3,11 @@ import ArticleBrief from "./article-brief";
 export default class ArticleListPayload {
   public status!: string;
   public message!: string;
-  public data: PayloadData | undefined;
+  public data: ArticleListPayloadData | undefined;
   public error = "";
 }
 
-class PayloadData {
+class ArticleListPayloadData {
   public articles: ArticleBrief[] | undefined;
   public more!: boolean;
 }
