@@ -13,7 +13,7 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
     const requestResponse = mockIndividualArticlesList.find((item: Article) => item.id === props.articleId);
 
     if (!requestResponse) {
-      alert(`Article with id ${props.articleId} could not be found`)
+      alert(`Article with id ${props.articleId} could not be found`);
     }
 
     setArticle(requestResponse);

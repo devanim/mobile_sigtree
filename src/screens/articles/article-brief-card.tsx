@@ -5,7 +5,6 @@ import ArticleBrief from "src/models/article/article-brief";
 
 const ArticleBriefCard = (props: ArticleBriefCardProps): JSX.Element => {
   const onArticlePress = (articleId: number) => {
-    //alert(`Pressed article with value ${articleId}`);
     props.onArticleSelected(articleId);
   }
 
