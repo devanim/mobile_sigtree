@@ -1,11 +1,14 @@
 import { useState } from "react";
 
 import { View } from "react-native";
+import { Button } from "@ui-kitten/components";
 import TicketsList from "./tickets-list";
 import TicketCard from "./ticket-card";
+import { ticketContainerStyles } from "./ticket-container-styles";
 
 const TicketContainer = (): JSX.Element => {
   const [showTicketsList, setShowTicketsList] = useState(true);
+  const [showAddTicket, setShowAddTicket] = useState(false);
   const [selectedTicketId, setSelectedTicketId] = useState(-1);
 
   const onTicketSelected = (ticketId: number) => {
@@ -26,6 +29,7 @@ const TicketContainer = (): JSX.Element => {
 
   return (
     <View>
+      <Button style={ticketContainerStyles.button} children={"Add ticket"} onPress={() => setShowAddTicket(true)} size={'small'}/>
       {toggleTicketsList()}
     </View>
   );
