@@ -69,7 +69,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
 };
 
 interface TicketCardProps {
-  ticketId: number;
+  ticketId: string;
   onTicketClosed: Function;
 }
 

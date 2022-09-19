@@ -1,5 +1,5 @@
 export class TicketBrief {
-  public id!: number;
+  public id!: string;
   public idtracking: number | null = null;
   public idscheduler!: number;
   public name!: string;
@@ -15,4 +15,10 @@ export class TicketBrief {
   public tenant!: string;
   public timestamp!: string;
   public approvalKey!: string;
+
+  public getDateFromTimeStamp = (): string => {
+    const date = new Date(this.timestamp);
+
+    return date.toISOString();
+  }
 }

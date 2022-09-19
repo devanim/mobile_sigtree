@@ -1,7 +1,7 @@
 import { Attachment } from "../attachment"
 
 export class Ticket {
-  public id!: number;
+  public id!: string;
   public idtracking: number | null = null;
   public idscheduler!: number;
   public name!: string;

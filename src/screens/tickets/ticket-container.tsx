@@ -9,7 +9,7 @@ import { ticketContainerStyles } from "./ticket-container-styles";
 const TicketContainer = (): JSX.Element => {
   const [showTicketsList, setShowTicketsList] = useState(true);
   const [showAddTicket, setShowAddTicket] = useState(false);
-  const [selectedTicketId, setSelectedTicketId] = useState(-1);
+  const [selectedTicketId, setSelectedTicketId] = useState("");
 
   const onTicketSelected = (ticketId: number) => {
     setSelectedTicketId(ticketId);

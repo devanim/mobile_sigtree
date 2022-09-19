@@ -8,7 +8,7 @@ export const mockTickets: TicketListPayload = {
   data: {
     tickets: [
       {
-        id: 1,
+        id: "TCK-001",
         idtracking: null,
         idscheduler: 0,
         name: "Some title",
@@ -25,7 +25,7 @@ export const mockTickets: TicketListPayload = {
         timestamp: "2022-09-18T18:55:03.540Z",
         approvalKey: "NEW"
       }, {
-        id: 2,
+        id: "TCK-002",
         idtracking: null,
         idscheduler: 0,
         name: "Some title 1",
@@ -42,7 +42,7 @@ export const mockTickets: TicketListPayload = {
         timestamp: "2022-09-19T18:55:03.540Z",
         approvalKey: "NEW"
       }, {
-        id: 3,
+        id: "TCK-003",
         idtracking: null,
         idscheduler: 0,
         name: "Some title 3",
@@ -59,7 +59,7 @@ export const mockTickets: TicketListPayload = {
         timestamp: "2022-08-18T18:55:03.540Z",
         approvalKey: "NEW"
       }, {
-        id: 4,
+        id: "TCK-004",
         idtracking: null,
         idscheduler: 0,
         name: "Some title 4",
@@ -76,7 +76,7 @@ export const mockTickets: TicketListPayload = {
         timestamp: "2022-09-22T18:55:03.540Z",
         approvalKey: "NEW"
       }, {
-        id: 5,
+        id: "TCK-005",
         idtracking: null,
         idscheduler: 0,
         name: "Some title 5",
@@ -93,7 +93,7 @@ export const mockTickets: TicketListPayload = {
         timestamp: "2021-09-18T18:55:03.540Z",
         approvalKey: "NEW"
       }, {
-        id: 6,
+        id: "TCK-006",
         idtracking: null,
         idscheduler: 0,
         name: "Some title 6",
@@ -117,7 +117,7 @@ export const mockTickets: TicketListPayload = {
 
 export const mockIndividualTicketsList: Ticket[] = [
   {
-    "id": 1,
+    "id": "TCK-001",
     "idtracking": null,
     "idscheduler": 0,
     "name": "Some title",
@@ -159,7 +159,7 @@ export const mockIndividualTicketsList: Ticket[] = [
     "idapproval": 0,
     "approvalKey": "NEW"
   }, {
-    "id": 2,
+    "id": "TCK-002",
     "idtracking": null,
     "idscheduler": 0,
     "name": "Some title 2",
@@ -201,7 +201,7 @@ export const mockIndividualTicketsList: Ticket[] = [
     "idapproval": 0,
     "approvalKey": "NEW"
   }, {
-    "id": 3,
+    "id": "TCK-003",
     "idtracking": null,
     "idscheduler": 0,
     "name": "Some title 3",

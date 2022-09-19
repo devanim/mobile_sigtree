@@ -19,8 +19,8 @@ const TicketsList = (props: TicketsListProps): JSX.Element => {
     setTickets(requestResponse.data?.tickets);
   }, []);
 
-  const onTicketSelected = (articleId: number) => {
-    props.onTicketSelected(articleId);
+  const onTicketSelected = (ticketId: string) => {
+    props.onTicketSelected(ticketId);
   }
 
   const mapArticles = () => {
