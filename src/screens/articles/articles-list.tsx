@@ -31,9 +31,6 @@ const ArticlesList = (props: ArticleListProps): JSX.Element => {
   }, []);
 
   return (
-    // <ScrollView>
-    //   {mapArticles()}
-    // </ScrollView>
     <FlatList
       data={articles || []}
       renderItem={renderItem}
