@@ -7,10 +7,10 @@ import { Button } from "@ui-kitten/components";
 import { View } from "react-native";
 
 const RealmList = (props: RealmListProps): JSX.Element => {
-  const tempRealms: LandingPageRealms[] = [];
+  const realmList: LandingPageRealms[] = [];
       
   props.storedRealms.forEach((item: RealmDetails) => {
-    tempRealms.push({
+    realmList.push({
       children: item.name, 
       onPress: () => { props.onRealmSelected(item); }, 
       onCancel: (realmName: string) => { props.onRemoveRealm(realmName);}
@@ -29,7 +29,7 @@ const RealmList = (props: RealmListProps): JSX.Element => {
   }, []);
 
   return <FlatList
-      data={tempRealms || []}
+      data={realmList || []}
       renderItem={renderItem}
       keyExtractor={(i, index) => index.toString()}
       showsVerticalScrollIndicator={false}

@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { FlatList } from "react-native";
 
 import { ScrollView } from "react-native-gesture-handler";
 import ArticleBrief from "../../models/article/article-brief";
 import { ResponseStatus } from "../../utils/response-status-enum";
 import ArticleBriefCard from "./article-brief-card";
+import { articleListStyles } from "./article-list.styles";
 import { mockArticles } from "./mock-articles";
 
 const ArticlesList = (props: ArticleListProps): JSX.Element => {
@@ -23,17 +25,23 @@ const ArticlesList = (props: ArticleListProps): JSX.Element => {
   const onArticleSelected = (articleId: number) => {
     props.onArticleSelected(articleId);
   }
-
-  const mapArticles = () => {
-    return articles?.map(article => {
-      return <ArticleBriefCard key={article.id} articleBrief={article} onArticleSelected={onArticleSelected}/>
-    });
-  }
+  
+  const renderItem = useCallback(({ item }) => {
+    return <ArticleBriefCard key={item.id} articleBrief={item} onArticleSelected={onArticleSelected}/>
+  }, []);
 
   return (
-    <ScrollView>
-      {mapArticles()}
-    </ScrollView>
+    // <ScrollView>
+    //   {mapArticles()}
+    // </ScrollView>
+    <FlatList
+      data={articles || []}
+      renderItem={renderItem}
+      keyExtractor={(i, index) => index.toString()}
+      showsVerticalScrollIndicator={false}
+      scrollEventThrottle={16}
+      contentContainerStyle={articleListStyles.contentContainerStyle}
+    />
   );
 };
 
