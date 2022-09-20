@@ -115,6 +115,120 @@ export const mockTickets: TicketListPayload = {
   }
 };
 
+export const finalMockTickets: TicketListPayload = {
+  status: "ok",
+  message: "A message for the user",
+  error: "",
+  data: {
+    tickets: [
+      {
+        id: "TCK-001",
+        idtracking: null,
+        idscheduler: 0,
+        name: "Some title",
+        tags: "tag1,tag2",
+        category: "Cleaning",
+        statusKey: "NEW",
+        priorityKey: "LOW",
+        user: "John Doe",
+        project: "Project A",
+        building: "Building A 1",
+        supplier: "Megaclean",
+        floor: "ground floor",
+        tenant: "Some tenant",
+        timestamp: "2022-09-18T18:55:03.540Z",
+        approvalKey: "NEW"
+      }, {
+        id: "TCK-002",
+        idtracking: null,
+        idscheduler: 0,
+        name: "Some title 1",
+        tags: "tag1,tag2, tag3",
+        category: "Cleaning 1",
+        statusKey: "NEW",
+        priorityKey: "LOW",
+        user: "John Doe 1",
+        project: "Project A 1",
+        building: "Building A 11",
+        supplier: "Megaclean 1",
+        floor: "ground floor 1",
+        tenant: "Some tenant 1",
+        timestamp: "2022-09-19T18:55:03.540Z",
+        approvalKey: "NEW"
+      }, {
+        id: "TCK-003",
+        idtracking: null,
+        idscheduler: 0,
+        name: "Some title 3",
+        tags: "tag1,tag2, tag4",
+        category: "Cleaning 3",
+        statusKey: "NEW",
+        priorityKey: "LOW",
+        user: "John Doe 3",
+        project: "Project A 3",
+        building: "Building A 13",
+        supplier: "Megaclean 3",
+        floor: "ground floor 3",
+        tenant: "Some tenant 3",
+        timestamp: "2022-08-18T18:55:03.540Z",
+        approvalKey: "NEW"
+      }, {
+        id: "TCK-004",
+        idtracking: null,
+        idscheduler: 0,
+        name: "Some title 4",
+        tags: "tag1,tag2,tag5",
+        category: "Cleaning 4",
+        statusKey: "NEW",
+        priorityKey: "LOW",
+        user: "John Doe 4",
+        project: "Project A 4",
+        building: "Building A 14",
+        supplier: "Megaclean 4",
+        floor: "ground floor 4",
+        tenant: "Some tenant 4",
+        timestamp: "2022-09-22T18:55:03.540Z",
+        approvalKey: "NEW"
+      }, {
+        id: "TCK-005",
+        idtracking: null,
+        idscheduler: 0,
+        name: "Some title 5",
+        tags: "tag1",
+        category: "Cleaning 5",
+        statusKey: "NEW",
+        priorityKey: "LOW",
+        user: "John Doe 5",
+        project: "Project A 5",
+        building: "Building A 15",
+        supplier: "Megaclean 5",
+        floor: "ground floor 5",
+        tenant: "Some tenant 5",
+        timestamp: "2021-09-18T18:55:03.540Z",
+        approvalKey: "NEW"
+      }, {
+        id: "TCK-006",
+        idtracking: null,
+        idscheduler: 0,
+        name: "Some title 6",
+        tags: "tag2",
+        category: "Cleaning 6",
+        statusKey: "NEW",
+        priorityKey: "LOW",
+        user: "John Doe 6",
+        project: "Project A 6",
+        building: "Building A 16",
+        supplier: "Megaclean 6",
+        floor: "ground floor 6",
+        tenant: "Some tenant 6",
+        timestamp: "2022-09-10T18:55:03.540Z",
+        approvalKey: "NEW"
+      }
+    ],
+    more: false,
+  }
+};
+
 export const mockIndividualTicketsList: Ticket[] = [
   {
     "id": "TCK-001",
@@ -244,3 +358,5 @@ export const mockIndividualTicketsList: Ticket[] = [
     "approvalKey": "NEW"
   }
 ];
+
+export const ticketPaginationMock: TicketListPayload[] = [mockTickets, mockTickets, mockTickets, finalMockTickets];

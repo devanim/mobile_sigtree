@@ -5,7 +5,7 @@ import ArticleBrief from "../../models/article/article-brief";
 import { ResponseStatus } from "../../utils/response-status-enum";
 import ArticleBriefCard from "./article-brief-card";
 import { articleListStyles } from "./article-list.styles";
-import { paginationMock } from "./mock-articles";
+import { articlesPaginationMock } from "./mock-articles";
 import Text from "../../components/Text";
 
 const ArticlesList = (props: ArticleListProps): JSX.Element => {
@@ -17,9 +17,10 @@ const ArticlesList = (props: ArticleListProps): JSX.Element => {
   useEffect(() => {
     setIsLoadingData(true);
     //TODO - replace with axios call to back-end
-    const requestResponse = paginationMock[page];
+    const requestResponse = articlesPaginationMock[page];
 
     setIsLoadingData(false);
+
     if (requestResponse.status === ResponseStatus.fail) {
       alert("Could not retrieve data from back-end");
     }
@@ -48,7 +49,7 @@ const ArticlesList = (props: ArticleListProps): JSX.Element => {
         {isLoadingData && <ActivityIndicator />}    
         {!hasNextPage && <Text>No more articles at the moment</Text>}
     </View>
-)
+  );
   
   const renderItem = useCallback(({ item }) => {
     return <ArticleBriefCard key={item.id} articleBrief={item} onArticleSelected={onArticleSelected}/>

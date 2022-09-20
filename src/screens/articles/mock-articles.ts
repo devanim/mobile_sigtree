@@ -167,4 +167,4 @@ export const mockIndividualArticlesList: Article[] = [
   }
 ]
 
-export const paginationMock: ArticleListPayload[] = [mockArticles, mockArticles, mockArticles, finalArticlesMock];
+export const articlesPaginationMock: ArticleListPayload[] = [mockArticles, mockArticles, mockArticles, finalArticlesMock];

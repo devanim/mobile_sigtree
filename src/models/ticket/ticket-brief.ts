@@ -15,10 +15,4 @@ export class TicketBrief {
   public tenant!: string;
   public timestamp!: string;
   public approvalKey!: string;
-
-  public getDateFromTimeStamp = (): string => {
-    const date = new Date(this.timestamp);
-
-    return date.toISOString();
-  }
 }

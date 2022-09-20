@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const articleListStyles = StyleSheet.create({
+export const ticketListStyles = StyleSheet.create({
   contentContainerStyle: {
     paddingHorizontal: 32,
     paddingBottom: 60,
