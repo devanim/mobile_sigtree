@@ -96,5 +96,8 @@
   "private": true,
   "lint-staged": {
     "*.js": "eslint --cache --fix"
+  },
+  "resolutions": {
+    "@types/react": "17.0.21"
   }
 }

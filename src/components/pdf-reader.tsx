@@ -1,6 +1,13 @@
-import { WebView } from 'react-native';
+import { View } from 'react-native';
+import { WebView } from 'react-native-webview';
 
-const PdfReader = (props: PdfReaderProps) => <WebView style={{ flex: 1 }} source={{ props.sourceUrl }} />;
+const PdfReader = (props: PdfReaderProps): JSX.Element => {
+  return (
+    <View>
+      <WebView style={{ flex: 1 }} originWhitelist={['*']}  source={{ uri: props.sourceUrl }} />
+    </View>
+  );
+}
 
 interface PdfReaderProps {
   sourceUrl: string;

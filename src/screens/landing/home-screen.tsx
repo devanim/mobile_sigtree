@@ -11,6 +11,7 @@ import { REALMS_KEY } from "../../utils/constants";
 import RealmList from "./realm-list";
 import RealmContext from "../../context/RealmContext";
 import { useKeycloak } from "expo-keycloak-auth";
+import TermsOfService from "../../components/terms-of-service";
 
 const HomeScreen = (): JSX.Element => {
   const {
@@ -23,6 +24,7 @@ const HomeScreen = (): JSX.Element => {
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
+  const [showTOS, setShowTOS] = useState(false);
   //const realm = `{"name": "test","clientId":"sigtree-app","keycloakUrl":"http://localhost8080"}`;
 
   useEffect(() => {
@@ -95,6 +97,7 @@ const HomeScreen = (): JSX.Element => {
 
   return (<Container style={homeScreenStyles.container}>
     <Button style={homeScreenStyles.button} children={"Add new realm"} onPress={() => setShowRealmSelector(true)} size={'small'}/>
+    <Button style={homeScreenStyles.button} children={"Read Tems of Services"} onPress={() => setShowTOS(true)} size={'small'}/>
     <Button style={homeScreenStyles.button} children={"Default realm"} onPress={() => login()} size={'small'}/>
     {toggleRealmSelectorComponent()}
   </Container>);
