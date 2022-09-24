@@ -3,7 +3,7 @@ import { View } from "react-native";
 import PdfReader from "./pdf-reader";
 import Text from "./Text";
 
-const TermsOfService = (props: TermsOfServiceProps) => {
+const TermsOfService = (props: TermsOfServiceProps): JSX.Element => {
   let endpointUrl = "https://test/api";
 
   if (props.buildingId) {
