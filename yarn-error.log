@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarnpkg add expo-barcode-scanner@~11.3.0
+  /usr/local/bin/node /usr/local/bin/yarn add expo-auth-session --save
 
 PATH: 
   /Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin
@@ -49,12 +49,14 @@ npm manifest:
       "expo-ads-admob": "~13.0.0",
       "expo-asset": "~8.5.0",
       "expo-av": "~11.2.3",
+      "expo-barcode-scanner": "~11.3.0",
       "expo-blur": "~11.1.0",
       "expo-cli": "^5.4.8",
       "expo-constants": "~13.1.1",
       "expo-font": "~10.1.0",
       "expo-image-manipulator": "~10.3.1",
       "expo-image-picker": "~13.1.1",
+      "expo-keycloak-auth": "^1.0.14",
       "expo-linear-gradient": "~11.3.0",
       "expo-linking": "~3.1.0",
       "expo-sensors": "~11.3.0",
@@ -75,6 +77,7 @@ npm manifest:
       "react-native-gifted-chat": "^0.16.3",
       "react-native-grid-list": "^1.1.0",
       "react-native-images-collage": "^3.3.5",
+      "react-native-inappbrowser-reborn": "^3.7.0",
       "react-native-keyboard-aware-scroll-view": "^0.9.4",
       "react-native-maps": "0.30.2",
       "react-native-pager-view": "5.4.15",
@@ -6093,6 +6096,14 @@ Lockfile:
     dependencies:
       "@expo/config-plugins" "^4.0.14"
   
+  expo-barcode-scanner@~11.3.0:
+    version "11.3.0"
+    resolved "https://registry.yarnpkg.com/expo-barcode-scanner/-/expo-barcode-scanner-11.3.0.tgz#0f23d748dcc04feb03f3978713eff6c7a5e7e11b"
+    integrity sha512-UZMZ4t/Q0P0nbpD2qCehpZ350zP8YIO1T1Mk3HgeT1gu/T2kRhwaVjI3oxxD33h3uPyXjYGd/RFvRqUEgHfd0A==
+    dependencies:
+      "@expo/config-plugins" "^4.0.14"
+      expo-image-loader "~3.2.0"
+  
   expo-blur@~11.1.0:
     version "11.1.0"
     resolved "https://registry.yarnpkg.com/expo-blur/-/expo-blur-11.1.0.tgz#21f9f0d28da1c326646c459813c9343b6da5e20f"
@@ -6234,6 +6245,11 @@ Lockfile:
     version "10.1.1"
     resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-10.1.1.tgz#03023c130f7e3824b738e3fdd5353b8a2c0c1980"
     integrity sha512-9zC0sdhQljUeMr2yQ7o4kzEZXVAy82fFOAZE1+TwPL7qR0b0sphe7OJ5T1GX1qLcwuVaJ8YewaPoLSHRk79+Rg==
+  
+  expo-keycloak-auth@^1.0.14:
+    version "1.0.14"
+    resolved "https://registry.yarnpkg.com/expo-keycloak-auth/-/expo-keycloak-auth-1.0.14.tgz#e01be8638ceddc8e835e9e78401074747bae4648"
+    integrity sha512-MW6JrFNgtoyxuNthMLtLurrtosdfYXVN5R3I7c4S+7/7vv65hY1H3k4WNq52KkrGE6hDP6CQu5/EZ5Yb9da6sg==
   
   expo-linear-gradient@~11.3.0:
     version "11.3.0"
@@ -10178,6 +10194,11 @@ Lockfile:
       is-docker "^2.1.1"
       is-wsl "^2.2.0"
   
+  opencollective-postinstall@^2.0.3:
+    version "2.0.3"
+    resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
+    integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
+  
   opn@^5.5.0:
     version "5.5.0"
     resolved "https://registry.yarnpkg.com/opn/-/opn-5.5.0.tgz#fc7164fab56d235904c51c3b27da6758ca3b9bfc"
@@ -11527,6 +11548,14 @@ Lockfile:
     version "3.3.5"
     resolved "https://registry.yarnpkg.com/react-native-images-collage/-/react-native-images-collage-3.3.5.tgz#e3816c474a9cea5232ab93c6859c09167717d572"
     integrity sha512-vst0lXBEsYWGDAPV3xALHNSakcerN07QRG6zoOsymqDwe6n81LElxGaSvxD1eUjPPcQaCK5LLOr2wxaR3YVfHw==
+  
+  react-native-inappbrowser-reborn@^3.7.0:
+    version "3.7.0"
+    resolved "https://registry.yarnpkg.com/react-native-inappbrowser-reborn/-/react-native-inappbrowser-reborn-3.7.0.tgz#849a43c3c7da22b65147649fe596836bcb494083"
+    integrity sha512-Ia53jYNtFcbNaX5W3QfOmN25I7bcvuDiQmSY5zABXjy4+WI20bPc9ua09li55F8yDCjv3C99jX6vKms68mBV7g==
+    dependencies:
+      invariant "^2.2.4"
+      opencollective-postinstall "^2.0.3"
   
   react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.2.1:
     version "1.3.1"

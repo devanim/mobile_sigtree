@@ -8,15 +8,21 @@ import { homeScreenStyles } from "./home-screen-styles";
 import RealmDetails from "../../models/realm-details";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { REALMS_KEY } from "../../utils/constants";
-import { useKeycloak } from "@react-keycloak/native";
 import RealmList from "./realm-list";
 import RealmContext from "../../context/RealmContext";
+import { useKeycloak } from "expo-keycloak-auth";
 
 const HomeScreen = (): JSX.Element => {
+  const {
+    ready, // If the discovery is already fetched and ready to prompt authentication flow 
+    login, // The login function - opens the browser
+    isLoggedIn, // Helper boolean to use e.g. in your components down the tree
+    token, // Access token, if available
+    logout, // The logout function - Logs the user out
+  } = useKeycloak();
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
-  const {keycloak, initialized} = useKeycloak();
   //const realm = `{"name": "test","clientId":"sigtree-app","keycloakUrl":"http://localhost8080"}`;
 
   useEffect(() => {
@@ -36,7 +42,8 @@ const HomeScreen = (): JSX.Element => {
   }
 
   const onRealmSelectedCallback = (realmDetails: RealmDetails) => {
-    setRealm(realmDetails)
+    setRealm(realmDetails);
+    login();
   }
 
   const onRemoveRealmCallback = (realmName: string) => {
@@ -88,7 +95,7 @@ const HomeScreen = (): JSX.Element => {
 
   return (<Container style={homeScreenStyles.container}>
     <Button style={homeScreenStyles.button} children={"Add new realm"} onPress={() => setShowRealmSelector(true)} size={'small'}/>
-    <Button style={homeScreenStyles.button} children={"Default realm"} onPress={() => keycloak?.login()} size={'small'}/>
+    <Button style={homeScreenStyles.button} children={"Default realm"} onPress={() => login()} size={'small'}/>
     {toggleRealmSelectorComponent()}
   </Container>);
 };

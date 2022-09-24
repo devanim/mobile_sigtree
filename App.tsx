@@ -1,13 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { ReactNativeKeycloakProvider } from "@react-keycloak/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 
+import { KeycloakProvider } from "expo-keycloak-auth";
+
 import useCachedResources from "./hooks/useCachedResources";
-import AppContainer from "./navigation/AppContainer";
 import * as eva from "@eva-design/eva";
 import { default as darkTheme } from "constants/theme/dark.json";
 import { default as lightTheme } from "constants/theme/light.json";
@@ -18,12 +18,18 @@ import ThemeContext from "./src/context/ThemeContext";
 import { patchFlatListProps } from "react-native-web-refresh-control";
 import RealmContext from "./src/context/RealmContext";
 import RealmDetails from "./src/models/realm-details";
-import keycloak from "./src/utils/keycloak";
 import RoutingContainer from "./src/routing/routing-container";
 
 patchFlatListProps();
 
 export default App = () =>  {
+  const keycloakConfiguration = {
+    clientId: "sigtree-app",
+    realm: "test",
+    url: "http://localhost:8080/auth",
+    redirectUri: "sigtree://DashboardScreen"
+  };
+
   const [theme, setTheme] = useState<"light" | "dark">("dark");
   const [selectedRealm, setSelectedRealm] = useState<RealmDetails | null>(null);
 
@@ -51,7 +57,7 @@ export default App = () =>  {
   }
 
   return (
-    <ReactNativeKeycloakProvider authClient={keycloak} initOptions={{ onLoad: 'login-required'}}>
+    <KeycloakProvider {...keycloakConfiguration}>
       <SafeAreaProvider>
         <RealmContext.Provider value={{realmData: selectedRealm, setRealm}}>
           <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -78,6 +84,6 @@ export default App = () =>  {
           </ThemeContext.Provider>
         </RealmContext.Provider>
       </SafeAreaProvider>
-    </ReactNativeKeycloakProvider>
+    </KeycloakProvider>
   );
 }
