@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { mockIndividualArticlesList } from "./mock-articles";
 import { Button } from "@ui-kitten/components";
 import { articleCardStyles } from "./article-card-styles";
-import WebView from "react-native-webview";
+import { WebView } from "react-native-webview";
 import { ScrollView } from "react-native-gesture-handler";
 
 const ArticleCard = (props: ArticleCardProps): JSX.Element => {
@@ -27,7 +27,7 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
       <Button children={"Close"} onPress={() => props.onArticleClosed()}></Button>
       <Text style={articleCardStyles.title} category="title1">{article?.title}</Text>
       <Image style={articleCardStyles.image} source={{uri: `${article?.image}`}}/>
-      <WebView source={{html: article?.content}}/>
+      <WebView style={articleCardStyles.content} source={{ html: article ? article.content : "<p>No data</p>"}}/>
     </ScrollView>
   );
 };

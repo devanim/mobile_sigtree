@@ -13,5 +13,10 @@ export const articleCardStyles = StyleSheet.create({
   title: {
     marginRight: "auto",
     color: "#000"
+  },
+  content: {
+    height: 350,
+    width: 350,
+    overflow:'hidden'
   }
 })
