@@ -24,46 +24,15 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
   return (
     <View style={ticketCardStyles.containerCard}>
       <Button children={"Close"} onPress={() => props.onTicketClosed()}></Button>
-      <Text marginTop={48} category="title1">
-        {`Name: ${ticket?.name}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Id: ${ticket?.id}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Tags: ${ticket?.tags}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Category: ${ticket?.category}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Status: ${ticket?.statusKey}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Priority: ${ticket?.priorityKey}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`User: ${ticket?.user}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Project: ${ticket?.project}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Building: ${ticket?.building}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Supplier: ${ticket?.supplier}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Floor: ${ticket?.floor}`}
-      </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Tenant: ${ticket?.tenant}`}
-      </Text>
+      <Text style={ticketCardStyles.textStyle} category="title1">{`${ticket?.id} - ${ticket?.name}`}</Text>
+      <View style={ticketCardStyles.threeOnRow}>
+        <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.category}</Text>
+        <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.statusKey}</Text>
+        <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.priorityKey}</Text>
+      </View>
+      <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.building}</Text>
+      <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.floor}</Text>
       <WebView style={ticketCardStyles.content} source={{ html: ticket ? ticket.content : "<p>No data</p>"}}/>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Timestamp: ${ticket?.timestamp}`}
-      </Text>
     </View>
   );
 };
