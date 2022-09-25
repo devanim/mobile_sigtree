@@ -1,6 +1,8 @@
 import { Ticket } from "../../models/ticket/ticket";
 import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 
+const htmlContentData = "<h1>This is a Heading</h1><p>This is a paragraph.</p>";
+
 export const mockTickets: TicketListPayload = {
   status: "ok",
   message: "A message for the user",
@@ -261,7 +263,7 @@ export const mockIndividualTicketsList: Ticket[] = [
     "idtenant": 1,
     "tenant": "Some tenant",
     "rating": 5,
-    "content": "Ticket description goes here",
+    "content": htmlContentData,
     "slaupdatesbreach": 1,
     "timestamp": "2022-09-18T18:55:03.515Z",
     "timestampClosure": "2022-09-18T18:55:03.515Z",
@@ -303,7 +305,7 @@ export const mockIndividualTicketsList: Ticket[] = [
     "idtenant": 2,
     "tenant": "Some tenant 2",
     "rating": 5,
-    "content": "Ticket description goes here 2",
+    "content": htmlContentData,
     "slaupdatesbreach": 1,
     "timestamp": "2022-09-18T18:55:03.515Z",
     "timestampClosure": "2022-09-18T18:55:03.515Z",
@@ -345,7 +347,7 @@ export const mockIndividualTicketsList: Ticket[] = [
     "idtenant": 3,
     "tenant": "Some tenant 3",
     "rating": 5,
-    "content": "Ticket description goes here 3",
+    "content": htmlContentData,
     "slaupdatesbreach": 1,
     "timestamp": "2022-09-18T18:55:03.515Z",
     "timestampClosure": "2022-09-18T18:55:03.515Z",

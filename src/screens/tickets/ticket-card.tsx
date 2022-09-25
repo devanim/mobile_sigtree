@@ -4,6 +4,8 @@ import { Ticket } from "src/models/ticket/ticket";
 import Text from "../../components/Text";
 import { Button } from "@ui-kitten/components";
 import { mockIndividualTicketsList } from "./mock-tickets";
+import { ticketCardStyles } from "./ticket-card-styles";
+import { WebView } from "react-native-webview";
 
 const TicketCard = (props: TicketCardProps): JSX.Element => {
   const [ticket, setTicket] = useState<Ticket | undefined>(undefined);
@@ -20,7 +22,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
   }, []);
   
   return (
-    <View>
+    <View style={ticketCardStyles.containerCard}>
       <Button children={"Close"} onPress={() => props.onTicketClosed()}></Button>
       <Text marginTop={48} category="title1">
         {`Name: ${ticket?.name}`}
@@ -58,9 +60,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
       <Text marginTop={8} category="call-out" status="placeholder">
         {`Tenant: ${ticket?.tenant}`}
       </Text>
-      <Text marginTop={8} category="call-out" status="placeholder">
-        {`Content: ${ticket?.content}`}
-      </Text>
+      <WebView style={ticketCardStyles.content} source={{ html: ticket ? ticket.content : "<p>No data</p>"}}/>
       <Text marginTop={8} category="call-out" status="placeholder">
         {`Timestamp: ${ticket?.timestamp}`}
       </Text>
