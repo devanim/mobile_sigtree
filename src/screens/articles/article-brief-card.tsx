@@ -1,4 +1,4 @@
-import {  Pressable, View } from "react-native";
+import {  Pressable, View, Image } from "react-native";
 import Text from "../../components/Text";
 
 import ArticleBrief from "src/models/article/article-brief";
@@ -12,9 +12,12 @@ const ArticleBriefCard = (props: ArticleBriefCardProps): JSX.Element => {
   return (
     <Pressable onPress={() => onArticlePress(props.articleBrief.id)}>
       <View style={articleBriefStyles.containerCard}>
-        <Text style={articleBriefStyles.default} category="title1">
-          {props.articleBrief.title}
-        </Text>
+        <View style={articleBriefStyles.firstRow}>
+          <Text style={articleBriefStyles.title} category="title1">
+            {props.articleBrief.title}
+          </Text>
+          <Image style={articleBriefStyles.image} source={{uri: `${props.articleBrief.image}`}}/>
+        </View>
         <Text style={articleBriefStyles.default} category="call-out" status="placeholder">
           {props.articleBrief.excerpt}
         </Text>
