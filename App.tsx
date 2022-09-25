@@ -6,6 +6,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 
 import { KeycloakProvider } from "expo-keycloak-auth";
+import * as AuthSession from 'expo-auth-session';
 
 import useCachedResources from "./hooks/useCachedResources";
 import * as eva from "@eva-design/eva";
@@ -23,11 +24,12 @@ import RoutingContainer from "./src/routing/routing-container";
 patchFlatListProps();
 
 export default App = () =>  {
+  const redirectUrl = AuthSession.makeRedirectUri({ useProxy: false });
   const keycloakConfiguration = {
     clientId: "sigtree-app",
     realm: "test",
     url: "http://localhost:8080/auth",
-    redirectUri: "sigtree://DashboardScreen"
+    redirectUri: redirectUrl
   };
 
   const [theme, setTheme] = useState<"light" | "dark">("dark");
