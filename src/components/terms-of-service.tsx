@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { View } from "react-native";
 import PdfReader from "./pdf-reader";
+import { termsOfServiceStyles } from "./terms-of-service-styles";
 import Text from "./Text";
 
 const TermsOfService = (props: TermsOfServiceProps): JSX.Element => {
@@ -15,8 +16,7 @@ const TermsOfService = (props: TermsOfServiceProps): JSX.Element => {
   });
 
   return (
-    <View>
-      <Text>PDF reader</Text>
+    <View style={termsOfServiceStyles.containerCard}>
       <PdfReader sourceUrl="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"/>
     </View>
   );
