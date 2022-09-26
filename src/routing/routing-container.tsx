@@ -10,8 +10,7 @@ const Stack = createNativeStackNavigator<AppStackParamList>();
 
 const RoutingContainer = (): ReactElement => {
   return (<NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Intro">
-        <Stack.Screen name="Intro" component={Intro} />
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="HomeScreen">
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="DashboardNavigator" component={DashboardNavigator} />
       </Stack.Navigator>

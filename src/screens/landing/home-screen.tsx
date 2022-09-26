@@ -12,6 +12,8 @@ import RealmList from "./realm-list";
 import RealmContext from "../../context/RealmContext";
 import { useKeycloak } from "expo-keycloak-auth";
 import Text from "../../components/text";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { AppStackParamList } from "../../routing/route-screens";
 
 const HomeScreen = (): JSX.Element => {
   const {
@@ -25,6 +27,7 @@ const HomeScreen = (): JSX.Element => {
   const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [showRealmSelector, setShowRealmSelector] = useState(false);
   const [showTOS, setShowTOS] = useState(false);
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   //const realm = `{"name": "test","clientId":"sigtree-app","keycloakUrl":"http://localhost8080"}`;
 
   useEffect(() => {
@@ -96,6 +99,7 @@ const HomeScreen = (): JSX.Element => {
   }
 
   return (<Container style={homeScreenStyles.container}>
+    <Button style={homeScreenStyles.button} children={"Go to dashboard"} onPress={() => navigate("DashboardNavigator", {screen: "DashboardScreen"})} size={'small'}/>
     <Button style={homeScreenStyles.button} children={"Add new realm"} onPress={() => setShowRealmSelector(true)} size={'small'}/>
     <Button style={homeScreenStyles.button} children={"Read Tems of Services"} onPress={() => setShowTOS(true)} size={'small'}/>
     <Button style={homeScreenStyles.button} children={"Default realm"} onPress={() => login()} size={'small'}/>

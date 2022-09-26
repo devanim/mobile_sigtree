@@ -8,7 +8,7 @@ import useLayout from "../../hooks/useLayout";
 import { ScrollView } from "react-native";
 import { RefreshControl } from "react-native-web-refresh-control";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { AppStackParamList, AuthenticatedParamList } from "../../routing/route-screens";
+import { AppStackParamList } from "../../routing/route-screens";
 
 const DashboardScreen = (): JSX.Element => {
   const layoutData = useLayout();
