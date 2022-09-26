@@ -5,7 +5,7 @@ import { ResponseStatus } from "../../utils/response-status-enum";
 import Text from "../../components/Text";
 import { mockUserProfile } from "./mock-user-profile";
 import { userProfileStyle } from "./user-profile-style";
-import Checkbox from "components/Checkbox";
+import Checkbox from "../../components/Checkbox";
 
 const UserProfile = (): JSX.Element => {
   const [userProfile, setUserProfile] = useState<UserProfileModel | undefined>(undefined);

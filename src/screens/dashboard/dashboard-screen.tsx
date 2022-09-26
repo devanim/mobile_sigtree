@@ -3,14 +3,10 @@ import { Layout } from "@ui-kitten/components";
 
 import Container from "../../../src/components/Container";
 import { dashboardStyles } from "./dashboard-screen-styles";
-import NavigationAction from "components/NavigationAction";
+import NavigationAction from "../../components/NavigationAction";
 import useLayout from "../../hooks/useLayout";
 import { ScrollView } from "react-native";
 import { RefreshControl } from "react-native-web-refresh-control";
-
-import Header from "screens/eCommerce/ECommerceHome/Header";
-import BestSeller from "screens/eCommerce/ECommerceHome/BestSeller";
-import Gallery from "screens/eCommerce/ECommerceHome/Gallery";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppStackParamList, AuthenticatedParamList } from "../../routing/route-screens";
 
@@ -24,9 +20,9 @@ const DashboardScreen = (): JSX.Element => {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl tintColor="#F0DF67" />}
       >
-        <Header />
+        {/* <Header />
         <BestSeller />
-        <Gallery />
+        <Gallery /> */}
     </ScrollView>
     <Layout level="2" style={[dashboardStyles.bottomTab, { paddingBottom: layoutData.bottom  }]}>
       <NavigationAction icon="house" status="primary" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "DashboardScreen"})} />

@@ -8,12 +8,11 @@ import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 import { KeycloakProvider } from "expo-keycloak-auth";
 import * as AuthSession from 'expo-auth-session';
 
-import useCachedResources from "./hooks/useCachedResources";
 import * as eva from "@eva-design/eva";
-import { default as darkTheme } from "constants/theme/dark.json";
-import { default as lightTheme } from "constants/theme/light.json";
-import { default as customTheme } from "constants/theme/appTheme.json";
-import { default as customMapping } from "./constants/theme/mapping.json";
+import { default as darkTheme } from "./src/theme/dark.json";
+import { default as lightTheme } from "./src/theme/light.json";
+import { default as customTheme } from "./src/theme/appTheme.json";
+import { default as customMapping } from "./src/theme/mapping.json";
 import AssetIconsPack from "assets/AssetIconsPack";
 import ThemeContext from "./src/context/ThemeContext";
 import { patchFlatListProps } from "react-native-web-refresh-control";
@@ -53,12 +52,6 @@ export default App = () =>  {
 
   const setRealm = (realm: RealmDetails | null) => {
     setSelectedRealm(realm);
-  }
-
-  const isLoadingComplete = useCachedResources();
-
-  if (!isLoadingComplete) {
-    return null;
   }
 
   return (

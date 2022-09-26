@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TopNavigation } from "@ui-kitten/components";
-import NavigationAction from "components/NavigationAction";
+import NavigationAction from "../../components/NavigationAction";
 import React from "react";
 import { AppStackParamList } from "src/routing/route-screens";
 

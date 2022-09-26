@@ -11,8 +11,7 @@ import { REALMS_KEY } from "../../utils/constants";
 import RealmList from "./realm-list";
 import RealmContext from "../../context/RealmContext";
 import { useKeycloak } from "expo-keycloak-auth";
-import TermsOfService from "../../components/terms-of-service";
-import Text from "components/Text";
+import Text from "../../components/Text";
 
 const HomeScreen = (): JSX.Element => {
   const {

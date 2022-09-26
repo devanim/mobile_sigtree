@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ReactElement } from "react";
-import Intro from "screens/intro/Intro";
+import Intro from "../screens/Intro";
 import HomeScreen from "../screens/landing/home-screen";
 import DashboardNavigator from "./dashboard-navigator";
 import { AppStackParamList } from "./route-screens";
