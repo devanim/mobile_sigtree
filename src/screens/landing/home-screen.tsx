@@ -12,6 +12,7 @@ import RealmList from "./realm-list";
 import RealmContext from "../../context/RealmContext";
 import { useKeycloak } from "expo-keycloak-auth";
 import TermsOfService from "../../components/terms-of-service";
+import Text from "components/Text";
 
 const HomeScreen = (): JSX.Element => {
   const {
@@ -99,6 +100,8 @@ const HomeScreen = (): JSX.Element => {
     <Button style={homeScreenStyles.button} children={"Add new realm"} onPress={() => setShowRealmSelector(true)} size={'small'}/>
     <Button style={homeScreenStyles.button} children={"Read Tems of Services"} onPress={() => setShowTOS(true)} size={'small'}/>
     <Button style={homeScreenStyles.button} children={"Default realm"} onPress={() => login()} size={'small'}/>
+    <Text>{`Token value: ${token}`}</Text>
+    <Text>{`IsLoggedInd: ${isLoggedIn}`}</Text>
     {toggleRealmSelectorComponent()}
   </Container>);
 };

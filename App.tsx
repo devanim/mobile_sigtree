@@ -25,11 +25,14 @@ patchFlatListProps();
 
 export default App = () =>  {
   const redirectUrl = AuthSession.makeRedirectUri({ useProxy: false });
+  //nativeRedirectPath: 182.168.119.106:1900
+  //alert(`redirectUrl ${redirectUrl}`);
   const keycloakConfiguration = {
     clientId: "sigtree-app",
     realm: "test",
     url: "http://localhost:8080/auth",
-    redirectUri: redirectUrl
+    nativeRedirectPath: "192.168.119.106:19000",
+    // scheme: "sigtree-app"
   };
 
   const [theme, setTheme] = useState<"light" | "dark">("dark");
