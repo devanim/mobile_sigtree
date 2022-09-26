@@ -6,15 +6,13 @@ import {
   useStyleSheet,
   Icon,
 } from "@ui-kitten/components";
-import { useNavigation } from "@react-navigation/native";
-import useLayout from "hooks/useLayout";
 
 interface Props {
   checked?: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
-const Checkbox = ({ checked, style }: Props) => {
+const Checkbox = ({ checked, style }: Props): JSX.Element => {
   const theme = useTheme();
   const styles = useStyleSheet(themedStyles);
   return (

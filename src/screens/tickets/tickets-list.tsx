@@ -6,7 +6,7 @@ import { ResponseStatus } from "../../utils/response-status-enum";
 import { ticketPaginationMock } from "./mock-tickets";
 import TicketBriefCard from "./ticket-brief-card";
 import { ticketListStyles } from "./ticket-list-styles";
-import Text from "../../components/Text";
+import Text from "../../components/text";
 
 const TicketsList = (props: TicketsListProps): JSX.Element => {
   const [tickets, setTickets] = useState<TicketBrief[] | undefined>(undefined);

@@ -1,6 +1,6 @@
 import {  Pressable, View } from "react-native";
 import { TicketBrief } from "../../models/ticket/ticket-brief";
-import Text from "../../components/Text";
+import Text from "../../components/text";
 import { briefStyles } from "./ticket-brief-card-styles";
 
 const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Ticket } from "src/models/ticket/ticket";
-import Text from "../../components/Text";
+import Text from "../../components/text";
 import { Button } from "@ui-kitten/components";
 import { mockIndividualTicketsList } from "./mock-tickets";
 import { ticketCardStyles } from "./ticket-card-styles";

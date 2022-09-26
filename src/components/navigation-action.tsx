@@ -9,7 +9,7 @@ import {
 import { useTheme, Icon, TopNavigationAction } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 
-import Text from "./Text";
+import Text from "./text";
 
 import { EvaStatus } from "@ui-kitten/components/devsupport";
 

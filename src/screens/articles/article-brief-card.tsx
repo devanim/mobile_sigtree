@@ -1,5 +1,5 @@
 import {  Pressable, View, Image } from "react-native";
-import Text from "../../components/Text";
+import Text from "../../components/text";
 
 import ArticleBrief from "src/models/article/article-brief";
 import { articleBriefStyles } from "./article-brief-styles";

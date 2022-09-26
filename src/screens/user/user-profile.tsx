@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { UserProfile as UserProfileModel } from "src/models/user-profile/user-profile";
 import { ResponseStatus } from "../../utils/response-status-enum";
-import Text from "../../components/Text";
+import Text from "../../components/text";
 import { mockUserProfile } from "./mock-user-profile";
 import { userProfileStyle } from "./user-profile-style";
 import Checkbox from "../../components/checkbox";

@@ -6,7 +6,7 @@ import { ResponseStatus } from "../../utils/response-status-enum";
 import ArticleBriefCard from "./article-brief-card";
 import { articleListStyles } from "./article-list.styles";
 import { articlesPaginationMock } from "./mock-articles";
-import Text from "../../components/Text";
+import Text from "../../components/text";
 
 const ArticlesList = (props: ArticleListProps): JSX.Element => {
   const [articles, setArticles] = useState<ArticleBrief[] | undefined>(undefined);

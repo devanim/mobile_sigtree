@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { View } from "react-native";
 import PdfReader from "./pdf-reader";
 import { termsOfServiceStyles } from "./terms-of-service-styles";
-import Text from "./Text";
+import Text from "./text";
 
 const TermsOfService = (props: TermsOfServiceProps): JSX.Element => {
   let endpointUrl = "https://test/api";

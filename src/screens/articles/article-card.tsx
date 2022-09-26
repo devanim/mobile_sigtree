@@ -1,6 +1,6 @@
 import { Image } from "react-native";
 import Article from "../../models/article/article";
-import Text from "../../components/Text";
+import Text from "../../components/text";
 import { useEffect, useState } from "react";
 import { mockIndividualArticlesList } from "./mock-articles";
 import { Button } from "@ui-kitten/components";
