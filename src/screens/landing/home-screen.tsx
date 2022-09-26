@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import Container from "../../../src/components/Container";
+import Container from "../../components/container";
 import { Button } from "@ui-kitten/components";
 
 import RealmSelector, { BarcodeReadPayload } from "../../components/realm-selector/realm-selector";

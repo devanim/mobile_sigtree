@@ -1,10 +1,10 @@
 import React from "react";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TopNavigation } from "@ui-kitten/components";
-import NavigationAction from "../../components/NavigationAction";
+import NavigationAction from "../../components/navigation-action";
 import { AppStackParamList } from "src/routing/route-screens";
 
-import Container from "../../../src/components/Container";
+import Container from "../../components/container";
 import UserContainer from "./user-container";
 
 import { userScreenStyle } from "./user-screen-style";

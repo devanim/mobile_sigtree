@@ -3,11 +3,11 @@ import { StyleSheet, Image, FlatList } from "react-native";
 import { Button } from "@ui-kitten/components";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 
-import Container from "../../src/components/Container";
+import Container from "../components/container";
 
 import { Images } from "assets/images";
 import { RootStackParamList } from "../routing/type";
-import AdMob from "../components/AdMob";
+import AdMob from "../components/ad-mob";
 
 const Intro = memo(() => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();

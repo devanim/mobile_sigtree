@@ -1,9 +1,9 @@
 import React from "react";
 import { Layout } from "@ui-kitten/components";
 
-import Container from "../../../src/components/Container";
+import Container from "../../components/container";
 import { dashboardStyles } from "./dashboard-screen-styles";
-import NavigationAction from "../../components/NavigationAction";
+import NavigationAction from "../../components/navigation-action";
 import useLayout from "../../hooks/useLayout";
 import { ScrollView } from "react-native";
 import { RefreshControl } from "react-native-web-refresh-control";
