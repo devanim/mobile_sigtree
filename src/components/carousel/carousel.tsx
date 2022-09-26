@@ -18,9 +18,9 @@ const Carousel = (props: CarouselProps): JSX.Element => {
         contentContainerStyle={styles.content}
         showsHorizontalScrollIndicator={false}
       >
-        {props.data.map((item, _) => {
+        {props.data.map((item) => {
           return (
-            <ArticleBriefCard key={_} articleBrief={item.data} onArticleSelected={item.onSelected}/>
+            item.childComponent
           );
         })}
       </ScrollView>
@@ -35,7 +35,7 @@ interface CarouselProps {
 
 interface CarouselData {
   data: any;
-  onSelected: Function;
+  childComponent: JSX.Element;
 }
 
 export default Carousel;
