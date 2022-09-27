@@ -1,4 +1,3 @@
-import { View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { pdfReaderStyles } from './pdf-reader-styles';
 

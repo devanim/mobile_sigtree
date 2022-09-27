@@ -6,7 +6,7 @@ export const homeScreenStyles = StyleSheet.create({
   },
   contentContainerStyle: {
     paddingHorizontal: 32,
-    paddingBottom: 60,
+    paddingBottom: 5,
   },
   image: {
     alignSelf: "center",

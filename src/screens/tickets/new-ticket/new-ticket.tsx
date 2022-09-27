@@ -22,12 +22,7 @@ const NewTicket = (): JSX.Element => {
       style={{ backgroundColor: "#181e34" }}
     >
       <View style={newTicketStyles.formContainer}>
-        <Form {...{ register, setValue, validation: ticketValidation, errors }}>
-          <Input name="name" label="Name " />
-          <Input name="email" label="Email" />
-          <Input name="password" label="Password" secureTextEntry={true} />
-          <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-        </Form>
+        <Form />
       </View>
     </KeyboardAwareScrollView>
   );

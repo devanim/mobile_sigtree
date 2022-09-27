@@ -6,7 +6,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 
 import { KeycloakProvider } from "expo-keycloak-auth";
-import * as AuthSession from 'expo-auth-session';
+import * as AuthSession from "expo-auth-session";
 
 import * as eva from "@eva-design/eva";
 import { default as darkTheme } from "./src/theme/dark.json";
@@ -22,7 +22,7 @@ import RoutingContainer from "./src/routing/routing-container";
 
 patchFlatListProps();
 
-export default App = () =>  {
+export default App = () => {
   const redirectUrl = AuthSession.makeRedirectUri({ useProxy: false });
   //nativeRedirectPath: 182.168.119.106:1900
   //alert(`redirectUrl ${redirectUrl}`);
@@ -52,12 +52,12 @@ export default App = () =>  {
 
   const setRealm = (realm: RealmDetails | null) => {
     setSelectedRealm(realm);
-  }
+  };
 
   return (
     <KeycloakProvider {...keycloakConfiguration}>
       <SafeAreaProvider>
-        <RealmContext.Provider value={{realmData: selectedRealm, setRealm}}>
+        <RealmContext.Provider value={{ realmData: selectedRealm, setRealm }}>
           <ThemeContext.Provider value={{ theme, toggleTheme }}>
             <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
             <ApplicationProvider
@@ -69,7 +69,7 @@ export default App = () =>  {
               }
               /* @ts-ignore */
               customMapping={customMapping}
-            > 
+            >
               <SafeAreaProvider>
                 <StatusBar
                   style={theme === "light" ? "dark" : "light"}
@@ -84,4 +84,4 @@ export default App = () =>  {
       </SafeAreaProvider>
     </KeycloakProvider>
   );
-}
+};

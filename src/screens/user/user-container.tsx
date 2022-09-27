@@ -8,7 +8,6 @@ const UserContainer = (): JSX.Element => {
   const [showTOS, setShowTOS] = useState<boolean>(false);
 
   const toggleUserProfile = () => {
-    alert(showTOS);
     if (showTOS) {
       return <TermsOfService buildingId={undefined} onCancel={() => setShowTOS(false)}/>
     }
