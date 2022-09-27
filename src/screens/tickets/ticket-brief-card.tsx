@@ -1,4 +1,4 @@
-import {  Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 import { TicketBrief } from "../../models/ticket/ticket-brief";
 import Text from "../../components/text";
 import { briefStyles } from "./ticket-brief-card-styles";
@@ -6,21 +6,32 @@ import { briefStyles } from "./ticket-brief-card-styles";
 const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
   const onTicketPress = (ticketId: string) => {
     props.onTicketSelected(ticketId);
-  }
-  
+  };
+
   return (
     <Pressable onPress={() => onTicketPress(props.ticketBrief.id)}>
       <View style={briefStyles.containerCard}>
         <View style={briefStyles.idRow}>
-          <Text style={[briefStyles.ticketId, briefStyles.default]} category="call-out" status="placeholder">
+          <Text
+            style={[briefStyles.ticketId, briefStyles.default]}
+            category="call-out"
+            status="placeholder"
+          >
             {props.ticketBrief?.id}
           </Text>
-          <Text style={[briefStyles.priority, briefStyles.default]} category="call-out" status="placeholder">
+          <Text
+            style={[briefStyles.priority, briefStyles.default]}
+            category="call-out"
+            status="placeholder"
+          >
             {props.ticketBrief?.priorityKey}
           </Text>
         </View>
         <View>
-          <Text style={[briefStyles.ticketName, briefStyles.default]} category="title1">
+          <Text
+            style={[briefStyles.ticketName, briefStyles.default]}
+            category="title1"
+          >
             {props.ticketBrief?.name}
           </Text>
         </View>
@@ -36,13 +47,21 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
           <Text marginTop={8} category="call-out" status="placeholder">
             User:
           </Text>
-          <Text style={[briefStyles.default]} category="call-out" status="placeholder">
+          <Text
+            style={[briefStyles.default]}
+            category="call-out"
+            status="placeholder"
+          >
             {props.ticketBrief?.user}
           </Text>
           <Text marginTop={8} category="call-out" status="placeholder">
-            Supplier: 
+            Supplier:
           </Text>
-          <Text style={[briefStyles.default]} category="call-out" status="placeholder">
+          <Text
+            style={[briefStyles.default]}
+            category="call-out"
+            status="placeholder"
+          >
             {props.ticketBrief?.supplier}
           </Text>
         </View>
@@ -64,7 +83,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
 
 interface TicketBriefCardProps {
   ticketBrief: TicketBrief;
-  onTicketSelected: Function;
+  onTicketSelected: (ticketId: string) => void;
 }
 
 export default TicketBriefCard;

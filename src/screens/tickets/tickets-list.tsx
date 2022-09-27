@@ -72,7 +72,7 @@ const TicketsList = (props: TicketsListProps): JSX.Element => {
 };
 
 interface TicketsListProps {
-  onTicketSelected: Function;
+  onTicketSelected: (ticketId: string) => void;
 }
 
 export default TicketsList;

@@ -15,7 +15,7 @@ const TicketContainer = (): JSX.Element => {
 
   const onTicketSelected = (ticketId: string) => {
     setSelectedTicketId(ticketId);
-
+    setShowTicketsList(false);
   }
 
   const onTicketClosed = () => {
