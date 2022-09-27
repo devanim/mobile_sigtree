@@ -4,7 +4,7 @@ import { AuthenticatedParamList } from "src/routing/route-screens";
 export type RootStackParamList = {
   HomeScreen: NavigatorScreenParams<OnboardingParamList>;
   DashboardNavigator: NavigatorScreenParams<AuthenticatedParamList>;
-  Intro: undefined;
+  NewTicketScreen: NavigatorScreenParams<AuthenticatedParamList>;
 };
 
 export type OnboardingParamList = {
