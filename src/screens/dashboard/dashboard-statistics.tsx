@@ -49,17 +49,17 @@ const DashboardStatistics = (): JSX.Element => {
     alert(`Selected ticket with id ${ticket.id}. Soon it will redirect there`);
   }
   
-  const articleCarouselData = articles?.map((article: ArticleBrief) => {
+  const articleCarouselData = articles?.map((article: ArticleBrief, idx: number) => {
     return {
       data: article,
-      childComponent: (<ArticleBriefCard articleBrief={article} onArticleSelected={() => onArticleSelected(article)}/>)
+      childComponent: (<ArticleBriefCard key={idx} articleBrief={article} onArticleSelected={() => onArticleSelected(article)}/>)
     }
   });
 
-  const ticketCarouselData = tickets?.map((ticket: TicketBrief) => {
+  const ticketCarouselData = tickets?.map((ticket: TicketBrief, idx: number) => {
     return {
       data: ticket,
-      childComponent: (<TicketBriefCard ticketBrief={ticket} onTicketSelected={() => onTicketSelected(ticket)}/>)
+      childComponent: (<TicketBriefCard key={idx} ticketBrief={ticket} onTicketSelected={() => onTicketSelected(ticket)}/>)
     }
   });
   
