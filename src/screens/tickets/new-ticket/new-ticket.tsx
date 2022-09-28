@@ -13,7 +13,7 @@ const NewTicket = (): JSX.Element => {
   const { handleSubmit, register, setValue, formState: {errors} } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
-    Alert.alert("data", JSON.stringify(data));
+    //TODO - make request to backend using axios
   };
 
   return (

@@ -23,5 +23,5 @@ export const inputStyles = StyleSheet.create({
   textError: {
     color: '#fc6d47',
     fontSize: 14,
-  },
+  }
 });

@@ -1,18 +1,22 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { TextInput, Button, View } from 'react-native';
+import { Button, View } from 'react-native';
+import Dropdown from './dropdown';
+import Input from './input';
 
 const Form = (): JSX.Element => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = (data: any) => alert(`data: ${JSON.stringify(data)}`);
+  const onSubmit = (data: any) => { const i = 1 };
   alert(errors);
   
   return (
     <View>
-      <TextInput placeholder="First name" {...register("First name", {required: true, maxLength: 80})} />
-      <TextInput placeholder="Last name" {...register("Last name", {required: true, maxLength: 100})} />
-      <TextInput placeholder="Email" {...register("Email", {required: true, pattern: /^\S+@\S+$/i})} />
-      <TextInput placeholder="Mobile number" {...register("Mobile number", {required: true, minLength: 6, maxLength: 12})} />
+      <Input label="Title" {...register("Title", {required: true, maxLength: 80})} />
+      <Input label="Priority" {...register("Priority", {required: true, maxLength: 100})} />
+      <Input label="Category" {...register("Category", {required: true, pattern: /^\S+@\S+$/i})} />
+      <Input label="Floor" {...register("Floor", {required: true, minLength: 6, maxLength: 12})} />
+      <Input label="Description" {...register("Description", {required: true, minLength: 6, maxLength: 12})} />
+      <Dropdown />
       <Button title="Submit" onPress={handleSubmit(onSubmit)} />
     </View>
   );
