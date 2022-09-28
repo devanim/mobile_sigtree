@@ -2,7 +2,7 @@ import { Button } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
 
 import Text from "../../../components/text";
-import { realmHandlerStyles } from "./realm-handler-styles";
+import { realmHandlerStyles } from "./realm-container-styles";
 import RealmSelector, {
   BarcodeReadPayload,
 } from "../../../components/realm-selector/realm-selector";
@@ -13,7 +13,7 @@ import RealmContext from "../../../context/RealmContext";
 import { REALMS_KEY } from "../../../utils/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const RealmHandler = (): JSX.Element => {
+const RealmContainer = (): JSX.Element => {
   const {
     ready, // If the discovery is already fetched and ready to prompt authentication flow
     login, // The login function - opens the browser
@@ -24,6 +24,7 @@ const RealmHandler = (): JSX.Element => {
   const [showRealmSelector, setShowRealmSelector] = useState(false);
   const {realmData: realmData, setRealm} = useContext(RealmContext);
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
+  //const realm = `{"name": "test","clientId":"sigtree-app","keycloakUrl":"http://localhost8080"}`;
 
   useEffect(() => {
     AsyncStorage.getItem(REALMS_KEY).then((value) => {
@@ -127,4 +128,4 @@ const RealmHandler = (): JSX.Element => {
   );
 };
 
-export default RealmHandler;
+export default RealmContainer;

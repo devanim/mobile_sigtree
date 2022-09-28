@@ -6,13 +6,12 @@ import { Button } from "@ui-kitten/components";
 import { homeScreenStyles } from "./home-screen-styles";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "../../routing/route-screens";
-import RealmHandler from "./realm-handler/realm-handler";
+import RealmContainer from "./realm-handler/realm-container";
 import TermsOfService from "../../components/terms-of-service";
 
 const HomeScreen = (): JSX.Element => {
   const [showTOS, setShowTOS] = useState(false);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
-  //const realm = `{"name": "test","clientId":"sigtree-app","keycloakUrl":"http://localhost8080"}`;
 
   const onTOSCancel = () => {
     setShowTOS(false);
@@ -23,7 +22,7 @@ const HomeScreen = (): JSX.Element => {
       return <TermsOfService buildingId={undefined} onCancel={onTOSCancel}/>
     }
 
-    return <RealmHandler />
+    return <RealmContainer />
   }
 
   return (<Container style={homeScreenStyles.container}>
