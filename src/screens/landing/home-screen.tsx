@@ -15,21 +15,35 @@ const HomeScreen = (): JSX.Element => {
 
   const onTOSCancel = () => {
     setShowTOS(false);
-  }
+  };
 
   const toggleTOS = () => {
     if (showTOS) {
-      return <TermsOfService buildingId={undefined} onCancel={onTOSCancel}/>
+      return <TermsOfService buildingId={undefined} onCancel={onTOSCancel} />;
     }
 
-    return <RealmContainer />
-  }
+    return <RealmContainer />;
+  };
 
-  return (<Container style={homeScreenStyles.container}>
-    <Button style={homeScreenStyles.button} children={"Go to dashboard"} onPress={() => navigate("DashboardNavigator", {screen: "DashboardScreen"})} size={'small'}/>
-    <Button style={homeScreenStyles.button} children={"Read Tems of Services"} onPress={() => setShowTOS(true)} size={'small'}/>
-    {toggleTOS()}
-  </Container>);
+  return (
+    <Container style={homeScreenStyles.container}>
+      <Button
+        style={homeScreenStyles.button}
+        children={"Go to dashboard"}
+        onPress={() =>
+          navigate("DashboardNavigator", { screen: "DashboardScreen" })
+        }
+        size={"small"}
+      />
+      <Button
+        style={homeScreenStyles.button}
+        children={"Read Tems of Services"}
+        onPress={() => setShowTOS(true)}
+        size={"small"}
+      />
+      {toggleTOS()}
+    </Container>
+  );
 };
 
 export default HomeScreen;

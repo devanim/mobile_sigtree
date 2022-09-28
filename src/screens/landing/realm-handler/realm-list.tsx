@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import RealmDetails from "../../models/realm-details";
+import RealmDetails from "../../../models/realm-details";
 import { realmListStyles } from "./realm-list-styles";
-import AdMob from "../../components/ad-mob";
+import AdMob from "../../../components/ad-mob";
 import { FlatList } from "react-native";
 import { Button } from "@ui-kitten/components";
 import { View } from "react-native";

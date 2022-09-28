@@ -6,12 +6,13 @@ import { realmHandlerStyles } from "./realm-container-styles";
 import RealmSelector, {
   BarcodeReadPayload,
 } from "../../../components/realm-selector/realm-selector";
-import RealmList from "../realm-list";
+import RealmList from "./realm-list";
 import { useKeycloak } from "expo-keycloak-auth";
 import RealmDetails from "../../../models/realm-details";
 import RealmContext from "../../../context/RealmContext";
 import { REALMS_KEY } from "../../../utils/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ActivityIndicator } from "react-native";
 
 const RealmContainer = (): JSX.Element => {
   const {
@@ -107,6 +108,8 @@ const RealmContainer = (): JSX.Element => {
     );
   };
 
+  if (!ready) return <ActivityIndicator />;
+
   return (
     <>
       <Button
@@ -117,8 +120,14 @@ const RealmContainer = (): JSX.Element => {
       />
       <Button
         style={realmHandlerStyles.button}
-        children={"Default realm"}
+        children={"Login with default realm"}
         onPress={() => login()}
+        size={"small"}
+      />
+      <Button
+        style={realmHandlerStyles.button}
+        children={"Logout"}
+        onPress={() => logout()}
         size={"small"}
       />
       <Text>{`Token value: ${token}`}</Text>
