@@ -34,6 +34,8 @@ const Form = (): JSX.Element => {
   const onSubmit = (data: any) => { 
     const vals = getValues();
     alert(`Data ${JSON.stringify(vals)}`);
+    //TODO - send data to server when integrated with back-end
+    goBack();
   };
 
   const onInvalid = (errors: any) => {
