@@ -11,10 +11,10 @@ const Dropdown = (): JSX.Element => {
     { label: "Female", value: "female" },
     { label: "Prefer Not to Say", value: "neutral" },
   ]);
-  const [companyOpen, setCompanyOpen] = useState(false);
   
   const onGenderOpen = useCallback(() => {
-    setCompanyOpen(false);
+    //setCompanyOpen(false);
+    alert(`opened gender dropdown`);
   }, []);
 
   const onChange = (data: any) => {
