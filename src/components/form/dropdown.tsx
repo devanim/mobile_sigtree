@@ -1,28 +1,28 @@
 import React, { useState, useCallback } from "react";
-import { View } from "react-native";
+import { TextStyle, View, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import { DropdownValue } from "src/models/common/dropdown-value";
 import { dropdownStyles } from "./dropdown-styles";
 
-const Dropdown = (): JSX.Element => {
+const Dropdown = (props: DropdownProps): JSX.Element => {
   const [genderOpen, setGenderOpen] = useState(false);
   const [genderValue, setGenderValue] = useState(null);
-  const [gender, setGender] = useState([
-    { label: "Male", value: "male" },
-    { label: "Female", value: "female" },
-    { label: "Prefer Not to Say", value: "neutral" },
-  ]);
+  const [gender, setGender] = useState(props.list);
   
   const onGenderOpen = useCallback(() => {
     //setCompanyOpen(false);
-    alert(`opened gender dropdown`);
+    //alert(`opened gender dropdown`);
+    const i = 2;
   }, []);
 
   const onChange = (data: any) => {
-    alert(`Value changed ${JSON.stringify(data)}`);
+    //alert(`Value changed ${JSON.stringify(data)}`);
+    const i = 1;
   };
 
   return (
     <View style={dropdownStyles.container}>
+      {props.label && <Text style={[dropdownStyles.label, props.labelStyle]}>{props.label}</Text>}
       <DropDownPicker
         style={dropdownStyles.dropdown}
         open={genderOpen}
@@ -31,7 +31,7 @@ const Dropdown = (): JSX.Element => {
         setOpen={setGenderOpen}
         setValue={setGenderValue}
         setItems={setGender}
-        placeholder="Select Gender"
+        placeholder={props.placeholder}
         placeholderStyle={dropdownStyles.placeholderStyles}
         onOpen={onGenderOpen}
         onChangeValue={onChange}
@@ -41,5 +41,12 @@ const Dropdown = (): JSX.Element => {
     </View>
   );
 };
+
+type DropdownProps = {
+  placeholder: string;
+  label?: string;
+  labelStyle?: TextStyle;
+  list: DropdownValue[];
+}
 
 export default Dropdown;

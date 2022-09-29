@@ -11,22 +11,22 @@ interface InputProps extends TextInputProps {
 }
 
 const Input = (props: InputProps): React.ReactElement => {
-    const { label, labelStyle, error, ...inputProps } = props;
+  const { label, labelStyle, error, ...inputProps } = props;
 
-    return (
-      <View style={inputStyles.container}>
-        {label && <Text style={[inputStyles.label, labelStyle]}>{label}</Text>}
-        <TextInput
-          autoCapitalize="none"
-          style={[
-            inputStyles.input,
-            { borderColor: error ? "#fc6d47" : "#c0cbd3" },
-          ]}
-          {...inputProps}
-        />
-        <Text style={inputStyles.textError}>{error && error.message}</Text>
-      </View>
-    );
-  };
+  return (
+    <View style={inputStyles.container}>
+      {label && <Text style={[inputStyles.label, labelStyle]}>{label}</Text>}
+      <TextInput
+        autoCapitalize="none"
+        style={[
+          inputStyles.input,
+          { borderColor: error ? "#fc6d47" : "#c0cbd3" },
+        ]}
+        {...inputProps}
+      />
+      <Text style={inputStyles.textError}>{error && error.message}</Text>
+    </View>
+  );
+};
 
 export default Input;
