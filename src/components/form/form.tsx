@@ -30,14 +30,14 @@ const Form = (): JSX.Element => {
     {label: "4", value: "4"}
   ];
 
-  const onSubmit = (data: any) => { alert(`Data: ${JSON.stringify(data)}`) };
+  const onSubmit = (data: any) => { alert(`Data`) };
   
   return (
     <View>
       <Button children={"Submit"} onPress={handleSubmit(onSubmit)} />
       <Button children={"Cancel"} onPress={goBack} />
       <Input label="Title" {...register("Title", {required: true, maxLength: 80})} />
-      <Input label="Description" {...register("Description", {required: true, minLength: 6, maxLength: 12})} />
+      <Input label="Description" multiline={true} {...register("Description", {required: true, minLength: 6, maxLength: 12})} />
       <Dropdown label="Priority" placeholder="Select Priority" list={priorityList} {...register("Priority", {required: true})}/>
       <Dropdown label="Category" placeholder="Select Category" list={categoryList} {...register("Category", {required: true})}/>
       <Dropdown label="Floor" placeholder="Select Floor" list={floorList} {...register("Floor", {required: true})}/>
