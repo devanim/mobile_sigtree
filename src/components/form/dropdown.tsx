@@ -10,14 +10,11 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
   const [gender, setGender] = useState(props.list);
   
   const onGenderOpen = useCallback(() => {
-    //setCompanyOpen(false);
-    //alert(`opened gender dropdown`);
     const i = 2;
   }, []);
 
-  const onChange = (data: any) => {
-    //alert(`Value changed ${JSON.stringify(data)}`);
-    const i = 1;
+  const onChange = (data: string | null) => {
+    props.setValue(props.label ?? "", data ?? "");
   };
 
   return (
@@ -47,6 +44,7 @@ type DropdownProps = {
   label?: string;
   labelStyle?: TextStyle;
   list: DropdownValue[];
+  setValue: (name: string, value: string, validate?: boolean) => void;
 }
 
 export default Dropdown;

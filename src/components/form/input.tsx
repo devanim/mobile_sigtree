@@ -8,6 +8,7 @@ interface InputProps extends TextInputProps {
   label?: string;
   labelStyle?: TextStyle;
   error?: FieldError | undefined;
+  setValue: (name: string, value: string, validate?: boolean) => void;
 }
 
 const Input = (props: InputProps): React.ReactElement => {
@@ -23,6 +24,7 @@ const Input = (props: InputProps): React.ReactElement => {
           { borderColor: error ? "#fc6d47" : "#c0cbd3" },
         ]}
         {...inputProps}
+        onChangeText={(val: string) => props.setValue(label ?? "", val)}
       />
       <Text style={inputStyles.textError}>{error && error.message}</Text>
     </View>

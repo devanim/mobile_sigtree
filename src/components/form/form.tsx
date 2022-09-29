@@ -7,10 +7,11 @@ import { DropdownValue } from '../../models/common/dropdown-value';
 import { Priority } from '../../models/ticket/priority-enum';
 import { AppStackParamList } from '../../routing/route-screens';
 import Dropdown from './dropdown';
+import { formStyles } from './form-styles';
 import Input from './input';
 
 const Form = (): JSX.Element => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, getValues, setValue, formState: { errors } } = useForm();
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   //TODO - get this data from back-end
   const priorityList: DropdownValue[] = [
@@ -30,17 +31,24 @@ const Form = (): JSX.Element => {
     {label: "4", value: "4"}
   ];
 
-  const onSubmit = (data: any) => { alert(`Data`) };
+  const onSubmit = (data: any) => { 
+    const vals = getValues();
+    alert(`Data ${JSON.stringify(vals)}`);
+  };
+
+  const onInvalid = (errors: any) => {
+    alert(`Errors ${JSON.stringify(errors)}`);
+  }
   
   return (
     <View>
-      <Button children={"Submit"} onPress={handleSubmit(onSubmit)} />
+      <Button children={"Submit"} onPress={handleSubmit(onSubmit, onInvalid)} />
       <Button children={"Cancel"} onPress={goBack} />
-      <Input label="Title" {...register("Title", {required: true, maxLength: 80})} />
-      <Input label="Description" multiline={true} {...register("Description", {required: true, minLength: 6, maxLength: 12})} />
-      <Dropdown label="Priority" placeholder="Select Priority" list={priorityList} {...register("Priority", {required: true})}/>
-      <Dropdown label="Category" placeholder="Select Category" list={categoryList} {...register("Category", {required: true})}/>
-      <Dropdown label="Floor" placeholder="Select Floor" list={floorList} {...register("Floor", {required: true})}/>
+      <Input label="Title" {...register("Title")} setValue={setValue}/>
+      <Input label="Description" multiline={true} {...register("Description")} setValue={setValue}/>
+      <Dropdown label="Priority" placeholder="Select Priority" list={priorityList} {...register("Priority")} setValue={setValue}/>
+      <Dropdown label="Category" placeholder="Select Category" list={categoryList} {...register("Category")} setValue={setValue}/>
+      <Dropdown label="Floor" placeholder="Select Floor" list={floorList} {...register("Floor")} setValue={setValue}/>
     </View>
   );
 };
