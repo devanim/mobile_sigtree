@@ -1,11 +1,9 @@
 const ticketValidations = {
-  name: {required: {value: true, message: 'Name is required'}},
-  email: {
-    required: {value: true, message: 'Email is required'},
-  },
-  password: {
-    required: {value: true, message: 'Password is required'},
-  },
+  title: {required: { value: true, message: "Title is required" }},
+  description: {required: { value: true, message: "Description is required" }},
+  priority: {required: { value: true, message: "Priority is required" }},
+  floor: {required: { value: true, message: "Floor is required" }},
+  category: {required: { value: true, message: "Category is required" }},
 };
 
 export default ticketValidations;

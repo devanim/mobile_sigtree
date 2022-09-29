@@ -24,7 +24,7 @@ const Input = (props: InputProps): React.ReactElement => {
           { borderColor: error ? "#fc6d47" : "#c0cbd3" },
         ]}
         {...inputProps}
-        onChangeText={(val: string) => props.setValue(label ?? "", val)}
+        onChangeText={(val: string) => props.setValue(label ?? "", val, true)}
       />
       <Text style={inputStyles.textError}>{error && error.message}</Text>
     </View>
