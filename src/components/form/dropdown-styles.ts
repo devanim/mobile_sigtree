@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const dropdownStyles = StyleSheet.create({
   container: {
     flex: 1,
+    marginVertical: 50,
   },
   input: {
     borderStyle: "solid",

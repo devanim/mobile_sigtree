@@ -34,7 +34,7 @@ export default App = () => {
     // scheme: "sigtree-app"
   };
 
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [selectedRealm, setSelectedRealm] = useState<RealmDetails | null>(null);
 
   React.useEffect(() => {
