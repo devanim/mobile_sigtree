@@ -9,9 +9,8 @@ import { AppStackParamList } from "../../../routing/route-screens";
 import Dropdown from "../../../components/form/dropdown";
 import { ticketFormStyles } from "./ticket-form-styles";
 import Input from "../../../components/form/input";
-import { FormConfiguration } from "../../../models/form-configuration";
 
-const TicketForm = (props: TicketFormProps): JSX.Element => {
+const TicketForm = (): JSX.Element => {
   const {
     register,
     handleSubmit,
@@ -112,10 +111,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     </View>
   );
 };
-
-type TicketFormProps = {
-  configuration: FormConfiguration
-}
 
 type FormData = {
   Category: string,

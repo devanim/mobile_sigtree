@@ -3,7 +3,6 @@ import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import TicketForm from "./ticket-form";
-import ticketFormConfiguration from "./ticket-form-configuration";
 import { newTicketStyles } from "./new-ticket-styles";
 
 const NewTicket = (): JSX.Element => {
