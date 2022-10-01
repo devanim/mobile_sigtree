@@ -1,10 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ReactElement } from "react";
+import { AppStackParamList } from "./route-screens";
+
 import NewTicketScreen from "../screens/tickets/new-ticket/new-ticket-screen";
 import HomeScreen from "../screens/landing/home-screen";
 import DashboardNavigator from "./dashboard-navigator";
-import { AppStackParamList } from "./route-screens";
+import EditTicketScreen from "../screens/tickets/edit-ticket/edit-ticket-screen";
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -17,6 +19,7 @@ const RoutingContainer = (): ReactElement => {
       >
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="NewTicketScreen" component={NewTicketScreen} />
+        <Stack.Screen name="EditTicketScreen" component={EditTicketScreen} />
         <Stack.Screen
           name="DashboardNavigator"
           component={DashboardNavigator}

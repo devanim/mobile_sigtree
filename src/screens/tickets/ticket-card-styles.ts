@@ -23,5 +23,9 @@ export const ticketCardStyles = StyleSheet.create({
   threeOnRow: {
     flex: 3,
     flexDirection: "row"
+  },
+  twoOnRow: {
+    flex: 2,
+    flexDirection: "row"
   }
 });

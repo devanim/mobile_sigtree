@@ -6,9 +6,12 @@ import { Button } from "@ui-kitten/components";
 import { mockIndividualTicketsList } from "./mock-tickets";
 import { ticketCardStyles } from "./ticket-card-styles";
 import { WebView } from "react-native-webview";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { AppStackParamList } from "src/routing/route-screens";
 
 const TicketCard = (props: TicketCardProps): JSX.Element => {
   const [ticket, setTicket] = useState<Ticket | undefined>(undefined);
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
 
   useEffect(() => {
     //TODO - replace with axios call to back-end
@@ -23,7 +26,11 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
   
   return (
     <View style={ticketCardStyles.containerCard}>
-      <Button children={"Close"} onPress={() => props.onTicketClosed()}></Button>
+      <View style={ticketCardStyles.twoOnRow}>
+        <Button children={"Close"} onPress={() => props.onTicketClosed()}></Button>
+        <Button children={"Edit"} onPress={() => navigate("NewTicketScreen", {screen: "NewTicketScreen"})}></Button>
+
+      </View>
       <Text style={ticketCardStyles.textStyle} category="title1">{`${ticket?.id} - ${ticket?.name}`}</Text>
       <View style={ticketCardStyles.threeOnRow}>
         <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.category}</Text>
@@ -39,7 +46,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
 
 interface TicketCardProps {
   ticketId: string;
-  onTicketClosed: Function;
+  onTicketClosed: () => void;
 }
 
 export default TicketCard;
