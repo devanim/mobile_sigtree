@@ -31,7 +31,7 @@ export default App = () => {
     realm: "test",
     url: "http://localhost:8080/auth",
     nativeRedirectPath: "192.168.119.106:19000",
-    // scheme: "sigtree-app"
+    scheme: "exp"
   };
 
   const [theme, setTheme] = useState<"light" | "dark">("light");
