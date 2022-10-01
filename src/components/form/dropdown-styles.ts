@@ -21,4 +21,8 @@ export const dropdownStyles = StyleSheet.create({
     borderColor: "#B7B7B7",
     height: 50,
   },
+  textError: {
+    color: '#fc6d47',
+    fontSize: 14,
+  },
 });

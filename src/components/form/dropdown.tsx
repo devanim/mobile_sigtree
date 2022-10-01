@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { FieldError } from "react-hook-form";
 import { TextStyle, View, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 import { DropdownValue } from "src/models/common/dropdown-value";
@@ -22,7 +23,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
     <View style={dropdownStyles.container}>
       {props.label && <Text style={[dropdownStyles.label, props.labelStyle]}>{props.label}</Text>}
       <DropDownPicker
-        style={[dropdownStyles.dropdown, props.dropdownStyle]}
+        style={[dropdownStyles.dropdown, props.dropdownStyle, { borderColor: props.error ? "#fc6d47" : "#c0cbd3" },]}
         open={genderOpen}
         value={genderValue}
         items={gender}
@@ -42,6 +43,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
 
 type DropdownProps = {
   placeholder: string;
+  error?: FieldError | undefined;
   label?: string;
   labelStyle?: TextStyle;
   dropdownStyle?: TextStyle;

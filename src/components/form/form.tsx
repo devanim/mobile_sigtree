@@ -1,6 +1,6 @@
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Button } from "@ui-kitten/components/ui";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { View } from "react-native";
 import { DropdownValue } from "../../models/common/dropdown-value";
@@ -16,8 +16,9 @@ const Form = (): JSX.Element => {
     handleSubmit,
     getValues,
     setValue,
-    formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
+  //TODO - try to use form state instead of new state
+  const [errors, setErrors] = useState({});
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   //TODO - get this data from back-end
   const priorityList: DropdownValue[] = [
@@ -25,11 +26,13 @@ const Form = (): JSX.Element => {
     { label: Priority.MEDIUM, value: Priority.MEDIUM },
     { label: Priority.HIGH, value: Priority.HIGH },
   ];
+  //TODO - see how to obtain category list
   const categoryList: DropdownValue[] = [
     { label: "Cleaning", value: "Cleaning" },
     { label: "Electric", value: "Electric" },
     { label: "Maintenance", value: "Maintenance" },
   ];
+  //TODO - see how to obtain floor details based on building
   const floorList: DropdownValue[] = [
     { label: "1", value: "1" },
     { label: "2", value: "2" },
@@ -44,8 +47,8 @@ const Form = (): JSX.Element => {
     goBack();
   };
 
-  const onInvalid = (errors: any) => {
-    alert(`Errors ${JSON.stringify(errors)}`);
+  const onInvalid = (err: any) => {
+    setErrors(err);
   };
 
   return (
@@ -55,6 +58,7 @@ const Form = (): JSX.Element => {
       <View style={formStyles.spacedView}>
         <Dropdown
           label="Category"
+          error={errors["Category"]}
           placeholder="Select Category"
           dropdownStyle={formStyles.spacedView}
           list={categoryList}
@@ -66,6 +70,7 @@ const Form = (): JSX.Element => {
       </View>
       <Input
         label="Title"
+        error={errors["Title"]}
         {...register("Title", {
           required: { value: true, message: "Title is required" },
         })}
@@ -73,6 +78,7 @@ const Form = (): JSX.Element => {
       />
       <Input
         label="Description"
+        error={errors["Description"]}
         multiline={true}
         inputStyle={formStyles.multilineHeight}
         {...register("Description", {
@@ -83,6 +89,7 @@ const Form = (): JSX.Element => {
       <View style={formStyles.twoOnRow}>
         <Dropdown
           label="Priority"
+          error={errors["Priority"]}
           placeholder="Select Priority"
           list={priorityList}
           {...register("Priority", {
@@ -92,6 +99,7 @@ const Form = (): JSX.Element => {
         />
         <Dropdown
           label="Floor"
+          error={errors["Floor"]}
           placeholder="Select Floor"
           list={floorList}
           {...register("Floor", {
@@ -103,5 +111,13 @@ const Form = (): JSX.Element => {
     </View>
   );
 };
+
+type FormData = {
+  category: string,
+  title: string,
+  description: string,
+  priority: Priority,
+  floor: string
+}
 
 export default Form;
