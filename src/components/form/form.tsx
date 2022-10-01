@@ -52,6 +52,18 @@ const Form = (): JSX.Element => {
     <View>
       <Button children={"Submit"} onPress={handleSubmit(onSubmit, onInvalid)} />
       <Button children={"Cancel"} onPress={goBack} />
+      <View style={formStyles.spacedView}>
+        <Dropdown
+          label="Category"
+          placeholder="Select Category"
+          dropdownStyle={formStyles.spacedView}
+          list={categoryList}
+          {...register("Category", {
+            required: { value: true, message: "Category is required" },
+          })}
+          setValue={setValue}
+        />
+      </View>
       <Input
         label="Title"
         {...register("Title", {
@@ -62,38 +74,32 @@ const Form = (): JSX.Element => {
       <Input
         label="Description"
         multiline={true}
+        inputStyle={formStyles.multilineHeight}
         {...register("Description", {
           required: { value: true, message: "Description is required" },
         })}
         setValue={setValue}
       />
-      <Dropdown
-        label="Priority"
-        placeholder="Select Priority"
-        list={priorityList}
-        {...register("Priority", {
-          required: { value: true, message: "Priority is required" },
-        })}
-        setValue={setValue}
-      />
-      <Dropdown
-        label="Category"
-        placeholder="Select Category"
-        list={categoryList}
-        {...register("Category", {
-          required: { value: true, message: "Category is required" },
-        })}
-        setValue={setValue}
-      />
-      <Dropdown
-        label="Floor"
-        placeholder="Select Floor"
-        list={floorList}
-        {...register("Floor", {
-          required: { value: true, message: "Floor is required" },
-        })}
-        setValue={setValue}
-      />
+      <View style={formStyles.twoOnRow}>
+        <Dropdown
+          label="Priority"
+          placeholder="Select Priority"
+          list={priorityList}
+          {...register("Priority", {
+            required: { value: true, message: "Priority is required" },
+          })}
+          setValue={setValue}
+        />
+        <Dropdown
+          label="Floor"
+          placeholder="Select Floor"
+          list={floorList}
+          {...register("Floor", {
+            required: { value: true, message: "Floor is required" },
+          })}
+          setValue={setValue}
+        />
+      </View>
     </View>
   );
 };

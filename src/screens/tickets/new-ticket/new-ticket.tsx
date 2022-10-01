@@ -3,8 +3,6 @@ import { View, Button, Alert } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useForm } from "react-hook-form";
 
-// You can import from local files
-import Input from "../../../components/form/input";
 import Form from "../../../components/form/form";
 import ticketValidation from "./ticket-validations";
 import { newTicketStyles } from "./new-ticket-styles";

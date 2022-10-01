@@ -6,6 +6,7 @@ import { inputStyles } from "./input-styles";
 interface InputProps extends TextInputProps {
   name: string;
   label?: string;
+  inputStyle?: TextStyle;
   labelStyle?: TextStyle;
   error?: FieldError | undefined;
   setValue: (name: string, value: string, validate?: boolean) => void;
@@ -21,6 +22,7 @@ const Input = (props: InputProps): React.ReactElement => {
         autoCapitalize="none"
         style={[
           inputStyles.input,
+          props.inputStyle,
           { borderColor: error ? "#fc6d47" : "#c0cbd3" },
         ]}
         {...inputProps}

@@ -10,4 +10,17 @@ export const formStyles = StyleSheet.create({
     borderRadius: 50,
     marginTop: 20,
   },
+  twoOnRow: {
+    flex: 2,
+    flexDirection: "row"
+  },
+  smallDropdown: {
+    width: "50%"
+  },
+  spacedView: {
+    marginBottom: 40
+  },
+  multilineHeight: {
+    height: 200
+  }
 });

@@ -22,7 +22,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
     <View style={dropdownStyles.container}>
       {props.label && <Text style={[dropdownStyles.label, props.labelStyle]}>{props.label}</Text>}
       <DropDownPicker
-        style={dropdownStyles.dropdown}
+        style={[dropdownStyles.dropdown, props.dropdownStyle]}
         open={genderOpen}
         value={genderValue}
         items={gender}
@@ -33,8 +33,8 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
         placeholderStyle={dropdownStyles.placeholderStyles}
         onOpen={onGenderOpen}
         onChangeValue={onChange}
-        zIndex={3000}
-        zIndexInverse={1000}
+        zIndex={300}
+        zIndexInverse={100}
       />
     </View>
   );
@@ -44,7 +44,10 @@ type DropdownProps = {
   placeholder: string;
   label?: string;
   labelStyle?: TextStyle;
+  dropdownStyle?: TextStyle;
   list: DropdownValue[];
+  zIndex: number;
+  zIndexInverse: number;
   setValue: (name: string, value: string, validate?: boolean) => void;
 }
 
