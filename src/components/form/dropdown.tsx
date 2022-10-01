@@ -6,17 +6,18 @@ import { DropdownValue } from "src/models/common/dropdown-value";
 import { dropdownStyles } from "./dropdown-styles";
 
 const Dropdown = (props: DropdownProps): JSX.Element => {
-  const [genderOpen, setGenderOpen] = useState(false);
-  const [genderValue, setGenderValue] = useState(null);
-  const [gender, setGender] = useState(props.list);
+  const [open, setOpen] = useState(false);
+  const [dropdownValue, setDropdownValue] = useState(props.value);
+  const [valuesList, setValuesList] = useState(props.list);
   
-  const onGenderOpen = useCallback(() => {
+  const onDropdownOpen = useCallback(() => {
     const i = 2;
   }, []);
 
   const onChange = (data: string | null) => {
     //TODO - fix this ?? thingy
     props.setValue(props.label ?? "", data ?? "", true);
+    setDropdownValue(data ?? undefined);
   };
 
   return (
@@ -24,15 +25,15 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
       {props.label && <Text style={[dropdownStyles.label, props.labelStyle]}>{props.label}</Text>}
       <DropDownPicker
         style={[dropdownStyles.dropdown, props.dropdownStyle, { borderColor: props.error ? "#fc6d47" : "#c0cbd3" },]}
-        open={genderOpen}
-        value={props.value ?? ""}
-        items={gender}
-        setOpen={setGenderOpen}
-        setValue={setGenderValue}
-        setItems={setGender}
+        open={open}
+        value={dropdownValue ?? ""}
+        items={valuesList}
+        setOpen={setOpen}
+        setValue={setDropdownValue}
+        setItems={setValuesList}
         placeholder={props.placeholder}
         placeholderStyle={dropdownStyles.placeholderStyles}
-        onOpen={onGenderOpen}
+        onOpen={onDropdownOpen}
         onChangeValue={onChange}
         zIndex={300}
         zIndexInverse={100}
