@@ -23,15 +23,12 @@ import RoutingContainer from "./src/routing/routing-container";
 patchFlatListProps();
 
 export default App = () => {
-  const redirectUrl = AuthSession.makeRedirectUri({ useProxy: false });
-  //nativeRedirectPath: 182.168.119.106:1900
-  //alert(`redirectUrl ${redirectUrl}`);
   const keycloakConfiguration = {
     clientId: "sigtree-app",
     realm: "test",
     url: "http://localhost:8080/auth",
     nativeRedirectPath: "192.168.119.106:19000",
-    scheme: "exp"
+    scheme: "app.myapp.com"
   };
 
   const [theme, setTheme] = useState<"light" | "dark">("light");
