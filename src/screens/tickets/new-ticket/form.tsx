@@ -1,14 +1,14 @@
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Button } from "@ui-kitten/components/ui";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldError, useForm } from "react-hook-form";
 import { View } from "react-native";
-import { DropdownValue } from "../../models/common/dropdown-value";
-import { Priority } from "../../models/ticket/priority-enum";
-import { AppStackParamList } from "../../routing/route-screens";
-import Dropdown from "./dropdown";
+import { DropdownValue } from "../../../models/common/dropdown-value";
+import { Priority } from "../../../models/ticket/priority-enum";
+import { AppStackParamList } from "../../../routing/route-screens";
+import Dropdown from "../../../components/form/dropdown";
 import { formStyles } from "./form-styles";
-import Input from "./input";
+import Input from "../../../components/form/input";
 
 const Form = (): JSX.Element => {
   const {
@@ -18,7 +18,7 @@ const Form = (): JSX.Element => {
     setValue,
   } = useForm<FormData>();
   //TODO - try to use form state instead of new state
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormData | undefined>(undefined);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   //TODO - get this data from back-end
   const priorityList: DropdownValue[] = [
@@ -113,11 +113,11 @@ const Form = (): JSX.Element => {
 };
 
 type FormData = {
-  category: string,
-  title: string,
-  description: string,
-  priority: Priority,
-  floor: string
+  Category: string,
+  Title: string,
+  Description: string,
+  Priority: Priority,
+  Floor: string
 }
 
 export default Form;
