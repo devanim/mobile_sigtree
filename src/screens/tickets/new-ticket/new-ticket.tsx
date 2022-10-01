@@ -16,7 +16,7 @@ const NewTicket = (): JSX.Element => {
       style={{ backgroundColor: "#181e34" }}
     >
       <View style={newTicketStyles.formContainer}>
-        <TicketForm />
+        <TicketForm mode={"insert"}/>
       </View>
     </KeyboardAwareScrollView>
   );

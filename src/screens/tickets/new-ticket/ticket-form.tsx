@@ -1,7 +1,7 @@
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Button } from "@ui-kitten/components/ui";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { FieldError, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { DropdownValue } from "../../../models/common/dropdown-value";
 import { Priority } from "../../../models/ticket/priority-enum";
@@ -9,8 +9,9 @@ import { AppStackParamList } from "../../../routing/route-screens";
 import Dropdown from "../../../components/form/dropdown";
 import { ticketFormStyles } from "./ticket-form-styles";
 import Input from "../../../components/form/input";
+import { Ticket } from "../../../models/ticket/ticket";
 
-const TicketForm = (): JSX.Element => {
+const TicketForm = (props: TicketFormProps): JSX.Element => {
   const {
     register,
     handleSubmit,
@@ -18,7 +19,8 @@ const TicketForm = (): JSX.Element => {
     setValue,
   } = useForm<FormData>();
   //TODO - try to use form state instead of new state
-  const [errors, setErrors] = useState<FormData | undefined>(undefined);
+  const [errors, setErrors] = useState<FormErrors | undefined>(undefined);
+  const [ticket, setTicket] = useState<Ticket | undefined>(undefined);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   //TODO - get this data from back-end
   const priorityList: DropdownValue[] = [
@@ -40,6 +42,13 @@ const TicketForm = (): JSX.Element => {
     { label: "4", value: "4" },
   ];
 
+  useEffect(() => {
+    if (props.mode === "edit") {
+      setTicket(props.ticket);
+    }
+  });
+
+
   const onSubmit = (data: any) => {
     const vals = getValues();
     alert(`Data ${JSON.stringify(vals)}`);
@@ -58,7 +67,7 @@ const TicketForm = (): JSX.Element => {
       <View style={ticketFormStyles.spacedView}>
         <Dropdown
           label="Category"
-          error={errors["Category"]}
+          error={errors ? errors["Category"] : undefined}
           placeholder="Select Category"
           dropdownStyle={ticketFormStyles.spacedView}
           list={categoryList}
@@ -70,7 +79,7 @@ const TicketForm = (): JSX.Element => {
       </View>
       <Input
         label="Title"
-        error={errors["Title"]}
+        error={errors ? errors["Title"] : undefined}
         {...register("Title", {
           required: { value: true, message: "Title is required" },
         })}
@@ -78,7 +87,7 @@ const TicketForm = (): JSX.Element => {
       />
       <Input
         label="Description"
-        error={errors["Description"]}
+        error={errors ? errors["Description"] : undefined}
         multiline={true}
         inputStyle={ticketFormStyles.multilineHeight}
         {...register("Description", {
@@ -89,7 +98,7 @@ const TicketForm = (): JSX.Element => {
       <View style={ticketFormStyles.twoOnRow}>
         <Dropdown
           label="Priority"
-          error={errors["Priority"]}
+          error={errors ? errors["Priority"] : undefined}
           placeholder="Select Priority"
           list={priorityList}
           {...register("Priority", {
@@ -99,7 +108,7 @@ const TicketForm = (): JSX.Element => {
         />
         <Dropdown
           label="Floor"
-          error={errors["Floor"]}
+          error={errors ? errors["Floor"] : undefined}
           placeholder="Select Floor"
           list={floorList}
           {...register("Floor", {
@@ -118,6 +127,19 @@ type FormData = {
   Description: string,
   Priority: Priority,
   Floor: string
+}
+
+type FormErrors = {
+  Category: FieldError,
+  Title: FieldError,
+  Description: FieldError,
+  Priority: FieldError,
+  Floor: FieldError
+}
+
+type TicketFormProps = {
+  mode: "insert"|"edit",
+  ticket?: Ticket
 }
 
 export default TicketForm;

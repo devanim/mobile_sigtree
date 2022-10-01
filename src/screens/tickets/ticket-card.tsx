@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { Ticket } from "src/models/ticket/ticket";
+import { Ticket } from "../../models/ticket/ticket";
 import Text from "../../components/text";
 import { Button } from "@ui-kitten/components";
 import { mockIndividualTicketsList } from "./mock-tickets";
 import { ticketCardStyles } from "./ticket-card-styles";
 import { WebView } from "react-native-webview";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { AppStackParamList } from "src/routing/route-screens";
+import { AppStackParamList } from "../../routing/route-screens";
 
 const TicketCard = (props: TicketCardProps): JSX.Element => {
   const [ticket, setTicket] = useState<Ticket | undefined>(undefined);
@@ -28,7 +28,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
     <View style={ticketCardStyles.containerCard}>
       <View style={ticketCardStyles.twoOnRow}>
         <Button children={"Close"} onPress={() => props.onTicketClosed()}></Button>
-        <Button children={"Edit"} onPress={() => navigate("NewTicketScreen", {screen: "NewTicketScreen"})}></Button>
+        <Button children={"Edit"} onPress={() => navigate("EditTicketScreen", {screen: "EditTicketScreen", ...ticket})}></Button>
 
       </View>
       <Text style={ticketCardStyles.textStyle} category="title1">{`${ticket?.id} - ${ticket?.name}`}</Text>
