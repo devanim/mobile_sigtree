@@ -20,7 +20,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   } = useForm<FormData>();
   //TODO - try to use form state instead of new state
   const [errors, setErrors] = useState<FormErrors | undefined>(undefined);
-  const [ticket, setTicket] = useState<Ticket | undefined>(undefined);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   //TODO - get this data from back-end
   const priorityList: DropdownValue[] = [
@@ -42,13 +41,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     { label: "4", value: "4" },
   ];
 
-  useEffect(() => {
-    if (props.mode === "edit") {
-      setTicket(props.ticket);
-    }
-  });
-
-
   const onSubmit = (data: any) => {
     const vals = getValues();
     alert(`Data ${JSON.stringify(vals)}`);
@@ -67,6 +59,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
       <View style={ticketFormStyles.spacedView}>
         <Dropdown
           label="Category"
+          value={props.ticket?.category}
           error={errors ? errors["Category"] : undefined}
           placeholder="Select Category"
           dropdownStyle={ticketFormStyles.spacedView}
@@ -79,6 +72,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
       </View>
       <Input
         label="Title"
+        value={props.ticket?.name ?? ""}
         error={errors ? errors["Title"] : undefined}
         {...register("Title", {
           required: { value: true, message: "Title is required" },
@@ -87,6 +81,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
       />
       <Input
         label="Description"
+        value={props.ticket?.content ?? ""}
         error={errors ? errors["Description"] : undefined}
         multiline={true}
         inputStyle={ticketFormStyles.multilineHeight}
@@ -98,6 +93,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
       <View style={ticketFormStyles.twoOnRow}>
         <Dropdown
           label="Priority"
+          value={props.ticket?.priorityKey ?? ""}
           error={errors ? errors["Priority"] : undefined}
           placeholder="Select Priority"
           list={priorityList}
@@ -108,6 +104,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
         />
         <Dropdown
           label="Floor"
+          value={props.ticket?.floor ?? ""}
           error={errors ? errors["Floor"] : undefined}
           placeholder="Select Floor"
           list={floorList}

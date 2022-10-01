@@ -5,6 +5,7 @@ import { inputStyles } from "./input-styles";
 
 interface InputProps extends TextInputProps {
   name: string;
+  value: string;
   label?: string;
   inputStyle?: TextStyle;
   labelStyle?: TextStyle;
@@ -26,6 +27,7 @@ const Input = (props: InputProps): React.ReactElement => {
           { borderColor: error ? "#fc6d47" : "#c0cbd3" },
         ]}
         {...inputProps}
+        value={props.value}
         onChangeText={(val: string) => props.setValue(label ?? "", val, true)}
       />
       <Text style={inputStyles.textError}>{error && error.message}</Text>

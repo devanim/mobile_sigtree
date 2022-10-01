@@ -25,7 +25,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
       <DropDownPicker
         style={[dropdownStyles.dropdown, props.dropdownStyle, { borderColor: props.error ? "#fc6d47" : "#c0cbd3" },]}
         open={genderOpen}
-        value={genderValue}
+        value={props.value ?? ""}
         items={gender}
         setOpen={setGenderOpen}
         setValue={setGenderValue}
@@ -43,6 +43,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
 
 type DropdownProps = {
   placeholder: string;
+  value?: string;
   error?: FieldError | undefined;
   label?: string;
   labelStyle?: TextStyle;
