@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const formStyles = StyleSheet.create({
+export const ticketFormStyles = StyleSheet.create({
   submit: {
     backgroundColor: "#5188E3",
     color: "white",

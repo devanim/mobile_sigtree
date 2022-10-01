@@ -2,8 +2,8 @@ import * as React from "react";
 import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import Form from "./form";
-import ticketValidation from "./ticket-validations";
+import TicketForm from "./ticket-form";
+import ticketFormConfiguration from "./ticket-form-configuration";
 import { newTicketStyles } from "./new-ticket-styles";
 
 const NewTicket = (): JSX.Element => {
@@ -17,7 +17,7 @@ const NewTicket = (): JSX.Element => {
       style={{ backgroundColor: "#181e34" }}
     >
       <View style={newTicketStyles.formContainer}>
-        <Form />
+        <TicketForm />
       </View>
     </KeyboardAwareScrollView>
   );

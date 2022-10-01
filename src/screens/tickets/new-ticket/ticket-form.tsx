@@ -1,16 +1,17 @@
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Button } from "@ui-kitten/components/ui";
 import React, { useState } from "react";
-import { FieldError, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { View } from "react-native";
 import { DropdownValue } from "../../../models/common/dropdown-value";
 import { Priority } from "../../../models/ticket/priority-enum";
 import { AppStackParamList } from "../../../routing/route-screens";
 import Dropdown from "../../../components/form/dropdown";
-import { formStyles } from "./form-styles";
+import { ticketFormStyles } from "./ticket-form-styles";
 import Input from "../../../components/form/input";
+import { FormConfiguration } from "../../../models/form-configuration";
 
-const Form = (): JSX.Element => {
+const TicketForm = (props: TicketFormProps): JSX.Element => {
   const {
     register,
     handleSubmit,
@@ -55,12 +56,12 @@ const Form = (): JSX.Element => {
     <View>
       <Button children={"Submit"} onPress={handleSubmit(onSubmit, onInvalid)} />
       <Button children={"Cancel"} onPress={goBack} />
-      <View style={formStyles.spacedView}>
+      <View style={ticketFormStyles.spacedView}>
         <Dropdown
           label="Category"
           error={errors["Category"]}
           placeholder="Select Category"
-          dropdownStyle={formStyles.spacedView}
+          dropdownStyle={ticketFormStyles.spacedView}
           list={categoryList}
           {...register("Category", {
             required: { value: true, message: "Category is required" },
@@ -80,13 +81,13 @@ const Form = (): JSX.Element => {
         label="Description"
         error={errors["Description"]}
         multiline={true}
-        inputStyle={formStyles.multilineHeight}
+        inputStyle={ticketFormStyles.multilineHeight}
         {...register("Description", {
           required: { value: true, message: "Description is required" },
         })}
         setValue={setValue}
       />
-      <View style={formStyles.twoOnRow}>
+      <View style={ticketFormStyles.twoOnRow}>
         <Dropdown
           label="Priority"
           error={errors["Priority"]}
@@ -112,6 +113,10 @@ const Form = (): JSX.Element => {
   );
 };
 
+type TicketFormProps = {
+  configuration: FormConfiguration
+}
+
 type FormData = {
   Category: string,
   Title: string,
@@ -120,4 +125,4 @@ type FormData = {
   Floor: string
 }
 
-export default Form;
+export default TicketForm;
