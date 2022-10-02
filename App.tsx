@@ -7,7 +7,7 @@ import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 
 import { KeycloakProvider } from "expo-keycloak-auth";
 
-import * as i18n from './src/localization/i18n';
+import {DEFAULT_LANGUAGE, setI18nConfig} from './src/localization/i18n';
 import localizationContext from './src/localization/localization-context';
 
 import * as eva from "@eva-design/eva";
@@ -24,7 +24,7 @@ import RoutingContainer from "./src/routing/routing-container";
 
 patchFlatListProps();
 
-export default App = () => {
+const App = (): JSX.Element => {
   const keycloakConfiguration = {
     clientId: "sigtree-app",
     realm: "test",
@@ -35,14 +35,15 @@ export default App = () => {
 
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [selectedRealm, setSelectedRealm] = useState<RealmDetails | null>(null);
-  const [locale, setLocale] = React.useState(i18n.DEFAULT_LANGUAGE);
+  const [locale, setLocale] = React.useState();
+  const i18n = setI18nConfig("ro");
   const localizationCtx = React.useMemo(
     () => ({
-      t: (scope: any, options: any) => i18n.t(scope, {locale, ...options}),
+      t: (scope: any, options: any) => i18n.t(scope, { ...options}),
       locale,
       setLocale,
     }),
-    [locale],
+    [],
   );
 
   React.useEffect(() => {
@@ -95,3 +96,5 @@ export default App = () => {
     </KeycloakProvider>
   );
 };
+
+export default App;
