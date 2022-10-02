@@ -1,11 +1,14 @@
 import { createContext } from "react";
 
-const localizationContext = createContext<LocalizationModel | null>(null);
+const defaultModel: LocalizationModel = {
+  t: () => {return;}
+}
+const localizationContext = createContext<LocalizationModel>(defaultModel);
 
 type LocalizationModel = {
-  t: (scope: any, options: any) => any; 
-  locale: string; 
-  setLocale: React.Dispatch<React.SetStateAction<string>>; 
+  t: (scope: any, options?: any) => any; 
+  locale?: string; 
+  setLocale?: React.Dispatch<React.SetStateAction<string>>; 
 }
 
 export default localizationContext;

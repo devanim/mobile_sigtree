@@ -1,18 +1,17 @@
-//Intentionally left as js file. TODO - maybe try to change to TS later
 import {I18nManager} from 'react-native';
-import i18n from 'i18n-js';
-import memoize from 'lodash.memoize';
+import { I18n } from 'i18n-js';
+import { memoize } from 'lodash';
 
 export const DEFAULT_LANGUAGE = 'en';
-
 export const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
-  en: () => require('./assets/locales/en.json'),
-  ro: () => require('./assets/locales/ro.json'),
+  en: (): any => require('../../assets/locales/en.json'),
+  ro: (): any => require('../../assets/locales/ro.json'),
 };
+export const i18nInstance = new I18n();
 
 export const translate = memoize(
-  (key, config) => i18n.t(key, config),
+  (key, config) => i18nInstance.t(key, config),
   (key, config) => (config ? key + JSON.stringify(config) : key),
 );
 
@@ -22,7 +21,6 @@ export const setI18nConfig = (codeLang = null) => {
   // fallback if no available language fits
   const fallback = {languageTag: DEFAULT_LANGUAGE, isRTL: false};
   const lang = codeLang ? {languageTag: codeLang, isRTL: false} : null;
-
   const {languageTag, isRTL} = lang ? lang : fallback;
 
   // clear translation cache
@@ -30,8 +28,8 @@ export const setI18nConfig = (codeLang = null) => {
   // update layout direction
   I18nManager.forceRTL(isRTL);
   // set i18n-js config
-  i18n.translations = {[languageTag]: translationGetters[languageTag]()};
-  i18n.locale = languageTag;
+  i18nInstance.translations = {[languageTag]: translationGetters[languageTag]()};
+  i18nInstance.locale = languageTag;
 
   return languageTag;
 };
