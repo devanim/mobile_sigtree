@@ -6,6 +6,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 
 import { KeycloakProvider } from "expo-keycloak-auth";
+import * as Localization from 'expo-localization';
 
 import {DEFAULT_LANGUAGE, setI18nConfig} from './src/localization/i18n';
 import localizationContext from './src/localization/localization-context';
@@ -35,8 +36,8 @@ const App = (): JSX.Element => {
 
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [selectedRealm, setSelectedRealm] = useState<RealmDetails | null>(null);
-  const [locale, setLocale] = React.useState();
-  const i18n = setI18nConfig("ro");
+  const [locale, setLocale] = React.useState(Localization.locale);
+  const i18n = setI18nConfig(DEFAULT_LANGUAGE);
   const localizationCtx = React.useMemo(
     () => ({
       t: (scope: any, options: any) => i18n.t(scope, { ...options}),
