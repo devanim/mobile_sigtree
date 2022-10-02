@@ -6,7 +6,9 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 
 import { KeycloakProvider } from "expo-keycloak-auth";
-import * as AuthSession from "expo-auth-session";
+
+import * as i18n from './src/localization/i18n';
+import localizationContext from './src/localization/localization-context';
 
 import * as eva from "@eva-design/eva";
 import { default as darkTheme } from "./src/theme/dark.json";
@@ -33,6 +35,15 @@ export default App = () => {
 
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [selectedRealm, setSelectedRealm] = useState<RealmDetails | null>(null);
+  const [locale, setLocale] = React.useState(i18n.DEFAULT_LANGUAGE);
+  const localizationCtx = React.useMemo(
+    () => ({
+      t: (scope: any, options: any) => i18n.t(scope, {locale, ...options}),
+      locale,
+      setLocale,
+    }),
+    [locale],
+  );
 
   React.useEffect(() => {
     AsyncStorage.getItem("theme").then((value) => {
@@ -53,32 +64,34 @@ export default App = () => {
 
   return (
     <KeycloakProvider {...keycloakConfiguration}>
-      <SafeAreaProvider>
-        <RealmContext.Provider value={{ realmData: selectedRealm, setRealm }}>
-          <ThemeContext.Provider value={{ theme, toggleTheme }}>
-            <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
-            <ApplicationProvider
-              {...eva}
-              theme={
-                theme === "light"
-                  ? { ...eva.light, ...customTheme, ...lightTheme }
-                  : { ...eva.dark, ...customTheme, ...darkTheme }
-              }
-              /* @ts-ignore */
-              customMapping={customMapping}
-            >
-              <SafeAreaProvider>
-                <StatusBar
-                  style={theme === "light" ? "dark" : "light"}
-                  translucent={true}
-                  backgroundColor={"#00000000"}
-                />
-                <RoutingContainer />
-              </SafeAreaProvider>
-            </ApplicationProvider>
-          </ThemeContext.Provider>
-        </RealmContext.Provider>
-      </SafeAreaProvider>
+      <localizationContext.Provider value={localizationCtx} >
+        <SafeAreaProvider>
+          <RealmContext.Provider value={{ realmData: selectedRealm, setRealm }}>
+            <ThemeContext.Provider value={{ theme, toggleTheme }}>
+              <IconRegistry icons={[EvaIconsPack, AssetIconsPack]} />
+              <ApplicationProvider
+                {...eva}
+                theme={
+                  theme === "light"
+                    ? { ...eva.light, ...customTheme, ...lightTheme }
+                    : { ...eva.dark, ...customTheme, ...darkTheme }
+                }
+                /* @ts-ignore */
+                customMapping={customMapping}
+              >
+                <SafeAreaProvider>
+                  <StatusBar
+                    style={theme === "light" ? "dark" : "light"}
+                    translucent={true}
+                    backgroundColor={"#00000000"}
+                  />
+                  <RoutingContainer />
+                </SafeAreaProvider>
+              </ApplicationProvider>
+            </ThemeContext.Provider>
+          </RealmContext.Provider>
+        </SafeAreaProvider>
+      </localizationContext.Provider>
     </KeycloakProvider>
   );
 };
