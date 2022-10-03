@@ -30,10 +30,10 @@ const HomeScreen = (): JSX.Element => {
 
   return (
     <Container style={homeScreenStyles.container}>
-      <Text>{t('BTN_TEST')}</Text>
+      <Text>{t("BTN_TEST")}</Text>
       <Button
         style={homeScreenStyles.button}
-        children={"Go to dashboard"}
+        children={t("NAVIGATE_TO_DASHBOARD")}
         onPress={() => {
           //TODO - after back-end is integrated we need to use language coming from user profile here
           handleChange("ro");
@@ -44,7 +44,7 @@ const HomeScreen = (): JSX.Element => {
       />
       <Button
         style={homeScreenStyles.button}
-        children={"Read Tems of Services"}
+        children={t("READ_TOS")}
         onPress={() => setShowTOS(true)}
         size={"small"}
       />

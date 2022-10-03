@@ -1,3 +1,5 @@
 {
-  "BTN_TEST": "english value button"
+  "BTN_TEST": "english value button",
+  "NAVIGATE_TO_DASHBOARD": "Go to dashboard",
+  "READ_TOS": "Read Tems of Services"
 }

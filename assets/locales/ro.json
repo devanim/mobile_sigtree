@@ -1,3 +1,5 @@
 {
-  "BTN_TEST": "romanian value button"
+  "BTN_TEST": "romanian value button",
+  "NAVIGATE_TO_DASHBOARD": "Mergeti la dashboard",
+  "READ_TOS": "Cititi termeni si conditii"
 }
