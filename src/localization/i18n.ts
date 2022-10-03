@@ -27,6 +27,6 @@ export const setI18nConfig = (codeLang: string | null = null): I18n => {
 
   i18nInstance.translations = {[languageTag]: translationGetters[languageTag]()};
   i18nInstance.locale = languageTag;
-  alert(`translations ${JSON.stringify(i18nInstance.translations)}`);
+
   return i18nInstance;
 };

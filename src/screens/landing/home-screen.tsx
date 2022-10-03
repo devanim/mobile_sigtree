@@ -9,12 +9,12 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "../../routing/route-screens";
 import RealmContainer from "./realm-handler/realm-container";
 import TermsOfService from "../../components/terms-of-service";
-import localizationContext from "../../localization/localization-context";
+import LocalizationContext from "../../localization/localization-context";
 
 const HomeScreen = (): JSX.Element => {
   const [showTOS, setShowTOS] = useState(false);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
-  const { t, locale } = useContext(localizationContext);
+  const { t, handleChange } = useContext(LocalizationContext);
 
   const onTOSCancel = () => {
     setShowTOS(false);
@@ -31,12 +31,14 @@ const HomeScreen = (): JSX.Element => {
   return (
     <Container style={homeScreenStyles.container}>
       <Text>{t('BTN_TEST')}</Text>
-      <Text>Locale: {locale}</Text>
       <Button
         style={homeScreenStyles.button}
         children={"Go to dashboard"}
-        onPress={() =>
+        onPress={() => {
+          //TODO - after back-end is integrated we need to use language coming from user profile here
+          handleChange("ro");
           navigate("DashboardNavigator", { screen: "DashboardScreen" })
+        }
         }
         size={"small"}
       />

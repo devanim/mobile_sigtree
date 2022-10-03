@@ -9,7 +9,7 @@ import { KeycloakProvider } from "expo-keycloak-auth";
 import * as Localization from 'expo-localization';
 
 import {DEFAULT_LANGUAGE, setI18nConfig} from './src/localization/i18n';
-import localizationContext from './src/localization/localization-context';
+import LocalizationContext from './src/localization/localization-context';
 
 import * as eva from "@eva-design/eva";
 import { default as darkTheme } from "./src/theme/dark.json";
@@ -37,15 +37,16 @@ const App = (): JSX.Element => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [selectedRealm, setSelectedRealm] = useState<RealmDetails | null>(null);
   const [locale, setLocale] = React.useState(Localization.locale);
-  const i18n = setI18nConfig(DEFAULT_LANGUAGE);
+  let i18n = setI18nConfig(DEFAULT_LANGUAGE);
   const localizationCtx = React.useMemo(
     () => ({
       t: (scope: any, options: any) => i18n.t(scope, { ...options}),
       locale,
       setLocale,
-    }),
-    [],
-  );
+      handleChange: (language: string) => {
+        i18n = setI18nConfig(language);
+      }
+    }), []);
 
   React.useEffect(() => {
     AsyncStorage.getItem("theme").then((value) => {
@@ -66,7 +67,7 @@ const App = (): JSX.Element => {
 
   return (
     <KeycloakProvider {...keycloakConfiguration}>
-      <localizationContext.Provider value={localizationCtx} >
+      <LocalizationContext.Provider value={localizationCtx}  >
         <SafeAreaProvider>
           <RealmContext.Provider value={{ realmData: selectedRealm, setRealm }}>
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -93,7 +94,7 @@ const App = (): JSX.Element => {
             </ThemeContext.Provider>
           </RealmContext.Provider>
         </SafeAreaProvider>
-      </localizationContext.Provider>
+      </LocalizationContext.Provider>
     </KeycloakProvider>
   );
 };
