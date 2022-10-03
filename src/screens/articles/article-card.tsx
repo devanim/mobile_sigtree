@@ -34,7 +34,7 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
 
 interface ArticleCardProps {
   articleId: number;
-  onArticleClosed: Function;
+  onArticleClosed: () => void;
 }
 
 export default ArticleCard;

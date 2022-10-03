@@ -31,7 +31,7 @@ const ArticleBriefCard = (props: ArticleBriefCardProps): JSX.Element => {
 
 interface ArticleBriefCardProps {
   articleBrief: ArticleBrief;
-  onArticleSelected: Function;
+  onArticleSelected: (articleId: number) => void;
 }
 
 export default ArticleBriefCard;

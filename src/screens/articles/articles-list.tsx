@@ -71,7 +71,7 @@ const ArticlesList = (props: ArticleListProps): JSX.Element => {
 };
 
 interface ArticleListProps {
-  onArticleSelected: Function;
+  onArticleSelected: (articleId: number) => void;
 }
 
 export default ArticlesList;

@@ -40,14 +40,14 @@ const RealmList = (props: RealmListProps): JSX.Element => {
 
 interface RealmListProps {
   storedRealms: RealmDetails[];
-  onRealmSelected: Function;
-  onRemoveRealm: Function;
+  onRealmSelected: (realmDetails: RealmDetails) => void;
+  onRemoveRealm: (realmName: string) => void;
 }
 
 interface LandingPageRealms {
   children: string;
-  onPress: Function;
-  onCancel: Function;
+  onPress: () => void;
+  onCancel: (realmName: string) => void;
 }
 
 export default RealmList;

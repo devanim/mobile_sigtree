@@ -49,6 +49,6 @@ export interface BarcodeReadPayload {
 }
 
 interface RealmSelectorProps {
-  onDataRead: Function;
-  onCancel: Function;
+  onDataRead: (payload: BarcodeReadPayload) => void;
+  onCancel: () =>  void;
 }

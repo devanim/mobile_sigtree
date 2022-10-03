@@ -58,7 +58,7 @@ const RealmContainer = (): JSX.Element => {
     AsyncStorage.setItem(REALMS_KEY, JSON.stringify(newRealms));
   };
 
-  const onBarcodeReadCallback = (payload: BarcodeReadPayload) => {
+  const onBarcodeReadCallback = (payload: BarcodeReadPayload): void => {
     const parsedRealmDetails = new RealmDetails(payload.data);
 
     if (!parsedRealmDetails.sucesfullyParsed) {
