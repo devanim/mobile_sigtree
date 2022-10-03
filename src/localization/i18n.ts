@@ -4,16 +4,32 @@ import { memoize } from 'lodash';
 
 //TODO - move to conviguration file
 export const DEFAULT_LANGUAGE = 'en';
+
 const translationGetters: {[key: string]: () => string} = {
   en: (): string => require('../../assets/locales/en.json'),
   ro: (): string => require('../../assets/locales/ro.json'),
 };
 
-export const setI18nConfig = (codeLang: string | null = null): I18n => {
+const setGetterMethod = (languageTag: string) => {
+  let languageGetterMethod = translationGetters[languageTag];
+
+  if (!languageGetterMethod) {
+    languageGetterMethod = translationGetters[DEFAULT_LANGUAGE];
+  }
+  return languageGetterMethod;
+}
+
+const getLanguageDef = (codeLang: string | null): LanguageDef => {
   const fallback = {languageTag: DEFAULT_LANGUAGE, isRTL: false};
   const lang = codeLang ? {languageTag: codeLang, isRTL: false} : null;
-  const i18nInstance = new I18n();
   const {languageTag, isRTL} = lang ? lang : fallback;
+
+  return {tag: languageTag, isRTL};
+}
+
+export const setI18nConfig = (codeLang: string | null = null): I18n => {
+  const languageDef: LanguageDef = getLanguageDef(codeLang);
+  const i18nInstance = new I18n();
   const translate = memoize(
     (key, config) => i18nInstance.t(key, config),
     (key, config) => (config ? key + JSON.stringify(config) : key),
@@ -23,10 +39,17 @@ export const setI18nConfig = (codeLang: string | null = null): I18n => {
     translate.cache.clear();
   }
   
-  I18nManager.forceRTL(isRTL);
+  I18nManager.forceRTL(languageDef.isRTL);
 
-  i18nInstance.translations = {[languageTag]: translationGetters[languageTag]()};
-  i18nInstance.locale = languageTag;
+  const languageGetterMethod = setGetterMethod(languageDef.tag);
+
+  i18nInstance.translations = {[languageDef.tag]: languageGetterMethod()};
+  i18nInstance.locale = languageDef.tag;
 
   return i18nInstance;
 };
+
+type LanguageDef = {
+  tag: string;
+  isRTL: boolean;
+}
