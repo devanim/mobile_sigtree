@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { AdMobBanner } from "expo-ads-admob";
 
 type AdMobProps = {
