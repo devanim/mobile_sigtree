@@ -38,13 +38,13 @@ const RealmList = (props: RealmListProps): JSX.Element => {
     />;
 };
 
-interface RealmListProps {
+type RealmListProps = {
   storedRealms: RealmDetails[];
   onRealmSelected: (realmDetails: RealmDetails) => void;
   onRemoveRealm: (realmName: string) => void;
 }
 
-interface LandingPageRealms {
+type LandingPageRealms = {
   children: string;
   onPress: () => void;
   onCancel: (realmName: string) => void;

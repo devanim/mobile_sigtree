@@ -29,7 +29,7 @@ const ArticleBriefCard = (props: ArticleBriefCardProps): JSX.Element => {
   );
 };
 
-interface ArticleBriefCardProps {
+type ArticleBriefCardProps = {
   articleBrief: ArticleBrief;
   onArticleSelected: (articleId: number) => void;
 }

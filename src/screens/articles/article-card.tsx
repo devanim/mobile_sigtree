@@ -32,7 +32,7 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
   );
 };
 
-interface ArticleCardProps {
+type ArticleCardProps = {
   articleId: number;
   onArticleClosed: () => void;
 }

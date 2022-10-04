@@ -15,12 +15,12 @@ const Carousel = (props: CarouselProps): JSX.Element => {
   );
 };
 
-interface CarouselProps {
+type CarouselProps = {
   name: string;
   data: CarouselData[];
 }
 
-interface CarouselData {
+type CarouselData = {
   data: any;
   childComponent: JSX.Element;
 }

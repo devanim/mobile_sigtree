@@ -13,7 +13,7 @@ import Text from "./text";
 
 import { EvaStatus } from "@ui-kitten/components/devsupport";
 
-interface NavigationActionProps {
+type NavigationActionProps = {
   icon?: string;
   marginTop?: number;
   marginBottom?: number;

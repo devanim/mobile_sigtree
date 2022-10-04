@@ -22,7 +22,7 @@ const TermsOfService = (props: TermsOfServiceProps): JSX.Element => {
   );
 };
 
-interface TermsOfServiceProps {
+type TermsOfServiceProps = {
   buildingId: number | undefined;
   onCancel: () => void;
 }

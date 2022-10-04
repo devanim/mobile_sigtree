@@ -2,7 +2,7 @@ import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { AdMobBanner } from "expo-ads-admob";
 
-interface Props {
+type AdMobProps = {
   bannerSize?:
     | "banner"
     | "largeBanner"
@@ -15,7 +15,7 @@ interface Props {
   marginTop?: number;
 }
 
-const AdMob = ({ marginBottom, marginTop, bannerSize = "banner" }: Props) => {
+const AdMob = ({ marginBottom, marginTop, bannerSize = "banner" }: AdMobProps): JSX.Element => {
   const adUnitID = "ca-app-pub-6106751649082059/9578983336";
 
   return (

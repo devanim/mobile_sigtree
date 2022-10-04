@@ -81,7 +81,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
   );
 };
 
-interface TicketBriefCardProps {
+type TicketBriefCardProps = {
   ticketBrief: TicketBrief;
   onTicketSelected: (ticketId: string) => void;
 }

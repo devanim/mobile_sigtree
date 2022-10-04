@@ -43,12 +43,12 @@ const RealmSelector = (props: RealmSelectorProps): JSX.Element => {
 
 export default RealmSelector;
 
-export interface BarcodeReadPayload {
+export type BarcodeReadPayload = {
   type: string;
   data: any;
 }
 
-interface RealmSelectorProps {
+type RealmSelectorProps = {
   onDataRead: (payload: BarcodeReadPayload) => void;
   onCancel: () =>  void;
 }

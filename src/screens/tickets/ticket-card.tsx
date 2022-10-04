@@ -44,7 +44,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
   );
 };
 
-interface TicketCardProps {
+type TicketCardProps = {
   ticketId: string;
   onTicketClosed: () => void;
 }

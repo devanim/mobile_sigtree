@@ -70,7 +70,7 @@ const ArticlesList = (props: ArticleListProps): JSX.Element => {
   );
 };
 
-interface ArticleListProps {
+type ArticleListProps = {
   onArticleSelected: (articleId: number) => void;
 }
 

@@ -7,12 +7,12 @@ import {
   Icon,
 } from "@ui-kitten/components";
 
-interface Props {
+type CheckboxProps = {
   checked?: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
-const Checkbox = ({ checked, style }: Props): JSX.Element => {
+const Checkbox = ({ checked, style }: CheckboxProps): JSX.Element => {
   const theme = useTheme();
   const styles = useStyleSheet(themedStyles);
   return (

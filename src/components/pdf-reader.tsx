@@ -5,7 +5,7 @@ const PdfReader = (props: PdfReaderProps): JSX.Element => {
   return (<WebView style={pdfReaderStyles.content} originWhitelist={['*']}  source={{ uri: props.sourceUrl }} />);
 }
 
-interface PdfReaderProps {
+type PdfReaderProps = {
   sourceUrl: string;
 }
 

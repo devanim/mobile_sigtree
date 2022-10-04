@@ -71,7 +71,7 @@ const TicketsList = (props: TicketsListProps): JSX.Element => {
   );
 };
 
-interface TicketsListProps {
+type TicketsListProps = {
   onTicketSelected: (ticketId: string) => void;
 }
 

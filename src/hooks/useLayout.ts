@@ -8,7 +8,7 @@ const useLayout = (): LayoutHookResponse => {
   return { width, height, top, bottom };
 };
 
-interface LayoutHookResponse {
+type LayoutHookResponse = {
   width: number;
   height: number;
   top: number;
