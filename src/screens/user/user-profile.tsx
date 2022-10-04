@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { UserProfile as UserProfileModel } from "../../models/user-profile/user-profile";
 import { ResponseStatus } from "../../utils/response-status-enum";
 import Text from "../../components/text";
 import { mockUserProfile } from "./mock-user-profile";
 import { userProfileStyle } from "./user-profile-style";
-import Checkbox from "../../components/Checkbox";
+import CustCheckbox from "../../components/cust-checkbox";
 
 const UserProfile = (): JSX.Element => {
-  const [userProfile, setUserProfile] = useState<UserProfileModel | undefined>(undefined);
+  const [userProfile, setUserProfile] = useState<UserProfileModel>(mockUserProfile.data);
 
   useEffect(() => {
     //TODO - replace with axios call to back-end
@@ -22,7 +22,7 @@ const UserProfile = (): JSX.Element => {
   }, []);
 
   return (
-    <View style={userProfileStyle.containerCard}>
+    <ScrollView style={userProfileStyle.containerCard}>
       <Text style={userProfileStyle.default}>
         Actualizati setarile de utilizator
       </Text>
@@ -50,43 +50,16 @@ const UserProfile = (): JSX.Element => {
         Actualizati setarile pentru notificari
       </Text>
       <View style={userProfileStyle.breakLine} />
-      <View style={userProfileStyle.checkboxContainer}>
-        <Checkbox checked={userProfile?.notifyOnNewNote} style={userProfileStyle.checkbox}/>
-        <Text style={[userProfileStyle.label, userProfileStyle.default]}>Primeste notificari despre note noi</Text>
-      </View>
-      <View style={userProfileStyle.checkboxContainer}>
-        <Checkbox checked={userProfile?.notifyOnStatusNew} style={userProfileStyle.checkbox}/>
-        <Text style={[userProfileStyle.label, userProfileStyle.default]}>Notificare status - Nou</Text>
-      </View>
-      <View style={userProfileStyle.checkboxContainer}>
-        <Checkbox checked={userProfile?.notifyOnStatusProgress} style={userProfileStyle.checkbox}/>
-        <Text style={[userProfileStyle.label, userProfileStyle.default]}>Notificare status - In Progres</Text>
-      </View>
-      <View style={userProfileStyle.checkboxContainer}>
-        <Checkbox checked={userProfile?.notifyOnStatusPending} style={userProfileStyle.checkbox}/>
-        <Text style={[userProfileStyle.label, userProfileStyle.default]}>Notificare status - In Asteptare</Text>
-      </View>
-      <View style={userProfileStyle.checkboxContainer}>
-        <Checkbox checked={userProfile?.notifyOnStatusResolved} style={userProfileStyle.checkbox}/>
-        <Text style={[userProfileStyle.label, userProfileStyle.default]}>Notificare status - Rezolvat</Text>
-      </View>
-      <View style={userProfileStyle.checkboxContainer}>
-        <Checkbox checked={userProfile?.notifyOnStatusClosed} style={userProfileStyle.checkbox}/>
-        <Text style={[userProfileStyle.label, userProfileStyle.default]}>Notificare status - Inchis</Text>
-      </View>
-      <View style={userProfileStyle.checkboxContainer}>
-        <Checkbox checked={userProfile?.notifyOnMyTicketsOnly} style={userProfileStyle.checkbox}/>
-        <Text style={[userProfileStyle.label, userProfileStyle.default]}>Primeste notificari doar pentru tichetele/serviciile mele</Text>
-      </View>
-      <View style={userProfileStyle.checkboxContainer}>
-        <Checkbox checked={userProfile?.allowNewsletters} style={userProfileStyle.checkbox}/>
-        <Text style={[userProfileStyle.label, userProfileStyle.default]}>Newsletter</Text>
-      </View>
-      <View style={userProfileStyle.checkboxContainer}>
-        <Checkbox checked={userProfile?.notifyOnNewDocument} style={userProfileStyle.checkbox}/>
-        <Text style={[userProfileStyle.label, userProfileStyle.default]}>Notificare document adaugat</Text>
-      </View>
-    </View>
+      <CustCheckbox isChecked={userProfile?.notifyOnNewNote} label="Primeste notificari despre note noi"/>
+      <CustCheckbox isChecked={userProfile?.notifyOnStatusNew} label="Notificare status - Nou"/>
+      <CustCheckbox isChecked={userProfile?.notifyOnStatusProgress} label="Notificare status - In Progress"/>
+      <CustCheckbox isChecked={userProfile?.notifyOnStatusPending} label="Notificare status - In Asteptare"/>
+      <CustCheckbox isChecked={userProfile?.notifyOnStatusResolved} label="Notificare status - Rezolvat"/>
+      <CustCheckbox isChecked={userProfile?.notifyOnStatusClosed} label="Notificare status - Inchis"/>
+      <CustCheckbox isChecked={userProfile?.notifyOnMyTicketsOnly} label="Primeste notificari doar pentru tichetele/serviciile mele"/>
+      <CustCheckbox isChecked={userProfile?.allowNewsletters} label="Newsletter"/>
+      <CustCheckbox isChecked={userProfile?.notifyOnNewDocument} label="Notificare document adaugat"/>
+    </ScrollView>
   );
 };
 

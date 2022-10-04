@@ -14,15 +14,6 @@ export const userProfileStyle = StyleSheet.create({
     borderBottomColor: 'black',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  checkboxContainer: {
-    flexDirection: "row"
-  },
-  checkbox: {
-    alignSelf: "center",
-  },
-  label: {
-    margin: 8,
-  },
   twoColumns: {
     flex: 2,
     flexDirection: "row"
