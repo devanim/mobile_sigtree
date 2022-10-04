@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 
 import Container from "../../components/container";
 import { Button } from "@ui-kitten/components";
@@ -7,25 +7,11 @@ import { homeScreenStyles } from "./home-screen-styles";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "../../routing/route-screens";
 import RealmContainer from "./realm-handler/realm-container";
-import TermsOfService from "../../components/terms-of-service";
 import LocalizationContext from "../../localization/localization-context";
 
 const HomeScreen = (): JSX.Element => {
-  const [showTOS, setShowTOS] = useState(false);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   const { t, handleChange } = useContext(LocalizationContext);
-
-  const onTOSCancel = () => {
-    setShowTOS(false);
-  };
-
-  const toggleTOS = () => {
-    if (showTOS) {
-      return <TermsOfService buildingId={undefined} onCancel={onTOSCancel} />;
-    }
-
-    return <RealmContainer />;
-  };
 
   return (
     <Container style={homeScreenStyles.container}>
@@ -43,10 +29,10 @@ const HomeScreen = (): JSX.Element => {
       <Button
         style={homeScreenStyles.button}
         children={t("READ_TOS")}
-        onPress={() => setShowTOS(true)}
+        onPress={() => navigate("TOSScreen", { screen: "TOSScreen" })}
         size={"small"}
       />
-      {toggleTOS()}
+      <RealmContainer />
     </Container>
   );
 };

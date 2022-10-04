@@ -1,7 +1,6 @@
 import { useEffect } from "react";
-import { Button, View } from "react-native";
+import { Button } from "@ui-kitten/components";
 import PdfReader from "./pdf-reader";
-import { termsOfServiceStyles } from "./terms-of-service-styles";
 
 const TermsOfService = (props: TermsOfServiceProps): JSX.Element => {
   let endpointUrl = "https://test/api";
@@ -15,16 +14,14 @@ const TermsOfService = (props: TermsOfServiceProps): JSX.Element => {
   });
 
   return (
-    <View style={termsOfServiceStyles.containerCard}>
-      <Button title="Go Back" onPress={() => props.onCancel()}/>
+    <>
       <PdfReader sourceUrl="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"/>
-    </View>
+    </>
   );
 };
 
 type TermsOfServiceProps = {
   buildingId: number | undefined;
-  onCancel: () => void;
 }
 
 export default TermsOfService;
