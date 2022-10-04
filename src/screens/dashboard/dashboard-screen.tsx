@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Text } from "react-native";
 import { Layout } from "@ui-kitten/components";
 
 import Container from "../../components/container";
@@ -11,7 +10,6 @@ import { AppStackParamList } from "../../routing/route-screens";
 import DashboardStatistics from "./dashboard-statistics";
 import LocalizationContext from "../../localization/localization-context";
 
-
 const DashboardScreen = (): JSX.Element => {
   const layoutData = useLayout();
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
@@ -19,7 +17,6 @@ const DashboardScreen = (): JSX.Element => {
 
   return (
   <Container style={dashboardStyles.container}>
-    <Text>{t('BTN_TEST')}</Text>
     <DashboardStatistics />
     <Layout level="2" style={[dashboardStyles.bottomTab, { paddingBottom: layoutData.bottom  }]}>
       <NavigationAction icon="house" status="primary" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "DashboardScreen"})} />

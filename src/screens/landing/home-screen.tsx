@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { Text } from "react-native";
 
 import Container from "../../components/container";
 import { Button } from "@ui-kitten/components";
@@ -30,7 +29,6 @@ const HomeScreen = (): JSX.Element => {
 
   return (
     <Container style={homeScreenStyles.container}>
-      <Text>{t("BTN_TEST")}</Text>
       <Button
         style={homeScreenStyles.button}
         children={t("NAVIGATE_TO_DASHBOARD")}

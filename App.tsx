@@ -37,7 +37,7 @@ const App = (): JSX.Element => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [selectedRealm, setSelectedRealm] = useState<RealmDetails | null>(null);
   const [locale, setLocale] = React.useState(Localization.locale);
-  let i18n = setI18nConfig("ro");
+  let i18n = setI18nConfig(Localization.locale);
   const localizationCtx = React.useMemo(
     () => ({
       t: (scope: any, options: any) => i18n.t(scope, { ...options}),
