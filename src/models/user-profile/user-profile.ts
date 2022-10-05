@@ -3,6 +3,7 @@ export class UserProfile {
   public firstName!: string;
   public lastName!: string;
   public username!: string;
+  public email!: string;
   public phoneNumber!: string;
   public notifyOnNewNote!: boolean;
   public notifyOnStatusNew!: boolean;

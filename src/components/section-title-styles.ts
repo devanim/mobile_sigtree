@@ -8,6 +8,7 @@ const sectionTitleStyles = StyleSheet.create({
   sectionText: {
     margin: 8,
     color: "#000",
+    fontWeight: "bold"
   },
 });
 

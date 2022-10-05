@@ -6,26 +6,19 @@ export const userProfileStyle = StyleSheet.create({
     marginTop: 10,
     borderRadius: 15
   },
-  default: {
+  textBox: {
     margin: 8,
     color: "#000",
+    width: '60%'
   },
   twoColumns: {
     flex: 2,
     flexDirection: "row"
   },
-  twoRows: {
-    flex: 2,
-    flexDirection: "column"
-  },
-  allignLeft: {
-    marginRight: "auto"
-  },
-  allignRight: {
-    marginLeft: "auto"
-  },
-  borderBox: {
-    borderColor: "#000",
-    borderStyle: "solid"
+  labelBox: {
+    margin: 8,
+    color: "#000",
+    width: '40%',
+    fontWeight: "bold"
   }
 });

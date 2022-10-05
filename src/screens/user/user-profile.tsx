@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import { UserProfile as UserProfileModel } from "../../models/user-profile/user-profile";
 import { ResponseStatus } from "../../utils/response-status-enum";
-import Text from "../../components/text";
 import { mockUserProfile } from "./mock-user-profile";
 import { userProfileStyle } from "./user-profile-style";
 import CustCheckbox from "../../components/cust-checkbox";
@@ -24,26 +23,30 @@ const UserProfile = (): JSX.Element => {
 
   return (
     <ScrollView style={userProfileStyle.containerCard}>
-      <SectionTitle title="Actualizati setarile de utilizator"/>
+      <SectionTitle title="User settings"/>
 
-      <View style={[userProfileStyle.allignLeft]}>
-        <Text style={userProfileStyle.default}>UTILIZATOR</Text>
-        <Text style={userProfileStyle.default}>{userProfile?.username}</Text>
+      <View style={userProfileStyle.twoColumns}>
+        <Text style={userProfileStyle.labelBox}>User</Text>
+        <Text style={userProfileStyle.textBox}>{userProfile?.username}</Text>
       </View>
-      <Text style={userProfileStyle.default} category="call-out" status="placeholder">
-        {`Fist Name: ${userProfile?.firstName}`}
-      </Text>
-      <Text style={userProfileStyle.default} category="call-out" status="placeholder">
-        {`Last Name: ${userProfile?.lastName}`}
-      </Text>
-      <Text style={userProfileStyle.default} category="call-out" status="placeholder">
-        {`Email: loremIpsum@test.com`}
-      </Text>
-      <Text style={userProfileStyle.default} category="call-out" status="placeholder">
-        {`Language: ${userProfile?.lang}`}
-      </Text>
+      <View style={userProfileStyle.twoColumns}>
+        <Text style={userProfileStyle.labelBox}>Firstname: </Text>
+        <Text style={userProfileStyle.textBox}>{userProfile?.firstName}</Text>
+      </View>
+      <View style={userProfileStyle.twoColumns}>
+        <Text style={userProfileStyle.labelBox}>Lastname: </Text>
+        <Text style={userProfileStyle.textBox}>{userProfile?.lastName}</Text>
+      </View>
+      <View style={userProfileStyle.twoColumns}>
+        <Text style={userProfileStyle.labelBox}>Email: </Text>
+        <Text style={userProfileStyle.textBox}>{userProfile?.email}</Text>
+      </View>
+      <View style={userProfileStyle.twoColumns}>
+        <Text style={userProfileStyle.labelBox}>Language: </Text>
+        <Text style={userProfileStyle.textBox}>{userProfile?.lang}</Text>
+      </View>
 
-      <SectionTitle title="Actualizati setarile pentru notificari"/>
+      <SectionTitle title="Notification settings"/>
 
       <CustCheckbox isChecked={userProfile?.notifyOnNewNote} label="Primeste notificari despre note noi"/>
       <CustCheckbox isChecked={userProfile?.notifyOnStatusNew} label="Notificare status - Nou"/>

@@ -6,6 +6,7 @@ export const mockUserProfile = {
     firstName: "John",
     lastName: "Doe",
     username: "jdoe",
+    email: "loremIpsum@gmail.com",
     phoneNumber: "1234567890",
     notifyOnNewNote: true,
     notifyOnStatusNew: true,
