@@ -6,6 +6,7 @@ import Text from "../../components/text";
 import { mockUserProfile } from "./mock-user-profile";
 import { userProfileStyle } from "./user-profile-style";
 import CustCheckbox from "../../components/cust-checkbox";
+import SectionTitle from "../../components/section-title";
 
 const UserProfile = (): JSX.Element => {
   const [userProfile, setUserProfile] = useState<UserProfileModel>(mockUserProfile.data);
@@ -23,17 +24,12 @@ const UserProfile = (): JSX.Element => {
 
   return (
     <ScrollView style={userProfileStyle.containerCard}>
-      <Text style={userProfileStyle.default}>
-        Actualizati setarile de utilizator
-      </Text>
-      <View style={userProfileStyle.breakLine} />
-      {/* <View style={userProfileStyle.twoColumns}> */}
-        <View style={[userProfileStyle.allignLeft]}>
-          <Text style={userProfileStyle.default}>UTILIZATOR</Text>
-          <Text style={userProfileStyle.default}>{userProfile?.username}</Text>
-        </View>
-        <Text style={[userProfileStyle.allignRight, userProfileStyle.default]}>De ce nu pot schimba asta?</Text>
-      {/* </View> */}
+      <SectionTitle title="Actualizati setarile de utilizator"/>
+
+      <View style={[userProfileStyle.allignLeft]}>
+        <Text style={userProfileStyle.default}>UTILIZATOR</Text>
+        <Text style={userProfileStyle.default}>{userProfile?.username}</Text>
+      </View>
       <Text style={userProfileStyle.default} category="call-out" status="placeholder">
         {`Fist Name: ${userProfile?.firstName}`}
       </Text>
@@ -46,10 +42,9 @@ const UserProfile = (): JSX.Element => {
       <Text style={userProfileStyle.default} category="call-out" status="placeholder">
         {`Language: ${userProfile?.lang}`}
       </Text>
-      <Text style={userProfileStyle.default}>
-        Actualizati setarile pentru notificari
-      </Text>
-      <View style={userProfileStyle.breakLine} />
+
+      <SectionTitle title="Actualizati setarile pentru notificari"/>
+
       <CustCheckbox isChecked={userProfile?.notifyOnNewNote} label="Primeste notificari despre note noi"/>
       <CustCheckbox isChecked={userProfile?.notifyOnStatusNew} label="Notificare status - Nou"/>
       <CustCheckbox isChecked={userProfile?.notifyOnStatusProgress} label="Notificare status - In Progress"/>

@@ -10,10 +10,6 @@ export const userProfileStyle = StyleSheet.create({
     margin: 8,
     color: "#000",
   },
-  breakLine: {
-    borderBottomColor: 'black',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
   twoColumns: {
     flex: 2,
     flexDirection: "row"
