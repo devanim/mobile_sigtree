@@ -4,11 +4,14 @@ import { FlatList, View, ActivityIndicator } from "react-native";
 import ArticleBrief from "../../models/article/article-brief";
 import { ResponseStatus } from "../../utils/response-status-enum";
 import ArticleBriefCard from "./article-brief-card";
-import { articleListStyles } from "./article-list.styles";
+import { articleListStyles } from "./article-list-styles";
 import { articlesPaginationMock } from "./mock-articles";
 import Text from "../../components/text";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { AppStackParamList } from "../../routing/route-screens";
 
-const ArticlesList = (props: ArticleListProps): JSX.Element => {
+const ArticlesList = (): JSX.Element => {
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   const [articles, setArticles] = useState<ArticleBrief[] | undefined>(undefined);
   const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -41,7 +44,7 @@ const ArticlesList = (props: ArticleListProps): JSX.Element => {
   }
 
   const onArticleSelected = (articleId: number) => {
-    props.onArticleSelected(articleId);
+    navigate("ArticleScreen", { screen: "ArticleScreen", params: {articleId: articleId} })
   }
 
   const renderFooter = () => (
@@ -69,9 +72,5 @@ const ArticlesList = (props: ArticleListProps): JSX.Element => {
     />
   );
 };
-
-type ArticleListProps = {
-  onArticleSelected: (articleId: number) => void;
-}
 
 export default ArticlesList;

@@ -5,9 +5,14 @@ export type AppStackParamList = {
   NewTicketScreen: NavigatorScreenParams<AuthenticatedParamList>;
   EditTicketScreen: NavigatorScreenParams<AuthenticatedParamList>;
   TOSScreen: NavigatorScreenParams<UnauthenticatedParamList>;
-  ArticleScreen: NavigatorScreenParams<AuthenticatedParamList>;
+  ArticleScreen: NavigatorScreenParams<ArticleParamList>;
   DashboardNavigator: NavigatorScreenParams<AuthenticatedParamList>;
 };
+
+export type ArticleParamList = {
+  ArticleScreen: any;
+  ArticleId: number;
+}
 
 export type AuthenticatedParamList = {
   DashboardScreen: undefined;

@@ -2,19 +2,25 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TopNavigation } from "@ui-kitten/components";
 import NavigationAction from "../../components/navigation-action";
 import React from "react";
-import { AppStackParamList } from "src/routing/route-screens";
+import { AppStackParamList, ArticleParamList } from "../../routing/route-screens";
 
 import Container from "../../components/container";
-import ArticleContainer from "./article-container";
 import { articlesScreenStyles } from "./articles-screen-styles";
+import ArticleCard from "./article-card";
 
-const ArticleScreen = (): JSX.Element => {
+const ArticleScreen = (props: ArticleScreenProps): JSX.Element => {
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
+  const articleId = props.route.params.params.articleId; 
 
   return (<Container style={articlesScreenStyles.container}>
     <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title="Article"/>
-    <ArticleContainer />
+    <ArticleCard articleId={articleId}/>
   </Container>);
+}
+
+type ArticleScreenProps = {
+  route: any;
+  navigation: any;
 }
 
 export default ArticleScreen;
