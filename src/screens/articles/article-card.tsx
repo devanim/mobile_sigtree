@@ -1,6 +1,5 @@
-import { Image } from "react-native";
+import { Image, Text } from "react-native";
 import Article from "../../models/article/article";
-import Text from "../../components/text";
 import { useEffect, useState } from "react";
 import { mockIndividualArticlesList } from "./mock-articles";
 import { articleCardStyles } from "./article-card-styles";
@@ -23,8 +22,8 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
 
   return (
     <ScrollView style={articleCardStyles.containerCard}>
-      <Text style={articleCardStyles.title} category="title1">{article?.title}</Text>
       <Image style={articleCardStyles.image} source={{uri: `${article?.image}`}}/>
+      <Text style={articleCardStyles.title}>{article?.title}</Text>
       <WebView style={articleCardStyles.content} source={{ html: article ? article.content : "<p>No data</p>"}}/>
     </ScrollView>
   );

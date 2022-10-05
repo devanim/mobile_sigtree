@@ -3,16 +3,21 @@ import { StyleSheet } from "react-native";
 export const articleCardStyles = StyleSheet.create({
   containerCard: {
     backgroundColor: "#fff",
-    marginTop: 10,
-    borderRadius: 15
+    flex: 3,
+    flexDirection: "row"
   },
   image: {
-    width: 25,
-    height: 25
+    flex: 1,
+    alignContent: "center",
+    width: '100%',
+    resizeMode: 'contain',
   },
   title: {
-    marginRight: "auto",
-    color: "#000"
+    alignContent: "center",
+    justifyContent: "center",
+    fontSize: 40,
+    fontWeight: "bold",
+    color: "#000",
   },
   content: {
     height: 350,

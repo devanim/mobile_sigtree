@@ -2,7 +2,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TopNavigation } from "@ui-kitten/components";
 import NavigationAction from "../../components/navigation-action";
 import React from "react";
-import { AppStackParamList, ArticleParamList } from "../../routing/route-screens";
+import { AppStackParamList } from "../../routing/route-screens";
 
 import Container from "../../components/container";
 import { articlesScreenStyles } from "./articles-screen-styles";
