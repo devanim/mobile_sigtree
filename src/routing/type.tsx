@@ -8,6 +8,7 @@ export type RootStackParamList = {
   NewTicketScreen: NavigatorScreenParams<AuthenticatedParamList>;
   EditTicketScreen: NavigatorScreenParams<AuthenticatedParamList>;
   TOSScreen: NavigatorScreenParams<OnboardingParamList>;
+  ArticleScreen: NavigatorScreenParams<AuthenticatedParamList>;
 };
 
 export type OnboardingParamList = {
