@@ -8,10 +8,10 @@ import { articleListStyles } from "./article-list-styles";
 import { articlesPaginationMock } from "./mock-articles";
 import Text from "../../components/text";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { AppStackParamList } from "../../routing/route-screens";
+import { ArticleParamList } from "../../routing/route-screens";
 
 const ArticlesList = (): JSX.Element => {
-  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { navigate } = useNavigation<NavigationProp<ArticleParamList>>();
   const [articles, setArticles] = useState<ArticleBrief[] | undefined>(undefined);
   const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -44,7 +44,7 @@ const ArticlesList = (): JSX.Element => {
   }
 
   const onArticleSelected = (articleId: number) => {
-    navigate("ArticleScreen", { screen: "ArticleScreen", params: {articleId: articleId} })
+    navigate("ArticleScreen", { screen: "ArticleScreen", params: {articleId: articleId} });
   }
 
   const renderFooter = () => (

@@ -7,8 +7,11 @@ import { ticketPaginationMock } from "./mock-tickets";
 import TicketBriefCard from "./ticket-brief-card";
 import { ticketListStyles } from "./ticket-list-styles";
 import Text from "../../components/text";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { TicketParamList } from "src/routing/route-screens";
 
-const TicketsList = (props: TicketsListProps): JSX.Element => {
+const TicketsList = (): JSX.Element => {
+  const { navigate } = useNavigation<NavigationProp<TicketParamList>>();
   const [tickets, setTickets] = useState<TicketBrief[] | undefined>(undefined);
   const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -36,7 +39,7 @@ const TicketsList = (props: TicketsListProps): JSX.Element => {
   }, []);
 
   const onTicketSelected = (ticketId: string) => {
-    props.onTicketSelected(ticketId);
+    navigate("TicketScreen", { screen: "TicketScreen", params: {ticketId: ticketId} });
   }
 
   const fetchNextPage = () => {
@@ -70,9 +73,5 @@ const TicketsList = (props: TicketsListProps): JSX.Element => {
     />
   );
 };
-
-type TicketsListProps = {
-  onTicketSelected: (ticketId: string) => void;
-}
 
 export default TicketsList;

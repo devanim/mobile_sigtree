@@ -27,9 +27,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
   return (
     <View style={ticketCardStyles.containerCard}>
       <View style={ticketCardStyles.twoOnRow}>
-        <Button children={"Close"} onPress={() => props.onTicketClosed()}></Button>
         <Button children={"Edit"} onPress={() => navigate("EditTicketScreen", {screen: "EditTicketScreen", ...ticket})}></Button>
-
       </View>
       <Text style={ticketCardStyles.textStyle} category="title1">{`${ticket?.id} - ${ticket?.name}`}</Text>
       <View style={ticketCardStyles.threeOnRow}>
@@ -46,7 +44,6 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
 
 type TicketCardProps = {
   ticketId: string;
-  onTicketClosed: () => void;
 }
 
 export default TicketCard;
