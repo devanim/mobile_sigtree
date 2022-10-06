@@ -13,15 +13,15 @@ export const articleCardStyles = StyleSheet.create({
     resizeMode: 'contain',
   },
   title: {
-    alignContent: "center",
-    justifyContent: "center",
+    textAlign: "center",
     fontSize: 40,
     fontWeight: "bold",
     color: "#000",
+    width: '100%'
   },
   content: {
-    height: 350,
-    width: 350,
+    height: 400,
+    width: 400,
     overflow:'hidden'
   }
 })

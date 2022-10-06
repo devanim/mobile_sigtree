@@ -3,37 +3,34 @@ import { StyleSheet } from "react-native";
 export const briefStyles = StyleSheet.create({
   containerCard: {
     backgroundColor: "#fff",
-    marginTop: 10,
-    borderRadius: 15
+    width: "100%",
+    marginBottom: 1,
+    borderBottomColor: "#000",
   },
-  idRow: {
+  twoRow: {
     flex: 2,
     flexDirection: "row"
-  },
-  floorRow: {
-    flex: 2,
-    flexDirection: "row"
-  },
-  userSupplierRow: {
-    flex: 4,
-    flexDirection: "row"
-  },
-  statusRow: {
-    flex: 2,
-    flexDirection: "row"
-  },
-  ticketId: {
-    fontWeight: "bold",
-    marginRight: "auto"
-  },
-  priority: {
-    marginLeft: "auto"
-  },
-  default: {
-    margin: 8,
-    color: "#000",
   },
   ticketName: {
     fontWeight: "bold"
-  }
+  },
+  text: {
+    margin: 5,
+    color: "#000",
+  },
+  title: {
+    margin: 5,
+    color: "#000",
+    fontWeight: "bold"
+  },
+  textView: {
+    flex: 2,
+    padding: 1,
+    flexDirection: "row"
+  },
+  titleView: {
+    textAlign: "center",
+    width: '100%',
+    fontSize: 25
+  },
 });
