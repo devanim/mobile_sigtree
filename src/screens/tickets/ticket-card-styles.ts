@@ -4,28 +4,44 @@ export const ticketCardStyles = StyleSheet.create({
   containerCard: {
     backgroundColor: "#fff",
     marginTop: 10,
-    borderRadius: 15,
-    height: 500
+    height: '15%'
   },
   button: {
     marginTop: 8,
   },
   content: {
+    marginTop: 1,
     height: 350,
-    width: 350,
+    width: '100%',
     overflow:'hidden'
   },
-  textStyle: {
+  text: {
+    margin: 5,
     color: "#000",
-    marginTop: 5,
-    marginRight: 5
   },
-  threeOnRow: {
-    flex: 3,
+  title: {
+    margin: 5,
+    color: "#000",
+    fontWeight: "bold"
+  },
+  textView: {
+    flex: 2,
+    padding: 1,
     flexDirection: "row"
+  },
+  titleView: {
+    textAlign: "center",
+    width: '100%',
+    fontSize: 25
   },
   twoOnRow: {
     flex: 2,
     flexDirection: "row"
+  },
+  titleStyle: {
+    textAlign: "center",
+    width: "100%",
+    fontSize: 25,
+    fontWeight: "bold"
   }
 });

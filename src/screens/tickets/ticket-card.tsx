@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Ticket } from "../../models/ticket/ticket";
-import Text from "../../components/text";
 import { Button } from "@ui-kitten/components";
 import { mockIndividualTicketsList } from "./mock-tickets";
 import { ticketCardStyles } from "./ticket-card-styles";
@@ -25,20 +24,35 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
   }, []);
   
   return (
-    <View style={ticketCardStyles.containerCard}>
-      <View style={ticketCardStyles.twoOnRow}>
+    <>
+      <View>
         <Button children={"Edit"} onPress={() => navigate("EditTicketScreen", {screen: "EditTicketScreen", ...ticket})}></Button>
       </View>
-      <Text style={ticketCardStyles.textStyle} category="title1">{`${ticket?.id} - ${ticket?.name}`}</Text>
-      <View style={ticketCardStyles.threeOnRow}>
-        <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.category}</Text>
-        <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.statusKey}</Text>
-        <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.priorityKey}</Text>
+      <View style={ticketCardStyles.containerCard}>
+        <Text style={ticketCardStyles.titleStyle}>{`${ticket?.id} - ${ticket?.name}`}</Text>
+        <View style={ticketCardStyles.twoOnRow}>
+          <View style={ticketCardStyles.textView}>
+            <Text style={ticketCardStyles.title}>Category: </Text>
+            <Text style={ticketCardStyles.text}>{ticket?.category}</Text>
+          </View>
+          <View style={ticketCardStyles.textView}>
+            <Text style={ticketCardStyles.title}>Status: </Text>
+            <Text style={ticketCardStyles.text}>{ticket?.statusKey}</Text>
+          </View>
+        </View>
+        <View style={ticketCardStyles.twoOnRow}>
+          <View style={ticketCardStyles.textView}>
+            <Text style={ticketCardStyles.title}>Priority: </Text>
+            <Text style={ticketCardStyles.text}>{ticket?.priorityKey}</Text>
+          </View>
+          <View style={ticketCardStyles.textView}>
+            <Text style={ticketCardStyles.title}>Building: </Text>
+            <Text style={ticketCardStyles.text}>{ticket?.building}</Text>
+          </View>
+        </View>
       </View>
-      <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.building}</Text>
-      <Text style={ticketCardStyles.textStyle} category="call-out" status="placeholder">{ticket?.floor}</Text>
       <WebView style={ticketCardStyles.content} source={{ html: ticket ? ticket.content : "<p>No data</p>"}}/>
-    </View>
+    </>
   );
 };
 
