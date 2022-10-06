@@ -4,6 +4,7 @@ export type AppStackParamList = {
   HomeScreen: NavigatorScreenParams<UnauthenticatedParamList>;
   NewTicketScreen: NavigatorScreenParams<AuthenticatedParamList>;
   EditTicketScreen: NavigatorScreenParams<AuthenticatedParamList>;
+  TicketScreen: NavigatorScreenParams<TicketParamList>;
   TOSScreen: NavigatorScreenParams<UnauthenticatedParamList>;
   ArticleScreen: NavigatorScreenParams<ArticleParamList>;
   DashboardNavigator: NavigatorScreenParams<AuthenticatedParamList>;
@@ -12,6 +13,11 @@ export type AppStackParamList = {
 export type ArticleParamList = {
   ArticleScreen: any;
   ArticleId: number;
+}
+
+export type TicketParamList = {
+  TicketScreen: any;
+  TicketId: string;
 }
 
 export type AuthenticatedParamList = {
