@@ -12,8 +12,11 @@ import { mockTickets } from "../tickets/mock-tickets";
 import ArticleBriefCard from "../articles/article-brief-card";
 import TicketBriefCard from "../tickets/ticket-brief-card";
 import { dashboardStatisticsStyles } from "./dashboard-statistics-styles";
+import { AppStackParamList } from "src/routing/route-screens";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 const DashboardStatistics = (): JSX.Element => {
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   const [articles, setArticles] = useState<ArticleBrief[] | undefined>([]);
   const [tickets, setTickets] = useState<TicketBrief[] | undefined>([]);
 
@@ -40,13 +43,11 @@ const DashboardStatistics = (): JSX.Element => {
   }, []);
 
   const onArticleSelected = (article: ArticleBrief) => {
-    //TODO - redirect to article screen
-    alert(`Selected article with title ${article.title}. Soon it will redirect there`);
+    navigate("ArticleScreen", { screen: "ArticleScreen", params: {articleId: article.id} });
   }
 
   const onTicketSelected = (ticket: TicketBrief) => {
-    //TODO - redirect to ticket screen
-    alert(`Selected ticket with id ${ticket.id}. Soon it will redirect there`);
+    navigate("TicketScreen", { screen: "TicketScreen", params: {ticketId: ticket.id} });
   }
   
   const articleCarouselData = articles?.map((article: ArticleBrief, idx: number) => {
