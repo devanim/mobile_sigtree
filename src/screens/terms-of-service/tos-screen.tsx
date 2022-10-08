@@ -21,80 +21,98 @@ const TOSScreen = (props: TermsOfServiceScreenProps) => {
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   const [tosList, setTosList] = useState<BuildingTos[]>([]);
-  const [error, setError] = useState<ErrorProps|undefined>(undefined);
-  const buildingsList: {id: number, name: string}[] = props.route.params.params.buildings; 
-  
+  const [error, setError] = useState<ErrorProps | undefined>(undefined);
+  const [tosUrl, setTosUrl] = useState<string | undefined>(undefined);
+  const buildingsList: { id: number; name: string }[] =
+    props.route.params.params.buildings;
+
   useEffect(() => {
     getAllTosData();
   }, []);
-  
+
   const getAllTosData = async () => {
     buildingsList.forEach(async (item) => {
       await getTOSList(item.id, item.name);
     });
-  }
+  };
 
   const getTOSList = async (buildingId: number, buildingName: string) => {
     try {
       const reqUrl = `${SCREEN_URL.TOS_URL}/${buildingId}?all=false`;
-      const response = await axios.get<TOSPayload>(reqUrl, { headers: { 'Authorization': `Bearer ${AUTH_MOCK.TOKEN}` } });
-      
+      const response = await axios.get<TOSPayload>(reqUrl, {
+        headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
+      });
+
       if (response.status == 200) {
         const buildingTos: BuildingTos = {
           buildingId: buildingId,
           buildingName: buildingName,
-          tosList: []
+          tosList: [],
         };
-        buildingTos.tosList = response.data.data.map(item => {
-          return {...item};
+        buildingTos.tosList = response.data.data.map((item) => {
+          return { ...item };
         });
         const newState = [...tosList, buildingTos];
-        
+
         setTosList(newState);
-      }
-      else {
+      } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
           friendlyMessage: friendlyMessage,
-          errorMessage: response.data.error ?? ""
+          errorMessage: response.data.error ?? "",
         });
       }
     } catch (error) {
       const friendlyMessage = t("FAILED_REQUEST");
       setError({
         friendlyMessage: friendlyMessage,
-        errorMessage: JSON.stringify(error)
+        errorMessage: JSON.stringify(error),
       });
     }
-  }
+  };
+
+  const onTosSelect = (tosUrl: string) => {
+    setTosUrl(tosUrl);
+  };
 
   if (error) {
-    return (<Error friendlyMessage={error.friendlyMessage} errorMessage={error.errorMessage}/>)
+    return (
+      <Error
+        friendlyMessage={error.friendlyMessage}
+        errorMessage={error.errorMessage}
+      />
+    );
   }
 
-  if (!tosList || tosList.length == 0){
-    return (<ActivityIndicator />);
+  if (!tosList || tosList.length == 0) {
+    return <ActivityIndicator />;
   }
-  alert(`final state ${JSON.stringify(tosList)}`);
+
   return (
-  <Container style={tosScreenStyles.container}>
-    <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title="Terms of service"/>
-    <View style={tosScreenStyles.container}>
-      {
-        tosList.map(item => (
-          <TosBuilding key={item.buildingId} buildingName={item.buildingName} tosList={item.tosList}/>
-        ))
-      }
-    </View>
-    <PdfReader sourceUrl="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"/>
-  </Container>
+    <Container style={tosScreenStyles.container}>
+      <TopNavigation
+        accessoryLeft={() => <NavigationAction onPress={goBack} />}
+        title="Terms of service"
+      />
+      <View style={tosScreenStyles.container}>
+        {tosList.map((item) => (
+          <TosBuilding
+            key={item.buildingId}
+            buildingName={item.buildingName}
+            tosList={item.tosList}
+            onTosSelect={onTosSelect}
+          />
+        ))}
+      </View>
+      {tosUrl ? (<PdfReader sourceUrl={tosUrl} />) : (<></>)}
+    </Container>
   );
 };
 
 type TermsOfServiceScreenProps = {
   route: any;
   navigation: any;
-}
+};
 
 class BuildingTos {
   public buildingId!: number;
