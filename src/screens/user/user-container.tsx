@@ -4,16 +4,17 @@ import { ActivityIndicator, View } from "react-native";
 import UserProfile from "./user-profile";
 import { Button } from "@ui-kitten/components";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { AppStackParamList } from "../../routing/route-screens";
+import { TOSParamList } from "../../routing/route-screens";
 import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
 import { UserProfile as UserProfileModel } from "../../models/user-profile/user-profile";
 import { UserProfilePayload } from "../../models/user-profile/user-profile-payload";
 import Error, { ErrorProps } from "../../components/error";
 import LocalizationContext from "../../localization/localization-context";
+import { Building } from "../../models/user-profile/building";
 
 const UserContainer = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { navigate } = useNavigation<NavigationProp<TOSParamList>>();
   const [userProfile, setUserProfile] = useState<UserProfileModel|undefined>(undefined);
   const [error, setError] = useState<ErrorProps|undefined>(undefined);
 
@@ -56,10 +57,24 @@ const UserContainer = (): JSX.Element => {
     return (<ActivityIndicator />);
   }
 
+  const navigateToTOSScreen = () => {
+    const buildings = userProfile.resources.buildings.map((item: Building) => {
+      return {
+        id: item.id,
+        name: item.name
+      };
+    });
+
+    navigate("TOSScreen", { screen: "TOSScreen", params: {buildings} })
+  }
+
+  const hasBuildingsAssigned = (): boolean => {
+    return  userProfile?.resources?.buildings?.length > 0;
+  }
 
   return (
     <View>
-      <Button children={t("READ_TOS")} onPress={() => navigate("TOSScreen", { screen: "TOSScreen" })} size={'small'}/>
+      {hasBuildingsAssigned() ? <Button children={t("READ_TOS")} onPress={navigateToTOSScreen} size={'small'}/> : <></>}
       <UserProfile profile={userProfile}/>
     </View>
   );

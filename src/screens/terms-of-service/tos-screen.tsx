@@ -1,76 +1,105 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TopNavigation } from "@ui-kitten/components";
 import axios from "axios";
+import { View, Text, ActivityIndicator } from "react-native";
 import { AppStackParamList } from "../../routing/route-screens";
 
 import NavigationAction from "../../components/navigation-action";
 import Container from "../../components/container";
-import TermsOfService from "../../components/terms-of-service";
 
 import { tosScreenStyles } from "./tos-screen-styles";
-import { useEffect } from "react";
-import { TOS } from "../../models/tos/tos";
+import { useContext, useEffect, useState } from "react";
 import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
+import PdfReader from "../../components/pdf-reader";
+import Error, { ErrorProps } from "../../components/error";
+import LocalizationContext from "../../localization/localization-context";
+import { TOSPayload } from "../../models/tos/tos-payload";
+import { TOS } from "../../models/tos/tos";
+import TosBuilding from "./tos-building";
 
-const TOSScreen = () => {
+const TOSScreen = (props: TermsOfServiceScreenProps) => {
+  const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
-
+  const [tosList, setTosList] = useState<BuildingTos[]>([]);
+  const [error, setError] = useState<ErrorProps|undefined>(undefined);
+  const buildingsList: {id: number, name: string}[] = props.route.params.params.buildings; 
+  
   useEffect(() => {
-    
-    // const source = axios.CancelToken.source();
-    
-    // const [isLoading, setIsLoading] = useState(false);
-    // const [hasError, setErrorFlag] = useState(false);
-    // const [userId, setUserId] = useState(1);
-    // const [user, setUser] = useState(null);
-
-    fetchUsers();
-    // return () => source.cancel("Data fetching cancelled");
+    getAllTosData();
   }, []);
+  
+  const getAllTosData = async () => {
+    buildingsList.forEach(async (item) => {
+      await getTOSList(item.id, item.name);
+    });
+  }
 
-  const fetchUsers = async () => {
-    
+  const getTOSList = async (buildingId: number, buildingName: string) => {
     try {
-      const response = await axios.get<TOS>(SCREEN_URL.TOS_URL, { headers: { 'Authorization': `Bearer ${AUTH_MOCK.TOKEN}` } });
+      const reqUrl = `${SCREEN_URL.TOS_URL}/${buildingId}?all=false`;
+      const response = await axios.get<TOSPayload>(reqUrl, { headers: { 'Authorization': `Bearer ${AUTH_MOCK.TOKEN}` } });
       
-      alert(`response ${JSON.stringify(response.data)}`);
+      if (response.status == 200) {
+        const buildingTos: BuildingTos = {
+          buildingId: buildingId,
+          buildingName: buildingName,
+          tosList: []
+        };
+        buildingTos.tosList = response.data.data.map(item => {
+          return {...item};
+        });
+        const newState = [...tosList, buildingTos];
+        
+        setTosList(newState);
+      }
+      else {
+        const friendlyMessage = t("FAILED_REQUEST");
+        setError({
+          friendlyMessage: friendlyMessage,
+          errorMessage: response.data.error ?? ""
+        });
+      }
     } catch (error) {
-      alert(`error: ${JSON.stringify(error)}`);
+      const friendlyMessage = t("FAILED_REQUEST");
+      setError({
+        friendlyMessage: friendlyMessage,
+        errorMessage: JSON.stringify(error)
+      });
     }
   }
 
+  if (error) {
+    return (<Error friendlyMessage={error.friendlyMessage} errorMessage={error.errorMessage}/>)
+  }
+
+  if (!tosList || tosList.length == 0){
+    return (<ActivityIndicator />);
+  }
+  alert(`final state ${JSON.stringify(tosList)}`);
   return (
   <Container style={tosScreenStyles.container}>
     <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title="Terms of service"/>
-    <TermsOfService buildingId={undefined}/>
+    <View style={tosScreenStyles.container}>
+      {
+        tosList.map(item => (
+          <TosBuilding key={item.buildingId} buildingName={item.buildingName} tosList={item.tosList}/>
+        ))
+      }
+    </View>
+    <PdfReader sourceUrl="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"/>
   </Container>
   );
 };
 
-/*
-    <View style={styles.wrapperStyle}>
-        {!isLoading && !hasError && user && <User userObject={user} />}
-      </View>
-      <View style={styles.wrapperStyle}>
-        {isLoading && <Text> Loading </Text>}
-        {!isLoading && hasError && <Text> An error has occurred </Text>}
-      </View>
-*/
+type TermsOfServiceScreenProps = {
+  route: any;
+  navigation: any;
+}
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "dodgerblue",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     marginTop: Platform.OS === "ios" ? 0 : Constants.statusBarHeight,
-//   },
-//   wrapperStyle: {
-//     minHeight: 128,
-//   },
-//   buttonStyles: {
-//     padding: 100,
-//   },
-// });
+class BuildingTos {
+  public buildingId!: number;
+  public buildingName!: string;
+  public tosList!: TOS[];
+}
 
 export default TOSScreen;

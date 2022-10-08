@@ -10,16 +10,6 @@ export type AppStackParamList = {
   DashboardNavigator: NavigatorScreenParams<AuthenticatedParamList>;
 };
 
-export type ArticleParamList = {
-  ArticleScreen: any;
-  ArticleId: number;
-}
-
-export type TicketParamList = {
-  TicketScreen: any;
-  TicketId: string;
-}
-
 export type AuthenticatedParamList = {
   DashboardScreen: undefined;
   ArticlesScreen: undefined;
@@ -34,4 +24,19 @@ export type AuthenticatedParamList = {
 export type UnauthenticatedParamList = {
   HomeScreen: undefined;
   TOSScreen: undefined;
+}
+
+export type ArticleParamList = {
+  ArticleScreen: any;
+  ArticleId: number;
+}
+
+export type TicketParamList = {
+  TicketScreen: any;
+  TicketId: string;
+}
+
+export type TOSParamList = {
+  TOSScreen: any
+  Buildings: {id: number, name: string}[]
 }

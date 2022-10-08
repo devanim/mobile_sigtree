@@ -21,6 +21,10 @@ export class UserProfile implements BaseData {
   public notifyOnNewDocument!: boolean;
   public role!: number;
   public defaultBuildingId!: number;
+  public resources!: UserProfileResources;
+}
+
+class UserProfileResources {
   public buildings!: Building[];
   public tenants!: Tenant[];
   public projects!: Project[];
