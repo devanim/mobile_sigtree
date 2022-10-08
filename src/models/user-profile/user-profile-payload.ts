@@ -1,8 +1,6 @@
+import { Payload } from "../payload";
 import { UserProfile } from "./user-profile";
 
-export class UserProfilePayload {
-  public status!: string;
-  public message!: string;
-  public data!: UserProfile;
-  public error = "";
+export class UserProfilePayload extends Payload {
+  declare public data: UserProfile;
 }

@@ -4,7 +4,7 @@ import { ResponseStatus } from "src/utils/response-status-enum";
 export class TOS {
   public status: ResponseStatus;
   public message: string;
-  public data: TosData[]; 
+  public data: TosData[];
 
   constructor(payload: string) {
     const parsedPayload: any = JSON.parse(payload);
