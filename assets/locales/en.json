@@ -3,5 +3,20 @@
   "NAVIGATE_TO_DASHBOARD": "Go to dashboard",
   "READ_TOS": "Read Tems of Services",
   "TOGGLE_DEBUG_ERROR": "Toggle debug error",
-  "FAILED_REQUEST": "Something went wrong when retrieving data"
+  "FAILED_REQUEST": "Something went wrong when retrieving data",
+  "USER_PROFILE_TITLE": "User Profile",
+  "USER_PROFILE_USER_LABEL": "User",
+  "USER_PROFILE_FIRST_NAME_LABEL": "FirstName",
+  "USER_PROFILE_LAST_NAME_LABEL": "LastName",
+  "USER_PROFILE_EMAIL_LABEL": "Email",
+  "USER_PROFILE_LANGUAGE_LABEL": "Language",
+  "USER_PROFILE_NEWNOTE_NOTIFICATION_LABEL": "Get notifications about new notes",
+  "USER_PROFILE_STATUS_NEW_NOTIFICATION_LABEL": "Status Notification - New",
+  "USER_PROFILE_STATUS_PROGRESS_NOTIFICATION_LABEL": "Status Notification - In Progress",
+  "USER_PROFILE_STATUS_PENDING_NOTIFICATION_LABEL": "Status Notification - Pending",
+  "USER_PROFILE_STATUS_RESOLVED_NOTIFICATION_LABEL": "Status Notification - Resolved",
+  "USER_PROFILE_STATUS_CLOSED_NOTIFICATION_LABEL": "Status Notification - Closed",
+  "USER_PROFILE_TICKETS_NOTIFICATION_LABEL": "Notify only on my tickets/services",
+  "USER_PROFILE_NEWSLETTER_NOTIFICATION_LABEL": "Newsletter",
+  "USER_PROFILE_NEWDOCUMENT_NOTIFICATION_LABEL": "Notification on new document added"
 }

@@ -59,7 +59,7 @@ const UserContainer = (): JSX.Element => {
 
   return (
     <View>
-      <Button children={"Read Tems of Services"} onPress={() => navigate("TOSScreen", { screen: "TOSScreen" })} size={'small'}/>
+      <Button children={t("READ_TOS")} onPress={() => navigate("TOSScreen", { screen: "TOSScreen" })} size={'small'}/>
       <UserProfile profile={userProfile}/>
     </View>
   );

@@ -3,5 +3,20 @@
   "NAVIGATE_TO_DASHBOARD": "Mergeti la dashboard",
   "READ_TOS": "Cititi termeni si conditii",
   "TOGGLE_DEBUG_ERROR": "Detalii eroare",
-  "FAILED_REQUEST": "Eroare neprevazuta la aducerea datelor"
+  "FAILED_REQUEST": "Eroare neprevazuta la aducerea datelor",
+  "USER_PROFILE_TITLE": "Profil utilizator",
+  "USER_PROFILE_USER_LABEL": "Utilizator",
+  "USER_PROFILE_FIRST_NAME_LABEL": "Prenume",
+  "USER_PROFILE_LAST_NAME_LABEL": "Nume",
+  "USER_PROFILE_EMAIL_LABEL": "Email",
+  "USER_PROFILE_LANGUAGE_LABEL": "Limba",
+  "USER_PROFILE_NEWNOTE_NOTIFICATION_LABEL": "Primeste notificari despre note noi",
+  "USER_PROFILE_STATUS_NEW_NOTIFICATION_LABEL": "Notificare status - Nou",
+  "USER_PROFILE_STATUS_PROGRESS_NOTIFICATION_LABEL": "Notificare status - In Progress",
+  "USER_PROFILE_STATUS_PENDING_NOTIFICATION_LABEL": "Notificare status - In Asteptare",
+  "USER_PROFILE_STATUS_RESOLVED_NOTIFICATION_LABEL": "Notificare status - Rezolvat",
+  "USER_PROFILE_STATUS_CLOSED_NOTIFICATION_LABEL": "Notificare status - Inchis",
+  "USER_PROFILE_TICKETS_NOTIFICATION_LABEL": "Primeste notificari doar pentru tichetele/serviciile mele",
+  "USER_PROFILE_NEWSLETTER_NOTIFICATION_LABEL": "Newsletter",
+  "USER_PROFILE_NEWDOCUMENT_NOTIFICATION_LABEL": "Notificare document adaugat"
 }
