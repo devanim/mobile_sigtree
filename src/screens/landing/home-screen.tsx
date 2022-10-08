@@ -26,12 +26,6 @@ const HomeScreen = (): JSX.Element => {
         }
         size={"small"}
       />
-      <Button
-        style={homeScreenStyles.button}
-        children={t("READ_TOS")}
-        onPress={() => navigate("TOSScreen", { screen: "TOSScreen" })}
-        size={"small"}
-      />
       <RealmContainer />
     </Container>
   );
