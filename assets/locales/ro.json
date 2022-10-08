@@ -1,5 +1,7 @@
 {
   "BTN_TEST": "romanian value button",
   "NAVIGATE_TO_DASHBOARD": "Mergeti la dashboard",
-  "READ_TOS": "Cititi termeni si conditii"
+  "READ_TOS": "Cititi termeni si conditii",
+  "TOGGLE_DEBUG_ERROR": "Detalii eroare",
+  "FAILED_REQUEST": "Eroare neprevazuta la aducerea datelor"
 }

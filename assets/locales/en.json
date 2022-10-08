@@ -1,5 +1,7 @@
 {
   "BTN_TEST": "english value button",
   "NAVIGATE_TO_DASHBOARD": "Go to dashboard",
-  "READ_TOS": "Read Tems of Services"
+  "READ_TOS": "Read Tems of Services",
+  "TOGGLE_DEBUG_ERROR": "Toggle debug error",
+  "FAILED_REQUEST": "Something went wrong when retrieving data"
 }

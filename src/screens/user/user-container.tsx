@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ActivityIndicator, View } from "react-native";
 import UserProfile from "./user-profile";
@@ -7,11 +7,15 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "../../routing/route-screens";
 import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
 import { UserProfile as UserProfileModel } from "../../models/user-profile/user-profile";
-import { UserProfilePayload } from "src/models/user-profile/user-profile-payload";
+import { UserProfilePayload } from "../../models/user-profile/user-profile-payload";
+import Error, { ErrorProps } from "../../components/error";
+import LocalizationContext from "../../localization/localization-context";
 
 const UserContainer = (): JSX.Element => {
+  const { t } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   const [userProfile, setUserProfile] = useState<UserProfileModel|undefined>(undefined);
+  const [error, setError] = useState<ErrorProps|undefined>(undefined);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -29,18 +33,29 @@ const UserContainer = (): JSX.Element => {
         setUserProfile(response.data.data);
       }
       else {
-        //TODO - set error state
-        alert(`Error message: ${response.data.error}`);
+        const friendlyMessage = t("FAILED_REQUEST");
+        setError({
+          friendlyMessage: friendlyMessage,
+          errorMessage: response.data.error ?? ""
+        });
       }
     } catch (error) {
-      alert(`error: ${JSON.stringify(error)}`);
-      //TODO - set error state 
+      const friendlyMessage = t("FAILED_REQUEST");
+      setError({
+        friendlyMessage: friendlyMessage,
+        errorMessage: JSON.stringify(error)
+      });
     }
   }
 
-  if (!userProfile){
-    return (<ActivityIndicator />)
+  if (error) {
+    return (<Error friendlyMessage={error.friendlyMessage} errorMessage={error.errorMessage}/>)
   }
+
+  if (!userProfile){
+    return (<ActivityIndicator />);
+  }
+
 
   return (
     <View>
