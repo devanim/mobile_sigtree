@@ -28,9 +28,9 @@ patchFlatListProps();
 
 const App = (): JSX.Element => {
   const keycloakConfiguration = {
-    clientId: "sigtree-app",
-    realm: "test",
-    url: "http://localhost:8080/auth",
+    clientId: "sigtree-mobile",
+    realm: "customer1",
+    url: "https://sso.sigtree.com/auth",
     nativeRedirectPath: "192.168.119.106:19000",
     scheme: "app.myapp.com"
   };
