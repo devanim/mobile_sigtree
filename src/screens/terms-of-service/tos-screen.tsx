@@ -92,7 +92,7 @@ const TOSScreen = (props: TermsOfServiceScreenProps) => {
     <Container style={tosScreenStyles.container}>
       <TopNavigation
         accessoryLeft={() => <NavigationAction onPress={goBack} />}
-        title="Terms of service"
+        title={t("TOS_TITLE")}
       />
       <View style={tosScreenStyles.container}>
         {tosList.map((item) => (

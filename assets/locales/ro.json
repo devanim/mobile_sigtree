@@ -18,5 +18,6 @@
   "USER_PROFILE_STATUS_CLOSED_NOTIFICATION_LABEL": "Notificare status - Inchis",
   "USER_PROFILE_TICKETS_NOTIFICATION_LABEL": "Primeste notificari doar pentru tichetele/serviciile mele",
   "USER_PROFILE_NEWSLETTER_NOTIFICATION_LABEL": "Newsletter",
-  "USER_PROFILE_NEWDOCUMENT_NOTIFICATION_LABEL": "Notificare document adaugat"
+  "USER_PROFILE_NEWDOCUMENT_NOTIFICATION_LABEL": "Notificare document adaugat",
+  "TOS_TITLE": "Termeni si conditii"
 }
