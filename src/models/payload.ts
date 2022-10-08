@@ -5,5 +5,6 @@ export interface BaseData {}
 export class Payload {
   public status!: ResponseStatus;
   public message!: string;
+  public error?: string;
   public data?: BaseData;
 }
