@@ -1,24 +1,62 @@
-import { Image, Text } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Image, Text, ActivityIndicator } from "react-native";
+import axios from "axios";
+
 import Article from "../../models/article/article";
-import { useEffect, useState } from "react";
-import { mockIndividualArticlesList } from "./mock-articles";
 import { articleCardStyles } from "./article-card-styles";
 import { WebView } from "react-native-webview";
 import { ScrollView } from "react-native-gesture-handler";
+import Error, { ErrorProps } from "../../components/error";
+import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
+import LocalizationContext from "../../localization/localization-context";
+import ArticlePayload from "../../models/article/article-payload";
 
 const ArticleCard = (props: ArticleCardProps): JSX.Element => {
+  const { t } = useContext(LocalizationContext);
+  const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [article, setArticle] = useState<Article | undefined>(undefined);
 
   useEffect(() => {
-    //TODO - replace with axios call to back-end
-    const requestResponse = mockIndividualArticlesList.find((item: Article) => item.id === props.articleId);
-
-    if (!requestResponse) {
-      alert(`Article with id ${props.articleId} could not be found`);
-    }
-
-    setArticle(requestResponse);
+    getArticle()
   }, []);
+
+  const getArticle = async () => {
+    try {
+      const reqUrl = `${SCREEN_URL.ARTICLE_URL}/${props.articleId}`;
+      const response = await axios.get<ArticlePayload>(reqUrl, {
+        headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
+      });
+
+      if (response.status == 200) {
+        setArticle(response.data.data);
+      } else {
+        const friendlyMessage = t("FAILED_REQUEST");
+        setError({
+          friendlyMessage: friendlyMessage,
+          errorMessage: response.data.error ?? "",
+        });
+      }
+    } catch (error) {
+      const friendlyMessage = t("FAILED_REQUEST");
+      setError({
+        friendlyMessage: friendlyMessage,
+        errorMessage: JSON.stringify(error),
+      });
+    }
+  };
+
+  if (error) {
+    return (
+      <Error
+        friendlyMessage={error.friendlyMessage}
+        errorMessage={error.errorMessage}
+      />
+    );
+  }
+
+  if (!article) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <ScrollView style={articleCardStyles.containerCard}>
