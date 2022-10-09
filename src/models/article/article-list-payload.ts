@@ -1,13 +1,11 @@
+import { BaseData, Payload } from "../payload";
 import ArticleBrief from "./article-brief";
 
-export default class ArticleListPayload {
-  public status!: string;
-  public message!: string;
-  public data: ArticleListPayloadData | undefined;
-  public error = "";
+export default class ArticleListPayload extends Payload {
+  declare public data: ArticleListPayloadData;
 }
 
-class ArticleListPayloadData {
+class ArticleListPayloadData implements BaseData {
   public articles: ArticleBrief[] | undefined;
   public more!: boolean;
 }
