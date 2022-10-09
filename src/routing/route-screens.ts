@@ -35,8 +35,3 @@ export type TicketParamList = {
   TicketScreen: any;
   TicketId: string;
 }
-
-export type TOSParamList = {
-  TOSScreen: any
-  Buildings: {id: number, name: string}[]
-}

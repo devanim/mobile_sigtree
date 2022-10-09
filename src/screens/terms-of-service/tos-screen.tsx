@@ -17,14 +17,12 @@ import { TOSPayload } from "../../models/tos/tos-payload";
 import TosBuilding from "./tos-building";
 import { BuildingTos } from "../../models/tos/building-tos";
 
-const TOSScreen = (props: TermsOfServiceScreenProps) => {
+const TOSScreen = () => {
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   const [tosList, setTosList] = useState<BuildingTos[]>([]);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [tosUrl, setTosUrl] = useState<string | undefined>(undefined);
-  const buildingsList: { id: number; name: string }[] =
-    props.route.params.params.buildings;
 
   useEffect(() => {
     getTOSList();
