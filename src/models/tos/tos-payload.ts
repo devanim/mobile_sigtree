@@ -1,6 +1,6 @@
 import { Payload } from "../payload";
-import { TOS } from "./tos";
+import { BuildingTos } from "./building-tos";
 
 export class TOSPayload extends Payload {
-  declare public data: TOS[];
+  declare public data: BuildingTos[];
 }

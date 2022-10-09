@@ -14,8 +14,8 @@ import PdfReader from "../../components/pdf-reader";
 import Error, { ErrorProps } from "../../components/error";
 import LocalizationContext from "../../localization/localization-context";
 import { TOSPayload } from "../../models/tos/tos-payload";
-import { TOS } from "../../models/tos/tos";
 import TosBuilding from "./tos-building";
+import { BuildingTos } from "../../models/tos/building-tos";
 
 const TOSScreen = (props: TermsOfServiceScreenProps) => {
   const { t } = useContext(LocalizationContext);
@@ -27,34 +27,18 @@ const TOSScreen = (props: TermsOfServiceScreenProps) => {
     props.route.params.params.buildings;
 
   useEffect(() => {
-    getAllTosData();
+    getTOSList();
   }, []);
 
-  const getAllTosData = async () => {
-    buildingsList.forEach(async (item) => {
-      await getTOSList(item.id, item.name);
-    });
-  };
-
-  const getTOSList = async (buildingId: number, buildingName: string) => {
+  const getTOSList = async () => {
     try {
-      const reqUrl = `${SCREEN_URL.TOS_URL}/${buildingId}?all=false`;
+      const reqUrl = `${SCREEN_URL.TOS_URL}/all`;
       const response = await axios.get<TOSPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
       });
 
       if (response.status == 200) {
-        const buildingTos: BuildingTos = {
-          buildingId: buildingId,
-          buildingName: buildingName,
-          tosList: [],
-        };
-        buildingTos.tosList = response.data.data.map((item) => {
-          return { ...item };
-        });
-        const newState = [...tosList, buildingTos];
-
-        setTosList(newState);
+        setTosList(response.data.data);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -95,14 +79,10 @@ const TOSScreen = (props: TermsOfServiceScreenProps) => {
         title={t("TOS_TITLE")}
       />
       <View style={tosScreenStyles.container}>
-        {tosList.map((item) => (
-          <TosBuilding
-            key={item.buildingId}
-            buildingName={item.buildingName}
-            tosList={item.tosList}
-            onTosSelect={onTosSelect}
-          />
-        ))}
+        <TosBuilding
+          tosList={tosList}
+          onTosSelect={onTosSelect}
+        />
       </View>
       {tosUrl ? (<PdfReader sourceUrl={tosUrl} />) : (<></>)}
     </Container>
@@ -113,11 +93,5 @@ type TermsOfServiceScreenProps = {
   route: any;
   navigation: any;
 };
-
-class BuildingTos {
-  public buildingId!: number;
-  public buildingName!: string;
-  public tosList!: TOS[];
-}
 
 export default TOSScreen;

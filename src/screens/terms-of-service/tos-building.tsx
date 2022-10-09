@@ -1,15 +1,13 @@
-import { Button } from "@ui-kitten/components";
-import { Text, View } from "react-native";
-import { TOS } from "../../models/tos/tos";
+import { Text, View, Button } from "react-native";
+import { BuildingTos } from "../../models/tos/building-tos";
 import tosBuildingStyles from "./tos-building-styles";
 
 const TosBuilding = (props: TosBuildingProps): JSX.Element => {
   return (
     <View style={tosBuildingStyles.container}>
-      <Text style={tosBuildingStyles.text}>{props.buildingName}</Text>
       {
         props.tosList.map(item => (
-          <Button children={item.name} onPress={() => props.onTosSelect(item.url)}/>
+          <Button title={`${item.buildingName} - ${item.name}`} onPress={() => props.onTosSelect(item.url)}/>
         ))
       }
     </View>
@@ -17,8 +15,7 @@ const TosBuilding = (props: TosBuildingProps): JSX.Element => {
 };
 
 type TosBuildingProps = {
-  buildingName: string;
-  tosList: TOS[];
+  tosList: BuildingTos[];
   onTosSelect: (tosUrl: string) => void;
 }
 
