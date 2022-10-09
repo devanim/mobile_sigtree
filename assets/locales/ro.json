@@ -4,6 +4,7 @@
   "READ_TOS": "Cititi termeni si conditii",
   "TOGGLE_DEBUG_ERROR": "Detalii eroare",
   "FAILED_REQUEST": "Eroare neprevazuta la aducerea datelor",
+  "NO_DATA_HTML": "<p>Nu sunt date</p>",
   "USER_PROFILE_TITLE": "Profil utilizator",
   "USER_PROFILE_USER_LABEL": "Utilizator",
   "USER_PROFILE_FIRST_NAME_LABEL": "Prenume",
@@ -19,5 +20,6 @@
   "USER_PROFILE_TICKETS_NOTIFICATION_LABEL": "Primeste notificari doar pentru tichetele/serviciile mele",
   "USER_PROFILE_NEWSLETTER_NOTIFICATION_LABEL": "Newsletter",
   "USER_PROFILE_NEWDOCUMENT_NOTIFICATION_LABEL": "Notificare document adaugat",
-  "TOS_TITLE": "Termeni si conditii"
+  "TOS_TITLE": "Termeni si conditii",
+  "ARTICLES_TITLE": "Articole"
 }

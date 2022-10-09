@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Image, Text, ActivityIndicator } from "react-native";
-import axios from "axios";
-
-import Article from "../../models/article/article";
-import { articleCardStyles } from "./article-card-styles";
 import { WebView } from "react-native-webview";
 import { ScrollView } from "react-native-gesture-handler";
-import Error, { ErrorProps } from "../../components/error";
-import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
+import axios from "axios";
+
 import LocalizationContext from "../../localization/localization-context";
+import Error, { ErrorProps } from "../../components/error";
+import Article from "../../models/article/article";
+import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
 import ArticlePayload from "../../models/article/article-payload";
+
+import { articleCardStyles } from "./article-card-styles";
 
 const ArticleCard = (props: ArticleCardProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -62,7 +63,7 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
     <ScrollView style={articleCardStyles.containerCard}>
       <Image style={articleCardStyles.image} source={{uri: `${article?.image}`}}/>
       <Text style={articleCardStyles.title}>{article?.title}</Text>
-      <WebView style={articleCardStyles.content} source={{ html: article ? article.content : "<p>No data</p>"}}/>
+      <WebView style={articleCardStyles.content} source={{ html: article ? article.content : t("NO_DATA_HTML")}}/>
     </ScrollView>
   );
 };

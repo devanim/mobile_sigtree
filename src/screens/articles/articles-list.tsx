@@ -1,17 +1,18 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { FlatList, View, ActivityIndicator } from "react-native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 
-import ArticleBrief from "../../models/article/article-brief";
-import ArticleBriefCard from "./article-brief-card";
-import { articleListStyles } from "./article-list-styles";
-import Text from "../../components/text";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { ArticleParamList } from "../../routing/route-screens";
-import Error, { ErrorProps } from "../../components/error";
-import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/mock-auth";
-import ArticleListPayload from "../../models/article/article-list-payload";
 import LocalizationContext from "../../localization/localization-context";
+import Text from "../../components/text";
+import Error, { ErrorProps } from "../../components/error";
+import ArticleListPayload from "../../models/article/article-list-payload";
+import ArticleBrief from "../../models/article/article-brief";
+import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/mock-auth";
+import ArticleBriefCard from "./article-brief-card";
+
+import { articleListStyles } from "./article-list-styles";
 
 const ArticlesList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);

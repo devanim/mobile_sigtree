@@ -4,6 +4,7 @@
   "READ_TOS": "Read Tems of Services",
   "TOGGLE_DEBUG_ERROR": "Toggle debug error",
   "FAILED_REQUEST": "Something went wrong when retrieving data",
+  "NO_DATA_HTML": "<p>No data</p>",
   "USER_PROFILE_TITLE": "User Profile",
   "USER_PROFILE_USER_LABEL": "User",
   "USER_PROFILE_FIRST_NAME_LABEL": "FirstName",
@@ -19,5 +20,6 @@
   "USER_PROFILE_TICKETS_NOTIFICATION_LABEL": "Notify only on my tickets/services",
   "USER_PROFILE_NEWSLETTER_NOTIFICATION_LABEL": "Newsletter",
   "USER_PROFILE_NEWDOCUMENT_NOTIFICATION_LABEL": "Notification on new document added",
-  "TOS_TITLE": "Terms of service"
+  "TOS_TITLE": "Terms of service",
+  "ARTICLES_TITLE": "Articles"
 }
