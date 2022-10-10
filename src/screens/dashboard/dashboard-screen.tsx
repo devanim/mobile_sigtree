@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Layout } from "@ui-kitten/components";
+import { View, Image } from "react-native";
 
 import Container from "../../components/container";
 import { dashboardStyles } from "./dashboard-screen-styles";
@@ -21,6 +22,7 @@ const DashboardScreen = (): JSX.Element => {
     <Layout level="2" style={[dashboardStyles.bottomTab, { paddingBottom: layoutData.bottom  }]}>
       <NavigationAction icon="house" status="primary" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "DashboardScreen"})} />
       <NavigationAction icon="book" status="snow" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "ArticlesScreen"})} />
+      <NavigationAction icon="add" status="snow" size="medium" onPress={() => navigate("NewTicketScreen", {screen: "NewTicketScreen"})}/>
       <NavigationAction icon="calendar" status="snow" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "TicketsScreen"})}/>
       <NavigationAction icon="user" status="snow" size="medium" onPress={() => navigate("DashboardNavigator", {screen: "UserScreen"})}/>
     </Layout>
