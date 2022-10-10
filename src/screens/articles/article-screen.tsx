@@ -3,7 +3,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TopNavigation } from "@ui-kitten/components";
 
 import { AppStackParamList } from "../../routing/route-screens";
-import LocalizationContext from "src/localization/localization-context";
+import LocalizationContext from "../../localization/localization-context";
 import NavigationAction from "../../components/navigation-action";
 import Container from "../../components/container";
 import ArticleCard from "./article-card";
