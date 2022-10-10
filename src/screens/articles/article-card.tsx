@@ -18,7 +18,7 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
   const [article, setArticle] = useState<Article | undefined>(undefined);
 
   useEffect(() => {
-    getArticle()
+    getArticle();
   }, []);
 
   const getArticle = async () => {

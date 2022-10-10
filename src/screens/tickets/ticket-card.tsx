@@ -1,27 +1,67 @@
-import { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { useContext, useEffect, useState } from "react";
+import { View, Text, ActivityIndicator } from "react-native";
 import { Ticket } from "../../models/ticket/ticket";
 import { Button } from "@ui-kitten/components";
-import { mockIndividualTicketsList } from "./mock-tickets";
+import axios from "axios";
+
 import { ticketCardStyles } from "./ticket-card-styles";
 import { WebView } from "react-native-webview";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { AppStackParamList } from "../../routing/route-screens";
+import LocalizationContext from "../../localization/localization-context";
+import Error, { ErrorProps } from "../../components/error";
+import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
+import { TicketPayload } from "../../models/ticket/ticket-payload";
 
 const TicketCard = (props: TicketCardProps): JSX.Element => {
+  const { t } = useContext(LocalizationContext);
+  const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [ticket, setTicket] = useState<Ticket | undefined>(undefined);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
 
   useEffect(() => {
-    //TODO - replace with axios call to back-end
-    const requestResponse = mockIndividualTicketsList.find((item: Ticket) => item.id === props.ticketId);
-
-    if (!requestResponse) {
-      alert(`Ticket with id ${props.ticketId} could not be found`);
-    }
-
-    setTicket(requestResponse);
+    getTicket();
   }, []);
+
+  const getTicket = async () => {
+    try {
+      const reqUrl = `${SCREEN_URL.TICKET_URL}/${props.ticketId}`;
+      const response = await axios.get<TicketPayload>(reqUrl, {
+        headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
+      });
+
+      if (response.status == 200) {
+        if (response.data.data.tickets.length > 0) {
+          setTicket(response.data.data.tickets[0]);
+        }
+      } else {
+        const friendlyMessage = t("FAILED_REQUEST");
+        setError({
+          friendlyMessage: friendlyMessage,
+          errorMessage: response.data.error ?? "",
+        });
+      }
+    } catch (error) {
+      const friendlyMessage = t("FAILED_REQUEST");
+      setError({
+        friendlyMessage: friendlyMessage,
+        errorMessage: JSON.stringify(error),
+      });
+    }
+  };
+
+  if (error) {
+    return (
+      <Error
+        friendlyMessage={error.friendlyMessage}
+        errorMessage={error.errorMessage}
+      />
+    );
+  }
+
+  if (!ticket) {
+    return <ActivityIndicator />;
+  }
   
   return (
     <>

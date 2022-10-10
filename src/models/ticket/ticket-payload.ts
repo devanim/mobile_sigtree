@@ -1,8 +1,10 @@
+import { Payload } from "../payload";
 import { Ticket } from "./ticket";
 
-export class TicketPayload {
-  public status!: string;
-  public message!: string;
-  public data: Ticket | undefined;
-  public error = "";
+export class TicketPayload extends Payload {
+  declare public data: TicketData;
+}
+
+export class TicketData {
+  public tickets!: Ticket[];
 }
