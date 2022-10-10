@@ -3,8 +3,6 @@ import { FlatList, View, ActivityIndicator } from "react-native";
 import axios from "axios";
 
 import { TicketBrief } from "../../models/ticket/ticket-brief";
-import { ResponseStatus } from "../../utils/response-status-enum";
-import { ticketPaginationMock } from "./mock-tickets";
 import TicketBriefCard from "./ticket-brief-card";
 import { ticketListStyles } from "./ticket-list-styles";
 import Text from "../../components/text";
@@ -59,7 +57,7 @@ const TicketsList = (): JSX.Element => {
     }
   };
 
-  const onTicketSelected = (ticketId: string) => {
+  const onTicketSelected = (ticketId: number) => {
     navigate("TicketScreen", { screen: "TicketScreen", params: {ticketId: ticketId} });
   }
 

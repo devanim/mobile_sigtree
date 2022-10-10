@@ -5,7 +5,7 @@ import { briefStyles } from "./ticket-brief-card-styles";
 const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
   const localizedDate = new Date(props.ticketBrief.timestamp).toLocaleDateString();
 
-  const onTicketPress = (ticketId: string) => {
+  const onTicketPress = (ticketId: number) => {
     props.onTicketSelected(ticketId);
   };
 
@@ -62,7 +62,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
 
 type TicketBriefCardProps = {
   ticketBrief: TicketBrief;
-  onTicketSelected: (ticketId: string) => void;
+  onTicketSelected: (ticketId: number) => void;
 }
 
 export default TicketBriefCard;

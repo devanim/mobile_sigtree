@@ -21,5 +21,13 @@
   "USER_PROFILE_NEWSLETTER_NOTIFICATION_LABEL": "Newsletter",
   "USER_PROFILE_NEWDOCUMENT_NOTIFICATION_LABEL": "Notification on new document added",
   "TOS_TITLE": "Terms of service",
-  "ARTICLES_TITLE": "Articles"
+  "ARTICLES_TITLE": "Articles",
+  "TICKETS_TITLE": "Tickets",
+  "TICKET_TITLE": "Ticket",
+  "TICKETS_ADD_TICKET": "Add ticket",
+  "EDIT": "Edit",
+  "TICKET_CARD_CATEGORY": "Category",
+  "TICKET_CARD_STATUS": "Status",
+  "TICKET_CARD_PRIORITY": "Priority",
+  "TICKET_CARD_BUILDING": "Building"
 }

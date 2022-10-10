@@ -1,17 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
-import { Ticket } from "../../models/ticket/ticket";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { WebView } from "react-native-webview";
 import { Button } from "@ui-kitten/components";
 import axios from "axios";
 
-import { ticketCardStyles } from "./ticket-card-styles";
-import { WebView } from "react-native-webview";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { AppStackParamList } from "../../routing/route-screens";
-import LocalizationContext from "../../localization/localization-context";
 import Error, { ErrorProps } from "../../components/error";
 import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
+import { Ticket } from "../../models/ticket/ticket";
 import { TicketPayload } from "../../models/ticket/ticket-payload";
+import { AppStackParamList } from "../../routing/route-screens";
+import LocalizationContext from "../../localization/localization-context";
+
+import { ticketCardStyles } from "./ticket-card-styles";
 
 const TicketCard = (props: TicketCardProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -66,32 +67,32 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
   return (
     <>
       <View>
-        <Button children={"Edit"} onPress={() => navigate("EditTicketScreen", {screen: "EditTicketScreen", ...ticket})}></Button>
+        <Button children={t("EDIT")} onPress={() => navigate("EditTicketScreen", {screen: "EditTicketScreen", ...ticket})}></Button>
       </View>
       <View style={ticketCardStyles.containerCard}>
         <Text style={ticketCardStyles.titleStyle}>{`${ticket?.id} - ${ticket?.name}`}</Text>
         <View style={ticketCardStyles.twoOnRow}>
           <View style={ticketCardStyles.textView}>
-            <Text style={ticketCardStyles.title}>Category: </Text>
+            <Text style={ticketCardStyles.title}>{t("TICKET_CARD_CATEGORY")}: </Text>
             <Text style={ticketCardStyles.text}>{ticket?.category}</Text>
           </View>
           <View style={ticketCardStyles.textView}>
-            <Text style={ticketCardStyles.title}>Status: </Text>
+            <Text style={ticketCardStyles.title}>{t("TICKET_CARD_STATUS")}: </Text>
             <Text style={ticketCardStyles.text}>{ticket?.statusKey}</Text>
           </View>
         </View>
         <View style={ticketCardStyles.twoOnRow}>
           <View style={ticketCardStyles.textView}>
-            <Text style={ticketCardStyles.title}>Priority: </Text>
+            <Text style={ticketCardStyles.title}>{t("TICKET_CARD_PRIORITY")}: </Text>
             <Text style={ticketCardStyles.text}>{ticket?.priorityKey}</Text>
           </View>
           <View style={ticketCardStyles.textView}>
-            <Text style={ticketCardStyles.title}>Building: </Text>
+            <Text style={ticketCardStyles.title}>{t("TICKET_CARD_BUILDING")}: </Text>
             <Text style={ticketCardStyles.text}>{ticket?.building}</Text>
           </View>
         </View>
       </View>
-      <WebView style={ticketCardStyles.content} source={{ html: ticket ? ticket.content : "<p>No data</p>"}}/>
+      <WebView style={ticketCardStyles.content} source={{ html: ticket ? ticket.content : t("NO_DATA_HTML")}}/>
     </>
   );
 };
