@@ -29,7 +29,9 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
       });
 
       if (response.status == 200) {
-        setArticle(response.data.data);
+        if (response.data.data.length > 0) {
+          setArticle(response.data.data[0]);
+        }
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
