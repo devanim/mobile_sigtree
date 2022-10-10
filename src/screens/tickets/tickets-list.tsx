@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { FlatList, View, ActivityIndicator } from "react-native";
+import axios from "axios";
 
 import { TicketBrief } from "../../models/ticket/ticket-brief";
 import { ResponseStatus } from "../../utils/response-status-enum";
@@ -8,35 +9,55 @@ import TicketBriefCard from "./ticket-brief-card";
 import { ticketListStyles } from "./ticket-list-styles";
 import Text from "../../components/text";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { TicketParamList } from "src/routing/route-screens";
+import { TicketParamList } from "../../routing/route-screens";
+import LocalizationContext from "../../localization/localization-context";
+import Error, { ErrorProps } from "../../components/error";
+import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
+import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/mock-auth";
 
 const TicketsList = (): JSX.Element => {
+  const { t } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<TicketParamList>>();
-  const [tickets, setTickets] = useState<TicketBrief[] | undefined>(undefined);
+  const [tickets, setTickets] = useState<TicketBrief[]>([]);
   const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
+  const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [isLoadingData, setIsLoadingData] = useState(false);
 
   useEffect(() => {
     setIsLoadingData(true);
 
-    //TODO - replace with axios call to back-end
-    const requestResponse = ticketPaginationMock[page];
+    getTickets();
 
     setIsLoadingData(false);
-
-    if (requestResponse.status === ResponseStatus.fail) {
-      alert("Could not retrieve data from back-end");
-    }
-
-    if (!tickets) {
-      setTickets(requestResponse.data?.tickets);
-      return;
-    }
-
-    setTickets([...tickets, ...requestResponse.data?.tickets ?? []]);
-    setHasNextPage(requestResponse.data?.more ?? false);
   }, []);
+
+  const getTickets = async () => {
+    try {
+      const maxIdFromState = getMaximumIdFromCurrentState();
+      const reqUrl = `${SCREEN_URL.TICKETS_URL}?fromId=${maxIdFromState}&count=${CONFIG.ITEMS_PER_PAGE}`;
+      const response = await axios.get<TicketListPayload>(reqUrl, {
+        headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
+      });
+
+      if (response.status == 200) {
+        setTickets([...tickets, ...response.data.data.tickets ?? []]);
+        setHasNextPage(response.data.data.more ?? false);
+      } else {
+        const friendlyMessage = t("FAILED_REQUEST");
+        setError({
+          friendlyMessage: friendlyMessage,
+          errorMessage: response.data.error ?? "",
+        });
+      }
+    } catch (error) {
+      const friendlyMessage = t("FAILED_REQUEST");
+      setError({
+        friendlyMessage: friendlyMessage,
+        errorMessage: JSON.stringify(error),
+      });
+    }
+  };
 
   const onTicketSelected = (ticketId: string) => {
     navigate("TicketScreen", { screen: "TicketScreen", params: {ticketId: ticketId} });
@@ -46,6 +67,14 @@ const TicketsList = (): JSX.Element => {
     if (hasNextPage) {
       setPage(page + 1);
     }
+  }
+
+  const getMaximumIdFromCurrentState = () => {
+    if (tickets.length === 0) {
+      return 0;
+    }
+    
+    return Math.max(...tickets.map(ticket => ticket.id));
   }
 
   const renderFooter = () => (
@@ -58,6 +87,19 @@ const TicketsList = (): JSX.Element => {
   const renderItem = useCallback(({ item }) => {
     return <TicketBriefCard key={item.id} ticketBrief={item} onTicketSelected={onTicketSelected}/>
   }, []);
+
+  if (error) {
+    return (
+      <Error
+        friendlyMessage={error.friendlyMessage}
+        errorMessage={error.errorMessage}
+      />
+    );
+  }
+
+  if (!tickets || tickets.length == 0) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <FlatList
