@@ -125,8 +125,8 @@ const DashboardStatistics = (): JSX.Element => {
 
   return (
     <ScrollView contentContainerStyle={dashboardStatisticsStyles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl tintColor="#F0DF67" />}>
-      <Carousel name={"Articles"} data={articleCarouselData ?? []}/>
-      <Carousel name={"Tickets"} data={ticketCarouselData ?? []}/>
+      <Carousel name={t("ARTICLES_TITLE")} data={articleCarouselData ?? []}/>
+      <Carousel name={t("TICKETS_TITLE")} data={ticketCarouselData ?? []}/>
     </ScrollView>
   );
 };
