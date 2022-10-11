@@ -1,6 +1,6 @@
 export class TicketBrief {
   public id!: number;
-  public idtracking: number | null = null;
+  public idtracking!: string;
   public idscheduler!: number;
   public name!: string;
   public tags!: string;

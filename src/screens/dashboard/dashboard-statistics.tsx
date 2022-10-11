@@ -92,25 +92,27 @@ const DashboardStatistics = (): JSX.Element => {
     }
   };
 
-  const onArticleSelected = (article: ArticleBrief) => {
-    navigate("ArticleScreen", { screen: "ArticleScreen", params: {articleId: article.id} });
+  const onArticleSelected = (articleId: number) => {
+    navigate("ArticleScreen", { screen: "ArticleScreen", params: {articleId: articleId} });
   }
 
-  const onTicketSelected = (ticket: TicketBrief) => {
-    navigate("TicketScreen", { screen: "TicketScreen", params: {ticketId: ticket.id} });
+  const onTicketSelected = (ticketId: number) => {
+    navigate("TicketScreen", { screen: "TicketScreen", params: {ticketId: ticketId} });
   }
   
   const articleCarouselData = articles?.map((article: ArticleBrief, idx: number) => {
     return {
-      data: article,
-      childComponent: (<ArticleBriefCard key={idx} articleBrief={article} onArticleSelected={() => onArticleSelected(article)}/>)
+      id: article.id,
+      title: article.title,
+      onItemSelected: onArticleSelected
     }
   });
 
   const ticketCarouselData = tickets?.map((ticket: TicketBrief, idx: number) => {
     return {
-      data: ticket,
-      childComponent: (<TicketBriefCard key={idx} ticketBrief={ticket} onTicketSelected={() => onTicketSelected(ticket)}/>)
+      id: ticket.id,
+      title: ticket.idtracking,
+      onItemSelected: onTicketSelected
     }
   });
 

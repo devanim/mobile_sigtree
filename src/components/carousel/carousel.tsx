@@ -2,6 +2,7 @@ import React from "react";
 import { View, ScrollView } from "react-native";
 
 import Text from "../text";
+import CarouselCard from "./carousel-card";
 import { carouselStyles } from "./carousel-style";
 
 const Carousel = (props: CarouselProps): JSX.Element => {
@@ -9,7 +10,9 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     <View style={carouselStyles.container}>
       <Text category="title3" marginBottom={16} status="white">{props.name}</Text>
       <ScrollView horizontal contentContainerStyle={carouselStyles.content} showsHorizontalScrollIndicator={false}>
-        {props.data.map((item) => { return (item.childComponent);})}
+        {props.data.map((item) => (
+          <CarouselCard title={item.title} id={item.id} onItemSelected={item.onItemSelected}/>
+        ))}
       </ScrollView>
     </View>
   );
@@ -21,8 +24,9 @@ type CarouselProps = {
 }
 
 type CarouselData = {
-  data: any;
-  childComponent: JSX.Element;
+  id: number;
+  title: string;
+  onItemSelected: (id: number) => void;
 }
 
 export default Carousel;
