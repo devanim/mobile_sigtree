@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { ScrollView } from "react-native";
+import { ScrollView, Text } from "react-native";
 import { RefreshControl } from "react-native-web-refresh-control";
 import axios from "axios";
 
@@ -165,6 +165,10 @@ const DashboardStatistics = (): JSX.Element => {
       <Carousel name={t("ARTICLES_TITLE")} data={articleCarouselData ?? []}/>
       <Carousel name={t("TICKETS_TITLE")} data={ticketCarouselData ?? []}/>
       {statistics ? <RoundChart data={statistics}/> : <></>}
+      {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_LOW_COUNT")} {statistics.count_low}</Text>: <></>}
+      {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_MEDIUM_COUNT")} {statistics.count_medium}</Text>: <></>}
+      {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_HIGH_COUNT")} {statistics.count_high}</Text>: <></>}
+      {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("TOTAL_TICKETS_COUNT")} {statistics.count_all}</Text>: <></>}
     </ScrollView>
   );
 };

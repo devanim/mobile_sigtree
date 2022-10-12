@@ -33,5 +33,9 @@
   "STATISTICS_TITLE": "Statistics",
   "PRIORITY_LOW": "Low",
   "PRIORITY_MID": "Medium",
-  "PRIORITY_HIGH": "High"
+  "PRIORITY_HIGH": "High",
+  "PRIORITY_LOW_COUNT": "Low Tickets Count:",
+  "PRIORITY_MEDIUM_COUNT": "Medium Tickets Count:",
+  "PRIORITY_HIGH_COUNT": "High Tickets Count:",
+  "TOTAL_TICKETS_COUNT": "Total Tickets Count:"
 }

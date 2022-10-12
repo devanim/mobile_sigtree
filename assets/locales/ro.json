@@ -33,5 +33,9 @@
   "STATISTICS_TITLE": "Statistici",
   "PRIORITY_LOW": "Scazuta",
   "PRIORITY_MID": "Medie",
-  "PRIORITY_HIGH": "Mare"
+  "PRIORITY_HIGH": "Mare",
+  "PRIORITY_LOW_COUNT": "Numar tichete scazute:",
+  "PRIORITY_MEDIUM_COUNT": "Numar tichete medii:",
+  "PRIORITY_HIGH_COUNT": "Numar tichete mare:",
+  "TOTAL_TICKETS_COUNT": "Total tichete:"
 }
