@@ -29,5 +29,9 @@
   "TICKET_CARD_CATEGORY": "Categorie",
   "TICKET_CARD_STATUS": "Status",
   "TICKET_CARD_PRIORITY": "Prioritate",
-  "TICKET_CARD_BUILDING": "Cladire"
+  "TICKET_CARD_BUILDING": "Cladire",
+  "STATISTICS_TITLE": "Statistici",
+  "PRIORITY_LOW": "Scazuta",
+  "PRIORITY_MID": "Medie",
+  "PRIORITY_HIGH": "Mare"
 }

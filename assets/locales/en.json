@@ -29,5 +29,9 @@
   "TICKET_CARD_CATEGORY": "Category",
   "TICKET_CARD_STATUS": "Status",
   "TICKET_CARD_PRIORITY": "Priority",
-  "TICKET_CARD_BUILDING": "Building"
+  "TICKET_CARD_BUILDING": "Building",
+  "STATISTICS_TITLE": "Statistics",
+  "PRIORITY_LOW": "Low",
+  "PRIORITY_MID": "Medium",
+  "PRIORITY_HIGH": "High"
 }
