@@ -1,5 +1,6 @@
 export class TicketBrief {
   public id!: number;
+  public row_num!: number;
   public idtracking!: string;
   public idscheduler!: number;
   public name!: string;

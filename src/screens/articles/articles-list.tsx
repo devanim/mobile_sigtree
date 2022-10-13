@@ -24,6 +24,7 @@ const ArticlesList = (): JSX.Element => {
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [selectedTag, setSelectedTag] = useState("");
+  const [resetList, setResetList] = useState(false);
 
   useEffect(() => {
     setIsLoadingData(true);
@@ -35,6 +36,11 @@ const ArticlesList = (): JSX.Element => {
 
   const getArticles = async () => {
     try {
+      if (resetList) {
+        setArticles([]);
+        setResetList(false);
+      }
+
       const filteringTag = selectedTag.length > 0 ? `tag=${selectedTag}&` : "";
       const maxIdFromState = getMaximumIdFromCurrentState();
       const reqUrl = `${SCREEN_URL.ARTICLES_URL}?${filteringTag}fromId=${maxIdFromState}&count=${CONFIG.ITEMS_PER_PAGE}`;
@@ -85,9 +91,11 @@ const ArticlesList = (): JSX.Element => {
 
   const onTagSelected = (tag: string) => {
     setSelectedTag(tag);
+    setResetList(true);
   };
 
   const onCancelFiltering = () => {
+    setResetList(true);
     setSelectedTag("");
   }
 

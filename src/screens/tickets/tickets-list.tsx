@@ -72,7 +72,7 @@ const TicketsList = (): JSX.Element => {
       return 0;
     }
     
-    return Math.max(...tickets.map(ticket => ticket.id));
+    return Math.max(...tickets.map(ticket => ticket.row_num));
   }
 
   const renderFooter = () => (
