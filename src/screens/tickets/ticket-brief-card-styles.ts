@@ -4,7 +4,6 @@ export const briefStyles = StyleSheet.create({
   containerCard: {
     backgroundColor: "#fff",
     width: "100%",
-    marginBottom: 1,
     borderBottomColor: "#000",
   },
   twoRow: {
@@ -25,7 +24,6 @@ export const briefStyles = StyleSheet.create({
   },
   textView: {
     flex: 2,
-    padding: 1,
     flexDirection: "row"
   },
   titleView: {
@@ -33,4 +31,12 @@ export const briefStyles = StyleSheet.create({
     width: '100%',
     fontSize: 25
   },
+  statusView: {
+    flex: 2,
+    flexDirection: "row",
+    backgroundColor: "#FFF",
+    marginBottom: 5,
+    borderWidth: 1,
+    borderColor: "#000"
+  }
 });

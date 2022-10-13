@@ -13,7 +13,7 @@ import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/mock-auth";
 import ArticleBriefCard from "./article-brief-card";
 
 import { articleListStyles } from "./article-list-styles";
-import ArticleFiltering from "./article-filtering";
+import ListFiltering from "../../components/list-filtering/list-filtering";
 
 const ArticlesList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -140,7 +140,7 @@ const ArticlesList = (): JSX.Element => {
 
   return (
     <>
-      {selectedTag ? <ArticleFiltering tag={selectedTag} onCancel={onCancelFiltering}/> : <></>}
+      {selectedTag ? <ListFiltering tag={selectedTag} onCancel={onCancelFiltering}/> : <></>}
       <FlatList
         data={articles || []}
         renderItem={renderItem}

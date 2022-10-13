@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const articleFilteringStyles = StyleSheet.create({
+const listFilteringStyles = StyleSheet.create({
   container: {
     backgroundColor: "#FFF",
     marginBottom: 2
@@ -16,4 +16,4 @@ const articleFilteringStyles = StyleSheet.create({
   }
 });
 
-export default articleFilteringStyles;
+export default listFilteringStyles;

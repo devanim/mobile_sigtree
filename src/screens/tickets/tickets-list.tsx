@@ -39,7 +39,7 @@ const TicketsList = (): JSX.Element => {
       });
 
       if (response.status == 200) {
-        setTickets([...tickets, ...response.data.data.tickets ?? []]);
+        setTickets([...tickets, ...(response.data.data.tickets ?? [])]);
         setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
       } else {
@@ -59,32 +59,46 @@ const TicketsList = (): JSX.Element => {
   };
 
   const onTicketSelected = (ticketId: number) => {
-    navigate("TicketScreen", { screen: "TicketScreen", params: {ticketId: ticketId} });
-  }
+    navigate("TicketScreen", {
+      screen: "TicketScreen",
+      params: { ticketId: ticketId },
+    });
+  };
+
+  const onSelectedStatus = (status: string) => {
+    alert(`selected status ${status}`);
+  };
 
   const fetchNextPage = () => {
     if (hasNextPage) {
       setPage(page + 1);
     }
-  }
+  };
 
   const getMaximumIdFromCurrentState = () => {
     if (tickets.length === 0) {
       return 0;
     }
-    
-    return Math.max(...tickets.map(ticket => ticket.row_num));
-  }
+
+    return Math.max(...tickets.map((ticket) => ticket.row_num));
+  };
 
   const renderFooter = () => (
     <View style={ticketListStyles.footerText}>
-        {isLoadingData && <ActivityIndicator />}    
-        {!hasNextPage && <Text>No more tickets at the moment</Text>}
+      {isLoadingData && <ActivityIndicator />}
+      {!hasNextPage && <Text>No more tickets at the moment</Text>}
     </View>
   );
-  
+
   const renderItem = useCallback(({ item }) => {
-    return <TicketBriefCard key={item.id} ticketBrief={item} onTicketSelected={onTicketSelected}/>
+    return (
+      <TicketBriefCard
+        key={item.id}
+        ticketBrief={item}
+        onTicketSelected={onTicketSelected}
+        onSelectedStatus={onSelectedStatus}
+      />
+    );
   }, []);
 
   if (error) {
