@@ -10,8 +10,8 @@ const Carousel = (props: CarouselProps): JSX.Element => {
     <View style={carouselStyles.container}>
       <Text category="title3" marginBottom={16} status="white">{props.name}</Text>
       <ScrollView horizontal contentContainerStyle={carouselStyles.content} showsHorizontalScrollIndicator={false}>
-        {props.data.map((item) => (
-          <CarouselCard key={item.id} title={item.title} id={item.id} onItemSelected={item.onItemSelected}/>
+        {props.data.map((item, idx) => (
+          <CarouselCard key={idx} title={item.title} id={item.id} onItemSelected={item.onItemSelected}/>
         ))}
       </ScrollView>
     </View>
