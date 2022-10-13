@@ -4,7 +4,7 @@ export const articleBriefCardStyles = StyleSheet.create({
   containerCard: {
     backgroundColor: "#fff",
     width: "100%",
-    marginBottom: 1,
+    // marginBottom: 1,
     borderBottomColor: "#000",
     flex: 2,
     flexDirection: "row"
@@ -38,5 +38,18 @@ export const articleBriefCardStyles = StyleSheet.create({
     width: '17%',
     alignContent: "center",
     marginTop: '5%'
+  },
+  tagsContainer: {
+    flex: 4,
+    flexDirection: "row",
+    backgroundColor: "#FFF",
+    marginBottom: 2,
+    borderWidth: 1,
+    borderColor: "#000"
+  },
+  tagsPressable: {
+    borderWidth: 1,
+    borderColor: "#000",
+    marginRight: 1
   }
 });

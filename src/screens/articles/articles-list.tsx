@@ -13,6 +13,7 @@ import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/mock-auth";
 import ArticleBriefCard from "./article-brief-card";
 
 import { articleListStyles } from "./article-list-styles";
+import ArticleFiltering from "./article-filtering";
 
 const ArticlesList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -22,25 +23,28 @@ const ArticlesList = (): JSX.Element => {
   const [hasNextPage, setHasNextPage] = useState(true);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [selectedTag, setSelectedTag] = useState("");
 
   useEffect(() => {
     setIsLoadingData(true);
-    
+
     getArticles();
 
     setIsLoadingData(false);
-  }, [page]);
+  }, [page, selectedTag]);
 
   const getArticles = async () => {
     try {
+      const filteringTag = selectedTag.length > 0 ? `tag=${selectedTag}&` : "";
       const maxIdFromState = getMaximumIdFromCurrentState();
-      const reqUrl = `${SCREEN_URL.ARTICLES_URL}?fromId=${maxIdFromState}&count=${CONFIG.ITEMS_PER_PAGE}`;
+      const reqUrl = `${SCREEN_URL.ARTICLES_URL}?${filteringTag}fromId=${maxIdFromState}&count=${CONFIG.ITEMS_PER_PAGE}`;
+      console.log("reqUrl", reqUrl);
       const response = await axios.get<ArticleListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
       });
 
       if (response.status == 200) {
-        setArticles([...articles, ...response.data.data.articles ?? []]);
+        setArticles([...articles, ...(response.data.data.articles ?? [])]);
         setHasNextPage(response.data.data.more ?? false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
@@ -62,29 +66,47 @@ const ArticlesList = (): JSX.Element => {
     if (hasNextPage) {
       setPage(page + 1);
     }
-  }
+  };
 
   const getMaximumIdFromCurrentState = () => {
     if (articles.length === 0) {
       return 0;
     }
-    
-    return Math.max(...articles.map(article => article.id));
-  }
+
+    return Math.max(...articles.map((article) => article.id));
+  };
 
   const onArticleSelected = (articleId: number) => {
-    navigate("ArticleScreen", { screen: "ArticleScreen", params: {articleId: articleId} });
+    navigate("ArticleScreen", {
+      screen: "ArticleScreen",
+      params: { articleId: articleId },
+    });
+  };
+
+  const onTagSelected = (tag: string) => {
+    setSelectedTag(tag);
+  };
+
+  const onCancelFiltering = () => {
+    setSelectedTag("");
   }
 
   const renderFooter = () => (
     <View style={articleListStyles.footerText}>
-        {isLoadingData && <ActivityIndicator />}    
-        {!hasNextPage && <Text>No more articles at the moment</Text>}
+      {isLoadingData && <ActivityIndicator />}
+      {!hasNextPage && <Text>No more articles at the moment</Text>}
     </View>
   );
-  
+
   const renderItem = useCallback(({ item }) => {
-    return <ArticleBriefCard key={item.id} articleBrief={item} onArticleSelected={onArticleSelected}/>
+    return (
+      <ArticleBriefCard
+        key={item.id}
+        articleBrief={item}
+        onArticleSelected={onArticleSelected}
+        onTagSelected={onTagSelected}
+      />
+    );
   }, []);
 
   if (error) {
@@ -101,17 +123,20 @@ const ArticlesList = (): JSX.Element => {
   }
 
   return (
-    <FlatList
-      data={articles || []}
-      renderItem={renderItem}
-      keyExtractor={(i, index) => index.toString()}
-      showsVerticalScrollIndicator={false}
-      scrollEventThrottle={16}
-      contentContainerStyle={articleListStyles.contentContainerStyle}
-      onEndReachedThreshold={0.2}
-      onEndReached={fetchNextPage}
-      ListFooterComponent={renderFooter}
-    />
+    <>
+      {selectedTag ? <ArticleFiltering tag={selectedTag} onCancel={onCancelFiltering}/> : <></>}
+      <FlatList
+        data={articles || []}
+        renderItem={renderItem}
+        keyExtractor={(i, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        contentContainerStyle={articleListStyles.contentContainerStyle}
+        onEndReachedThreshold={0.2}
+        onEndReached={fetchNextPage}
+        ListFooterComponent={renderFooter}
+      />
+    </>
   );
 };
 
