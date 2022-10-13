@@ -29,9 +29,10 @@ const ArticlesList = (): JSX.Element => {
 
   useEffect(() => {
     setIsLoadingData(true);
+
     resetState();
     getArticles();
-    console.log("articles state", JSON.stringify(articles));
+
     setIsLoadingData(false);
   }, [page, selectedTag]);
 
@@ -52,7 +53,9 @@ const ArticlesList = (): JSX.Element => {
       });
       
       if (response.status == 200) {
-        setArticles([...articles, ...(response.data.data.articles ?? [])]);
+        //TODO - pagination is broken because of this
+        //setArticles([...articles, ...(response.data.data.articles ?? [])]);
+        setArticles(response.data.data.articles ?? []);
         setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
       } else {
@@ -63,7 +66,6 @@ const ArticlesList = (): JSX.Element => {
         });
       }
     } catch (error) {
-      console.log("Inside the error", JSON.stringify(error));
       const friendlyMessage = t("FAILED_REQUEST");
       setError({
         friendlyMessage: friendlyMessage,
@@ -96,11 +98,13 @@ const ArticlesList = (): JSX.Element => {
   const onTagSelected = (tag: string) => {
     setSelectedTag(tag);
     setResetList(true);
+    setMaxId(0);
   };
 
   const onCancelFiltering = () => {
     setResetList(true);
     setSelectedTag("");
+    setMaxId(0);
   }
 
   const renderFooter = () => (
