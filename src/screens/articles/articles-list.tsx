@@ -25,32 +25,35 @@ const ArticlesList = (): JSX.Element => {
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [selectedTag, setSelectedTag] = useState("");
   const [resetList, setResetList] = useState(false);
+  const [maxId, setMaxId] = useState(0);
 
   useEffect(() => {
     setIsLoadingData(true);
-
+    resetState();
     getArticles();
-
+    console.log("articles state", JSON.stringify(articles));
     setIsLoadingData(false);
   }, [page, selectedTag]);
 
+  const resetState = () => {
+    if (resetList) {
+      setArticles([]);
+      setMaxId(0);
+      setResetList(false);
+    }
+  }
+
   const getArticles = async () => {
     try {
-      if (resetList) {
-        setArticles([]);
-        setResetList(false);
-      }
-
       const filteringTag = selectedTag.length > 0 ? `tag=${selectedTag}&` : "";
-      const maxIdFromState = getMaximumIdFromCurrentState();
-      const reqUrl = `${SCREEN_URL.ARTICLES_URL}?${filteringTag}fromId=${maxIdFromState}&count=${CONFIG.ITEMS_PER_PAGE}`;
-      console.log("reqUrl", reqUrl);
+      const reqUrl = `${SCREEN_URL.ARTICLES_URL}?${filteringTag}fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
       const response = await axios.get<ArticleListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
       });
-
+      
       if (response.status == 200) {
         setArticles([...articles, ...(response.data.data.articles ?? [])]);
+        setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
@@ -60,6 +63,7 @@ const ArticlesList = (): JSX.Element => {
         });
       }
     } catch (error) {
+      console.log("Inside the error", JSON.stringify(error));
       const friendlyMessage = t("FAILED_REQUEST");
       setError({
         friendlyMessage: friendlyMessage,
