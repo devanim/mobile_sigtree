@@ -21,6 +21,7 @@ const TicketsList = (): JSX.Element => {
   const [hasNextPage, setHasNextPage] = useState(true);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [maxId, setMaxId] = useState(0);
 
   useEffect(() => {
     setIsLoadingData(true);
@@ -28,18 +29,18 @@ const TicketsList = (): JSX.Element => {
     getTickets();
 
     setIsLoadingData(false);
-  }, []);
+  }, [page]);
 
   const getTickets = async () => {
     try {
-      const maxIdFromState = getMaximumIdFromCurrentState();
-      const reqUrl = `${SCREEN_URL.TICKETS_URL}?fromId=${maxIdFromState}&count=${CONFIG.ITEMS_PER_PAGE}`;
+      const reqUrl = `${SCREEN_URL.TICKETS_URL}?fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
       const response = await axios.get<TicketListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
       });
 
       if (response.status == 200) {
         setTickets([...tickets, ...response.data.data.tickets ?? []]);
+        setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
