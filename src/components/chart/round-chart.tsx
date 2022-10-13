@@ -10,7 +10,6 @@ const RoundChart = (props: RoundChartProps): JSX.Element => {
   const data: RoundChartData[] = [];
 
   const createDataArray = () => {
-    alert(`props.data ${JSON.stringify(props.data)}`);
     data.push({
       name: t("PRIORITY_LOW"), 
       value: props.data?.pct_low ?? 0, 
