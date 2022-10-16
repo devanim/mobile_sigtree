@@ -47,5 +47,9 @@
   "PRIORITY_HIGH_COUNT": "Numar tichete mare:",
   "TOTAL_TICKETS_COUNT": "Total tichete:",
   "USER_PROFILE_EDIT": "Editati profilul",
-  "USER_PROFILE_CHANGE_PASSWORD": "Schimbati parola"
+  "USER_PROFILE_CHANGE_PASSWORD": "Schimbati parola",
+  "USER_PROFILE_CHANGE_PASSWORD_REQUIRED": "Parola este necesara",
+  "USER_PROFILE_OLD_PASSWORD_REQUIRED": "Parola anterioara este necesara",
+  "USER_PROFILE_CONFIRM_PASSWORD_REQUIRED": "Confirmarea Parolei este necesara",
+  "BTN_SUBMIT": "Salvati"
 }
