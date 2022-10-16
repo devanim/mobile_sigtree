@@ -45,5 +45,7 @@
   "PRIORITY_LOW_COUNT": "Numar tichete scazute:",
   "PRIORITY_MEDIUM_COUNT": "Numar tichete medii:",
   "PRIORITY_HIGH_COUNT": "Numar tichete mare:",
-  "TOTAL_TICKETS_COUNT": "Total tichete:"
+  "TOTAL_TICKETS_COUNT": "Total tichete:",
+  "USER_PROFILE_EDIT": "Editati profilul",
+  "USER_PROFILE_CHANGE_PASSWORD": "Schimbati parola"
 }

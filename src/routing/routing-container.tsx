@@ -10,6 +10,9 @@ import EditTicketScreen from "../screens/tickets/edit-ticket/edit-ticket-screen"
 import TOSScreen from "../screens/terms-of-service/tos-screen";
 import ArticleScreen from "../screens/articles/article-screen";
 import TicketScreen from "../screens/tickets/ticket-screen";
+import UserScreen from "../screens/user/user-screen";
+import EditUserScreen from "../screens/user/edit-user/edit-user-screen";
+import ChangePasswordScreen from "../screens/user/change-password/change-password-screen";
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -25,6 +28,9 @@ const RoutingContainer = (): ReactElement => {
         <Stack.Screen name="NewTicketScreen" component={NewTicketScreen} />
         <Stack.Screen name="EditTicketScreen" component={EditTicketScreen} />
         <Stack.Screen name="ArticleScreen" component={ArticleScreen} />
+        <Stack.Screen name="UserScreen" component={UserScreen} />
+        <Stack.Screen name="EditUserScreen" component={EditUserScreen} />
+        <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
         <Stack.Screen name="TicketScreen" component={TicketScreen} />
         <Stack.Screen name="DashboardNavigator" component={DashboardNavigator} />
       </Stack.Navigator>

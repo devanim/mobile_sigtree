@@ -12,6 +12,7 @@ import LocalizationContext from "../../localization/localization-context";
 import Error, { ErrorProps } from "../../components/error";
 import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/mock-auth";
+import ListFiltering from "../../components/list-filtering/list-filtering";
 
 const TicketsList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -21,25 +22,39 @@ const TicketsList = (): JSX.Element => {
   const [hasNextPage, setHasNextPage] = useState(true);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [isLoadingData, setIsLoadingData] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [resetList, setResetList] = useState(false);
   const [maxId, setMaxId] = useState(0);
 
   useEffect(() => {
     setIsLoadingData(true);
 
+    resetState();
     getTickets();
 
     setIsLoadingData(false);
-  }, [page]);
+  }, [page, selectedStatus]);
+
+  const resetState = () => {
+    if (resetList) {
+      setTickets([]);
+      setMaxId(0);
+      setResetList(false);
+    }
+  }
 
   const getTickets = async () => {
     try {
-      const reqUrl = `${SCREEN_URL.TICKETS_URL}?fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
+      const filteringStatus = selectedStatus.length > 0 ? `status=${selectedStatus}&` : "";
+      const reqUrl = `${SCREEN_URL.TICKETS_URL}?${filteringStatus}fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
       const response = await axios.get<TicketListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
       });
 
       if (response.status == 200) {
-        setTickets([...tickets, ...(response.data.data.tickets ?? [])]);
+        //TODO - pagination is broken because of this
+        //setTickets([...tickets, ...(response.data.data.tickets ?? [])]);
+        setTickets(response.data.data.tickets ?? []);
         setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
       } else {
@@ -66,8 +81,16 @@ const TicketsList = (): JSX.Element => {
   };
 
   const onSelectedStatus = (status: string) => {
-    alert(`selected status ${status}`);
+    setSelectedStatus(status);
+    setResetList(true);
+    setMaxId(0);
   };
+
+  const onCancelFiltering = () => {
+    setResetList(true);
+    setSelectedStatus("");
+    setMaxId(0);
+  }
 
   const fetchNextPage = () => {
     if (hasNextPage) {
@@ -115,17 +138,20 @@ const TicketsList = (): JSX.Element => {
   }
 
   return (
-    <FlatList
-      data={tickets || []}
-      renderItem={renderItem}
-      keyExtractor={(i, index) => index.toString()}
-      showsVerticalScrollIndicator={false}
-      scrollEventThrottle={16}
-      contentContainerStyle={ticketListStyles.contentContainerStyle}
-      onEndReachedThreshold={0.2}
-      onEndReached={fetchNextPage}
-      ListFooterComponent={renderFooter}
-    />
+    <>
+      {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering}/> : <></>}
+      <FlatList
+        data={tickets || []}
+        renderItem={renderItem}
+        keyExtractor={(i, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        contentContainerStyle={ticketListStyles.contentContainerStyle}
+        onEndReachedThreshold={0.2}
+        onEndReached={fetchNextPage}
+        ListFooterComponent={renderFooter}
+      />
+    </>
   );
 };
 

@@ -45,5 +45,7 @@
   "PRIORITY_LOW_COUNT": "Low Tickets Count:",
   "PRIORITY_MEDIUM_COUNT": "Medium Tickets Count:",
   "PRIORITY_HIGH_COUNT": "High Tickets Count:",
-  "TOTAL_TICKETS_COUNT": "Total Tickets Count:"
+  "TOTAL_TICKETS_COUNT": "Total Tickets Count:",
+  "USER_PROFILE_EDIT": "Edit User Profile",
+  "USER_PROFILE_CHANGE_PASSWORD": "Change Password"
 }

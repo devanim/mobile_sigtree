@@ -60,6 +60,14 @@ const UserContainer = (): JSX.Element => {
     navigate("TOSScreen", { screen: "TOSScreen" });
   }
 
+  const navigateToEditUserProfileScreen = () => {
+    navigate("EditUserScreen", { screen: "EditUserScreen" });
+  }
+
+  const navigateToChangePasswordScreen = () => {
+    navigate("ChangePasswordScreen", { screen: "ChangePasswordScreen" });
+  }
+
   const hasBuildingsAssigned = (): boolean => {
     return  userProfile?.resources?.buildings?.length > 0;
   }
@@ -67,6 +75,8 @@ const UserContainer = (): JSX.Element => {
   return (
     <View>
       {hasBuildingsAssigned() ? <Button children={t("READ_TOS")} onPress={navigateToTOSScreen} size={'small'}/> : <></>}
+      <Button children={t("USER_PROFILE_EDIT")} onPress={navigateToEditUserProfileScreen} size={'small'}/>
+      <Button children={t("USER_PROFILE_CHANGE_PASSWORD")} onPress={navigateToChangePasswordScreen} size={'small'}/>
       <UserProfile profile={userProfile}/>
     </View>
   );
