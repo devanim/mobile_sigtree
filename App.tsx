@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
 
-import { KeycloakProvider } from "expo-keycloak-auth";
+import { KeycloakProvider } from "./src/keycloak/KeycloakProvider";
 import * as Localization from 'expo-localization';
 
 import { setI18nConfig } from './src/localization/i18n';
@@ -28,9 +28,14 @@ patchFlatListProps();
 
 const App = (): JSX.Element => {
   const keycloakConfiguration = {
-    clientId: "sigtree",
-    realm: "customer1",
-    url: "https://sso.sigtree.com/auth",
+    // clientId: "sigtree",
+    // realm: "customer1",
+    // url: "https://sso.sigtree.com/auth",
+    // nativeRedirectPath: "192.168.119.106:19000",
+    // scheme: "app.myapp.com"
+    clientId: "sigtree-app",
+    realm: "test",
+    url: "http://localhost:8080/auth",
     nativeRedirectPath: "192.168.119.106:19000",
     scheme: "app.myapp.com"
   };

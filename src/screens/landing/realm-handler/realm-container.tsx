@@ -7,7 +7,7 @@ import RealmSelector, {
   BarcodeReadPayload,
 } from "../../../components/realm-selector/realm-selector";
 import RealmList from "./realm-list";
-import { useKeycloak } from "expo-keycloak-auth";
+import { useKeycloak } from "../../../keycloak/useKeycloak";
 import RealmDetails from "../../../models/realm-details";
 import RealmContext from "../../../context/RealmContext";
 import { REALMS_KEY } from "../../../utils/constants";
@@ -46,7 +46,6 @@ const RealmContainer = (): JSX.Element => {
 
   const onRealmSelectedCallback = (realmDetails: RealmDetails) => {
     setRealm(realmDetails);
-    login();
   };
 
   const onRemoveRealmCallback = (realmName: string) => {
@@ -93,9 +92,7 @@ const RealmContainer = (): JSX.Element => {
   };
 
   const onLogin = async () => {
-    login().then((data: AuthSessionResult) => {
-      alert(`data ${JSON.stringify(data)}`);
-    })
+    login();
   };
 
   const toggleRealmSelectorComponent = () => {
