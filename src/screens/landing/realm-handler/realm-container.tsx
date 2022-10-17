@@ -13,7 +13,9 @@ import RealmContext from "../../../context/RealmContext";
 import { REALMS_KEY } from "../../../utils/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator } from "react-native";
-import { AuthSessionResult, TokenError } from "expo-auth-session";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { AppStackParamList } from "../../../routing/route-screens";
+import LocalizationContext from "../../../localization/localization-context";
 
 const RealmContainer = (): JSX.Element => {
   const {
@@ -26,7 +28,8 @@ const RealmContainer = (): JSX.Element => {
   const [showRealmSelector, setShowRealmSelector] = useState(false);
   const { realmData: realmData, setRealm } = useContext(RealmContext);
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
-  //const realm = `{"name": "test","clientId":"sigtree-app","keycloakUrl":"http://localhost8080"}`;
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { handleChange } = useContext(LocalizationContext);
 
   useEffect(() => {
     AsyncStorage.getItem(REALMS_KEY).then((value) => {
@@ -92,7 +95,9 @@ const RealmContainer = (): JSX.Element => {
   };
 
   const onLogin = async () => {
-    login();
+    await login();
+    handleChange("ro");
+    navigate("DashboardNavigator", { screen: "DashboardScreen" })
   };
 
   const toggleRealmSelectorComponent = () => {
