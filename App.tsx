@@ -28,16 +28,15 @@ patchFlatListProps();
 
 const App = (): JSX.Element => {
   const keycloakConfiguration = {
-    // clientId: "sigtree",
-    // realm: "customer1",
-    // url: "https://sso.sigtree.com/auth",
-    // nativeRedirectPath: "192.168.119.106:19000",
-    // scheme: "app.myapp.com"
-    clientId: "sigtree-app",
-    realm: "test",
-    url: "http://localhost:8080/auth",
+    clientId: "sigtree",
+    realm: "customer1",
+    url: "https://sso.sigtree.com/auth",
     nativeRedirectPath: "192.168.119.106:19000",
-    scheme: "app.myapp.com"
+    scheme: "app.myapp.com",
+    extraParams: {
+      grant_type: "authorization_code",
+      client_secret: "**********"
+    }
   };
 
   const [theme, setTheme] = useState<"light" | "dark">("light");

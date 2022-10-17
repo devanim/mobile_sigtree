@@ -1,4 +1,6 @@
 import * as AuthSession from "expo-auth-session";
+import axios from "axios";
+
 export const getRealmURL = (config) => {
   const { url, realm } = config;
   const slash = url.endsWith('/') ? '' : '/';
@@ -20,6 +22,7 @@ export const handleTokenExchange = async ({
         { code: response.params.code, ...config },
         discovery,
       );
+
       return token;
     }
     if (response?.type === 'error') {

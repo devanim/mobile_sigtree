@@ -12,21 +12,8 @@ import {
   NATIVE_REDIRECT_PATH,
 } from './const';
 
-// export interface IKeycloakConfiguration extends Partial<AuthRequestConfig> {
-//   clientId: string;
-//   disableAutoRefresh?: boolean;
-//   nativeRedirectPath?: string;
-//   realm: string;
-//   refreshTimeBuffer?: number;
-//   scheme?: string;
-//   tokenStorageKey?: string;
-//   url: string;
-// }
-
-
 export const KeycloakProvider = ({ realm, clientId, url, extraParams, children, ...options }) => {
   const discovery = useAutoDiscovery(getRealmURL({ realm, url }));
-  console.log("discovery", discovery);
   const redirectUri = AuthSession.makeRedirectUri({
     native: `${options.scheme ?? 'exp'}://${options.nativeRedirectPath ?? NATIVE_REDIRECT_PATH}`,
     useProxy: !options.scheme,
@@ -35,10 +22,9 @@ export const KeycloakProvider = ({ realm, clientId, url, extraParams, children, 
   const config = { redirectUri, clientId, realm, url, extraParams }
 
   const [request, response, promptAsync] = useAuthRequest(
-    { usePKCE: false, ...config },
+    { usePKCE: true, responseType: AuthSession.ResponseType.Code, ...config },
     discovery,
   );
-  console.log("useAuthRequest response", JSON.stringify(promptAsync(options)));
   const [currentToken, updateToken] = useTokenStorage(options, config, discovery)
 
   const handleLogin = useCallback((options) => {
@@ -72,6 +58,7 @@ export const KeycloakProvider = ({ realm, clientId, url, extraParams, children, 
   }
   useEffect(() => {
     if (response) {
+      config.extraParams.code_verifier = request.codeVerifier;
       handleTokenExchange({ response, discovery, config })
         .then(updateToken)
     }
