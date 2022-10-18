@@ -6,16 +6,18 @@ import { Button } from "@ui-kitten/components";
 import axios from "axios";
 
 import Error, { ErrorProps } from "../../components/error";
-import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
+import { AUTH_MOCK, SCREEN_URL } from "../../models/config";
 import { Ticket } from "../../models/ticket/ticket";
 import { TicketPayload } from "../../models/ticket/ticket-payload";
 import { AppStackParamList } from "../../routing/route-screens";
 import LocalizationContext from "../../localization/localization-context";
 
 import { ticketCardStyles } from "./ticket-card-styles";
+import { useKeycloak } from "../../keycloak/useKeycloak";
 
 const TicketCard = (props: TicketCardProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
+  const { token } = useKeycloak();
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [ticket, setTicket] = useState<Ticket | undefined>(undefined);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
@@ -28,7 +30,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
     try {
       const reqUrl = `${SCREEN_URL.TICKET_URL}/${props.ticketId}`;
       const response = await axios.get<TicketPayload>(reqUrl, {
-        headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.status == 200) {

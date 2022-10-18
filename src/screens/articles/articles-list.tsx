@@ -9,15 +9,18 @@ import Text from "../../components/text";
 import Error, { ErrorProps } from "../../components/error";
 import ArticleListPayload from "../../models/article/article-list-payload";
 import ArticleBrief from "../../models/article/article-brief";
-import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/mock-auth";
+import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/config";
 import ArticleBriefCard from "./article-brief-card";
 
 import { articleListStyles } from "./article-list-styles";
 import ListFiltering from "../../components/list-filtering/list-filtering";
+import { useKeycloak } from "../../keycloak/useKeycloak";
 
 const ArticlesList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<ArticleParamList>>();
+  const { token } = useKeycloak();
+
   const [articles, setArticles] = useState<ArticleBrief[]>([]);
   const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -49,7 +52,7 @@ const ArticlesList = (): JSX.Element => {
       const filteringTag = selectedTag.length > 0 ? `tag=${selectedTag}&` : "";
       const reqUrl = `${SCREEN_URL.ARTICLES_URL}?${filteringTag}fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
       const response = await axios.get<ArticleListPayload>(reqUrl, {
-        headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       
       if (response.status == 200) {

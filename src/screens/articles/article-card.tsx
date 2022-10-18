@@ -7,13 +7,15 @@ import axios from "axios";
 import LocalizationContext from "../../localization/localization-context";
 import Error, { ErrorProps } from "../../components/error";
 import Article from "../../models/article/article";
-import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
+import { AUTH_MOCK, SCREEN_URL } from "../../models/config";
 import ArticlePayload from "../../models/article/article-payload";
 
 import { articleCardStyles } from "./article-card-styles";
+import { useKeycloak } from "../../keycloak/useKeycloak";
 
 const ArticleCard = (props: ArticleCardProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
+  const { token } = useKeycloak();
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [article, setArticle] = useState<Article | undefined>(undefined);
 
@@ -25,7 +27,7 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
     try {
       const reqUrl = `${SCREEN_URL.ARTICLE_URL}/${props.articleId}`;
       const response = await axios.get<ArticlePayload>(reqUrl, {
-        headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.status == 200) {

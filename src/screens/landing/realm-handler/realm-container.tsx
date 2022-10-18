@@ -141,8 +141,6 @@ const RealmContainer = (): JSX.Element => {
         onPress={() => logout()}
         size={"small"}
       />
-      <Text>{`Token value: ${token}`}</Text>
-      <Text>{`IsLoggedInd: ${isLoggedIn}`}</Text>
       {toggleRealmSelectorComponent()}
     </>
   );

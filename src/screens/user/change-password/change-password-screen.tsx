@@ -12,10 +12,12 @@ import Container from "../../../components/container";
 import { TopNavigation } from "@ui-kitten/components";
 import NavigationAction from "../../../components/navigation-action";
 import { ChangePasswordPayload } from "../../../models/user-profile/change-password-payload";
-import { AUTH_MOCK, SCREEN_URL } from "../../../models/mock-auth";
+import { AUTH_MOCK, SCREEN_URL } from "../../../models/config";
+import { useKeycloak } from "../../../keycloak/useKeycloak";
 
 const ChangePasswordScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
+  const { token } = useKeycloak();
   const {
     register,
     handleSubmit,
@@ -37,7 +39,7 @@ const ChangePasswordScreen = (): JSX.Element => {
           password: vals.Password,
         },
         {
-          headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
       console.log("response put", response)

@@ -9,17 +9,19 @@ import Container from "../../components/container";
 
 import { tosScreenStyles } from "./tos-screen-styles";
 import { useContext, useEffect, useState } from "react";
-import { AUTH_MOCK, SCREEN_URL } from "../../models/mock-auth";
+import { AUTH_MOCK, SCREEN_URL } from "../../models/config";
 import PdfReader from "../../components/pdf-reader";
 import Error, { ErrorProps } from "../../components/error";
 import LocalizationContext from "../../localization/localization-context";
 import { TOSPayload } from "../../models/tos/tos-payload";
 import TosBuilding from "./tos-building";
 import { BuildingTos } from "../../models/tos/building-tos";
+import { useKeycloak } from "../../keycloak/useKeycloak";
 
 const TOSScreen = () => {
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { token } = useKeycloak();
   const [tosList, setTosList] = useState<BuildingTos[]>([]);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [tosUrl, setTosUrl] = useState<string | undefined>(undefined);
@@ -32,7 +34,7 @@ const TOSScreen = () => {
     try {
       const reqUrl = `${SCREEN_URL.TOS_URL}/all`;
       const response = await axios.get<TOSPayload>(reqUrl, {
-        headers: { Authorization: `Bearer ${AUTH_MOCK.TOKEN}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.status == 200) {
