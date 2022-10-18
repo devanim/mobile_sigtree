@@ -9,13 +9,24 @@ import Container from "../../components/container";
 import ArticleContainer from "./article-container";
 
 import { articlesScreenStyles } from "./articles-screen-styles";
+import { useKeycloak } from "../../keycloak/useKeycloak";
 
 const ArticlesScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { logout } = useKeycloak();
+  const { goBack, navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+
+  const onLogout = () => {
+    logout();
+    navigate("HomeScreen", { screen: "HomeScreen" });
+  }
 
   return (<Container style={articlesScreenStyles.container}>
-    <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title={t("ARTICLES_TITLE")}/>
+    <TopNavigation 
+      title={t("ARTICLES_TITLE")}
+      accessoryLeft={() => <NavigationAction onPress={goBack} />} 
+      accessoryRight={() => <NavigationAction onPress={onLogout} icon={"flag"}/>}
+    />
     <ArticleContainer />
   </Container>);
 }

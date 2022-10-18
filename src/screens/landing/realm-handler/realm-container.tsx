@@ -19,11 +19,9 @@ import LocalizationContext from "../../../localization/localization-context";
 
 const RealmContainer = (): JSX.Element => {
   const {
-    ready, // If the discovery is already fetched and ready to prompt authentication flow
-    login, // The login function - opens the browser
-    isLoggedIn, // Helper boolean to use e.g. in your components down the tree
-    token, // Access token, if available
-    logout, // The logout function - Logs the user out
+    ready,
+    login,
+    logout
   } = useKeycloak();
   const [showRealmSelector, setShowRealmSelector] = useState(false);
   const { realmData: realmData, setRealm } = useContext(RealmContext);
@@ -97,7 +95,7 @@ const RealmContainer = (): JSX.Element => {
   const onLogin = async () => {
     await login();
     handleChange("ro");
-    navigate("DashboardNavigator", { screen: "DashboardScreen" })
+    navigate("DashboardNavigator", { screen: "DashboardScreen" });
   };
 
   const toggleRealmSelectorComponent = () => {
@@ -133,12 +131,6 @@ const RealmContainer = (): JSX.Element => {
         style={realmHandlerStyles.button}
         children={"Login with default realm"}
         onPress={onLogin}
-        size={"small"}
-      />
-      <Button
-        style={realmHandlerStyles.button}
-        children={"Logout"}
-        onPress={() => logout()}
         size={"small"}
       />
       {toggleRealmSelectorComponent()}

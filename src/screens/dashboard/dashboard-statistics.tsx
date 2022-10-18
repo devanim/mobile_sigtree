@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native";
 import { RefreshControl } from "react-native-web-refresh-control";
 import axios from "axios";
+import { TopNavigation } from "@ui-kitten/components";
 
 import Carousel from "../../components/carousel/carousel";
 import ArticleBrief from "../../models/article/article-brief";
@@ -12,18 +13,20 @@ import { AppStackParamList } from "src/routing/route-screens";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import LocalizationContext from "../../localization/localization-context";
 import Error, { ErrorProps } from "../../components/error";
-import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/config";
+import { CONFIG, SCREEN_URL } from "../../models/config";
 import ArticleListPayload from "../../models/article/article-list-payload";
 import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 import RoundChart from "../../components/chart/round-chart";
 import Statistics from "../../models/dashboard/statistics";
 import StatisticsPayload from "../../models/dashboard/statistics-payload";
 import { useKeycloak } from "../../keycloak/useKeycloak";
+import NavigationAction from "../../components/navigation-action";
+import Container from "../../components/container";
 
 const DashboardStatistics = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
-  const { token } = useKeycloak();
+  const { token, logout } = useKeycloak();
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [articles, setArticles] = useState<ArticleBrief[]>([]);
@@ -56,7 +59,7 @@ const DashboardStatistics = (): JSX.Element => {
 
   const getArticles = async () => {
     try {
-      console.log("Token here", token);
+      console.log("token value", token);
       const reqUrl = `${SCREEN_URL.ARTICLES_URL}?count=${CONFIG.ITEMS_PER_CAROUSEL}`;
       const response = await axios.get<ArticleListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
@@ -163,16 +166,27 @@ const DashboardStatistics = (): JSX.Element => {
     );
   }
 
+  const onLogout = () => {
+    logout();
+    navigate("HomeScreen", { screen: "HomeScreen" });
+  }
+
   return (
-    <ScrollView contentContainerStyle={dashboardStatisticsStyles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl tintColor="#F0DF67" />}>
-      <Carousel name={t("ARTICLES_TITLE")} data={articleCarouselData ?? []}/>
-      <Carousel name={t("TICKETS_TITLE")} data={ticketCarouselData ?? []}/>
-      {statistics ? <RoundChart data={statistics}/> : <></>}
-      {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_LOW_COUNT")} {statistics.count_low}</Text>: <></>}
-      {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_MEDIUM_COUNT")} {statistics.count_medium}</Text>: <></>}
-      {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_HIGH_COUNT")} {statistics.count_high}</Text>: <></>}
-      {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("TOTAL_TICKETS_COUNT")} {statistics.count_all}</Text>: <></>}
-    </ScrollView>
+    <Container>
+      <TopNavigation 
+        title={t("DASHBOARD_TITLE")}
+        accessoryRight={() => <NavigationAction onPress={onLogout} icon={"flag"}/>}
+      />
+      <ScrollView contentContainerStyle={dashboardStatisticsStyles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl tintColor="#F0DF67" />}>
+        <Carousel name={t("ARTICLES_TITLE")} data={articleCarouselData ?? []}/>
+        <Carousel name={t("TICKETS_TITLE")} data={ticketCarouselData ?? []}/>
+        {statistics ? <RoundChart data={statistics}/> : <></>}
+        {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_LOW_COUNT")} {statistics.count_low}</Text>: <></>}
+        {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_MEDIUM_COUNT")} {statistics.count_medium}</Text>: <></>}
+        {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_HIGH_COUNT")} {statistics.count_high}</Text>: <></>}
+        {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("TOTAL_TICKETS_COUNT")} {statistics.count_all}</Text>: <></>}
+      </ScrollView>
+    </Container>
   );
 };
 

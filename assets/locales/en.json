@@ -51,5 +51,6 @@
   "USER_PROFILE_CHANGE_PASSWORD_REQUIRED": "Password is required",
   "USER_PROFILE_OLD_PASSWORD_REQUIRED": "Previous Password is required",
   "USER_PROFILE_CONFIRM_PASSWORD_REQUIRED": "Confirm Password is required",
-  "BTN_SUBMIT": "Submit"
+  "BTN_SUBMIT": "Submit",
+  "DASHBOARD_TITLE": "Dashboard"
 }
