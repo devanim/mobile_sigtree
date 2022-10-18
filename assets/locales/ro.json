@@ -52,5 +52,6 @@
   "USER_PROFILE_OLD_PASSWORD_REQUIRED": "Parola anterioara este necesara",
   "USER_PROFILE_CONFIRM_PASSWORD_REQUIRED": "Confirmarea Parolei este necesara",
   "BTN_SUBMIT": "Salvati",
-  "DASHBOARD_TITLE": "Rapoarte"
+  "DASHBOARD_TITLE": "Rapoarte",
+  "LOGIN_BTN": "Logare"
 }

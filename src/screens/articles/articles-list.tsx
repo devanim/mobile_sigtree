@@ -9,7 +9,7 @@ import Text from "../../components/text";
 import Error, { ErrorProps } from "../../components/error";
 import ArticleListPayload from "../../models/article/article-list-payload";
 import ArticleBrief from "../../models/article/article-brief";
-import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/config";
+import { CONFIG, SCREEN_URL } from "../../models/config";
 import ArticleBriefCard from "./article-brief-card";
 
 import { articleListStyles } from "./article-list-styles";

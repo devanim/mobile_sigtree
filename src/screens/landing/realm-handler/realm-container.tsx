@@ -18,16 +18,12 @@ import { AppStackParamList } from "../../../routing/route-screens";
 import LocalizationContext from "../../../localization/localization-context";
 
 const RealmContainer = (): JSX.Element => {
-  const {
-    ready,
-    login,
-    logout
-  } = useKeycloak();
+  const { ready, login } = useKeycloak();
   const [showRealmSelector, setShowRealmSelector] = useState(false);
   const { realmData: realmData, setRealm } = useContext(RealmContext);
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
-  const { handleChange } = useContext(LocalizationContext);
+  const { t, handleChange } = useContext(LocalizationContext);
 
   useEffect(() => {
     AsyncStorage.getItem(REALMS_KEY).then((value) => {
@@ -47,6 +43,7 @@ const RealmContainer = (): JSX.Element => {
 
   const onRealmSelectedCallback = (realmDetails: RealmDetails) => {
     setRealm(realmDetails);
+    onLogin();
   };
 
   const onRemoveRealmCallback = (realmName: string) => {
@@ -104,6 +101,17 @@ const RealmContainer = (): JSX.Element => {
         <RealmSelector
           onDataRead={onBarcodeReadCallback}
           onCancel={resetRealmSelectorComponent}
+        />
+      );
+    }
+
+    if (storedRealms.length == 1) {
+      return (
+        <Button
+          style={realmHandlerStyles.button}
+          children={t("LOGIN_BTN")}
+          onPress={onLogin}
+          size={"small"}
         />
       );
     }
