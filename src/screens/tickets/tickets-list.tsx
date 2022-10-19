@@ -11,7 +11,7 @@ import { TicketParamList } from "../../routing/route-screens";
 import LocalizationContext from "../../localization/localization-context";
 import Error, { ErrorProps } from "../../components/error";
 import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
-import { AUTH_MOCK, CONFIG, SCREEN_URL } from "../../models/config";
+import { CONFIG, SCREEN_URL } from "../../models/config";
 import ListFiltering from "../../components/list-filtering/list-filtering";
 import { useKeycloak } from "../../keycloak/useKeycloak";
 

@@ -34,9 +34,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
       });
 
       if (response.status == 200) {
-        if (response.data.data.tickets.length > 0) {
-          setTicket(response.data.data.tickets[0]);
-        }
+          setTicket(response.data.data);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
