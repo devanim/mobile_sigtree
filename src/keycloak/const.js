@@ -4,6 +4,7 @@ export const KC_INITIAL_VALUE = {
   login: () => console.error('KC Not Initialized.'),
   logout: () => console.error('Not Logged In.'),
   tokens: null,
+  realm: ""
 };
 export const NATIVE_REDIRECT_PATH = 'auth/redirect';
 export const TOKEN_STORAGE_KEY = 'keycloak_token';

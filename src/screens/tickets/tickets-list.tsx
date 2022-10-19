@@ -11,14 +11,14 @@ import { TicketParamList } from "../../routing/route-screens";
 import LocalizationContext from "../../localization/localization-context";
 import Error, { ErrorProps } from "../../components/error";
 import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
-import { CONFIG, SCREEN_URL } from "../../models/config";
+import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import ListFiltering from "../../components/list-filtering/list-filtering";
 import { useKeycloak } from "../../keycloak/useKeycloak";
 
 const TicketsList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<TicketParamList>>();
-  const { token } = useKeycloak();
+  const { token, realm } = useKeycloak();
   const [tickets, setTickets] = useState<TicketBrief[]>([]);
   const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -48,7 +48,7 @@ const TicketsList = (): JSX.Element => {
   const getTickets = async () => {
     try {
       const filteringStatus = selectedStatus.length > 0 ? `status=${t(selectedStatus)}&` : "";
-      const reqUrl = `${SCREEN_URL.TICKETS_URL}?${filteringStatus}fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
+      const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKETS_URL)}?${filteringStatus}fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
       console.log("reqUrl", reqUrl);
       const response = await axios.get<TicketListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },

@@ -72,6 +72,7 @@ export const KeycloakProvider = ({ realm, clientId, url, extraParams, children, 
         logout: handleLogout,
         ready: discovery !== null && request !== null && currentToken !== undefined,
         token: currentToken,
+        realm: realm
       }}
     >
       {children}

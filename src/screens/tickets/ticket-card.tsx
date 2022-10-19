@@ -6,7 +6,7 @@ import { Button } from "@ui-kitten/components";
 import axios from "axios";
 
 import Error, { ErrorProps } from "../../components/error";
-import { AUTH_MOCK, SCREEN_URL } from "../../models/config";
+import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { Ticket } from "../../models/ticket/ticket";
 import { TicketPayload } from "../../models/ticket/ticket-payload";
 import { AppStackParamList } from "../../routing/route-screens";
@@ -17,7 +17,7 @@ import { useKeycloak } from "../../keycloak/useKeycloak";
 
 const TicketCard = (props: TicketCardProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const { token } = useKeycloak();
+  const { token, realm } = useKeycloak();
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [ticket, setTicket] = useState<Ticket | undefined>(undefined);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
@@ -28,7 +28,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
 
   const getTicket = async () => {
     try {
-      const reqUrl = `${SCREEN_URL.TICKET_URL}/${props.ticketId}`;
+      const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKET_URL)}/${props.ticketId}`;
       const response = await axios.get<TicketPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -4,7 +4,7 @@ import { ActivityIndicator, View } from "react-native";
 import UserProfile from "./user-profile";
 import { Button } from "@ui-kitten/components";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { AUTH_MOCK, SCREEN_URL } from "../../models/config";
+import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { UserProfile as UserProfileModel } from "../../models/user-profile/user-profile";
 import { UserProfilePayload } from "../../models/user-profile/user-profile-payload";
 import Error, { ErrorProps } from "../../components/error";
@@ -15,7 +15,7 @@ import { useKeycloak } from "../../keycloak/useKeycloak";
 const UserContainer = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
-  const { token } = useKeycloak();
+  const { token, realm } = useKeycloak();
   const [userProfile, setUserProfile] = useState<UserProfileModel | undefined>(
     undefined
   );
@@ -32,7 +32,7 @@ const UserContainer = (): JSX.Element => {
   const getUserProfileDetails = async () => {
     try {
       const response = await axios.get<UserProfilePayload>(
-        SCREEN_URL.USER_PROFILE_URL,
+        SigtreeConfiguration.getUrl(realm, SCREEN_URL.USER_PROFILE_URL),
         { headers: { Authorization: `Bearer ${token}` } }
       );
 

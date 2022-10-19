@@ -91,6 +91,7 @@ const RealmContainer = (): JSX.Element => {
 
   const onLogin = async () => {
     await login();
+    setTimeout(() => {}, 500);
     handleChange("ro");
     navigate("DashboardNavigator", { screen: "DashboardScreen" });
   };

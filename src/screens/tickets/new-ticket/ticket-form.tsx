@@ -11,7 +11,7 @@ import Dropdown from "../../../components/form/dropdown";
 import { ticketFormStyles } from "./ticket-form-styles";
 import Input from "../../../components/form/input";
 import { Ticket } from "../../../models/ticket/ticket";
-import { SCREEN_URL } from "../../../models/config";
+import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
 import { TicketPayload } from "../../../models/ticket/ticket-payload";
 
@@ -22,7 +22,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     getValues,
     setValue,
   } = useForm<FormData>();
-  const { token } = useKeycloak();
+  const { token, realm } = useKeycloak();
   //TODO - try to use form state instead of new state
   const [errors, setErrors] = useState<FormErrors | undefined>(undefined);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
@@ -50,7 +50,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     const vals = getValues();
     console.log("Data values", vals);
     
-    const reqUrl = `${SCREEN_URL.TICKET_URL}`;
+    const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKET_URL)}`;
     const response = await axios.post<TicketPayload>(reqUrl, vals, {
       headers: { Authorization: `Bearer ${token}` },
     });

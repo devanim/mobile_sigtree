@@ -13,7 +13,7 @@ import { AppStackParamList } from "src/routing/route-screens";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import LocalizationContext from "../../localization/localization-context";
 import Error, { ErrorProps } from "../../components/error";
-import { CONFIG, SCREEN_URL } from "../../models/config";
+import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import ArticleListPayload from "../../models/article/article-list-payload";
 import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 import RoundChart from "../../components/chart/round-chart";
@@ -26,7 +26,7 @@ import Container from "../../components/container";
 const DashboardStatistics = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
-  const { token, logout } = useKeycloak();
+  const { token, realm, logout } = useKeycloak();
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [articles, setArticles] = useState<ArticleBrief[]>([]);
@@ -59,8 +59,7 @@ const DashboardStatistics = (): JSX.Element => {
 
   const getArticles = async () => {
     try {
-      console.log("token value", token);
-      const reqUrl = `${SCREEN_URL.ARTICLES_URL}?count=${CONFIG.ITEMS_PER_CAROUSEL}`;
+      const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.ARTICLES_URL)}?count=${CONFIG.ITEMS_PER_CAROUSEL}`;
       const response = await axios.get<ArticleListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -85,7 +84,7 @@ const DashboardStatistics = (): JSX.Element => {
 
   const getTickets = async () => {
     try {
-      const reqUrl = `${SCREEN_URL.TICKETS_URL}?count=${CONFIG.ITEMS_PER_CAROUSEL}`;
+      const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKETS_URL)}?count=${CONFIG.ITEMS_PER_CAROUSEL}`;
       const response = await axios.get<TicketListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -110,7 +109,7 @@ const DashboardStatistics = (): JSX.Element => {
 
   const getStatistics = async () => {
     try {
-      const reqUrl = `${SCREEN_URL.STATISTICS_URL}`;
+      const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.STATISTICS_URL)}`;
       const response = await axios.get<StatisticsPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });

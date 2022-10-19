@@ -12,12 +12,12 @@ import Container from "../../../components/container";
 import { TopNavigation } from "@ui-kitten/components";
 import NavigationAction from "../../../components/navigation-action";
 import { ChangePasswordPayload } from "../../../models/user-profile/change-password-payload";
-import { AUTH_MOCK, SCREEN_URL } from "../../../models/config";
+import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
 
 const ChangePasswordScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const { token } = useKeycloak();
+  const { token, realm } = useKeycloak();
   const {
     register,
     handleSubmit,
@@ -34,7 +34,7 @@ const ChangePasswordScreen = (): JSX.Element => {
 
     try {
       const response = await axios.put<ChangePasswordPayload>(
-        SCREEN_URL.USER_PROFILE_URL,
+        SigtreeConfiguration.getUrl(realm, SCREEN_URL.USER_PROFILE_URL),
         {
           password: vals.Password,
         },
