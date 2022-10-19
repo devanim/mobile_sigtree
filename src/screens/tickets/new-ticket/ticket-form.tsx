@@ -1,6 +1,7 @@
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Button } from "@ui-kitten/components/ui";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { FieldError, useForm } from "react-hook-form";
 import { View } from "react-native";
 import { DropdownValue } from "../../../models/common/dropdown-value";
@@ -10,6 +11,9 @@ import Dropdown from "../../../components/form/dropdown";
 import { ticketFormStyles } from "./ticket-form-styles";
 import Input from "../../../components/form/input";
 import { Ticket } from "../../../models/ticket/ticket";
+import { SCREEN_URL } from "../../../models/config";
+import { useKeycloak } from "../../../keycloak/useKeycloak";
+import { TicketPayload } from "../../../models/ticket/ticket-payload";
 
 const TicketForm = (props: TicketFormProps): JSX.Element => {
   const {
@@ -18,6 +22,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     getValues,
     setValue,
   } = useForm<FormData>();
+  const { token } = useKeycloak();
   //TODO - try to use form state instead of new state
   const [errors, setErrors] = useState<FormErrors | undefined>(undefined);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
@@ -41,10 +46,15 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     { label: "4", value: "4" },
   ];
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async () => {
     const vals = getValues();
-    alert(`Data ${JSON.stringify(vals)}`);
-    //TODO - send data to server when integrated with back-end
+    console.log("Data values", vals);
+    
+    const reqUrl = `${SCREEN_URL.TICKET_URL}`;
+    const response = await axios.post<TicketPayload>(reqUrl, vals, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log("response", response);
     goBack();
   };
 

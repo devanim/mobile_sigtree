@@ -53,5 +53,10 @@
   "USER_PROFILE_CONFIRM_PASSWORD_REQUIRED": "Confirmarea Parolei este necesara",
   "BTN_SUBMIT": "Salvati",
   "DASHBOARD_TITLE": "Rapoarte",
-  "LOGIN_BTN": "Logare"
+  "LOGIN_BTN": "Logare",
+  "TICKET_NEW": "Nou",
+  "TICKET_NOTAPPROVED": "Neaprobat",
+  "TICKET_PENDING": "In asteptare",
+  "TICKET_REJECTED": "Rejectat",
+  "TICKET_RESOLVED": "Rezolvat"
 }

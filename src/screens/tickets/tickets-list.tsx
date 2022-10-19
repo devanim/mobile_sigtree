@@ -47,8 +47,9 @@ const TicketsList = (): JSX.Element => {
 
   const getTickets = async () => {
     try {
-      const filteringStatus = selectedStatus.length > 0 ? `status=${selectedStatus}&` : "";
+      const filteringStatus = selectedStatus.length > 0 ? `status=${t(selectedStatus)}&` : "";
       const reqUrl = `${SCREEN_URL.TICKETS_URL}?${filteringStatus}fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
+      console.log("reqUrl", reqUrl);
       const response = await axios.get<TicketListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });
