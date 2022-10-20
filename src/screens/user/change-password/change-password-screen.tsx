@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { FieldError, useForm } from "react-hook-form";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import axios from "axios";
@@ -19,7 +19,6 @@ const ChangePasswordScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { token, realm } = useKeycloak();
   const {
-    register,
     handleSubmit,
     getValues,
     setValue,
@@ -32,6 +31,11 @@ const ChangePasswordScreen = (): JSX.Element => {
   const onSubmit = async () => {
     const vals = getValues();
 
+    if (!isPasswordInputCorrect(vals)) {
+      setErrors(t("USER_PROFILE_CHANGE_PASSWORD_ERROR"));
+      return;
+    }
+
     try {
       const response = await axios.put<ChangePasswordPayload>(
         SigtreeConfiguration.getUrl(realm, SCREEN_URL.USER_PROFILE_URL),
@@ -42,7 +46,7 @@ const ChangePasswordScreen = (): JSX.Element => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("response put", response)
+
       if (response.status == 200) {
         goBack();
       } else {
@@ -53,6 +57,24 @@ const ChangePasswordScreen = (): JSX.Element => {
       setErrors(error);
     }
   };
+
+  const isPasswordInputCorrect = (values: ChangePasswordFormData): boolean => {
+    console.log("values confirm password", values.ConfirmPassword);
+    console.log("values confirm password", values.Password);
+    if (values.ConfirmPassword != values.Password) {
+      return false;
+    }
+
+    if (values.ConfirmPassword.length == 0) {
+      return false;
+    }
+
+    if (values.Password.length == 0) {
+      return false;
+    }
+
+    return true;
+  }
 
   const onInvalid = (err: any) => {
     setErrors(err);
@@ -70,51 +92,45 @@ const ChangePasswordScreen = (): JSX.Element => {
           onPress={handleSubmit(onSubmit, onInvalid)}
         />
         <Input
-          label="Old Password"
-          value={""}
-          {...register("OldPassword", {
-            required: {
-              value: true,
-              message: t("USER_PROFILE_OLD_PASSWORD_REQUIRED"),
-            },
-          })}
-          setValue={setValue}
-        />
-        <Input
           label="Password"
           value={""}
-          {...register("Password", {
-            required: {
-              value: true,
-              message: t("USER_PROFILE_CHANGE_PASSWORD_REQUIRED"),
-            },
-          })}
+          secureEntry={true}
+          // {...register("Password", {
+          //   required: {
+          //     value: true,
+          //     message: t("USER_PROFILE_CHANGE_PASSWORD_REQUIRED"),
+          //   },
+          // })}
           setValue={setValue}
         />
         <Input
-          label="Confirm Password"
+          label="ConfirmPassword"
           value={""}
-          {...register("ConfirmPassword", {
-            required: {
-              value: true,
-              message: t("USER_PROFILE_CONFIRM_PASSWORD_REQUIRED"),
-            },
-          })}
+          secureEntry={true}
+          // {...register("ConfirmPassword", {
+          //   required: {
+          //     value: true,
+          //     message: t("USER_PROFILE_CONFIRM_PASSWORD_REQUIRED"),
+          //   },
+          // })}
           setValue={setValue}
         />
       </View>
+      <Text style={changePasswordStyle.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_1")}</Text>
+      <Text style={changePasswordStyle.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_2")}</Text>
+      <Text style={changePasswordStyle.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_3")}</Text>
+      <Text style={changePasswordStyle.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_4")}</Text>
+      {errors ? <Text style={changePasswordStyle.errorMessage}>{t("USER_PROFILE_CHANGE_PASSWORD_ERROR")}</Text> : <></>}
     </Container>
   );
 };
 
 type ChangePasswordFormData = {
-  OldPassword: string;
   Password: string;
   ConfirmPassword: string
 };
 
 type ChangePasswordFormErrors = {
-  OldPassword: string;
   Password: FieldError;
   ConfirmPassword: FieldError;
 };

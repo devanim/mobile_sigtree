@@ -4,10 +4,11 @@ import { FieldError } from "react-hook-form";
 import { inputStyles } from "./input-styles";
 import { useState } from "react";
 
-interface InputProps extends TextInputProps {
+interface InputProps {
   name: string;
   value: string;
   label?: string;
+  secureEntry?: boolean;
   inputStyle?: TextStyle;
   labelStyle?: TextStyle;
   error?: FieldError | undefined;
@@ -34,6 +35,7 @@ const Input = (props: InputProps): React.ReactElement => {
           { borderColor: error ? "#fc6d47" : "#c0cbd3" },
         ]}
         {...inputProps}
+        secureTextEntry={props.secureEntry ?? false}
         value={inputValue}
         onChangeText={onChange}
       />
