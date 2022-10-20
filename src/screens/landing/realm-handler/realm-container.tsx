@@ -16,9 +16,13 @@ import { ActivityIndicator } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "../../../routing/route-screens";
 import LocalizationContext from "../../../localization/localization-context";
+import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
+import axios from "axios";
+import { UserProfilePayload } from "../../../models/user-profile/user-profile-payload";
+import { DEFAULT_LANGUAGE } from "../../../localization/i18n";
 
 const RealmContainer = (): JSX.Element => {
-  const { ready, login } = useKeycloak();
+  const { ready, login, realm, token } = useKeycloak();
   const [showRealmSelector, setShowRealmSelector] = useState(false);
   const { realmData: realmData, setRealm } = useContext(RealmContext);
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
@@ -92,8 +96,27 @@ const RealmContainer = (): JSX.Element => {
   const onLogin = async () => {
     await login();
     setTimeout(() => {}, 500);
-    handleChange("ro");
+    await setLanguage();
+
     navigate("DashboardNavigator", { screen: "DashboardScreen" });
+  };
+
+  const setLanguage = async () => {
+    try {
+      const response = await axios.get<UserProfilePayload>(
+        SigtreeConfiguration.getUrl(realm, SCREEN_URL.USER_PROFILE_URL),
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (response.status == 200) {
+        const language = response.data.data.lang;
+        if (language.length > 0) {
+          handleChange(language);
+        } else {
+          handleChange(DEFAULT_LANGUAGE);
+        }
+      }
+    } catch (error) { }
   };
 
   const toggleRealmSelectorComponent = () => {
