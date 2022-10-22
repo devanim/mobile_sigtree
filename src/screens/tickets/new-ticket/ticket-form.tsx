@@ -1,6 +1,6 @@
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Button } from "@ui-kitten/components/ui";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { FieldError, useForm } from "react-hook-form";
 import { View } from "react-native";
@@ -14,6 +14,7 @@ import { Ticket } from "../../../models/ticket/ticket";
 import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
 import { TicketPayload } from "../../../models/ticket/ticket-payload";
+import LocalizationContext from "../../../localization/localization-context";
 
 const TicketForm = (props: TicketFormProps): JSX.Element => {
   const {
@@ -23,7 +24,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     setValue,
   } = useForm<FormData>();
   const { token, realm } = useKeycloak();
-  //TODO - try to use form state instead of new state
+  const { t } = useContext(LocalizationContext);
   const [errors, setErrors] = useState<FormErrors | undefined>(undefined);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   //TODO - get this data from back-end
@@ -48,13 +49,11 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
 
   const onSubmit = async () => {
     const vals = getValues();
-    console.log("Data values", vals);
     
     const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKET_URL)}`;
     const response = await axios.post<TicketPayload>(reqUrl, vals, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("response", response);
     goBack();
   };
 
@@ -64,8 +63,8 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
 
   return (
     <View>
-      <Button children={"Submit"} onPress={handleSubmit(onSubmit, onInvalid)} />
-      <Button children={"Cancel"} onPress={goBack} />
+      <Button children={t("BTN_SUBMIT")} onPress={handleSubmit(onSubmit, onInvalid)} />
+      <Button children={t("BTN_CANCEL")} onPress={goBack} />
       <View style={ticketFormStyles.spacedView}>
         <Dropdown
           label="Category"

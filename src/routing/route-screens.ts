@@ -1,4 +1,5 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
+import { UserProfile } from "src/models/user-profile/user-profile";
 
 export type AppStackParamList = {
   HomeScreen: NavigatorScreenParams<UnauthenticatedParamList>;
@@ -8,7 +9,7 @@ export type AppStackParamList = {
   TOSScreen: NavigatorScreenParams<UnauthenticatedParamList>;
   ArticleScreen: NavigatorScreenParams<ArticleParamList>;
   UserScreen: NavigatorScreenParams<AuthenticatedParamList>;
-  EditUserScreen: NavigatorScreenParams<AuthenticatedParamList>;
+  EditUserScreen: NavigatorScreenParams<EditUserProfileParamList>;
   ChangePasswordScreen: NavigatorScreenParams<AuthenticatedParamList>;
   DashboardNavigator: NavigatorScreenParams<AuthenticatedParamList>;
 };
@@ -39,4 +40,9 @@ export type ArticleParamList = {
 export type TicketParamList = {
   TicketScreen: any;
   TicketId: string;
+}
+
+export type EditUserProfileParamList = {
+  EditUserScreen: any;
+  UserProfile: UserProfile;
 }

@@ -14,7 +14,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
 
   return (
     <ScrollView style={userProfileStyle.containerCard}>
-      <SectionTitle title="User settings"/>
+      <SectionTitle title={t("USER_PROFILE_USER_SETTINGS")}/>
 
       <View style={userProfileStyle.twoColumns}>
         <Text style={userProfileStyle.labelBox}>{t("USER_PROFILE_USER_LABEL")}</Text>
@@ -37,7 +37,7 @@ const UserProfile = (props: UserProfileProps): JSX.Element => {
         <Text style={userProfileStyle.textBox}>{userProfile.lang}</Text>
       </View>
 
-      <SectionTitle title="Notification settings"/>
+      <SectionTitle title={t("USER_PROFILE_NOTIFICATION_SETTINGS")}/>
 
       <CustCheckbox isChecked={userProfile.notifyOnNewNote} label={t("USER_PROFILE_NEWNOTE_NOTIFICATION_LABEL")}/>
       <CustCheckbox isChecked={userProfile.notifyOnStatusNew} label={t("USER_PROFILE_STATUS_NEW_NOTIFICATION_LABEL")}/>

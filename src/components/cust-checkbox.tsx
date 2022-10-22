@@ -8,7 +8,7 @@ const CustCheckbox = (props: CustCheckboxProps): JSX.Element => {
 
   return (
     <View style={custCheckbokStyles.section}>
-      <Checkbox style={custCheckbokStyles.checkbox} disabled value={isChecked} onValueChange={setChecked} />
+      <Checkbox style={custCheckbokStyles.checkbox} disabled={props.isDisabled ?? true} value={isChecked} onValueChange={setChecked} />
       <Text style={custCheckbokStyles.paragraph}>{props.label}</Text>
     </View>
   );
@@ -16,6 +16,7 @@ const CustCheckbox = (props: CustCheckboxProps): JSX.Element => {
 
 type CustCheckboxProps = {
   isChecked: boolean;
+  isDisabled?: boolean;
   label: string
 }
 
