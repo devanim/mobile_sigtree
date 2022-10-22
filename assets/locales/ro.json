@@ -59,9 +59,10 @@
   "BTN_SUBMIT": "Salvati",
   "DASHBOARD_TITLE": "Rapoarte",
   "LOGIN_BTN": "Logare",
-  "TICKET_NEW": "Nou",
-  "TICKET_NOTAPPROVED": "Neaprobat",
-  "TICKET_PENDING": "In asteptare",
-  "TICKET_REJECTED": "Rejectat",
-  "TICKET_RESOLVED": "Rezolvat"
+  "TICKET_IN_PROGRESS": "in_progress",
+  "TICKET_NEW": "new",
+  "TICKET_READ": "read",
+  "TICKET_PENDING": "pending",
+  "TICKET_CLOSED": "closed",
+  "TICKET_RESOLVED": "resolved"
 }

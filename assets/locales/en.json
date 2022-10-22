@@ -59,10 +59,10 @@
   "BTN_SUBMIT": "Submit",
   "DASHBOARD_TITLE": "Dashboard",
   "LOGIN_BTN": "Login",
-  "TICKET_IN_PROGRESS": "In progress",
-  "TICKET_NEW": "New",
-  "TICKET_NOTAPPROVED": "Not approved",
-  "TICKET_PENDING": "Pending",
-  "TICKET_REJECTED": "Rejected",
-  "TICKET_RESOLVED": "Resolved"
+  "TICKET_IN_PROGRESS": "in_progress",
+  "TICKET_NEW": "new",
+  "TICKET_READ": "read",
+  "TICKET_PENDING": "pending",
+  "TICKET_CLOSED": "closed",
+  "TICKET_RESOLVED": "resolved"
 }
