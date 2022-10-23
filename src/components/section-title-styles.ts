@@ -2,11 +2,12 @@ import { StyleSheet } from "react-native";
 
 const sectionTitleStyles = StyleSheet.create({
   breakLine: {
-    borderBottomColor: 'black',
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    //borderBottomColor: 'black',
+    //borderBottomWidth: StyleSheet.hairlineWidth,
   },
   sectionText: {
-    margin: 8,
+    marginLeft: '5%',
+    marginBottom: '5%',   
     color: "#000",
     fontWeight: "bold"
   },

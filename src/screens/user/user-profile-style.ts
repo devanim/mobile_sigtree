@@ -4,10 +4,11 @@ export const userProfileStyle = StyleSheet.create({
   containerCard: {
     backgroundColor: "#fff",
     marginTop: 10,
-    borderRadius: 15
+    borderRadius: 0,
+    
   },
   textBox: {
-    margin: 8,
+    marginLeft: '5%',
     color: "#000",
     width: '60%'
   },
@@ -20,5 +21,9 @@ export const userProfileStyle = StyleSheet.create({
     color: "#000",
     width: '40%',
     fontWeight: "bold"
-  }
+  }, 
+  container : {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
 });

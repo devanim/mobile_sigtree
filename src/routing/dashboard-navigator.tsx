@@ -12,13 +12,13 @@ const Stack = createNativeStackNavigator<AuthenticatedParamList>();
 
 const DashboardNavigator = (): Stack.Navigator => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="DashboardScreen">
-      <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
-      <Stack.Screen name="ArticlesScreen" component={ArticlesScreen} />
-      <Stack.Screen name="TicketsScreen" component={TicketsScreen} />
-      <Stack.Screen name="UserScreen" component={UserScreen} />
-      <Stack.Screen name="NotificationsScreen" component={NotificationsScreen} />
-    </Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="DashboardScreen" >
+        <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
+        <Stack.Screen name="ArticlesScreen" component={ArticlesScreen} />
+        <Stack.Screen name="TicketsScreen" component={TicketsScreen} />
+        <Stack.Screen name="UserScreen" component={UserScreen} />
+        <Stack.Screen name="NotificationsScreen" component={NotificationsScreen} />
+      </Stack.Navigator>
   );
 };
 

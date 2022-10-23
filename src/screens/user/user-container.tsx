@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { ActivityIndicator, View } from "react-native";
+import { Button, Layout, Text } from "@ui-kitten/components";
+import { ActivityIndicator, View, StyleSheet } from "react-native";
 import UserProfile from "./user-profile";
-import { Button } from "@ui-kitten/components";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { UserProfile as UserProfileModel } from "../../models/user-profile/user-profile";
@@ -84,29 +84,75 @@ const UserContainer = (): JSX.Element => {
   };
 
   return (
-    <View>
-      {hasBuildingsAssigned() ? (
+    <Layout style={styles.container} level='1'>
+      <Layout level='1'>
+        <UserProfile profile={userProfile} />
         <Button
-          children={t("READ_TOS")}
-          onPress={navigateToTOSScreen}
-          size={"small"}
-        />
-      ) : (
-        <></>
-      )}
-      <Button
-        children={t("USER_PROFILE_EDIT")}
-        onPress={navigateToEditUserProfileScreen}
-        size={"small"}
-      />
-      <Button
-        children={t("USER_PROFILE_CHANGE_PASSWORD")}
-        onPress={navigateToChangePasswordScreen}
-        size={"small"}
-      />
-      <UserProfile profile={userProfile} />
-    </View>
+          style={styles.button}
+          onPress={navigateToEditUserProfileScreen}
+          appearance='fill'
+        >{t("USER_PROFILE_EDIT").toUpperCase()}</Button>
+        <Button
+          style={styles.button}
+          onPress={navigateToChangePasswordScreen}
+          appearance='fill'
+        ><Text style={styles.text}>{t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()}</Text></Button>
+      </Layout>
+      <Layout style={styles.tos} level='1'>
+        {hasBuildingsAssigned() ? (
+          <Text style={styles.tosIntro}> {t("TOS_INTRO")}
+            <Text
+              style={styles.tosLink}
+              onPress={navigateToTOSScreen}
+            >{t("READ_TOS")}</Text>
+          </Text>
+        ) : (
+          <></>
+        )}
+      </Layout>
+    </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  tos: {
+    flexDirection: 'column',
+    flexGrow: 1,
+    padding: '5% 5%',
+    paddingBottom: '1%',
+
+  },
+  tosLink: {
+    color: '#000', 
+    textDecorationLine: 'underline',
+    fontWeight:'100',
+    fontStyle: 'normal',
+    fontFamily:'Montserrat-Regular'
+  },
+  tosIntro: {
+    fontWeight:'100',
+    fontStyle: 'normal',
+    fontFamily:'Montserrat-Regular',
+    textAlign: 'center'
+  },
+  text: {
+    marginHorizontal: 8,
+    textTransform: "capitalize",
+  },
+  button: {
+    marginTop: '2%',
+    marginLeft: '5%',
+    marginRight: '5%',
+    borderRadius: 0,
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+});
+
 
 export default UserContainer;

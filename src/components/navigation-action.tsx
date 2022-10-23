@@ -1,17 +1,10 @@
-import React, { memo } from "react";
-import {
-  ColorValue,
-  StyleProp,
-  StyleSheet,
-  TouchableOpacity,
-  ViewStyle,
-} from "react-native";
-import { useTheme, Icon, TopNavigationAction } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
+import { Icon, TopNavigationAction, useTheme } from "@ui-kitten/components";
+import { EvaStatus } from "@ui-kitten/components/devsupport";
+import React, { memo } from "react";
+import { ColorValue, StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
 
 import Text from "./text";
-
-import { EvaStatus } from "@ui-kitten/components/devsupport";
 
 type NavigationActionProps = {
   icon?: string;
@@ -92,7 +85,7 @@ const NavigationAction = memo(
         case "small":
           return 32;
         default:
-          return 40;
+          return 32;
       }
     };
 
@@ -126,7 +119,7 @@ const NavigationAction = memo(
         case "small":
           return 8;
         default:
-          return 12;
+          return 0;
       }
     };
 
@@ -165,7 +158,7 @@ const NavigationAction = memo(
           <Icon
             {...props}
             pack="assets"
-            name={icon || "cancel"}
+            name={icon || "leftArrow"}
             style={[
               {
                 height: getSizeIcon(size),
