@@ -7,6 +7,7 @@ const custCheckbokStyles = StyleSheet.create({
   },
   paragraph: {
     fontSize: 15,
+    color: "#ff0000"
   },
   checkbox: {
     margin: 8,

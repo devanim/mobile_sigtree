@@ -1,5 +1,9 @@
 import { StyleSheet } from "react-native";
 
-const EditUserFormStyles = StyleSheet.create({
-  
+const editUserFormStyles = StyleSheet.create({
+  text: {
+    color: "#FFF"
+  }
 });
+
+export default editUserFormStyles;

@@ -30,8 +30,8 @@ const EditUserForm = (props: EditUserFormProps): JSX.Element => {
     setValue("firstName", props.userProfile.firstName, {shouldValidate: true});
     setValue("lastName", props.userProfile.lastName, {shouldValidate: true});
     setValue("username", props.userProfile.username, {shouldValidate: true});
-    setValue("email", props.userProfile.email, {shouldValidate: true});
-    setValue("phoneNumber", props.userProfile.phoneNumber, {shouldValidate: true});
+    setValue("email", props.userProfile.email ?? "");
+    setValue("phoneNumber", props.userProfile.phoneNumber ?? "");
     setValue("notifyOnNewNote", props.userProfile.notifyOnNewNote);
     setValue("notifyOnStatusNew", props.userProfile.notifyOnStatusNew);
     setValue("notifyOnStatusProgress", props.userProfile.notifyOnStatusProgress);
@@ -49,13 +49,14 @@ const EditUserForm = (props: EditUserFormProps): JSX.Element => {
       realm,
       SCREEN_URL.USER_PROFILE_URL
     )}`;
-    console.log("vals", vals);
+
     try {
       const response = await axios.put<EditUserPayload>(reqUrl, vals, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (response.status == 200) {
+        console.log("response", response);
         goBack();
       }
     } catch (error) {
@@ -80,34 +81,30 @@ const EditUserForm = (props: EditUserFormProps): JSX.Element => {
       <SectionTitle title={t("USER_PROFILE_USER_SETTINGS")} />
 
       <Input
-        name={"username"}
         label={t("USER_PROFILE_USER_LABEL")}
         value={props.userProfile.username}
         error={errors ? errors["username"] : undefined}
-        //TODO - uncomment these
-        // {...register(t("USER_PROFILE_USER_LABEL"), {
-        //   required: { value: true, message: "Username is required" },
-        // })}
+        {...register("username", {
+          required: { value: true, message: "Username is required" },
+        })}
         setValue={setValue}
       />
       <Input
-        name={"firstName"}
         label={t("USER_PROFILE_FIRST_NAME_LABEL")}
         value={props.userProfile.firstName}
         error={errors ? errors["firstName"] : undefined}
-        // {...register(t("USER_PROFILE_FIRST_NAME_LABEL"), {
-        //   required: { value: true, message: "First Name is required" },
-        // })}
+        {...register("firstName", {
+          required: { value: true, message: "First Name is required" },
+        })}
         setValue={setValue}
       />
       <Input
-        name={"lastName"}
         label={t("USER_PROFILE_LAST_NAME_LABEL")}
         value={props.userProfile.lastName}
         error={errors ? errors["lastName"] : undefined}
-        // {...register(t("USER_PROFILE_LAST_NAME_LABEL"), {
-        //   required: { value: true, message: "Last Name is required" },
-        // })}
+        {...register("lastName", {
+          required: { value: true, message: "Last Name is required" },
+        })}
         setValue={setValue}
       />
       <Input
@@ -115,19 +112,15 @@ const EditUserForm = (props: EditUserFormProps): JSX.Element => {
         label={t("USER_PROFILE_EMAIL_LABEL")}
         value={props.userProfile.email}
         error={errors ? errors["email"] : undefined}
-        // {...register(t("USER_PROFILE_EMAIL_LABEL"), {
-        //   required: { value: true, message: "Email is required" },
-        // })}
         setValue={setValue}
       />
       <Input
-        name={"lang"}
         label={t("USER_PROFILE_LANGUAGE_LABEL")}
         value={props.userProfile.lang}
         error={errors ? errors["lang"] : undefined}
-        // {...register(t("USER_PROFILE_LANGUAGE_LABEL"), {
-        //   required: { value: true, message: "Language is required" },
-        // })}
+        {...register("lang", {
+          required: { value: true, message: "Language is required" },
+        })}
         setValue={setValue}
       />
       <SectionTitle title={t("USER_PROFILE_NOTIFICATION_SETTINGS")} />

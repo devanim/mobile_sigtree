@@ -5,6 +5,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "../../../routing/route-screens";
 import LocalizationContext from "../../../localization/localization-context";
 import { useContext } from "react";
+import Container from "../../../components/container";
 
 
 const EditUserScreen = (props: EditUserScreenProps): JSX.Element => {
@@ -13,10 +14,10 @@ const EditUserScreen = (props: EditUserScreenProps): JSX.Element => {
   const userProfile = props.route.params.params;
   
   return (
-    <>
+    <Container>
       <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title={t("USER_PROFILE_EDIT_TITLE")}/>
       <EditUserForm userProfile={userProfile}/>
-    </>
+    </Container>
   );
 }
 

@@ -8,10 +8,6 @@ import custCheckbokStyles from "./cust-checkbox-styles";
 const CustCheckbox = (props: CustCheckboxProps): JSX.Element => {
   const [isChecked, setChecked] = useState(props.isChecked);
   
-  // useEffect(() => {
-  //   props.setValue(props.name, isChecked, {shouldValidate: true});
-  // })
-
   const onValueChange = (val: boolean) => {
     props.setValue(props.name, val, {shouldValidate: true});
     setChecked(val);
