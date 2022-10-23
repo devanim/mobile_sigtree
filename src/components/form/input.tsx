@@ -5,22 +5,22 @@ import { inputStyles } from "./input-styles";
 import { useState } from "react";
 
 interface InputProps {
-  name: string;
+  name: any;
   value: string;
   label?: string;
   secureEntry?: boolean;
   inputStyle?: TextStyle;
   labelStyle?: TextStyle;
   error?: FieldError | undefined;
-  setValue: (name: string, value: string, validate?: boolean) => void;
+  setValue: (name: any, value: string, validate?: boolean) => void;
 }
 
 const Input = (props: InputProps): React.ReactElement => {
-  const { label, labelStyle, error, ...inputProps } = props;
+  const { name, label, labelStyle, error, ...inputProps } = props;
   const [inputValue, setInputValue] = useState(props.value);
 
   const onChange = (val: string) => {
-    props.setValue(label ?? "", val, true);
+    props.setValue(name, val, true);
     setInputValue(val);
   }
 

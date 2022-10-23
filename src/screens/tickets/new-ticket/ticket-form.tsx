@@ -49,7 +49,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
 
   const onSubmit = async () => {
     const vals = getValues();
-    
+    console.log("values in ticket", vals);
     const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKET_URL)}`;
     const response = await axios.post<TicketPayload>(reqUrl, vals, {
       headers: { Authorization: `Bearer ${token}` },

@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ScrollView, Button } from "react-native";
 import { AppStackParamList } from "../../../routing/route-screens";
 import LocalizationContext from "../../../localization/localization-context";
@@ -24,95 +24,186 @@ const EditUserForm = (props: EditUserFormProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   const [errors, setErrors] = useState<UserFormErrors | undefined>(undefined);
-  
+
+  useEffect(() => {
+    setValue("lang", props.userProfile.lang, {shouldValidate: true});
+    setValue("firstName", props.userProfile.firstName, {shouldValidate: true});
+    setValue("lastName", props.userProfile.lastName, {shouldValidate: true});
+    setValue("username", props.userProfile.username, {shouldValidate: true});
+    setValue("email", props.userProfile.email, {shouldValidate: true});
+    setValue("phoneNumber", props.userProfile.phoneNumber, {shouldValidate: true});
+    setValue("notifyOnNewNote", props.userProfile.notifyOnNewNote);
+    setValue("notifyOnStatusNew", props.userProfile.notifyOnStatusNew);
+    setValue("notifyOnStatusProgress", props.userProfile.notifyOnStatusProgress);
+    setValue("notifyOnStatusPending", props.userProfile.notifyOnStatusPending);
+    setValue("notifyOnStatusResolved", props.userProfile.notifyOnStatusResolved);
+    setValue("notifyOnStatusClosed", props.userProfile.notifyOnStatusClosed);
+    setValue("notifyOnMyTicketsOnly", props.userProfile.notifyOnMyTicketsOnly);
+    setValue("allowNewsletters", props.userProfile.allowNewsletters);
+    setValue("notifyOnNewDocument", props.userProfile.notifyOnNewDocument);
+  }, []);
+
   const onSubmit = async () => {
-    console.log("here");
     const vals = getValues();
-    console.log("values", vals);
-    const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.USER_PROFILE_URL)}`;
-    const response = await axios.post<EditUserPayload>(reqUrl, vals, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    console.log("response", response);
-    goBack();
+    const reqUrl = `${SigtreeConfiguration.getUrl(
+      realm,
+      SCREEN_URL.USER_PROFILE_URL
+    )}`;
+    console.log("vals", vals);
+    try {
+      const response = await axios.put<EditUserPayload>(reqUrl, vals, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.status == 200) {
+        goBack();
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   const onInvalid = (err: any) => {
+    console.log("Invalidate", err);
     setErrors(err);
   };
+  console.log("user profile", props.userProfile);
 
   return (
     <ScrollView>
-      <Button title={t("BTN_SUBMIT")} onPress={handleSubmit(onSubmit, onInvalid)} />
+      <Button
+        title={t("BTN_SUBMIT")}
+        onPress={handleSubmit(onSubmit, onInvalid)}
+      />
       <Button title={t("BTN_CANCEL")} onPress={goBack} />
 
-      <SectionTitle title={t("USER_PROFILE_USER_SETTINGS")}/>
+      <SectionTitle title={t("USER_PROFILE_USER_SETTINGS")} />
 
       <Input
+        name={"username"}
         label={t("USER_PROFILE_USER_LABEL")}
-        value={props.userProfile.username ?? ""}
+        value={props.userProfile.username}
         error={errors ? errors["username"] : undefined}
-        {...register(t("USER_PROFILE_USER_LABEL"), {
-          required: { value: true, message: "Username is required" },
-        })}
+        //TODO - uncomment these
+        // {...register(t("USER_PROFILE_USER_LABEL"), {
+        //   required: { value: true, message: "Username is required" },
+        // })}
         setValue={setValue}
       />
       <Input
+        name={"firstName"}
         label={t("USER_PROFILE_FIRST_NAME_LABEL")}
-        value={props.userProfile.firstName ?? ""}
+        value={props.userProfile.firstName}
         error={errors ? errors["firstName"] : undefined}
-        {...register(t("USER_PROFILE_FIRST_NAME_LABEL"), {
-          required: { value: true, message: "First Name is required" },
-        })}
+        // {...register(t("USER_PROFILE_FIRST_NAME_LABEL"), {
+        //   required: { value: true, message: "First Name is required" },
+        // })}
         setValue={setValue}
       />
       <Input
+        name={"lastName"}
         label={t("USER_PROFILE_LAST_NAME_LABEL")}
-        value={props.userProfile.lastName ?? ""}
+        value={props.userProfile.lastName}
         error={errors ? errors["lastName"] : undefined}
-        {...register(t("USER_PROFILE_LAST_NAME_LABEL"), {
-          required: { value: true, message: "Last Name is required" },
-        })}
+        // {...register(t("USER_PROFILE_LAST_NAME_LABEL"), {
+        //   required: { value: true, message: "Last Name is required" },
+        // })}
         setValue={setValue}
       />
       <Input
+        name={"email"}
         label={t("USER_PROFILE_EMAIL_LABEL")}
-        value={props.userProfile.email ?? ""}
+        value={props.userProfile.email}
         error={errors ? errors["email"] : undefined}
-        {...register(t("USER_PROFILE_EMAIL_LABEL"), {
-          required: { value: true, message: "Email is required" },
-        })}
+        // {...register(t("USER_PROFILE_EMAIL_LABEL"), {
+        //   required: { value: true, message: "Email is required" },
+        // })}
         setValue={setValue}
       />
       <Input
+        name={"lang"}
         label={t("USER_PROFILE_LANGUAGE_LABEL")}
-        value={props.userProfile.lang ?? ""}
+        value={props.userProfile.lang}
         error={errors ? errors["lang"] : undefined}
-        {...register(t("USER_PROFILE_LANGUAGE_LABEL"), {
-          required: { value: true, message: "Language is required" },
-        })}
+        // {...register(t("USER_PROFILE_LANGUAGE_LABEL"), {
+        //   required: { value: true, message: "Language is required" },
+        // })}
         setValue={setValue}
       />
-      <SectionTitle title={t("USER_PROFILE_NOTIFICATION_SETTINGS")}/>
+      <SectionTitle title={t("USER_PROFILE_NOTIFICATION_SETTINGS")} />
 
-      <CustCheckbox isChecked={props.userProfile.notifyOnNewNote} isDisabled={false} label={t("USER_PROFILE_NEWNOTE_NOTIFICATION_LABEL")}/>
-      <CustCheckbox isChecked={props.userProfile.notifyOnStatusNew} isDisabled={false} label={t("USER_PROFILE_STATUS_NEW_NOTIFICATION_LABEL")}/>
-      <CustCheckbox isChecked={props.userProfile.notifyOnStatusProgress} isDisabled={false} label={t("USER_PROFILE_STATUS_PROGRESS_NOTIFICATION_LABEL")}/>
-      <CustCheckbox isChecked={props.userProfile.notifyOnStatusPending} isDisabled={false} label={t("USER_PROFILE_STATUS_PENDING_NOTIFICATION_LABEL")}/>
-      <CustCheckbox isChecked={props.userProfile.notifyOnStatusResolved} isDisabled={false} label={t("USER_PROFILE_STATUS_RESOLVED_NOTIFICATION_LABEL")}/>
-      <CustCheckbox isChecked={props.userProfile.notifyOnStatusClosed} isDisabled={false} label={t("USER_PROFILE_STATUS_CLOSED_NOTIFICATION_LABEL")}/>
-      <CustCheckbox isChecked={props.userProfile.notifyOnMyTicketsOnly} isDisabled={false} label={t("USER_PROFILE_TICKETS_NOTIFICATION_LABEL")}/>
-      <CustCheckbox isChecked={props.userProfile.allowNewsletters} isDisabled={false} label={t("USER_PROFILE_NEWSLETTER_NOTIFICATION_LABEL")}/>
-      <CustCheckbox isChecked={props.userProfile.notifyOnNewDocument} isDisabled={false} label={t("USER_PROFILE_NEWDOCUMENT_NOTIFICATION_LABEL")}/>
+      <CustCheckbox
+        name={"lang"}
+        isChecked={props.userProfile.notifyOnNewNote}
+        isDisabled={false}
+        label={t("USER_PROFILE_NEWNOTE_NOTIFICATION_LABEL")}
+        setValue={setValue}
+      />
+      <CustCheckbox
+        name={"notifyOnStatusNew"}
+        isChecked={props.userProfile.notifyOnStatusNew}
+        isDisabled={false}
+        label={t("USER_PROFILE_STATUS_NEW_NOTIFICATION_LABEL")}
+        setValue={setValue}
+      />
+      <CustCheckbox
+        name={"notifyOnStatusProgress"}
+        isChecked={props.userProfile.notifyOnStatusProgress}
+        isDisabled={false}
+        label={t("USER_PROFILE_STATUS_PROGRESS_NOTIFICATION_LABEL")}
+        setValue={setValue}
+      />
+      <CustCheckbox
+        name={"notifyOnStatusPending"}
+        isChecked={props.userProfile.notifyOnStatusPending}
+        isDisabled={false}
+        label={t("USER_PROFILE_STATUS_PENDING_NOTIFICATION_LABEL")}
+        setValue={setValue}
+      />
+      <CustCheckbox
+        name={"notifyOnStatusResolved"}
+        isChecked={props.userProfile.notifyOnStatusResolved}
+        isDisabled={false}
+        label={t("USER_PROFILE_STATUS_RESOLVED_NOTIFICATION_LABEL")}
+        setValue={setValue}
+      />
+      <CustCheckbox
+        name={"notifyOnStatusClosed"}
+        isChecked={props.userProfile.notifyOnStatusClosed}
+        isDisabled={false}
+        label={t("USER_PROFILE_STATUS_CLOSED_NOTIFICATION_LABEL")}
+        setValue={setValue}
+      />
+      <CustCheckbox
+        name={"notifyOnMyTicketsOnly"}
+        isChecked={props.userProfile.notifyOnMyTicketsOnly}
+        isDisabled={false}
+        label={t("USER_PROFILE_TICKETS_NOTIFICATION_LABEL")}
+        setValue={setValue}
+      />
+      <CustCheckbox
+        name={"allowNewsletters"}
+        isChecked={props.userProfile.allowNewsletters}
+        isDisabled={false}
+        label={t("USER_PROFILE_NEWSLETTER_NOTIFICATION_LABEL")}
+        setValue={setValue}
+      />
+      <CustCheckbox
+        name={"notifyOnNewDocument"}
+        isChecked={props.userProfile.notifyOnNewDocument}
+        isDisabled={false}
+        label={t("USER_PROFILE_NEWDOCUMENT_NOTIFICATION_LABEL")}
+        setValue={setValue}
+      />
     </ScrollView>
   );
 };
 
 type EditUserFormProps = {
   userProfile: UserProfile;
-}
+};
 
-type UserFormData = {
+export type UserFormData = {
   lang: string;
   firstName: string;
   lastName: string;
@@ -137,6 +228,6 @@ type UserFormErrors = {
   username: FieldError;
   email: FieldError;
   phoneNumber: FieldError;
-}
+};
 
 export default EditUserForm;

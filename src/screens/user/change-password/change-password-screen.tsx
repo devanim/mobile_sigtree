@@ -59,8 +59,6 @@ const ChangePasswordScreen = (): JSX.Element => {
   };
 
   const isPasswordInputCorrect = (values: ChangePasswordFormData): boolean => {
-    console.log("values confirm password", values.ConfirmPassword);
-    console.log("values confirm password", values.Password);
     if (values.ConfirmPassword != values.Password) {
       return false;
     }
@@ -95,24 +93,12 @@ const ChangePasswordScreen = (): JSX.Element => {
           label="Password"
           value={""}
           secureEntry={true}
-          // {...register("Password", {
-          //   required: {
-          //     value: true,
-          //     message: t("USER_PROFILE_CHANGE_PASSWORD_REQUIRED"),
-          //   },
-          // })}
           setValue={setValue}
         />
         <Input
           label="ConfirmPassword"
           value={""}
           secureEntry={true}
-          // {...register("ConfirmPassword", {
-          //   required: {
-          //     value: true,
-          //     message: t("USER_PROFILE_CONFIRM_PASSWORD_REQUIRED"),
-          //   },
-          // })}
           setValue={setValue}
         />
       </View>

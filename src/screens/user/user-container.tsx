@@ -72,7 +72,6 @@ const UserContainer = (): JSX.Element => {
   };
 
   const navigateToEditUserProfileScreen = () => {
-    console.log("before sending");
     navigate("EditUserScreen", { screen: "EditUserScreen", params: userProfile });
   };
 
