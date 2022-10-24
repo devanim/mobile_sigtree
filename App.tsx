@@ -89,6 +89,7 @@ const App = (): JSX.Element => {
                       ? { ...eva.light, ...customTheme, ...lightTheme }
                       : { ...eva.dark, ...customTheme, ...darkTheme }
                   }
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   /* @ts-ignore */
                   customMapping={customMapping}
                 >

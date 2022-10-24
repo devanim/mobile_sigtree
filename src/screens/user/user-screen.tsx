@@ -1,23 +1,28 @@
+import { NavigationProp, useNavigation, } from "@react-navigation/native";
+import { TopNavigation, Layout } from "@ui-kitten/components";
 import React, { useContext } from "react";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { TopNavigation } from "@ui-kitten/components";
+import { StyleSheet} from "react-native";
 import NavigationAction from "../../components/navigation-action";
-import { AppStackParamList } from "../../routing/route-screens";
-
-import Container from "../../components/container";
-import UserContainer from "./user-container";
 import LocalizationContext from "../../localization/localization-context";
-
-import { userScreenStyle } from "./user-screen-style";
+import { AppStackParamList } from "../../routing/route-screens";
+import UserContainer from "./user-container";
 
 const UserScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
 
-  return (<Container style={userScreenStyle.container}>
-    <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title={t("USER_PROFILE_TITLE")}/>
-    <UserContainer />
-  </Container>);
+  return (
+    <Layout style={styles.container} level='1'>
+    <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title={t("USER_PROFILE_TITLE").toUpperCase()}/>
+    <UserContainer/>
+  </Layout>);
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+    paddingTop: "10%",    
+  }
+});
 export default UserScreen;
