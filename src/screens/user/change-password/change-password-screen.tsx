@@ -1,124 +1,33 @@
-import { useContext, useState } from "react";
-import { View, Text } from "react-native";
-import { FieldError, useForm } from "react-hook-form";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import axios from "axios";
-import { Button } from "@ui-kitten/components/ui";
-import Input from "../../../components/form/input";
-import { AppStackParamList } from "../../../routing/route-screens";
-import LocalizationContext from "../../../localization/localization-context";
-import changePasswordStyle from "./change-password-styles";
-import Container from "../../../components/container";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TopNavigation } from "@ui-kitten/components";
+import { Layout } from "@ui-kitten/components/ui";
+import { useContext } from "react";
+import { StyleSheet } from "react-native";
+
 import NavigationAction from "../../../components/navigation-action";
-import { ChangePasswordPayload } from "../../../models/user-profile/change-password-payload";
-import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
-import { useKeycloak } from "../../../keycloak/useKeycloak";
+import LocalizationContext from "../../../localization/localization-context";
+import { AppStackParamList } from "../../../routing/route-screens";
+import UserScreenContainer from "./change-password-container";
 
 const ChangePasswordScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const { token, realm } = useKeycloak();
-  const {
-    handleSubmit,
-    getValues,
-    setValue,
-  } = useForm<ChangePasswordFormData>();
-  const [errors, setErrors] = useState<ChangePasswordFormErrors | undefined>(
-    undefined
-  );
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
 
-  const onSubmit = async () => {
-    const vals = getValues();
-
-    if (!isPasswordInputCorrect(vals)) {
-      setErrors(t("USER_PROFILE_CHANGE_PASSWORD_ERROR"));
-      return;
-    }
-
-    try {
-      const response = await axios.put<ChangePasswordPayload>(
-        SigtreeConfiguration.getUrl(realm, SCREEN_URL.USER_PROFILE_URL),
-        {
-          password: vals.Password,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      if (response.status == 200) {
-        goBack();
-      } else {
-        const friendlyMessage = t("FAILED_REQUEST");
-        setErrors(friendlyMessage);
-      }
-    } catch (error: any) {
-      setErrors(error);
-    }
-  };
-
-  const isPasswordInputCorrect = (values: ChangePasswordFormData): boolean => {
-    if (values.ConfirmPassword != values.Password) {
-      return false;
-    }
-
-    if (values.ConfirmPassword.length == 0) {
-      return false;
-    }
-
-    if (values.Password.length == 0) {
-      return false;
-    }
-
-    return true;
-  }
-
-  const onInvalid = (err: any) => {
-    setErrors(err);
-  };
-
   return (
-    <Container style={changePasswordStyle.container}>
+    <Layout style={styles.container} level='1'>
       <TopNavigation
         accessoryLeft={() => <NavigationAction onPress={goBack} />}
-        title={t("USER_PROFILE_CHANGE_PASSWORD")}
+        title={t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()}
       />
-      <View>
-        <Button
-          children={t("BTN_SUBMIT")}
-          onPress={handleSubmit(onSubmit, onInvalid)}
-        />
-        <Input
-          label="Password"
-          value={""}
-          secureEntry={true}
-          setValue={setValue}
-        />
-        <Input
-          label="ConfirmPassword"
-          value={""}
-          secureEntry={true}
-          setValue={setValue}
-        />
-      </View>
-      <Text style={changePasswordStyle.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_1")}</Text>
-      <Text style={changePasswordStyle.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_2")}</Text>
-      <Text style={changePasswordStyle.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_3")}</Text>
-      <Text style={changePasswordStyle.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_4")}</Text>
-      {errors ? <Text style={changePasswordStyle.errorMessage}>{t("USER_PROFILE_CHANGE_PASSWORD_ERROR")}</Text> : <></>}
-    </Container>
-  );
+      <UserScreenContainer />
+    </Layout>);
 };
 
-type ChangePasswordFormData = {
-  Password: string;
-  ConfirmPassword: string
-};
-
-type ChangePasswordFormErrors = {
-  Password: FieldError;
-  ConfirmPassword: FieldError;
-};
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+    paddingTop: "10%",
+  }
+});
 export default ChangePasswordScreen;

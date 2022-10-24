@@ -52,6 +52,8 @@
     "PRIORITY_HIGH_COUNT": "Număr tichete mare:",
     "TOTAL_TICKETS_COUNT": "Total tichete:",
     "USER_PROFILE_EDIT": "Actualizați profilul",
+    "USER_PROFILE_CONFIRM_PASSWORD_LABEL": "Confirmă parola",
+    "USER_PROFILE_PASSWORD_LABEL": "Parola",
     "USER_PROFILE_CHANGE_PASSWORD": "Schimbați parola",
     "USER_PROFILE_CHANGE_PASSWORD_REQUIRED": "Parola este necesară",
     "USER_PROFILE_OLD_PASSWORD_REQUIRED": "Parola anterioară este necesară",

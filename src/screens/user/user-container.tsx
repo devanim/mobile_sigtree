@@ -90,13 +90,11 @@ const UserContainer = (): JSX.Element => {
         <Button
           style={styles.button}
           onPress={navigateToEditUserProfileScreen}
-          appearance='fill'
         >{t("USER_PROFILE_EDIT").toUpperCase()}</Button>
         <Button
           style={styles.button}
-          onPress={navigateToChangePasswordScreen}
-          appearance='fill'
-        ><Text style={styles.text}>{t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()}</Text></Button>
+          onPress={navigateToChangePasswordScreen}         
+        ><Text style={{}}>{t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()}</Text></Button>
       </Layout>
       <Layout style={styles.tos} level='1'>
         {hasBuildingsAssigned() ? (

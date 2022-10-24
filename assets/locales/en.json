@@ -13,6 +13,8 @@
     "USER_PROFILE_LAST_NAME_LABEL": "LastName",
     "USER_PROFILE_EMAIL_LABEL": "Email",
     "USER_PROFILE_LANGUAGE_LABEL": "Language",
+    "USER_PROFILE_CONFIRM_PASSWORD_LABEL": "Confirm password",
+    "USER_PROFILE_PASSWORD_LABEL": "Password",
     "USER_PROFILE_NEWNOTE_NOTIFICATION_LABEL": "Get notifications about new notes",
     "USER_PROFILE_STATUS_NEW_NOTIFICATION_LABEL": "Status Notification - New",
     "USER_PROFILE_STATUS_PROGRESS_NOTIFICATION_LABEL": "Status Notification - In progress",
