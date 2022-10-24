@@ -15,6 +15,7 @@ import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
 import { TicketPayload } from "../../../models/ticket/ticket-payload";
 import LocalizationContext from "../../../localization/localization-context";
+import { priorityList } from "../../../models/common/priority-list";
 
 const TicketForm = (props: TicketFormProps): JSX.Element => {
   const {
@@ -27,24 +28,18 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const [errors, setErrors] = useState<FormErrors | undefined>(undefined);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
-  //TODO - get this data from back-end
-  const priorityList: DropdownValue[] = [
-    { label: Priority.LOW, value: Priority.LOW },
-    { label: Priority.MEDIUM, value: Priority.MEDIUM },
-    { label: Priority.HIGH, value: Priority.HIGH },
-  ];
   //TODO - see how to obtain category list
   const categoryList: DropdownValue[] = [
-    { label: "Cleaning", value: "Cleaning" },
-    { label: "Electric", value: "Electric" },
-    { label: "Maintenance", value: "Maintenance" },
+    { label: "Cleaning", value: 1 },
+    { label: "Electric", value: 2 },
+    { label: "Maintenance", value: 3 },
   ];
   //TODO - see how to obtain floor details based on building
   const floorList: DropdownValue[] = [
-    { label: "1", value: "1" },
-    { label: "2", value: "2" },
-    { label: "3", value: "3" },
-    { label: "4", value: "4" },
+    { label: "1", value: 1 },
+    { label: "2", value: 2 },
+    { label: "3", value: 3 },
+    { label: "4", value: 4 },
   ];
 
   const onSubmit = async () => {
