@@ -3,7 +3,7 @@ import { Button } from "@ui-kitten/components/ui";
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { FieldError, useForm } from "react-hook-form";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { DropdownValue } from "../../../models/common/dropdown-value";
 import { Priority } from "../../../models/ticket/priority-enum";
 import { AppStackParamList } from "../../../routing/route-screens";
@@ -16,6 +16,7 @@ import { useKeycloak } from "../../../keycloak/useKeycloak";
 import { TicketPayload } from "../../../models/ticket/ticket-payload";
 import LocalizationContext from "../../../localization/localization-context";
 import { priorityList } from "../../../models/common/priority-list";
+import { UserProfile } from "src/models/user-profile/user-profile";
 
 const TicketForm = (props: TicketFormProps): JSX.Element => {
   const {
@@ -30,45 +31,44 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   //TODO - see how to obtain category list
   const categoryList: DropdownValue[] = [
-    { label: "Cleaning", value: 1 },
-    { label: "Electric", value: 2 },
-    { label: "Maintenance", value: 3 },
+    { label: "Cleaning", value: "1" },
+    { label: "Electric", value: "2" },
+    { label: "Maintenance", value: "3" },
   ];
   //TODO - see how to obtain floor details based on building
   const floorList: DropdownValue[] = [
-    { label: "1", value: 1 },
-    { label: "2", value: 2 },
-    { label: "3", value: 3 },
-    { label: "4", value: 4 },
+    { label: "1", value: "1" },
+    { label: "2", value: "2" },
+    { label: "3", value: "3" },
+    { label: "4", value: "4" },
   ];
 
   const onSubmit = async () => {
     const vals = getValues();
-    console.log("values in ticket", vals);
     const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKET_URL)}`;
     const response = await axios.post<TicketPayload>(reqUrl, vals, {
       headers: { Authorization: `Bearer ${token}` },
     });
     goBack();
   };
-
+console.log("profile data", props.userProfile);
   const onInvalid = (err: any) => {
     setErrors(err);
   };
 
   return (
-    <View>
+    <ScrollView>
       <Button children={t("BTN_SUBMIT")} onPress={handleSubmit(onSubmit, onInvalid)} />
       <Button children={t("BTN_CANCEL")} onPress={goBack} />
       <View style={ticketFormStyles.spacedView}>
         <Dropdown
           label="Category"
-          value={props.ticket?.category}
-          error={errors ? errors["Category"] : undefined}
+          value={props.ticket?.category ?? ""}
+          error={errors ? errors["idcategory"] : undefined}
           placeholder="Select Category"
           dropdownStyle={ticketFormStyles.spacedView}
           list={categoryList}
-          {...register("Category", {
+          {...register("idcategory", {
             required: { value: true, message: "Category is required" },
           })}
           setValue={setValue}
@@ -77,19 +77,24 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
       <Input
         label="Title"
         value={props.ticket?.name ?? ""}
-        error={errors ? errors["Title"] : undefined}
-        {...register("Title", {
+        error={errors ? errors["name"] : undefined}
+        {...register("name", {
           required: { value: true, message: "Title is required" },
         })}
         setValue={setValue}
       />
       <Input
+        label="Tags"
+        value={props.ticket?.tags ?? ""}
+        setValue={setValue}
+      />
+      <Input
         label="Description"
         value={props.ticket?.content ?? ""}
-        error={errors ? errors["Description"] : undefined}
+        error={errors ? errors["content"] : undefined}
         multiline={true}
         inputStyle={ticketFormStyles.multilineHeight}
-        {...register("Description", {
+        {...register("content", {
           required: { value: true, message: "Description is required" },
         })}
         setValue={setValue}
@@ -98,10 +103,10 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
         <Dropdown
           label="Priority"
           value={props.ticket?.priorityKey ?? ""}
-          error={errors ? errors["Priority"] : undefined}
+          error={errors ? errors["idpriority"] : undefined}
           placeholder="Select Priority"
           list={priorityList}
-          {...register("Priority", {
+          {...register("idpriority", {
             required: { value: true, message: "Priority is required" },
           })}
           setValue={setValue}
@@ -109,38 +114,79 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
         <Dropdown
           label="Floor"
           value={props.ticket?.floor ?? ""}
-          error={errors ? errors["Floor"] : undefined}
           placeholder="Select Floor"
           list={floorList}
-          {...register("Floor", {
-            required: { value: true, message: "Floor is required" },
+          setValue={setValue}
+        />
+      </View>
+      <View style={ticketFormStyles.twoOnRow}>
+        <Dropdown
+          label="Building"
+          value={props.ticket?.building ?? ""}
+          error={errors ? errors["idbuilding"] : undefined}
+          placeholder="Select Building"
+          //TODO - use here buildings list
+          list={priorityList}
+          {...register("idbuilding", {
+            required: { value: true, message: "Building is required" },
+          })}
+          setValue={setValue}
+        />
+        <Dropdown
+          label="Project"
+          value={props.ticket?.building ?? ""}
+          error={errors ? errors["idproject"] : undefined}
+          placeholder="Select Project"
+          //TODO - use here project list from the chosen building
+          list={priorityList}
+          {...register("idproject", {
+            required: { value: true, message: "Project is required" },
           })}
           setValue={setValue}
         />
       </View>
-    </View>
+      <Dropdown
+          label="Tennant"
+          value={props.ticket?.building ?? ""}
+          error={errors ? errors["idtenant"] : undefined}
+          placeholder="Select Tennant"
+          //TODO - use here tennants list
+          list={priorityList}
+          {...register("idtenant", {
+            required: { value: true, message: "Project is required" },
+          })}
+          setValue={setValue}
+        />
+    </ScrollView>
   );
 };
 
 type FormData = {
-  Category: string,
-  Title: string,
-  Description: string,
-  Priority: Priority,
-  Floor: string
+  name:string;
+  tags:string;
+  idcategory:number;
+  idpriority:number;
+  floor:string;
+  idproject:number;
+  idbuilding:number;
+  content:string;
+  idtenant?: number;
 }
 
 type FormErrors = {
-  Category: FieldError,
-  Title: FieldError,
-  Description: FieldError,
-  Priority: FieldError,
-  Floor: FieldError
+  name: FieldError;
+  idcategory: FieldError;
+  idpriority: FieldError;
+  content: FieldError;
+  idproject: FieldError;
+  idbuilding: FieldError;
+  idtenant?: FieldError;
 }
 
 type TicketFormProps = {
   mode: "insert"|"edit",
-  ticket?: Ticket
+  ticket?: Ticket,
+  userProfile?: UserProfile;
 }
 
 export default TicketForm;
