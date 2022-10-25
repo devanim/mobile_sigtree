@@ -158,7 +158,7 @@ const NavigationAction = memo(
           <Icon
             {...props}
             pack="assets"
-            name={icon || "leftArrow"}
+            name={icon || "arrowLeft"}
             style={[
               {
                 height: getSizeIcon(size),

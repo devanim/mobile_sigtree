@@ -146,6 +146,8 @@ const AssetIconsPack: IconPack<ImageProps | SvgProps> = {
     motorcycle: createIcon(Icons.motorcycle),
     flag: createIcon(Icons.flag),
     priceTag: createIcon(Icons.priceTag),
+    arrowLeft: createIcon(Icons.arrowLeft),
+    logout: createIcon(Icons.logout),
   },
 };
 export default AssetIconsPack;

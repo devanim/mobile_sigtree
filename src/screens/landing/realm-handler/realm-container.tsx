@@ -1,5 +1,6 @@
-import { Button } from "@ui-kitten/components";
+import { Button, Layout } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 
 import Text from "../../../components/text";
 import { realmHandlerStyles } from "./realm-container-styles";
@@ -95,7 +96,7 @@ const RealmContainer = (): JSX.Element => {
 
   const onLogin = async () => {
     await login();
-    setTimeout(() => {}, 500);
+    setTimeout(() => { }, 500);
     await setLanguage();
 
     navigate("DashboardNavigator", { screen: "DashboardScreen" });
@@ -152,7 +153,7 @@ const RealmContainer = (): JSX.Element => {
   if (!ready) return <ActivityIndicator />;
 
   return (
-    <>
+    <Layout style={styles.container} level='1'>
       <Button
         style={realmHandlerStyles.button}
         children={"Add new realm"}
@@ -166,8 +167,15 @@ const RealmContainer = (): JSX.Element => {
         size={"small"}
       />
       {toggleRealmSelectorComponent()}
-    </>
+    </Layout>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+    paddingTop: "10%",
+  }
+});
 
 export default RealmContainer;

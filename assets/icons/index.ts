@@ -113,4 +113,7 @@ export const Icons = {
   motorcycle: require("./ic_motorcycle.png"),
   priceTag: require("./ic_price_tag.png"),
   flag: require("./ic_flag.png"),
+  arrowLeft: require("./ic_arr_left_16.png"),
+  logout: require("./ic_logout_16.png")
+
 };
