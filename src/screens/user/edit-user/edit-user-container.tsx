@@ -68,10 +68,8 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
   };
 
   const onInvalid = (err: any) => {
-    console.log("Invalidate", err);
     setErrors(err);
   };
-  console.log("user profile", props.userProfile);
 
   return (
     <Layout style={styles.container} level='1'>

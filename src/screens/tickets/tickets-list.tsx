@@ -49,7 +49,6 @@ const TicketsList = (): JSX.Element => {
     try {
       const filteringStatus = selectedStatus.length > 0 ? `status=${t(selectedStatus)}&` : "";
       const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKETS_URL)}?${filteringStatus}fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
-      console.log("reqUrl", reqUrl);
       const response = await axios.get<TicketListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });

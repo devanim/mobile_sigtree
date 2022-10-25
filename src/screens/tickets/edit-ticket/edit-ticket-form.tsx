@@ -51,7 +51,6 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
       const response = await axios.get<TicketStatusPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });
-console.log("response", response.data, reqUrl);
       if (response.status == 200) {
         setStatuses(response.data.data ?? []);
       } else {
@@ -108,7 +107,7 @@ console.log("response", response.data, reqUrl);
       />
     );
   }
-console.log("status", props.ticket);
+
   return (
     <ScrollView>
       <Button

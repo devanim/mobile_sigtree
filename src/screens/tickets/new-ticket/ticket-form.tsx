@@ -1,6 +1,6 @@
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { Button } from "@ui-kitten/components/ui";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FieldError, useForm } from "react-hook-form";
 import { ScrollView, View } from "react-native";
@@ -28,21 +28,46 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   const { token, realm } = useKeycloak();
   const { t } = useContext(LocalizationContext);
   const [errors, setErrors] = useState<FormErrors | undefined>(undefined);
+  const [selectedBuilding, setSelectedBuilding] = useState<number>(0);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   //TODO - see how to obtain category list
   const categoryList: DropdownValue[] = [
-    { label: "Cleaning", value: "1" },
-    { label: "Electric", value: "2" },
-    { label: "Maintenance", value: "3" },
+    { label: "Cleaning", value: 1 },
+    { label: "Electric", value: 2 },
+    { label: "Maintenance", value: 3 },
   ];
   //TODO - see how to obtain floor details based on building
   const floorList: DropdownValue[] = [
-    { label: "1", value: "1" },
-    { label: "2", value: "2" },
-    { label: "3", value: "3" },
-    { label: "4", value: "4" },
+    { label: "1", value: 1 },
+    { label: "2", value: 2 },
+    { label: "3", value: 3 },
+    { label: "4", value: 4 },
   ];
+  
+  const getProjectList = (): DropdownValue[] => {
+    if (!props.userProfile) {
+      return [];
+    }
 
+    return props.userProfile.resources.projects.map(prj => {
+      return {label: prj.name, value: prj.id}
+    });
+  };
+  const projectList: DropdownValue[] = getProjectList();
+
+  const setBuildings = () => {
+    console.log("userProfile", props.userProfile?.resources.buildings);
+    if (!props.userProfile) {
+      return [];
+    }
+
+    const buildings = props.userProfile?.resources.buildings.map(b => {
+      return {label: b.name, value: b.id}
+    });
+    return buildings ?? [];
+  };
+  const buildingsList: DropdownValue[] = setBuildings();
+  
   const onSubmit = async () => {
     const vals = getValues();
     const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKET_URL)}`;
@@ -51,7 +76,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     });
     goBack();
   };
-console.log("profile data", props.userProfile);
+
   const onInvalid = (err: any) => {
     setErrors(err);
   };
@@ -60,20 +85,6 @@ console.log("profile data", props.userProfile);
     <ScrollView>
       <Button children={t("BTN_SUBMIT")} onPress={handleSubmit(onSubmit, onInvalid)} />
       <Button children={t("BTN_CANCEL")} onPress={goBack} />
-      <View style={ticketFormStyles.spacedView}>
-        <Dropdown
-          label="Category"
-          value={props.ticket?.category ?? ""}
-          error={errors ? errors["idcategory"] : undefined}
-          placeholder="Select Category"
-          dropdownStyle={ticketFormStyles.spacedView}
-          list={categoryList}
-          {...register("idcategory", {
-            required: { value: true, message: "Category is required" },
-          })}
-          setValue={setValue}
-        />
-      </View>
       <Input
         label="Title"
         value={props.ticket?.name ?? ""}
@@ -115,37 +126,51 @@ console.log("profile data", props.userProfile);
           label="Floor"
           value={props.ticket?.floor ?? ""}
           placeholder="Select Floor"
+          //TODO - Get floors based on selected building
           list={floorList}
           setValue={setValue}
         />
       </View>
       <View style={ticketFormStyles.twoOnRow}>
-        <Dropdown
+        {buildingsList.length > 0 ? <Dropdown
           label="Building"
           value={props.ticket?.building ?? ""}
           error={errors ? errors["idbuilding"] : undefined}
           placeholder="Select Building"
-          //TODO - use here buildings list
-          list={priorityList}
+          list={buildingsList}
           {...register("idbuilding", {
             required: { value: true, message: "Building is required" },
           })}
           setValue={setValue}
-        />
-        <Dropdown
+        /> : <></>}
+        {projectList?.length > 0 ? <Dropdown
           label="Project"
           value={props.ticket?.building ?? ""}
           error={errors ? errors["idproject"] : undefined}
           placeholder="Select Project"
-          //TODO - use here project list from the chosen building
-          list={priorityList}
+          list={projectList}
           {...register("idproject", {
             required: { value: true, message: "Project is required" },
           })}
           setValue={setValue}
+        /> : <></>}
+      </View>
+      <View style={ticketFormStyles.spacedView}>
+        <Dropdown
+          label="Category"
+          value={props.ticket?.category ?? ""}
+          error={errors ? errors["idcategory"] : undefined}
+          placeholder="Select Category"
+          dropdownStyle={ticketFormStyles.spacedView}
+          //TODO - filter list based on chosen building
+          list={categoryList}
+          {...register("idcategory", {
+            required: { value: true, message: "Category is required" },
+          })}
+          setValue={setValue}
         />
       </View>
-      <Dropdown
+      {props.userProfile?.role == 5 ? <Dropdown
           label="Tennant"
           value={props.ticket?.building ?? ""}
           error={errors ? errors["idtenant"] : undefined}
@@ -156,7 +181,7 @@ console.log("profile data", props.userProfile);
             required: { value: true, message: "Project is required" },
           })}
           setValue={setValue}
-        />
+        /> : <></>}
     </ScrollView>
   );
 };
