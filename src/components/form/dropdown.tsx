@@ -16,6 +16,11 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
 
   const onChange = (data: string | null) => {
     props.setValue(props.name, data ?? "", true);
+    
+    if (props.onChange) {
+      props.onChange(data ?? "0");
+    }
+    
     setDropdownValue(data ?? undefined);
   };
 
@@ -54,6 +59,7 @@ type DropdownProps = {
   zIndex: number;
   zIndexInverse: number;
   setValue: (name: string, value: string, validate?: boolean) => void;
+  onChange?: (value: string) => void;
 }
 
 export default Dropdown;

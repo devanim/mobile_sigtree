@@ -17,25 +17,28 @@ import { TicketPayload } from "../../../models/ticket/ticket-payload";
 import LocalizationContext from "../../../localization/localization-context";
 import { priorityList } from "../../../models/common/priority-list";
 import { UserProfile } from "src/models/user-profile/user-profile";
+import { Building } from "src/models/user-profile/building";
 
 const TicketForm = (props: TicketFormProps): JSX.Element => {
   const {
     register,
     handleSubmit,
     getValues,
-    setValue,
+    setValue
   } = useForm<FormData>();
   const { token, realm } = useKeycloak();
   const { t } = useContext(LocalizationContext);
   const [errors, setErrors] = useState<FormErrors | undefined>(undefined);
   const [selectedBuilding, setSelectedBuilding] = useState<number>(0);
+  const [categoryList, setCategoryList] = useState<DropdownValue[]>([]);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
+
   //TODO - see how to obtain category list
-  const categoryList: DropdownValue[] = [
-    { label: "Cleaning", value: 1 },
-    { label: "Electric", value: 2 },
-    { label: "Maintenance", value: 3 },
-  ];
+  // const categoryList: DropdownValue[] = [
+  //   { label: "Cleaning", value: 1 },
+  //   { label: "Electric", value: 2 },
+  //   { label: "Maintenance", value: 3 },
+  // ];
   //TODO - see how to obtain floor details based on building
   const floorList: DropdownValue[] = [
     { label: "1", value: 1 },
@@ -60,10 +63,14 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
       return [];
     }
 
-    const buildings = props.userProfile?.resources.buildings.map(b => {
-      return {label: b.name, value: b.id}
+    const buildings: DropdownValue[] = [];
+
+    props.userProfile?.resources.buildings.forEach(b => {
+      if (b.categories && b.categories.length > 0) {
+        buildings.push({label: b.name, value: b.id});
+      }
     });
-    return buildings ?? [];
+    return buildings;
   };
   const buildingsList: DropdownValue[] = setBuildings();
   
@@ -73,14 +80,29 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     const response = await axios.post<TicketPayload>(reqUrl, vals, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("response", response);
+    
     goBack();
   };
 
   const onInvalid = (err: any) => {
-    console.log("on invalid", err);
     setErrors(err);
   };
+
+  const onBuildingChange = (data: string) => {
+    const dataNbr = Number(data);
+    setSelectedBuilding(dataNbr);
+    
+    const building: Building | undefined = props.userProfile?.resources.buildings.find(item => item.id.toString() === data) ?? undefined;
+    const categories: DropdownValue[] = [];
+
+    if (building) {
+      building.categories?.forEach(c => {
+        categories.push({label: c.name, value: c.id});
+      });
+    }
+
+    setCategoryList(categories);
+  }
 
   return (
     <ScrollView>
@@ -142,6 +164,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
           {...register("idbuilding", {
             required: { value: true, message: "Building is required" },
           })}
+          onChange={onBuildingChange}
           setValue={setValue}
         /> : <></>}
         {projectList?.length > 0 ? <Dropdown
@@ -157,7 +180,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
         /> : <></>}
       </View>
       <View style={ticketFormStyles.spacedView}>
-        <Dropdown
+        {(selectedBuilding > 0 && categoryList.length > 0) ? <Dropdown
           label="Category"
           value={props.ticket?.category ?? ""}
           error={errors ? errors["idcategory"] : undefined}
@@ -169,7 +192,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
             required: { value: true, message: "Category is required" },
           })}
           setValue={setValue}
-        />
+        /> : <></>}
       </View>
       {props.userProfile?.role == 5 ? <Dropdown
           label="Tennant"
