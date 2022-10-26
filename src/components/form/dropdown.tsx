@@ -38,6 +38,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
         zIndex={300}
         zIndexInverse={100}
       />
+      <Text style={dropdownStyles.textError}>{props.error && props.error.message}</Text>
     </View>
   );
 };

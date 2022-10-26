@@ -56,7 +56,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   const projectList: DropdownValue[] = getProjectList();
 
   const setBuildings = () => {
-    console.log("userProfile", props.userProfile?.resources.buildings);
     if (!props.userProfile) {
       return [];
     }
@@ -74,10 +73,12 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     const response = await axios.post<TicketPayload>(reqUrl, vals, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    console.log("response", response);
     goBack();
   };
 
   const onInvalid = (err: any) => {
+    console.log("on invalid", err);
     setErrors(err);
   };
 
