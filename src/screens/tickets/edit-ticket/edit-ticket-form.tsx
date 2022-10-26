@@ -7,6 +7,7 @@ import LocalizationContext from "../../../localization/localization-context";
 import { FieldError, useForm } from "react-hook-form";
 import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
+import Input from "../../../components/form/input";
 import axios from "axios";
 import Dropdown from "../../../components/form/dropdown";
 import { EditUserPayload } from "../../../models/user-profile/edit-user-payload";
@@ -16,6 +17,9 @@ import { TicketStatusPayload } from "../../../models/ticket/ticket-status-payloa
 import { TicketStatus } from "../../../models/ticket/ticket-status";
 import Error, { ErrorProps } from "../../../components/error";
 import { DropdownValue } from "../../../models/common/dropdown-value";
+import { UserProfile } from "../../../models/user-profile/user-profile";
+import { Building } from "../../../models/user-profile/building";
+import { ticketCardStyles } from "../ticket-card-styles";
 
 const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   const {
@@ -30,18 +34,19 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   const [errors, setErrors] = useState<EditTicketFormErrors | undefined>(undefined);
   const [statuses, setStatuses] = useState<TicketStatus[]>([]);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
-  //TODO - see how to obtain category list
-  const categoryList: DropdownValue[] = [
-    { label: "Cleaning", value: 1 },
-    { label: "Electric", value: 2 },
-    { label: "Maintenance", value: 3 },
-  ];
+  const [categoryList, setCategoryList] = useState<DropdownValue[]>([]);
   const statusList: DropdownValue[] = [
     { label: "In progress", value: 2 },
+    { label: "Availabil", value: 3 },
     { label: "Inchis", value: 4 },
   ]
 
   useEffect(() => {
+    setPossibleCategories();
+    setValue("tags", props.ticket.tags);
+    setValue("idpriority", props.ticket.idpriority);
+    setValue("idcategory", props.ticket.idcategory);
+    setValue("idstatus", props.ticket.idstatus);
     getPossibleStatuses();
   }, []);
 
@@ -93,10 +98,18 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
     setErrors(err);
   };
 
-  const transformToDropdownValues = (): DropdownValue[] => {
-    return statuses.map(status => {
-      return {label: t(status.nameKey), value: status.id}
-    });
+  const setPossibleCategories = () => {
+    const building: Building | undefined = props.userProfile?.resources.buildings.find(item => item.id == props.ticket.idbuilding) ?? undefined;
+    const categories: DropdownValue[] = [];
+    
+    console.log("here building id", props.ticket.idbuilding, props.userProfile?.resources.buildings);
+    if (building) {
+      building.categories?.forEach(c => {
+        categories.push({label: c.name, value: c.id});
+      });
+    }
+
+    setCategoryList(categories);
   }
 
   if (error) {
@@ -109,7 +122,7 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={editTicketFormStyles.marginTop}>
       <Button
         title={t("BTN_SUBMIT")}
         onPress={handleSubmit(onSubmit, onInvalid)}
@@ -118,10 +131,17 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
       <View style={editTicketFormStyles.containerCard}>
         <Text>{`${props.ticket?.id} - ${props.ticket?.name}`}</Text>
       </View>
+      <View style={editTicketFormStyles.containerCard}>
+        <Input
+          label="Tags"
+          value={props.ticket?.tags ?? ""}
+          setValue={setValue}
+        />
+      </View>
       <View style={editTicketFormStyles.twoOnRow}>
         <Dropdown
           label="Priority"
-          value={props.ticket?.priorityKey ?? ""}
+          value={props.ticket?.idpriority}
           error={errors ? errors["idpriority"] : undefined}
           placeholder="Select Priority"
           list={priorityList}
@@ -132,7 +152,7 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
         />
         <Dropdown
           label="Status"
-          value={props.ticket?.statusKey ?? ""}
+          value={props.ticket?.idstatus}
           error={errors ? errors["idstatus"] : undefined}
           placeholder="Select Status"
           list={statusList}
@@ -143,9 +163,9 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
         />
       </View>
       <View style={editTicketFormStyles.spacedView}>
-        <Dropdown
+        {categoryList.length > 0 ? <Dropdown
           label="Category"
-          value={props.ticket?.category}
+          value={props.ticket?.idcategory}
           error={errors ? errors["idcategory"] : undefined}
           placeholder="Select Category"
           dropdownStyle={editTicketFormStyles.spacedView}
@@ -154,7 +174,7 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
             required: { value: true, message: "Category is required" },
           })}
           setValue={setValue}
-        />
+        /> : <></>}
       </View>
     </ScrollView>
   );
@@ -175,6 +195,7 @@ type EditTicketFormErrors = {
 
 type EditTicketFormProps = {
   ticket: Ticket;
+  userProfile?: UserProfile;
 }
 
 export default EditTicketForm;

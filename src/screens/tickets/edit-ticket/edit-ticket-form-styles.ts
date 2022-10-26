@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 
 const editTicketFormStyles = StyleSheet.create({
+  marginTop: {
+    marginTop: 50
+  },
   containerCard: {
     backgroundColor: "#fff",
     marginTop: 10,

@@ -23,7 +23,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
     
     setDropdownValue(data ?? undefined);
   };
-
+console.log("ddl", dropdownValue);
   return (
     <View style={dropdownStyles.container}>
       {props.label && <Text style={[dropdownStyles.label, props.labelStyle]}>{props.label}</Text>}
@@ -50,7 +50,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
 type DropdownProps = {
   name: string;
   placeholder: string;
-  value?: string;
+  value?: string|number;
   error?: FieldError | undefined;
   label?: string;
   labelStyle?: TextStyle;
