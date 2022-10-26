@@ -15,8 +15,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
   }, []);
 
   const onChange = (data: string | null) => {
-    //TODO - fix this ?? thingy
-    props.setValue(props.label ?? "", data ?? "", true);
+    props.setValue(props.name, data ?? "", true);
     setDropdownValue(data ?? undefined);
   };
 
@@ -44,6 +43,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
 };
 
 type DropdownProps = {
+  name: string;
   placeholder: string;
   value?: string;
   error?: FieldError | undefined;
