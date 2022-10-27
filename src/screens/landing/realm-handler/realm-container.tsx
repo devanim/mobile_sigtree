@@ -2,7 +2,6 @@ import { Button, Layout } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
-import Text from "../../../components/text";
 import { realmHandlerStyles } from "./realm-container-styles";
 import RealmSelector, {
   BarcodeReadPayload,
@@ -11,7 +10,7 @@ import RealmList from "./realm-list";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
 import RealmDetails from "../../../models/realm-details";
 import RealmContext from "../../../context/RealmContext";
-import { REALMS_KEY } from "../../../utils/constants";
+import { APP_LANGUAGE_KEY, REALMS_KEY } from "../../../utils/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
@@ -28,7 +27,7 @@ const RealmContainer = (): JSX.Element => {
   const { realmData: realmData, setRealm } = useContext(RealmContext);
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
-  const { t, handleChange } = useContext(LocalizationContext);
+  const { t, locale, handleChange } = useContext(LocalizationContext);
 
   useEffect(() => {
     AsyncStorage.getItem(REALMS_KEY).then((value) => {
@@ -113,6 +112,7 @@ const RealmContainer = (): JSX.Element => {
         const language = response.data.data.lang;
         if (language.length > 0) {
           handleChange(language);
+          AsyncStorage.setItem(APP_LANGUAGE_KEY, language);
         } else {
           handleChange(DEFAULT_LANGUAGE);
         }
