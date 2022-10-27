@@ -1,23 +1,39 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { TopNavigation } from "@ui-kitten/components";
+import { Layout } from "@ui-kitten/components";
 import React, { useContext } from "react";
+import { StyleSheet } from "react-native";
+import { Appbar } from 'react-native-paper';
 
-import NavigationAction from "../../components/navigation-action";
-import Container from "../../components/container";
-import { AppStackParamList } from "../../routing/route-screens";
+import { useKeycloak } from "../../keycloak/useKeycloak";
 import LocalizationContext from "../../localization/localization-context";
+import { AppStackParamList } from "../../routing/route-screens";
 import TicketContainer from "./ticket-container";
-
-import { ticketsScreenStyle } from "./tickets-screen-style";
 
 const TicketsScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { logout } = useKeycloak();
+  const { goBack, navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const onLogout = () => {
+    logout();
+    navigate("HomeScreen", { screen: "HomeScreen" });
+  }
 
-  return (<Container style={ticketsScreenStyle.container}>
-    <TopNavigation accessoryLeft={() => <NavigationAction onPress={goBack} />} title={t("TICKETS_TITLE")}/>
-    <TicketContainer />
-  </Container>);
+  return (
+    <Layout style={styles.container} level='1'>
+      <Appbar.Header style={{ backgroundColor: '#fff' }}>
+        <Appbar.BackAction onPress={goBack} />
+        <Appbar.Content title={t("TICKET_TITLE").toUpperCase()} />
+        <Appbar.Action icon="logout" onPress={onLogout} />
+      </Appbar.Header>
+      <TicketContainer />
+    </Layout>
+  )
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+});
 
 export default TicketsScreen;

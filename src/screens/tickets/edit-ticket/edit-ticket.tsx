@@ -1,21 +1,21 @@
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import * as React from "react";
+import { useContext, useEffect, useState } from "react";
 import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Ticket } from "src/models/ticket/ticket";
 
-import TicketForm from "../new-ticket/ticket-form";
-import EditTicketForm from "./edit-ticket-form";
-import { editTicketStyles } from "./edit-ticket-styles";
-import { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import Error, { ErrorProps } from "../../../components/error";
+import { useKeycloak } from "../../../keycloak/useKeycloak";
+import LocalizationContext from "../../../localization/localization-context";
 import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import { UserProfile } from "../../../models/user-profile/user-profile";
 import { UserProfilePayload } from "../../../models/user-profile/user-profile-payload";
-import Error, { ErrorProps } from "../../../components/error";
-import LocalizationContext from "../../../localization/localization-context";
 import { AppStackParamList } from "../../../routing/route-screens";
-import { useKeycloak } from "../../../keycloak/useKeycloak";
+import TicketForm from "../new-ticket/ticket-form";
+import EditTicketForm from "./edit-ticket-form";
+import { editTicketStyles } from "./edit-ticket-styles";
 
 const EditTicket = (props: EditTicketProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -25,7 +25,7 @@ const EditTicket = (props: EditTicketProps): JSX.Element => {
     undefined
   );
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
-  
+
   useEffect(() => {
     const source = axios.CancelToken.source();
 
@@ -67,14 +67,14 @@ const EditTicket = (props: EditTicketProps): JSX.Element => {
       />
     );
   }
-  
+
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={editTicketStyles.container}
-      style={{ backgroundColor: "#181e34" }}
+      style={{ backgroundColor: "" }}
     >
       <View style={editTicketStyles.formContainer}>
-        <EditTicketForm ticket={props.ticket} userProfile={userProfile}/>
+        <EditTicketForm ticket={props.ticket} userProfile={userProfile} />
       </View>
     </KeyboardAwareScrollView>
   );

@@ -4,6 +4,7 @@ export const carouselStyles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
+    color: '#000'
   },
   img: {
     borderRadius: 8,

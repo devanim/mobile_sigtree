@@ -1,32 +1,27 @@
-import React, { useContext, useEffect, useState } from "react";
-
-import { ScrollView, Text } from "react-native";
-import { RefreshControl } from "react-native-web-refresh-control";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Layout } from "@ui-kitten/components";
 import axios from "axios";
-import { TopNavigation } from "@ui-kitten/components";
+import React, { useContext, useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
+import { ScrollView, Text } from "react-native";
+import { Appbar, Card, Title } from 'react-native-paper';
+import { RefreshControl } from "react-native-web-refresh-control";
+import { AppStackParamList } from "src/routing/route-screens";
 
 import Carousel from "../../components/carousel/carousel";
-import ArticleBrief from "../../models/article/article-brief";
-import { TicketBrief } from "../../models/ticket/ticket-brief";
-import { dashboardStatisticsStyles } from "./dashboard-statistics-styles";
-import { AppStackParamList } from "src/routing/route-screens";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import LocalizationContext from "../../localization/localization-context";
-import Error, { ErrorProps } from "../../components/error";
-import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
-import ArticleListPayload from "../../models/article/article-list-payload";
-import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 import RoundChart from "../../components/chart/round-chart";
+import Error, { ErrorProps } from "../../components/error";
+import { useKeycloak } from "../../keycloak/useKeycloak";
+import LocalizationContext from "../../localization/localization-context";
+import ArticleBrief from "../../models/article/article-brief";
+import ArticleListPayload from "../../models/article/article-list-payload";
+import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import Statistics from "../../models/dashboard/statistics";
 import StatisticsPayload from "../../models/dashboard/statistics-payload";
-import { useKeycloak } from "../../keycloak/useKeycloak";
-import NavigationAction from "../../components/navigation-action";
-import Container from "../../components/container";
+import { TicketBrief } from "../../models/ticket/ticket-brief";
+import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 
 const DashboardStatistics = (): JSX.Element => {
-  const { t } = useContext(LocalizationContext);
-  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
-  const { token, realm, logout } = useKeycloak();
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [articles, setArticles] = useState<ArticleBrief[]>([]);
@@ -35,7 +30,7 @@ const DashboardStatistics = (): JSX.Element => {
 
   useEffect(() => {
     setIsLoadingData(true);
-    
+
     getArticles();
 
     setIsLoadingData(false);
@@ -43,7 +38,7 @@ const DashboardStatistics = (): JSX.Element => {
 
   useEffect(() => {
     setIsLoadingData(true);
-    
+
     getTickets();
 
     setIsLoadingData(false);
@@ -51,7 +46,7 @@ const DashboardStatistics = (): JSX.Element => {
 
   useEffect(() => {
     setIsLoadingData(true);
-    
+
     getStatistics();
 
     setIsLoadingData(false);
@@ -132,14 +127,18 @@ const DashboardStatistics = (): JSX.Element => {
     }
   };
 
+  const { t } = useContext(LocalizationContext);
+  const { token, realm, logout } = useKeycloak();
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+
   const onArticleSelected = (articleId: number) => {
-    navigate("ArticleScreen", { screen: "ArticleScreen", params: {articleId: articleId} });
+    navigate("ArticleScreen", { screen: "ArticleScreen", params: { articleId: articleId } });
   }
 
   const onTicketSelected = (ticketId: number) => {
-    navigate("TicketScreen", { screen: "TicketScreen", params: {ticketId: ticketId} });
+    navigate("TicketScreen", { screen: "TicketScreen", params: { ticketId: ticketId } });
   }
-  
+
   const articleCarouselData = articles?.map((article: ArticleBrief, idx: number) => {
     return {
       id: article.id,
@@ -171,22 +170,40 @@ const DashboardStatistics = (): JSX.Element => {
   }
 
   return (
-    <Container>
-      <TopNavigation 
-        title={t("DASHBOARD_TITLE")}
-        accessoryRight={() => <NavigationAction onPress={onLogout} icon={"flag"}/>}
-      />
-      <ScrollView contentContainerStyle={dashboardStatisticsStyles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl tintColor="#F0DF67" />}>
-        <Carousel name={t("ARTICLES_TITLE")} data={articleCarouselData ?? []}/>
-        <Carousel name={t("TICKETS_TITLE")} data={ticketCarouselData ?? []}/>
-        {statistics ? <RoundChart data={statistics}/> : <></>}
-        {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_LOW_COUNT")} {statistics.count_low}</Text>: <></>}
-        {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_MEDIUM_COUNT")} {statistics.count_medium}</Text>: <></>}
-        {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("PRIORITY_HIGH_COUNT")} {statistics.count_high}</Text>: <></>}
-        {statistics ? <Text style={dashboardStatisticsStyles.text}>{t("TOTAL_TICKETS_COUNT")} {statistics.count_all}</Text>: <></>}
+    <Layout style={styles.container} level='1'>
+      <Appbar.Header style={{ backgroundColor: '#fff' }}>
+        <Appbar.BackAction disabled />
+        <Appbar.Content title={t("DASHBOARD_TITLE").toUpperCase()} />
+        <Appbar.Action icon="logout" onPress={onLogout} />
+      </Appbar.Header>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl tintColor="#CCC" />}>
+        <Carousel name={t("ARTICLES_TITLE")} data={articleCarouselData ?? []} />
+        <Carousel name={t("TICKETS_TITLE")} data={ticketCarouselData ?? []} />
+        <Card style={{ margin: '5%', backgroundColor: '#fff' }} mode='contained'>
+          <Card.Content>
+            <Title>{t("STATISTICS_TITLE")}</Title>
+            {statistics ? <RoundChart data={statistics} /> : <></>}
+            {statistics ? <Text style={styles.text}>{t("PRIORITY_LOW_COUNT")} {statistics.count_low}</Text> : <></>}
+            {statistics ? <Text style={styles.text}>{t("PRIORITY_MEDIUM_COUNT")} {statistics.count_medium}</Text> : <></>}
+            {statistics ? <Text style={styles.text}>{t("PRIORITY_HIGH_COUNT")} {statistics.count_high}</Text> : <></>}
+            {statistics ? <Text style={styles.text}>{t("TOTAL_TICKETS_COUNT")} {statistics.count_all}</Text> : <></>}
+          </Card.Content>
+        </Card>
       </ScrollView>
-    </Container>
+    </Layout>
   );
 };
-
-export default DashboardStatistics
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  content: {
+    paddingBottom: 10,
+  },
+  text: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#FFF"
+  }
+});
+export default DashboardStatistics;

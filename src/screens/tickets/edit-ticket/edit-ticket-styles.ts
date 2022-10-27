@@ -4,7 +4,7 @@ export const editTicketStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#181e34',
+    backgroundColor: '#FFF',
   },
   formContainer: {
     padding: 8,

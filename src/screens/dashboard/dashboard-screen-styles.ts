@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const dashboardStyles = StyleSheet.create({
   container: {
     paddingBottom: 0,
+    color: '#000'
   },
   bottomTab: {
     flexDirection: "row",
@@ -15,6 +16,7 @@ export const dashboardStyles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    backgroundColor: '#fff'    
   },
   button: {
     marginTop: 8,

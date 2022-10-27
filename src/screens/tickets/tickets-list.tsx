@@ -1,19 +1,21 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { FlatList, View, ActivityIndicator } from "react-native";
-import axios from "axios";
-
-import { TicketBrief } from "../../models/ticket/ticket-brief";
-import TicketBriefCard from "./ticket-brief-card";
-import { ticketListStyles } from "./ticket-list-styles";
-import Text from "../../components/text";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { TicketParamList } from "../../routing/route-screens";
-import LocalizationContext from "../../localization/localization-context";
+import { Layout } from "@ui-kitten/components";
+import axios from "axios";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { Avatar, Button, Card, Paragraph, Title } from 'react-native-paper';
+
 import Error, { ErrorProps } from "../../components/error";
-import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
-import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import ListFiltering from "../../components/list-filtering/list-filtering";
+import Text from "../../components/text";
 import { useKeycloak } from "../../keycloak/useKeycloak";
+import LocalizationContext from "../../localization/localization-context";
+import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
+import { TicketBrief } from "../../models/ticket/ticket-brief";
+import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
+import { TicketParamList } from "../../routing/route-screens";
+import TicketBriefCard from "./ticket-brief-card";
 
 const TicketsList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -109,7 +111,7 @@ const TicketsList = (): JSX.Element => {
   };
 
   const renderFooter = () => (
-    <View style={ticketListStyles.footerText}>
+    <View style={styles.footer}>
       {isLoadingData && <ActivityIndicator />}
       {!hasNextPage && <Text>No more tickets at the moment</Text>}
     </View>
@@ -140,21 +142,33 @@ const TicketsList = (): JSX.Element => {
   }
 
   return (
-    <>
-      {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering}/> : <></>}
+    <Layout style={{ flex: 1 }} level='1'>
+      {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
       <FlatList
         data={tickets || []}
         renderItem={renderItem}
         keyExtractor={(i, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
-        contentContainerStyle={ticketListStyles.contentContainerStyle}
+        contentContainerStyle={styles.container}
         onEndReachedThreshold={0.2}
         onEndReached={fetchNextPage}
         ListFooterComponent={renderFooter}
       />
-    </>
+    </Layout>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: '5%',
+    flex: 1
+  },
+  footer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10
+  }
+});
 export default TicketsList;
