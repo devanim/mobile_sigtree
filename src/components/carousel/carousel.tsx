@@ -1,20 +1,29 @@
+import { Layout } from "@ui-kitten/components";
 import React from "react";
-import { View, ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
+import { Card, Paragraph, Text, Title } from 'react-native-paper';
 
-import Text from "../text";
 import CarouselCard from "./carousel-card";
-import { carouselStyles } from "./carousel-style";
 
 const Carousel = (props: CarouselProps): JSX.Element => {
   return (
-    <View style={carouselStyles.container}>
-      <Text category="title3" marginBottom={16} status="white">{props.name}</Text>
-      <ScrollView horizontal contentContainerStyle={carouselStyles.content} showsHorizontalScrollIndicator={false}>
-        {props.data.map((item, idx) => (
-          <CarouselCard key={idx} title={item.title} id={item.id} onItemSelected={item.onItemSelected}/>
-        ))}
-      </ScrollView>
-    </View>
+    <Layout style={styles.container} level='1'>
+      <Card style={{ backgroundColor: '#fff' }} mode='contained'>
+        <Card.Content>
+          <Title>{props.name}</Title>
+          <Paragraph>
+            <ScrollView horizontal contentContainerStyle={styles.content} showsHorizontalScrollIndicator={false}>
+              {props.data.map((item, idx) => (
+                <>
+                  <CarouselCard key={idx} title={item.title} id={item.id} onItemSelected={item.onItemSelected} />
+                  <Text>{'   '}</Text>
+                </>
+              ))}
+            </ScrollView>
+          </Paragraph>
+        </Card.Content>
+      </Card>
+    </Layout>
   );
 };
 
@@ -28,5 +37,23 @@ type CarouselData = {
   title: string;
   onItemSelected: (id: number) => void;
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    color: '#000',
+    marginLeft: '5%',
+    marginTop: '1%',
+    marginRight: '5%',
+    marginBottom: '1%',
+  },
+  img: {
+    borderRadius: 8,
+    marginRight: 16,
+  },
+  content: {
+    paddingRight: 16,
+  },
+});
 
 export default Carousel;

@@ -1,13 +1,10 @@
-import { Text, View, Pressable } from "react-native";
-import carouselCardStyles from "./carousel-card-styles";
+import { Card, Text } from 'react-native-paper';
 
 const CarouselCard = (props: CarouselCardProps): JSX.Element => {
   return (
-    <Pressable onPress={() => props.onItemSelected(props.id)}>
-      <View style={carouselCardStyles.container}>
-        <Text style={carouselCardStyles.text}>{props.title}</Text>
-      </View>
-    </Pressable>
+    <Card onPress={() => props.onItemSelected(props.id)} style={{ backgroundColor: '#fff', marginHorizontal: 5 }} >
+      <Card.Title title={props.title} />
+    </Card>
   );
 }
 

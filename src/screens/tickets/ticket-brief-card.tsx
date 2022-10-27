@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { Pressable, View, Text } from "react-native";
+import { Card, Chip, DataTable } from 'react-native-paper';
+
 import LocalizationContext from "../../localization/localization-context";
 import { TicketBrief } from "../../models/ticket/ticket-brief";
-import { briefStyles } from "./ticket-brief-card-styles";
 
 const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -17,55 +17,33 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
   }
 
   return (
-    <>
-      <Pressable onPress={() => onTicketPress(props.ticketBrief.id)}>
-        <View style={briefStyles.containerCard}>
-          <View>
-            <Text style={[briefStyles.title, briefStyles.titleView]}>{props.ticketBrief?.name}</Text>
-          </View>
-          <View style={briefStyles.twoRow}>
-            <View style={briefStyles.textView}>
-              <Text style={briefStyles.title}>{t("TICKET_BRIEF_CARD_TICKETID")}</Text>
-              <Text style={briefStyles.text}>{props.ticketBrief?.id}</Text>
-            </View>
-            <View style={briefStyles.textView}>
-              <Text style={briefStyles.title}>{t("TICKET_BRIEF_CARD_PRIORITY")}</Text>
-              <Text style={briefStyles.text}>{props.ticketBrief?.priorityKey}</Text>
-            </View>
-          </View>
-          <View style={briefStyles.twoRow}>
-            <View style={briefStyles.textView}>
-              <Text style={briefStyles.title}>{t("TICKET_BRIEF_CARD_BUILDING")}</Text>
-              <Text style={briefStyles.text}>{props.ticketBrief?.building}</Text>
-            </View>
-            <View style={briefStyles.textView}>
-              <Text style={briefStyles.title}>{t("TICKET_BRIEF_CARD_DATE")}</Text>
-              <Text style={briefStyles.text}>{localizedDate}</Text>
-            </View>
-          </View>
-          <View style={briefStyles.twoRow}>
-            <View style={briefStyles.textView}>
-              <Text style={briefStyles.title}>{t("TICKET_BRIEF_CARD_USER")}</Text>
-              <Text style={briefStyles.text}>{props.ticketBrief?.user}</Text>
-            </View>
-            <View style={briefStyles.textView}>
-              <Text style={briefStyles.title}>{t("TICKET_BRIEF_CARD_SUPPLIER")}</Text>
-              <Text style={briefStyles.text}>{props.ticketBrief?.supplier}</Text>
-            </View>
-          </View>
-          <View style={briefStyles.twoRow}>
-            <View style={briefStyles.textView}>
-              <Text style={briefStyles.title}>{t("TICKET_BRIEF_CARD_CATEGORY")}</Text>
-              <Text style={briefStyles.text}>{props.ticketBrief?.category}</Text>
-            </View>
-          </View>
-        </View>
-      </Pressable>
-      <Pressable style={briefStyles.statusView} onPress={() => onSelectedStatus(props.ticketBrief.statusKey)}>
-        <Text style={briefStyles.title}>{t("TICKET_BRIEF_CARD_STATUS")}</Text>
-        <Text style={briefStyles.text}>{props.ticketBrief?.statusKey}</Text>
-      </Pressable>
-    </>
+    <Card onPress={() => onTicketPress(props.ticketBrief.id)} style={{ backgroundColor: '#fff', marginBottom: '1%', marginTop: '1%' }}>
+      <Card.Title title={props.ticketBrief?.name} titleVariant='titleLarge' />
+      <Card.Content style={{ paddingHorizontal: 0 }}>
+        <DataTable>
+          <DataTable.Row >
+            <DataTable.Cell>
+              <Chip style={{ backgroundColor: '#fff', borderWidth: 1 }}>#{props.ticketBrief?.id}</Chip>
+            </DataTable.Cell>
+            <DataTable.Cell numeric>{props.ticketBrief?.priorityKey}</DataTable.Cell>
+          </DataTable.Row>
+          <DataTable.Row>
+            <DataTable.Cell>{props.ticketBrief?.building}</DataTable.Cell>
+            <DataTable.Cell numeric>{localizedDate}</DataTable.Cell>
+          </DataTable.Row>
+          <DataTable.Row>
+            <DataTable.Cell>{props.ticketBrief?.user}</DataTable.Cell>
+            <DataTable.Cell numeric>{props.ticketBrief?.supplier}</DataTable.Cell>
+          </DataTable.Row>
+          <DataTable.Row>
+            <DataTable.Cell numeric>{props.ticketBrief?.category}</DataTable.Cell>
+          </DataTable.Row>
+        </DataTable>
+      </Card.Content>
+      <Card.Actions>
+        <Chip icon="filter-plus" onPress={() => onSelectedStatus(props.ticketBrief.statusKey)}>{props.ticketBrief?.statusKey}</Chip>
+      </Card.Actions>
+    </Card>
   );
 };
 

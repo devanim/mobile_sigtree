@@ -1,12 +1,8 @@
-import React from "react";
-import {
-  Image,
-  ImageProps,
-  ImageSourcePropType,
-  StyleSheet,
-} from "react-native";
 import { IconPack, IconProvider } from "@ui-kitten/components";
+import React from "react";
+import { Image, ImageProps, ImageSourcePropType, StyleSheet } from "react-native";
 import { SvgProps } from "react-native-svg";
+
 import { Icons } from "./icons";
 
 const createIcon = (source: ImageSourcePropType): IconProvider<ImageProps> => {
@@ -148,6 +144,7 @@ const AssetIconsPack: IconPack<ImageProps | SvgProps> = {
     priceTag: createIcon(Icons.priceTag),
     arrowLeft: createIcon(Icons.arrowLeft),
     logout: createIcon(Icons.logout),
+    ticket: createIcon(Icons.ticket),
   },
 };
 export default AssetIconsPack;

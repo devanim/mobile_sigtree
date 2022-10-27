@@ -1,25 +1,27 @@
-import { ScrollView, Button, View, Text } from "react-native";
-import { Ticket } from "../../../models/ticket/ticket";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { useContext, useEffect, useState } from "react";
-import { AppStackParamList } from "../../../routing/route-screens";
-import LocalizationContext from "../../../localization/localization-context";
-import { FieldError, useForm } from "react-hook-form";
-import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
-import { useKeycloak } from "../../../keycloak/useKeycloak";
-import Input from "../../../components/form/input";
 import axios from "axios";
-import Dropdown from "../../../components/form/dropdown";
-import { EditUserPayload } from "../../../models/user-profile/edit-user-payload";
-import editTicketFormStyles from "./edit-ticket-form-styles";
-import { priorityList } from "../../../models/common/priority-list";
-import { TicketStatusPayload } from "../../../models/ticket/ticket-status-payload";
-import { TicketStatus } from "../../../models/ticket/ticket-status";
+import { useContext, useEffect, useState } from "react";
+import { FieldError, useForm } from "react-hook-form";
+import { Button, ScrollView, Text, View } from "react-native";
+import { TextInput } from 'react-native-paper';
+
 import Error, { ErrorProps } from "../../../components/error";
+import Dropdown from "../../../components/form/dropdown";
+import Input from "../../../components/form/input";
+import { useKeycloak } from "../../../keycloak/useKeycloak";
+import LocalizationContext from "../../../localization/localization-context";
 import { DropdownValue } from "../../../models/common/dropdown-value";
-import { UserProfile } from "../../../models/user-profile/user-profile";
+import { priorityList } from "../../../models/common/priority-list";
+import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
+import { Ticket } from "../../../models/ticket/ticket";
+import { TicketStatus } from "../../../models/ticket/ticket-status";
+import { TicketStatusPayload } from "../../../models/ticket/ticket-status-payload";
 import { Building } from "../../../models/user-profile/building";
-import { ticketCardStyles } from "../ticket-card-styles";
+import { EditUserPayload } from "../../../models/user-profile/edit-user-payload";
+import { UserProfile } from "../../../models/user-profile/user-profile";
+import { AppStackParamList } from "../../../routing/route-screens";
+//import { ticketCardStyles } from "../ticket-card-styles";
+import editTicketFormStyles from "./edit-ticket-form-styles";
 
 const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   const {
@@ -33,12 +35,13 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   const [errors, setErrors] = useState<EditTicketFormErrors | undefined>(undefined);
   const [statuses, setStatuses] = useState<TicketStatus[]>([]);
+
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [categoryList, setCategoryList] = useState<DropdownValue[]>([]);
   const statusList: DropdownValue[] = [
     { label: "In progress", value: 2 },
-    { label: "Availabil", value: 3 },
-    { label: "Inchis", value: 4 },
+    { label: "Available", value: 3 },
+    { label: "Closed", value: 4 },
   ]
 
   useEffect(() => {
@@ -101,11 +104,11 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   const setPossibleCategories = () => {
     const building: Building | undefined = props.userProfile?.resources.buildings.find(item => item.id == props.ticket.idbuilding) ?? undefined;
     const categories: DropdownValue[] = [];
-    
+
     console.log("here building id", props.ticket.idbuilding, props.userProfile?.resources.buildings);
     if (building) {
       building.categories?.forEach(c => {
-        categories.push({label: c.name, value: c.id});
+        categories.push({ label: c.name, value: c.id });
       });
     }
 

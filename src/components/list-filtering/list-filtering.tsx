@@ -1,5 +1,4 @@
-import { Button, Text, View } from "react-native";
-import listFilteringStyles from "./list-filtering-styles";
+import { Chip, Text } from 'react-native-paper';
 
 const ListFiltering = (props: ArticleFilteringProps): JSX.Element => {
   const onCancel = () => {
@@ -7,10 +6,9 @@ const ListFiltering = (props: ArticleFilteringProps): JSX.Element => {
   }
 
   return (
-    <View style={listFilteringStyles.container}>
-      <Text style={listFilteringStyles.text}>{props.tag}</Text>
-      <Button title="X" onPress={onCancel}/>
-    </View>
+    <Chip icon='filter' onClose={onCancel} closeIcon='close' style={{ maxWidth: '45%', marginLeft: '5%', marginBottom: '5%' }}>
+      <Text>{props.tag}</Text>
+    </Chip>
   );
 };
 
