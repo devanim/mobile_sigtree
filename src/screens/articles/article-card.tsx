@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Image, Text, ActivityIndicator } from "react-native";
-import { WebView } from "react-native-webview";
-import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { ActivityIndicator, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Text } from 'react-native-paper';
+import { WebView } from "react-native-webview";
 
-import LocalizationContext from "../../localization/localization-context";
 import Error, { ErrorProps } from "../../components/error";
-import Article from "../../models/article/article";
-import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
-import ArticlePayload from "../../models/article/article-payload";
-
-import { articleCardStyles } from "./article-card-styles";
 import { useKeycloak } from "../../keycloak/useKeycloak";
+import LocalizationContext from "../../localization/localization-context";
+import Article from "../../models/article/article";
+import ArticlePayload from "../../models/article/article-payload";
+import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 
 const ArticleCard = (props: ArticleCardProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -64,16 +63,37 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
   }
 
   return (
-    <ScrollView style={articleCardStyles.containerCard}>
-      <Image style={articleCardStyles.image} source={{uri: `${article?.image}`}}/>
-      <Text style={articleCardStyles.title}>{article?.title}</Text>
-      <WebView style={articleCardStyles.content} source={{ html: article ? article.content : t("NO_DATA_HTML")}}/>
-    </ScrollView>
+    <View style={styles.container}>
+      <Text variant="headlineMedium" style={{ flex: 0.1 }}>{article?.title}</Text>
+      <Image style={styles.image} source={{ uri: `${article?.image}` }} />
+      <WebView style={styles.content} source={{ html: article ? article.content : t("NO_DATA_HTML") }} />
+    </View>
   );
 };
 
 type ArticleCardProps = {
   articleId: number;
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignContent: "center",
+    flexGrow: 1,
+    flexDirection: "column",
+    marginHorizontal: '5%'
+  },
+  image: {
+    flex: 0.2,
+    alignContent: "center",
+    minHeight: 200,
+    width: '100%',
+    resizeMode: 'contain',
+  },
+  content: {
+    minHeight: 300,
+    minWidth: 400,
+    flex: 0.3
+  }
+})
 
 export default ArticleCard;

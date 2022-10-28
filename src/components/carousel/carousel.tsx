@@ -1,7 +1,7 @@
 import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Card, Paragraph, Text, Title } from 'react-native-paper';
+import { Card, Paragraph, Title } from 'react-native-paper';
 
 import CarouselCard from "./carousel-card";
 
@@ -14,10 +14,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
           <Paragraph>
             <ScrollView horizontal contentContainerStyle={styles.content} showsHorizontalScrollIndicator={false}>
               {props.data.map((item, idx) => (
-                <>
-                  <CarouselCard key={idx} title={item.title} id={item.id} onItemSelected={item.onItemSelected} />
-                  <Text>{'   '}</Text>
-                </>
+                <CarouselCard key={idx} title={item.title} id={item.id} onItemSelected={item.onItemSelected} />
               ))}
             </ScrollView>
           </Paragraph>
