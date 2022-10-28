@@ -201,9 +201,8 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   text: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#FFF"
+
   }
+
 });
 export default DashboardStatistics;

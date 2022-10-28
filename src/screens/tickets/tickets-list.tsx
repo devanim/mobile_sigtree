@@ -4,7 +4,6 @@ import axios from "axios";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, View } from "react-native";
 import { StyleSheet } from "react-native";
-import { Avatar, Button, Card, Paragraph, Title } from 'react-native-paper';
 
 import Error, { ErrorProps } from "../../components/error";
 import ListFiltering from "../../components/list-filtering/list-filtering";

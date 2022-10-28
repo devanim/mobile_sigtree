@@ -1,15 +1,13 @@
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Layout, TopNavigation } from "@ui-kitten/components";
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
-import { TopNavigation, Layout } from "@ui-kitten/components";
-
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-
-import { AppStackParamList } from "../../routing/route-screens";
-import LocalizationContext from "../../localization/localization-context";
-import NavigationAction from "../../components/navigation-action";
-import ArticleContainer from "./article-container";
+import { Appbar } from 'react-native-paper';
 
 import { useKeycloak } from "../../keycloak/useKeycloak";
+import LocalizationContext from "../../localization/localization-context";
+import { AppStackParamList } from "../../routing/route-screens";
+import ArticleContainer from "./article-container";
 
 const ArticlesScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -23,20 +21,18 @@ const ArticlesScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <TopNavigation
-        accessoryLeft={() => <NavigationAction onPress={goBack} />}
-        accessoryRight={() => <NavigationAction onPress={onLogout} icon={"logout"} />}
-        title={t("ARTICLES_TITLE").toUpperCase()}
-      />
+      <Appbar.Header style={{ backgroundColor: '#fff' }}>
+        <Appbar.BackAction onPress={goBack} />
+        <Appbar.Content title={t("ARTICLES_TITLE").toUpperCase()} />
+        <Appbar.Action icon="logout" onPress={onLogout} />
+      </Appbar.Header>
       <ArticleContainer />
     </Layout>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "space-between",
-    paddingTop: "10%",
+    flex: 1
   }
 });
 

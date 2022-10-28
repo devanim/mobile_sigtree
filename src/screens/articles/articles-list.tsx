@@ -1,20 +1,20 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { FlatList, View, ActivityIndicator } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Layout } from "@ui-kitten/components";
 import axios from "axios";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, View } from "react-native";
+import { StyleSheet } from "react-native";
 
-import { ArticleParamList } from "../../routing/route-screens";
-import LocalizationContext from "../../localization/localization-context";
-import Text from "../../components/text";
 import Error, { ErrorProps } from "../../components/error";
-import ArticleListPayload from "../../models/article/article-list-payload";
-import ArticleBrief from "../../models/article/article-brief";
-import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
-import ArticleBriefCard from "./article-brief-card";
-
-import { articleListStyles } from "./article-list-styles";
 import ListFiltering from "../../components/list-filtering/list-filtering";
+import Text from "../../components/text";
 import { useKeycloak } from "../../keycloak/useKeycloak";
+import LocalizationContext from "../../localization/localization-context";
+import ArticleBrief from "../../models/article/article-brief";
+import ArticleListPayload from "../../models/article/article-list-payload";
+import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
+import { ArticleParamList } from "../../routing/route-screens";
+import ArticleBriefCard from "./article-brief-card";
 
 const ArticlesList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -54,7 +54,7 @@ const ArticlesList = (): JSX.Element => {
       const response = await axios.get<ArticleListPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       if (response.status == 200) {
         //TODO - pagination is broken because of this
         //setArticles([...articles, ...(response.data.data.articles ?? [])]);
@@ -111,7 +111,7 @@ const ArticlesList = (): JSX.Element => {
   }
 
   const renderFooter = () => (
-    <View style={articleListStyles.footerText}>
+    <View style={styles.footer}>
       {isLoadingData && <ActivityIndicator />}
       {!hasNextPage && <Text>No more articles at the moment</Text>}
     </View>
@@ -142,21 +142,33 @@ const ArticlesList = (): JSX.Element => {
   }
 
   return (
-    <>
-      {selectedTag ? <ListFiltering tag={selectedTag} onCancel={onCancelFiltering}/> : <></>}
+    <Layout level='1'>
+      {selectedTag ? <ListFiltering tag={selectedTag} onCancel={onCancelFiltering} /> : <></>}
       <FlatList
         data={articles || []}
         renderItem={renderItem}
         keyExtractor={(i, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
-        contentContainerStyle={articleListStyles.contentContainerStyle}
+        contentContainerStyle={styles.container}
         onEndReachedThreshold={0.2}
         onEndReached={fetchNextPage}
         ListFooterComponent={renderFooter}
       />
-    </>
+    </Layout>
   );
 };
 
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: '5%',
+  },
+  footer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10
+  }
+});
 export default ArticlesList;
