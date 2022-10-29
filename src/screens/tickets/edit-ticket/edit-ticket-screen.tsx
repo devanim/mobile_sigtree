@@ -1,3 +1,4 @@
+import React from "react";
 import EditTicket from "./edit-ticket";
 
 const EditTicketScreen = (props: any): JSX.Element => {

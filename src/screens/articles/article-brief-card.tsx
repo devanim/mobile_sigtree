@@ -1,3 +1,4 @@
+import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { Chip } from 'react-native-paper';

@@ -3,6 +3,7 @@ export class Building {
   public name!: string;
   public image?: string;
   public projectId!: string;
+  public floors!: string[];
   public categories?: Category[];
 }
 

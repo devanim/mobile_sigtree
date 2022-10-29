@@ -5,6 +5,7 @@ import AdMob from "../../../components/ad-mob";
 import { FlatList } from "react-native";
 import { Button } from "@ui-kitten/components";
 import { View } from "react-native";
+import React from "react";
 
 const RealmList = (props: RealmListProps): JSX.Element => {
   const realmList: LandingPageRealms[] = [];

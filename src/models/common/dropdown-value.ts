@@ -1,4 +1,4 @@
 export type DropdownValue = {
   label: string;
-  value: number;
+  value: string|number;
 }

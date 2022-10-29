@@ -5,6 +5,7 @@ import CustCheckbox from "../../components/cust-checkbox";
 import SectionTitle from "../../components/section-title";
 import { UserProfile as UserProfileModel } from "../../models/user-profile/user-profile";
 import LocalizationContext from "../../localization/localization-context";
+import React from "react";
 
 const UserProfile = (props: UserProfileProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
