@@ -37,8 +37,8 @@ const ArticleBriefCard = (props: ArticleBriefCardProps): JSX.Element => {
         </View>
       </Pressable>
       <View style={styles.tagsContainer}>
-        {props.articleBrief.tagsArray.map((item) => (
-          <Chip onPress={() => onTagPress(item)} style={styles.chip}>{item}</Chip>
+        {props.articleBrief.tagsArray.map((item, idx) => (
+          <Chip key={idx} onPress={() => onTagPress(item)} style={styles.chip}>{item}</Chip>
         ))}
       </View>
     </>

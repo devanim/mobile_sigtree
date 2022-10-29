@@ -3,7 +3,7 @@ import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { ScrollView, Text } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { Appbar, Card, Title } from 'react-native-paper';
 import { RefreshControl } from "react-native-web-refresh-control";
 import { AppStackParamList } from "src/routing/route-screens";
@@ -183,10 +183,26 @@ const DashboardStatistics = (): JSX.Element => {
           <Card.Content>
             <Title>{t("STATISTICS_TITLE")}</Title>
             {statistics ? <RoundChart data={statistics} /> : <></>}
-            {statistics ? <Text style={styles.text}>{t("PRIORITY_LOW_COUNT")} {statistics.count_low}</Text> : <></>}
-            {statistics ? <Text style={styles.text}>{t("PRIORITY_MEDIUM_COUNT")} {statistics.count_medium}</Text> : <></>}
-            {statistics ? <Text style={styles.text}>{t("PRIORITY_HIGH_COUNT")} {statistics.count_high}</Text> : <></>}
-            {statistics ? <Text style={styles.text}>{t("TOTAL_TICKETS_COUNT")} {statistics.count_all}</Text> : <></>}
+            {statistics ?
+              <View style={{ flexDirection: 'column' }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ flex: 1 }}>{t("PRIORITY_LOW_COUNT")}</Text>
+                  <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_low}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ flex: 1 }}>{t("PRIORITY_MEDIUM_COUNT")}</Text>
+                  <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_medium}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ flex: 1 }}>{t("PRIORITY_HIGH_COUNT")}</Text>
+                  <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_high}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ flex: 1, textAlign: 'right', fontWeight: 'bold' }}>{t("TOTAL_TICKETS_COUNT")}</Text>
+                  <Text style={{ flex: 1, textAlign: 'left', fontWeight: 'bold' }}> {statistics.count_all}</Text>
+                </View>
+              </View>
+              : <></>}
           </Card.Content>
         </Card>
       </ScrollView>
