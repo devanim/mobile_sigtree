@@ -31,21 +31,16 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   const [errors, setErrors] = useState<FormErrors | undefined>(undefined);
   const [selectedBuilding, setSelectedBuilding] = useState<number>(0);
   const [categoryList, setCategoryList] = useState<DropdownValue[]>([]);
+  const [floorList, setFloorList] = useState<DropdownValue[]>([]);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
 
-  //TODO - see how to obtain category list
-  // const categoryList: DropdownValue[] = [
-  //   { label: "Cleaning", value: 1 },
-  //   { label: "Electric", value: 2 },
-  //   { label: "Maintenance", value: 3 },
-  // ];
   //TODO - see how to obtain floor details based on building
-  const floorList: DropdownValue[] = [
-    { label: "1", value: 1 },
-    { label: "2", value: 2 },
-    { label: "3", value: 3 },
-    { label: "4", value: 4 },
-  ];
+  // const floorList: DropdownValue[] = [
+  //   { label: "1", value: 1 },
+  //   { label: "2", value: 2 },
+  //   { label: "3", value: 3 },
+  //   { label: "4", value: 4 },
+  // ];
   
   const getProjectList = (): DropdownValue[] => {
     if (!props.userProfile) {
@@ -94,14 +89,20 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     
     const building: Building | undefined = props.userProfile?.resources.buildings.find(item => item.id.toString() === data) ?? undefined;
     const categories: DropdownValue[] = [];
+    const floors: DropdownValue[] = [];
 
     if (building) {
       building.categories?.forEach(c => {
         categories.push({label: c.name, value: c.id});
       });
+
+      building.floors.forEach((f: string) => {
+        floors.push({label: f, value: f})
+      })
     }
 
     setCategoryList(categories);
+    setFloorList(floors);
   }
 
   return (
@@ -145,14 +146,13 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
           })}
           setValue={setValue}
         />
-        <Dropdown
+        {(selectedBuilding > 0 && floorList.length > 0) ? <Dropdown
           label="Floor"
           value={props.ticket?.floor ?? ""}
           placeholder="Select Floor"
-          //TODO - Get floors based on selected building
           list={floorList}
           setValue={setValue}
-        />
+        /> : <></>}
       </View>
       <View style={ticketFormStyles.twoOnRow}>
         {buildingsList.length > 0 ? <Dropdown
@@ -186,7 +186,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
           error={errors ? errors["idcategory"] : undefined}
           placeholder="Select Category"
           dropdownStyle={ticketFormStyles.spacedView}
-          //TODO - filter list based on chosen building
           list={categoryList}
           {...register("idcategory", {
             required: { value: true, message: "Category is required" },
