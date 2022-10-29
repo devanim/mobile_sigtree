@@ -20,7 +20,7 @@ const TicketContainer = (): JSX.Element => {
         style={styles.fab}
         onPress={() => navigate("NewTicketScreen", { screen: "NewTicketScreen" })}
         variant='primary'
-
+        color='#fff'
       />
     </>
   );
@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 10,
     bottom: 10,
-    backgroundColor: '#bbb',
+    backgroundColor: '#383E42',
     borderWidth: 1,
-    borderColor: '#ccc'
-
+    borderColor: '#cccccc',
+    borderRadius: 5,
   },
 })
 export default TicketContainer;

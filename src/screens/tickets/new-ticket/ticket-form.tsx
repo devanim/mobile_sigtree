@@ -1,23 +1,25 @@
-import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { Button } from "@ui-kitten/components/ui";
-import React, { useContext, useEffect, useState } from "react";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { ScrollView, View } from "react-native";
-import { DropdownValue } from "../../../models/common/dropdown-value";
-import { Priority } from "../../../models/ticket/priority-enum";
-import { AppStackParamList } from "../../../routing/route-screens";
-import Dropdown from "../../../components/form/dropdown";
-import { ticketFormStyles } from "./ticket-form-styles";
-import Input from "../../../components/form/input";
-import { Ticket } from "../../../models/ticket/ticket";
-import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
-import { useKeycloak } from "../../../keycloak/useKeycloak";
-import { TicketPayload } from "../../../models/ticket/ticket-payload";
-import LocalizationContext from "../../../localization/localization-context";
-import { priorityList } from "../../../models/common/priority-list";
-import { UserProfile } from "src/models/user-profile/user-profile";
+import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Button } from 'react-native-paper';
 import { Building } from "src/models/user-profile/building";
+import { UserProfile } from "src/models/user-profile/user-profile";
+
+import Dropdown from "../../../components/form/dropdown";
+import Input from "../../../components/form/input";
+import { useKeycloak } from "../../../keycloak/useKeycloak";
+import LocalizationContext from "../../../localization/localization-context";
+import { DropdownValue } from "../../../models/common/dropdown-value";
+import { priorityList } from "../../../models/common/priority-list";
+import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
+import { Priority } from "../../../models/ticket/priority-enum";
+import { Ticket } from "../../../models/ticket/ticket";
+import { TicketPayload } from "../../../models/ticket/ticket-payload";
+import { AppStackParamList } from "../../../routing/route-screens";
 
 const TicketForm = (props: TicketFormProps): JSX.Element => {
   const {
@@ -46,14 +48,14 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     { label: "3", value: 3 },
     { label: "4", value: 4 },
   ];
-  
+
   const getProjectList = (): DropdownValue[] => {
     if (!props.userProfile) {
       return [];
     }
 
     return props.userProfile.resources.projects.map(prj => {
-      return {label: prj.name, value: prj.id}
+      return { label: prj.name, value: prj.id }
     });
   };
   const projectList: DropdownValue[] = getProjectList();
@@ -67,20 +69,20 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
 
     props.userProfile?.resources.buildings.forEach(b => {
       if (b.categories && b.categories.length > 0) {
-        buildings.push({label: b.name, value: b.id});
+        buildings.push({ label: b.name, value: b.id });
       }
     });
     return buildings;
   };
   const buildingsList: DropdownValue[] = setBuildings();
-  
+
   const onSubmit = async () => {
     const vals = getValues();
     const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKET_URL)}`;
     const response = await axios.post<TicketPayload>(reqUrl, vals, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    
+
     goBack();
   };
 
@@ -91,13 +93,13 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   const onBuildingChange = (data: string) => {
     const dataNbr = Number(data);
     setSelectedBuilding(dataNbr);
-    
+
     const building: Building | undefined = props.userProfile?.resources.buildings.find(item => item.id.toString() === data) ?? undefined;
     const categories: DropdownValue[] = [];
 
     if (building) {
       building.categories?.forEach(c => {
-        categories.push({label: c.name, value: c.id});
+        categories.push({ label: c.name, value: c.id });
       });
     }
 
@@ -105,120 +107,126 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   }
 
   return (
-    <ScrollView>
-      <Button children={t("BTN_SUBMIT")} onPress={handleSubmit(onSubmit, onInvalid)} />
-      <Button children={t("BTN_CANCEL")} onPress={goBack} />
-      <Input
-        label="Title"
-        value={props.ticket?.name ?? ""}
-        error={errors ? errors["name"] : undefined}
-        {...register("name", {
-          required: { value: true, message: "Title is required" },
-        })}
-        setValue={setValue}
-      />
-      <Input
-        label="Tags"
-        value={props.ticket?.tags ?? ""}
-        setValue={setValue}
-      />
-      <Input
-        label="Description"
-        value={props.ticket?.content ?? ""}
-        error={errors ? errors["content"] : undefined}
-        multiline={true}
-        inputStyle={ticketFormStyles.multilineHeight}
-        {...register("content", {
-          required: { value: true, message: "Description is required" },
-        })}
-        setValue={setValue}
-      />
-      <View style={ticketFormStyles.twoOnRow}>
-        <Dropdown
-          label="Priority"
-          value={props.ticket?.priorityKey ?? ""}
-          error={errors ? errors["idpriority"] : undefined}
-          placeholder="Select Priority"
-          list={priorityList}
-          {...register("idpriority", {
-            required: { value: true, message: "Priority is required" },
-          })}
-          setValue={setValue}
-        />
-        <Dropdown
-          label="Floor"
-          value={props.ticket?.floor ?? ""}
-          placeholder="Select Floor"
-          //TODO - Get floors based on selected building
-          list={floorList}
-          setValue={setValue}
-        />
-      </View>
-      <View style={ticketFormStyles.twoOnRow}>
-        {buildingsList.length > 0 ? <Dropdown
-          label="Building"
-          value={props.ticket?.building ?? ""}
-          error={errors ? errors["idbuilding"] : undefined}
-          placeholder="Select Building"
-          list={buildingsList}
-          {...register("idbuilding", {
-            required: { value: true, message: "Building is required" },
-          })}
-          onChange={onBuildingChange}
-          setValue={setValue}
-        /> : <></>}
-        {projectList?.length > 0 ? <Dropdown
-          label="Project"
-          value={props.ticket?.building ?? ""}
-          error={errors ? errors["idproject"] : undefined}
-          placeholder="Select Project"
-          list={projectList}
-          {...register("idproject", {
-            required: { value: true, message: "Project is required" },
-          })}
-          setValue={setValue}
-        /> : <></>}
-      </View>
-      <View style={ticketFormStyles.spacedView}>
-        {(selectedBuilding > 0 && categoryList.length > 0) ? <Dropdown
-          label="Category"
-          value={props.ticket?.category ?? ""}
-          error={errors ? errors["idcategory"] : undefined}
-          placeholder="Select Category"
-          dropdownStyle={ticketFormStyles.spacedView}
-          //TODO - filter list based on chosen building
-          list={categoryList}
-          {...register("idcategory", {
-            required: { value: true, message: "Category is required" },
-          })}
-          setValue={setValue}
-        /> : <></>}
-      </View>
-      {props.userProfile?.role == 5 ? <Dropdown
-          label="Tennant"
-          value={props.ticket?.building ?? ""}
-          error={errors ? errors["idtenant"] : undefined}
-          placeholder="Select Tennant"
-          //TODO - use here tennants list
-          list={priorityList}
-          {...register("idtenant", {
-            required: { value: true, message: "Project is required" },
-          })}
-          setValue={setValue}
-        /> : <></>}
-    </ScrollView>
+    <KeyboardAwareScrollView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View>
+            <Input
+              label={t("TICKETS_ADD_FORM_TITLE")}
+              value={props.ticket?.name ?? ""}
+              error={errors ? errors["name"] : undefined}
+              {...register("name", {
+                required: { value: true, message: t("TICKETS_ADD_FORM_TITLE_ERROR") },
+              })}
+              setValue={setValue}
+            />
+            <Input
+              label={t("TICKETS_ADD_FORM_TAG")}
+              value={props.ticket?.tags ?? ""}
+              setValue={setValue}
+            />
+            <Input
+              label={t("TICKETS_ADD_FORM_DESCRIPTION")}
+              value={props.ticket?.content ?? ""}
+              error={errors ? errors["content"] : undefined}
+              multiline={true}
+              inputStyle={{ height: 200 }}
+              {...register("content", {
+                required: { value: true, message: t("TICKETS_ADD_FORM_DESCRIPTION_ERROR") },
+              })}
+              setValue={setValue}
+            />
+          </View>
+          <Dropdown
+            label={t("TICKETS_ADD_FORM_PRIORITY")}
+            value={props.ticket?.priorityKey ?? ""}
+            error={errors ? errors["idpriority"] : undefined}
+            placeholder={t("TICKETS_ADD_FORM_PRIORITY_PLACEHOLDER")}
+            list={priorityList}
+            {...register("idpriority", {
+              required: { value: true, message: t("TICKETS_ADD_FORM_PRIORITY_ERROR") },
+            })}
+
+            setValue={setValue}
+          />
+          <Dropdown
+            label={t("TICKETS_ADD_FORM_FLOOR")}
+            value={props.ticket?.floor ?? ""}
+            placeholder={t("TICKETS_ADD_FORM_FLOOR_PLACEHOLDER")}
+
+            //TODO - Get floors based on selected building
+            list={floorList}
+            setValue={setValue}
+          />
+          {buildingsList.length > 0 ? <><Dropdown
+            label={t("TICKETS_ADD_FORM_BUILDING")}
+            value={props.ticket?.building ?? ""}
+            error={errors ? errors["idbuilding"] : undefined}
+            placeholder={t("TICKETS_ADD_FORM_BUILDING_PLACEHOLDER")}
+            list={buildingsList}
+            {...register("idbuilding", {
+              required: { value: true, message: t("TICKETS_ADD_FORM_BUILDING_ERROR") },
+            })}
+            onChange={onBuildingChange}
+            setValue={setValue}
+          /></> : <></>}
+
+          {projectList?.length > 0 ? <><Dropdown
+            label={t("TICKETS_ADD_FORM_PROJECT")}
+            value={props.ticket?.building ?? ""}
+            error={errors ? errors["idproject"] : undefined}
+            placeholder={t("TICKETS_ADD_FORM_PROJECT_PLACEHOLDER")}
+            list={projectList}
+            {...register("idproject", {
+              required: { value: true, message: t("TICKETS_ADD_FORM_PROJECT_ERROR") },
+            })}
+            setValue={setValue}
+          /></> : <></>}
+          {(selectedBuilding > 0 && categoryList.length > 0) ? <><Dropdown
+            label={t("TICKETS_ADD_FORM_CATEGORY")}
+            value={props.ticket?.category ?? ""}
+            error={errors ? errors["idcategory"] : undefined}
+            placeholder={t("TICKETS_ADD_FORM_CATEGORY_PLACEHOLDER")}
+            //TODO - filter list based on chosen building
+            list={categoryList}
+            {...register("idcategory", {
+              required: { value: true, message: t("TICKETS_ADD_FORM_CATEGORY_ERROR") },
+            })}
+            setValue={setValue}
+          /></> : <></>
+          }
+          {
+            props.userProfile?.role == 5 ? <><Dropdown
+              label={t("TICKETS_ADD_FORM_TENANT")}
+              value={props.ticket?.building ?? ""}
+              error={errors ? errors["idtenant"] : undefined}
+              placeholder={t("TICKETS_ADD_FORM_TENANT_PLACEHOLDER")}
+              //TODO - use here tenants list
+              list={priorityList}
+              {...register("idtenant", {
+                required: { value: true, message: t("TICKETS_ADD_FORM_TENANT_ERROR") },
+              })}
+              setValue={setValue}
+            /></> : <></>
+          }
+          <Button mode="outlined" onPress={handleSubmit(onSubmit, onInvalid)} style={styles.submit}>
+            {t("BTN_SUBMIT")}
+          </Button>
+        </View >
+      </TouchableWithoutFeedback >
+    </KeyboardAwareScrollView >
   );
 };
 
 type FormData = {
-  name:string;
-  tags:string;
-  idcategory:number;
-  idpriority:number;
-  floor:string;
-  idproject:number;
-  idbuilding:number;
-  content:string;
+  name: string;
+  tags: string;
+  idcategory: number;
+  idpriority: number;
+  floor: string;
+  idproject: number;
+  idbuilding: number;
+  content: string;
   idtenant?: number;
 }
 
@@ -233,9 +241,28 @@ type FormErrors = {
 }
 
 type TicketFormProps = {
-  mode: "insert"|"edit",
+  mode: "insert" | "edit",
   ticket?: Ticket,
   userProfile?: UserProfile;
 }
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    flex: 1,
+    paddingHorizontal: '5%',
+    paddingVertical: '5%',
+  },
+  dropdown: {
+    marginVertical: '5%',
+    paddingVertical: 10,
+  },
+  submit: {
+    marginVertical: '10%',
+    borderColor: '#000000',
+    borderWidth: 1,
+    borderRadius: 0
+  }
+});
 
 export default TicketForm;

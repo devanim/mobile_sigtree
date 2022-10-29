@@ -9,26 +9,26 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [dropdownValue, setDropdownValue] = useState(props.value);
   const [valuesList, setValuesList] = useState(props.list);
-  
+
   const onDropdownOpen = useCallback(() => {
     const i = 2;
   }, []);
 
   const onChange = (data: string | null) => {
     props.setValue(props.name, data ?? "", true);
-    
+
     if (props.onChange) {
       props.onChange(data ?? "0");
     }
-    
+
     setDropdownValue(data ?? undefined);
   };
-console.log("ddl", dropdownValue);
+  console.log("ddl", dropdownValue);
   return (
-    <View style={dropdownStyles.container}>
+    <View style={{ flex: 1 }}>
       {props.label && <Text style={[dropdownStyles.label, props.labelStyle]}>{props.label}</Text>}
       <DropDownPicker
-        style={[dropdownStyles.dropdown, props.dropdownStyle, { borderColor: props.error ? "#fc6d47" : "#c0cbd3" },]}
+        style={[dropdownStyles.dropDownStyle, props.dropdownStyle, { borderColor: props.error ? "#fc6d47" : "#c0cbd3" },]}
         open={open}
         value={dropdownValue ?? ""}
         items={valuesList}
@@ -41,6 +41,7 @@ console.log("ddl", dropdownValue);
         onChangeValue={onChange}
         zIndex={300}
         zIndexInverse={100}
+        dropDownDirection="TOP"
       />
       <Text style={dropdownStyles.textError}>{props.error && props.error.message}</Text>
     </View>
@@ -50,7 +51,7 @@ console.log("ddl", dropdownValue);
 type DropdownProps = {
   name: string;
   placeholder: string;
-  value?: string|number;
+  value?: string | number;
   error?: FieldError | undefined;
   label?: string;
   labelStyle?: TextStyle;

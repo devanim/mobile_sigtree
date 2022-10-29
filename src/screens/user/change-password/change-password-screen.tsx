@@ -3,8 +3,8 @@ import { TopNavigation } from "@ui-kitten/components";
 import { Layout } from "@ui-kitten/components/ui";
 import { useContext } from "react";
 import { StyleSheet } from "react-native";
+import { Appbar } from 'react-native-paper';
 
-import NavigationAction from "../../../components/navigation-action";
 import LocalizationContext from "../../../localization/localization-context";
 import { AppStackParamList } from "../../../routing/route-screens";
 import UserScreenContainer from "./change-password-container";
@@ -15,10 +15,10 @@ const ChangePasswordScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <TopNavigation
-        accessoryLeft={() => <NavigationAction onPress={goBack} />}
-        title={t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()}
-      />
+      <Appbar.Header style={{ backgroundColor: '#fff' }}>
+        <Appbar.Content title={t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()} />
+        <Appbar.Action icon="window-close" onPress={goBack} />
+      </Appbar.Header>
       <UserScreenContainer />
     </Layout>);
 };

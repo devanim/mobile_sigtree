@@ -1,30 +1,26 @@
-import * as React from "react";
-import { View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
-import TicketForm from "./ticket-form";
-import { newTicketStyles } from "./new-ticket-styles";
-
-import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import * as React from "react";
+import { useContext, useEffect, useState } from "react";
+import { View } from "react-native";
+import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import Error, { ErrorProps } from "../../../components/error";
+import { useKeycloak } from "../../../keycloak/useKeycloak";
+import LocalizationContext from "../../../localization/localization-context";
 import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import { UserProfile } from "../../../models/user-profile/user-profile";
 import { UserProfilePayload } from "../../../models/user-profile/user-profile-payload";
-import Error, { ErrorProps } from "../../../components/error";
-import LocalizationContext from "../../../localization/localization-context";
-import { AppStackParamList } from "../../../routing/route-screens";
-import { useKeycloak } from "../../../keycloak/useKeycloak";
+import TicketForm from "./ticket-form";
 
 const NewTicket = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   const { token, realm } = useKeycloak();
   const [userProfile, setUserProfile] = useState<UserProfile | undefined>(
     undefined
   );
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
-  
+
   useEffect(() => {
     const source = axios.CancelToken.source();
 
@@ -66,17 +62,11 @@ const NewTicket = (): JSX.Element => {
       />
     );
   }
-  
+
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={newTicketStyles.container}
-      style={{ backgroundColor: "#181e34" }}
-    >
-      <View style={newTicketStyles.formContainer}>
-        <TicketForm mode={"insert"} userProfile={userProfile}/>
-      </View>
-    </KeyboardAwareScrollView>
+    <TicketForm mode={"insert"} userProfile={userProfile} />
   );
 };
+
 
 export default NewTicket;

@@ -2,7 +2,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native";
 
 import Error, { ErrorProps } from "../../components/error";
@@ -142,18 +142,20 @@ const TicketsList = (): JSX.Element => {
 
   return (
     <Layout style={{ flex: 1 }} level='1'>
-      {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
-      <FlatList
-        data={tickets || []}
-        renderItem={renderItem}
-        keyExtractor={(i, index) => index.toString()}
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={16}
-        contentContainerStyle={styles.container}
-        onEndReachedThreshold={0.2}
-        onEndReached={fetchNextPage}
-        ListFooterComponent={renderFooter}
-      />
+      <ScrollView>
+        {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
+        <FlatList
+          data={tickets || []}
+          renderItem={renderItem}
+          keyExtractor={(i, index) => index.toString()}
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={16}
+          contentContainerStyle={styles.container}
+          onEndReachedThreshold={0.2}
+          onEndReached={fetchNextPage}
+          ListFooterComponent={renderFooter}
+        />
+      </ScrollView>
     </Layout>
   );
 };
