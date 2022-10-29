@@ -1,3 +1,4 @@
+import React from 'react';
 import { Chip, Text } from 'react-native-paper';
 
 const ListFiltering = (props: ArticleFilteringProps): JSX.Element => {

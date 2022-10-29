@@ -11,6 +11,7 @@ import Error, { ErrorProps } from "../../components/error";
 import LocalizationContext from "../../localization/localization-context";
 import { AppStackParamList } from "../../routing/route-screens";
 import { useKeycloak } from "../../keycloak/useKeycloak";
+import React from "react";
 
 const UserContainer = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);

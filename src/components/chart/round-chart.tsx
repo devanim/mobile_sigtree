@@ -4,6 +4,7 @@ import { PieChart } from 'react-native-chart-kit';
 import Statistics from "../../models/dashboard/statistics";
 import { useContext } from "react";
 import LocalizationContext from "../../localization/localization-context";
+import React from "react";
 
 const RoundChart = (props: RoundChartProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);

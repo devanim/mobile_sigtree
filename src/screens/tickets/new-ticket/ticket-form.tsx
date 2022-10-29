@@ -33,14 +33,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   const [categoryList, setCategoryList] = useState<DropdownValue[]>([]);
   const [floorList, setFloorList] = useState<DropdownValue[]>([]);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
-
-  //TODO - see how to obtain floor details based on building
-  // const floorList: DropdownValue[] = [
-  //   { label: "1", value: 1 },
-  //   { label: "2", value: 2 },
-  //   { label: "3", value: 3 },
-  //   { label: "4", value: 4 },
-  // ];
   
   const getProjectList = (): DropdownValue[] => {
     if (!props.userProfile) {

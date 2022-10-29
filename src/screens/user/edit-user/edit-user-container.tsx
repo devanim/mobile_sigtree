@@ -15,6 +15,7 @@ import CustCheckbox from "../../../components/cust-checkbox";
 import { EditUserPayload } from "../../../models/user-profile/edit-user-payload";
 import { UserProfile } from "src/models/user-profile/user-profile";
 import Input from "../../../components/form/input";
+import React from "react";
 
 const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
   const {

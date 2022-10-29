@@ -17,6 +17,7 @@ import { TOSPayload } from "../../models/tos/tos-payload";
 import TosBuilding from "./tos-building";
 import { BuildingTos } from "../../models/tos/building-tos";
 import { useKeycloak } from "../../keycloak/useKeycloak";
+import React from "react";
 
 const TOSScreen = () => {
   const { t } = useContext(LocalizationContext);
