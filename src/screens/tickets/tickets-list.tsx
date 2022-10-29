@@ -17,7 +17,7 @@ import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 import { TicketParamList } from "../../routing/route-screens";
 import TicketBriefCard from "./ticket-brief-card";
 
-const TicketsList = (): JSX.Element => {
+const TicketsList = (props: TicketListProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<TicketParamList>>();
   const { token, realm } = useKeycloak();
@@ -76,11 +76,10 @@ const TicketsList = (): JSX.Element => {
       });
     }
   };
-
-  const onTicketSelected = (ticketId: number) => {
+  const onTicketSelected = (ticketId: number, status: string) => {
     navigate("TicketScreen", {
       screen: "TicketScreen",
-      params: { ticketId: ticketId },
+      params: { ticketId: ticketId, roleId: props.roleId, status: status },
     });
   };
 
@@ -158,6 +157,10 @@ const TicketsList = (): JSX.Element => {
     </Layout>
   );
 };
+
+type TicketListProps = {
+  roleId: number;
+}
 
 const styles = StyleSheet.create({
   container: {

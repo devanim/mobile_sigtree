@@ -9,13 +9,13 @@ import LocalizationContext from "../../localization/localization-context";
 import { AppStackParamList } from "../../routing/route-screens";
 import TicketsList from "./tickets-list";
 
-const TicketContainer = (): JSX.Element => {
+const TicketContainer = (props: TicketContainerProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
 
   return (
     <>
-      <TicketsList />
+      <TicketsList roleId={props.roleId}/>
       <FAB
         icon="plus"
         style={styles.fab}
@@ -26,6 +26,11 @@ const TicketContainer = (): JSX.Element => {
     </>
   );
 };
+
+type TicketContainerProps = {
+  roleId: number;
+}
+
 const styles = StyleSheet.create({
   fab: {
     position: 'absolute',

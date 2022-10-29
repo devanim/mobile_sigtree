@@ -9,8 +9,8 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const localizedDate = new Date(props.ticketBrief.timestamp).toLocaleDateString();
 
-  const onTicketPress = (ticketId: number) => {
-    props.onTicketSelected(ticketId);
+  const onTicketPress = (ticketId: number, status: string) => {
+    props.onTicketSelected(ticketId, status);
   };
 
   const onSelectedStatus = (status: string) => {
@@ -18,7 +18,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
   }
 
   return (
-    <Card onPress={() => onTicketPress(props.ticketBrief.id)} style={{ backgroundColor: '#fff', marginBottom: '1%', marginTop: '1%' }}>
+    <Card onPress={() => onTicketPress(props.ticketBrief.id, props.ticketBrief.statusKey)} style={{ backgroundColor: '#fff', marginBottom: '1%', marginTop: '1%' }}>
       <Card.Title title={props.ticketBrief?.name} titleVariant='titleLarge' />
       <Card.Content style={{ paddingHorizontal: 0 }}>
         <DataTable>
@@ -50,7 +50,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
 
 type TicketBriefCardProps = {
   ticketBrief: TicketBrief;
-  onTicketSelected: (ticketId: number) => void;
+  onTicketSelected: (ticketId: number, status: string) => void;
   onSelectedStatus: (status: string) => void;
 }
 
