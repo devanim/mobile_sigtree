@@ -16,6 +16,9 @@ import { EditUserPayload } from "../../../models/user-profile/edit-user-payload"
 import { UserProfile } from "src/models/user-profile/user-profile";
 import Input from "../../../components/form/input";
 import React from "react";
+import { Language } from "../../../models/language/language";
+import { DropdownValue } from "../../../models/common/dropdown-value";
+import Dropdown from "../../../components/form/dropdown";
 
 const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
   const {
@@ -28,6 +31,9 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   const [errors, setErrors] = useState<UserFormErrors | undefined>(undefined);
+  const languages: DropdownValue[] = props.languageList.map(l => {
+    return {label: l.displayName, value: l.name}
+  });
 
   useEffect(() => {
     setValue("lang", props.userProfile.lang, { shouldValidate: true });
@@ -110,10 +116,12 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
           error={errors ? errors["email"] : undefined}
           setValue={setValue}
         />
-        <Input
+        <Dropdown
           label={t("USER_PROFILE_LANGUAGE_LABEL")}
           value={props.userProfile.lang}
           error={errors ? errors["lang"] : undefined}
+          placeholder="Select Priority"
+          list={languages}
           {...register("lang", {
             required: { value: true, message: "Language is required" },
           })}
@@ -200,6 +208,7 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
 
 type EditUserFormProps = {
   userProfile: UserProfile;
+  languageList: Language[];
 };
 
 export type UserFormData = {

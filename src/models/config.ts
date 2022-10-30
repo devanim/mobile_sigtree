@@ -5,7 +5,8 @@ export const SCREEN_URL = {
   TICKETS_URL: "tickets",
   TICKET_URL: "ticket",
   USER_PROFILE_URL: "user",
-  STATISTICS_URL: "statistics"
+  STATISTICS_URL: "statistics",
+  LANGUAGES_URL: "languages"
 }
 
 export const VERSION = "v1";
