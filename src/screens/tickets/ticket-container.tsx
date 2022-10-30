@@ -1,8 +1,7 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { useContext } from "react";
-import { StyleSheet, View } from "react-native";
-import { Button } from 'react-native-paper';
+import { StyleSheet } from "react-native";
 import { FAB } from 'react-native-paper';
 
 import LocalizationContext from "../../localization/localization-context";
@@ -15,7 +14,7 @@ const TicketContainer = (props: TicketContainerProps): JSX.Element => {
 
   return (
     <>
-      <TicketsList roleId={props.roleId}/>
+      <TicketsList roleId={props.roleId} />
       <FAB
         icon="plus"
         style={styles.fab}

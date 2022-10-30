@@ -3,9 +3,9 @@ import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React from "react";
 import { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { StyleSheet } from "react-native";
-import { Avatar, Card, Chip, DataTable, IconButton, MD3Colors, Paragraph } from 'react-native-paper';
+import { Chip, DataTable, IconButton, MD3Colors } from 'react-native-paper';
 import { WebView } from "react-native-webview";
 
 import Error, { ErrorProps } from "../../components/error";

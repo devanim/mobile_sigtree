@@ -142,15 +142,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
 
             setValue={setValue}
           />
-          <Dropdown
-            label={t("TICKETS_ADD_FORM_FLOOR")}
-            value={props.ticket?.floor ?? ""}
-            placeholder={t("TICKETS_ADD_FORM_FLOOR_PLACEHOLDER")}
-
-            //TODO - Get floors based on selected building
-            list={floorList}
-            setValue={setValue}
-          />
           {buildingsList.length > 0 ? <><Dropdown
             label={t("TICKETS_ADD_FORM_BUILDING")}
             value={props.ticket?.building ?? ""}
@@ -163,7 +154,14 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
             onChange={onBuildingChange}
             setValue={setValue}
           /></> : <></>}
+          {(selectedBuilding > 0 && floorList.length > 0) ? <Dropdown
+            label={t("TICKETS_ADD_FORM_FLOOR")}
+            value={props.ticket?.floor ?? ""}
+            placeholder={t("TICKETS_ADD_FORM_FLOOR_PLACEHOLDER")}
 
+            list={floorList}
+            setValue={setValue}
+          /> : <></>}
           {projectList?.length > 0 ? <><Dropdown
             label={t("TICKETS_ADD_FORM_PROJECT")}
             value={props.ticket?.building ?? ""}
@@ -180,7 +178,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
             value={props.ticket?.category ?? ""}
             error={errors ? errors["idcategory"] : undefined}
             placeholder={t("TICKETS_ADD_FORM_CATEGORY_PLACEHOLDER")}
-            //TODO - filter list based on chosen building
             list={categoryList}
             {...register("idcategory", {
               required: { value: true, message: t("TICKETS_ADD_FORM_CATEGORY_ERROR") },

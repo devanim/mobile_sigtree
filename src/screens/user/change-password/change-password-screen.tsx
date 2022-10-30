@@ -1,5 +1,4 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { TopNavigation } from "@ui-kitten/components";
 import { Layout } from "@ui-kitten/components/ui";
 import React from "react";
 import { useContext } from "react";
