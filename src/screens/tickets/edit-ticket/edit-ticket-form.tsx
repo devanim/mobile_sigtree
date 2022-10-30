@@ -4,7 +4,6 @@ import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { Button, ScrollView, Text, View } from "react-native";
-import { TextInput } from 'react-native-paper';
 
 import Error, { ErrorProps } from "../../../components/error";
 import Dropdown from "../../../components/form/dropdown";
@@ -35,15 +34,10 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   const [errors, setErrors] = useState<EditTicketFormErrors | undefined>(undefined);
-  const [statuses, setStatuses] = useState<TicketStatus[]>([]);
+  const [statuses, setStatuses] = useState<DropdownValue[]>([]);
 
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [categoryList, setCategoryList] = useState<DropdownValue[]>([]);
-  const statusList: DropdownValue[] = [
-    { label: "In progress", value: 2 },
-    { label: "Available", value: 3 },
-    { label: "Closed", value: 4 },
-  ]
 
   useEffect(() => {
     setPossibleCategories();
@@ -61,7 +55,11 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.status == 200) {
-        setStatuses(response.data.data ?? []);
+        const responseStatuses: TicketStatus[] = response.data.data ?? [];
+        const parsedStatusList = responseStatuses.map(s => {
+          return {label: t(s.nameKey), value: s.id};
+        })
+        setStatuses(parsedStatusList);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -154,17 +152,17 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
           })}
           setValue={setValue}
         />
-        <Dropdown
+        {statuses.length > 0 ? <Dropdown
           label="Status"
           value={props.ticket?.idstatus}
           error={errors ? errors["idstatus"] : undefined}
           placeholder="Select Status"
-          list={statusList}
+          list={statuses}
           {...register("idstatus", {
             required: { value: true, message: "Status is required" },
           })}
           setValue={setValue}
-        />
+        />: <></>}
       </View>
       <View style={editTicketFormStyles.spacedView}>
         {categoryList.length > 0 ? <Dropdown
