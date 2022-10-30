@@ -57,8 +57,7 @@ const ArticlesList = (): JSX.Element => {
       });
 
       if (response.status == 200) {
-        //TODO - pagination is broken because of this
-        //setArticles([...articles, ...(response.data.data.articles ?? [])]);
+        setArticles(articles => [...articles, ...(response.data.data.articles ?? [])]);
         setArticles(response.data.data.articles ?? []);
         setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);

@@ -56,9 +56,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
       });
 
       if (response.status == 200) {
-        //TODO - pagination is broken because of this
-        //setTickets([...tickets, ...(response.data.data.tickets ?? [])]);
-        setTickets(response.data.data.tickets ?? []);
+        setTickets(tickets => [...tickets, ...(response.data.data.tickets ?? [])]);
         setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
       } else {
