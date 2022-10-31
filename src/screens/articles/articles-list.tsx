@@ -37,7 +37,7 @@ const ArticlesList = (): JSX.Element => {
     resetState();
     getArticles();
 
-    return () => setIsLoadingData(false);
+    setIsLoadingData(false);
   }, [page, selectedTag]);
 
   const resetState = () => {

@@ -140,20 +140,19 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
 
   return (
     <Layout style={{ flex: 1 }} level='1'>
-      <ScrollView>
-        {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
-        <FlatList
-          data={tickets || []}
-          renderItem={renderItem}
-          keyExtractor={(i, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
-          scrollEventThrottle={16}
-          contentContainerStyle={styles.container}
-          onEndReachedThreshold={0.2}
-          onEndReached={fetchNextPage}
-          ListFooterComponent={renderFooter}
-        />
-      </ScrollView>
+      {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
+      <FlatList
+        data={tickets || []}
+        renderItem={renderItem}
+        keyExtractor={(i, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
+        scrollEnabled={true}
+        contentContainerStyle={styles.container}
+        onEndReachedThreshold={0.2}
+        onEndReached={fetchNextPage}
+        ListFooterComponent={renderFooter}
+      />
     </Layout>
   );
 };
