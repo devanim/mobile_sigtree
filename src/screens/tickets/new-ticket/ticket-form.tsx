@@ -1,8 +1,8 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button } from 'react-native-paper';
@@ -16,7 +16,6 @@ import LocalizationContext from "../../../localization/localization-context";
 import { DropdownValue } from "../../../models/common/dropdown-value";
 import { priorityList } from "../../../models/common/priority-list";
 import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
-import { Priority } from "../../../models/ticket/priority-enum";
 import { Ticket } from "../../../models/ticket/ticket";
 import { TicketPayload } from "../../../models/ticket/ticket-payload";
 import { AppStackParamList } from "../../../routing/route-screens";
@@ -123,7 +122,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
               value={props.ticket?.content ?? ""}
               error={errors ? errors["content"] : undefined}
               multiline={true}
-              inputStyle={{ height: 200 }}
+              numberOfLines={4}
               {...register("content", {
                 required: { value: true, message: t("TICKETS_ADD_FORM_DESCRIPTION_ERROR") },
               })}

@@ -8,7 +8,6 @@ import { FieldError, useForm } from "react-hook-form";
 import { StyleSheet, Text, View } from "react-native";
 
 import Input from "../../../components/form/input";
-import NavigationAction from "../../../components/navigation-action";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
 import LocalizationContext from "../../../localization/localization-context";
 import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
@@ -96,7 +95,7 @@ const ChangePasswordContainer = (): JSX.Element => {
       </Layout>
       <Layout level='1'>
         <Button
-        style={styles.submit}
+          style={styles.submit}
           children={t("BTN_SUBMIT")}
           onPress={handleSubmit(onSubmit, onInvalid)}
         />

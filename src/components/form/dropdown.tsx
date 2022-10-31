@@ -1,9 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { FieldError } from "react-hook-form";
-import { TextStyle, View, Text } from "react-native";
+import { Text, TextStyle, View } from "react-native";
+import { StyleSheet } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import { HelperText } from 'react-native-paper';
 import { DropdownValue } from "src/models/common/dropdown-value";
-import { dropdownStyles } from "./dropdown-styles";
 
 const Dropdown = (props: DropdownProps): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -23,12 +24,16 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
 
     setDropdownValue(data ?? undefined);
   };
-  console.log("ddl", dropdownValue);
+
+  const hasErrors = () => {
+    if (!props.error) return false;
+    return props.error && props.error.message && props.error?.message?.length > 0;
+  };
   return (
     <View style={{ flex: 1 }}>
-      {props.label && <Text style={[dropdownStyles.label, props.labelStyle]}>{props.label}</Text>}
+      {props.label && <Text style={[styles.label, props.labelStyle]}>{props.label}</Text>}
       <DropDownPicker
-        style={[dropdownStyles.dropDownStyle, props.dropdownStyle, { borderColor: props.error ? "#fc6d47" : "#c0cbd3" },]}
+        style={[props.dropdownStyle, { borderRadius: 3, borderColor: props.error ? "#fc6d47" : "#c0cbd3" },]}
         open={open}
         value={dropdownValue ?? ""}
         items={valuesList}
@@ -36,14 +41,16 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
         setValue={setDropdownValue}
         setItems={setValuesList}
         placeholder={props.placeholder}
-        placeholderStyle={dropdownStyles.placeholderStyles}
+        placeholderStyle={styles.placeholderStyles}
         onOpen={onDropdownOpen}
         onChangeValue={onChange}
         zIndex={300}
         zIndexInverse={100}
         dropDownDirection="TOP"
       />
-      <Text style={dropdownStyles.textError}>{props.error && props.error.message}</Text>
+      <HelperText type="error" visible={hasErrors()}>
+        {props.error && props.error.message}
+      </HelperText>
     </View>
   );
 };
@@ -62,5 +69,14 @@ type DropdownProps = {
   setValue: (name: string, value: string, validate?: boolean) => void;
   onChange?: (value: string) => void;
 }
+
+const styles = StyleSheet.create({
+  label: {
+    paddingVertical: '2%',
+  },
+  placeholderStyles: {
+    color: "#cccccc",
+  },
+});
 
 export default Dropdown;
