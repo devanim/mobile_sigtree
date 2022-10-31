@@ -33,7 +33,9 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   const { token, realm } = useKeycloak();
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
-  const [errors, setErrors] = useState<EditTicketFormErrors | undefined>(undefined);
+  const [errors, setErrors] = useState<EditTicketFormErrors | undefined>(
+    undefined
+  );
   const [statuses, setStatuses] = useState<DropdownValue[]>([]);
 
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
@@ -48,17 +50,32 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
     getPossibleStatuses();
   }, []);
 
+  useEffect(() => {
+    register("idpriority", {
+      required: { value: true, message: "Priority is required" },
+    });
+    register("idstatus", {
+      required: { value: true, message: "Status is required" },
+    });
+    register("idcategory", {
+      required: { value: true, message: "Category is required" },
+    });
+  }, []);
+
   const getPossibleStatuses = async () => {
     try {
-      const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKET_URL)}/${props.ticket.id}/statuses`;
+      const reqUrl = `${SigtreeConfiguration.getUrl(
+        realm,
+        SCREEN_URL.TICKET_URL
+      )}/${props.ticket.id}/statuses`;
       const response = await axios.get<TicketStatusPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.status == 200) {
         const responseStatuses: TicketStatus[] = response.data.data ?? [];
-        const parsedStatusList = responseStatuses.map(s => {
-          return {label: t(s.nameKey), value: s.id};
-        })
+        const parsedStatusList = responseStatuses.map((s) => {
+          return { label: t(s.nameKey), value: s.id };
+        });
         setStatuses(parsedStatusList);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
@@ -74,7 +91,7 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
         errorMessage: JSON.stringify(error),
       });
     }
-  }
+  };
 
   const onSubmit = async () => {
     const vals = getValues();
@@ -101,18 +118,25 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   };
 
   const setPossibleCategories = () => {
-    const building: Building | undefined = props.userProfile?.resources.buildings.find(item => item.id == props.ticket.idbuilding) ?? undefined;
+    const building: Building | undefined =
+      props.userProfile?.resources.buildings.find(
+        (item) => item.id == props.ticket.idbuilding
+      ) ?? undefined;
     const categories: DropdownValue[] = [];
 
-    console.log("here building id", props.ticket.idbuilding, props.userProfile?.resources.buildings);
+    console.log(
+      "here building id",
+      props.ticket.idbuilding,
+      props.userProfile?.resources.buildings
+    );
     if (building) {
-      building.categories?.forEach(c => {
+      building.categories?.forEach((c) => {
         categories.push({ label: c.name, value: c.id });
       });
     }
 
     setCategoryList(categories);
-  }
+  };
 
   if (error) {
     return (
@@ -124,7 +148,7 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   }
 
   return (
-    <ScrollView style={editTicketFormStyles.marginTop}>
+    <View style={editTicketFormStyles.marginTop}>
       <Button
         title={t("BTN_SUBMIT")}
         onPress={handleSubmit(onSubmit, onInvalid)}
@@ -143,42 +167,44 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
       <View style={editTicketFormStyles.twoOnRow}>
         <Dropdown
           label="Priority"
+          name="idpriority"
           value={props.ticket?.idpriority}
           error={errors ? errors["idpriority"] : undefined}
           placeholder="Select Priority"
           list={priorityList}
-          {...register("idpriority", {
-            required: { value: true, message: "Priority is required" },
-          })}
           setValue={setValue}
         />
-        {statuses.length > 0 ? <Dropdown
-          label="Status"
-          value={props.ticket?.idstatus}
-          error={errors ? errors["idstatus"] : undefined}
-          placeholder="Select Status"
-          list={statuses}
-          {...register("idstatus", {
-            required: { value: true, message: "Status is required" },
-          })}
-          setValue={setValue}
-        />: <></>}
+        {statuses.length > 0 ? (
+          <Dropdown
+            label="Status"
+            name="idstatus"
+            value={props.ticket?.idstatus}
+            error={errors ? errors["idstatus"] : undefined}
+            placeholder="Select Status"
+            list={statuses}
+            setValue={setValue}
+          />
+        ) : (
+          <></>
+        )}
       </View>
       <View style={editTicketFormStyles.spacedView}>
-        {categoryList.length > 0 ? <Dropdown
-          label="Category"
-          value={props.ticket?.idcategory}
-          error={errors ? errors["idcategory"] : undefined}
-          placeholder="Select Category"
-          dropdownStyle={editTicketFormStyles.spacedView}
-          list={categoryList}
-          {...register("idcategory", {
-            required: { value: true, message: "Category is required" },
-          })}
-          setValue={setValue}
-        /> : <></>}
+        {categoryList.length > 0 ? (
+          <Dropdown
+            label="Category"
+            name="idcategory"
+            value={props.ticket?.idcategory}
+            error={errors ? errors["idcategory"] : undefined}
+            placeholder="Select Category"
+            dropdownStyle={editTicketFormStyles.spacedView}
+            list={categoryList}
+            setValue={setValue}
+          />
+        ) : (
+          <></>
+        )}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -198,6 +224,6 @@ type EditTicketFormErrors = {
 type EditTicketFormProps = {
   ticket: Ticket;
   userProfile?: UserProfile;
-}
+};
 
 export default EditTicketForm;

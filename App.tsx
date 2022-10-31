@@ -34,6 +34,7 @@ const App = (): JSX.Element => {
     nativeRedirectPath: "192.168.119.106:19000",
     scheme: "app.myapp.com",
     extraParams: {
+      //password - grant type
       grant_type: "authorization_code",
       client_secret: "**********"
     }
