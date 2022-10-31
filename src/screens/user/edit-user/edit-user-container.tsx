@@ -31,26 +31,49 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   const [errors, setErrors] = useState<UserFormErrors | undefined>(undefined);
-  const languages: DropdownValue[] = props.languageList.map(l => {
-    return {label: l.displayName, value: l.name}
+  const languages: DropdownValue[] = props.languageList.map((l) => {
+    return { label: l.displayName, value: l.name };
   });
 
   useEffect(() => {
     setValue("lang", props.userProfile.lang, { shouldValidate: true });
-    setValue("firstName", props.userProfile.firstName, { shouldValidate: true });
+    setValue("firstName", props.userProfile.firstName, {
+      shouldValidate: true,
+    });
     setValue("lastName", props.userProfile.lastName, { shouldValidate: true });
     setValue("username", props.userProfile.username, { shouldValidate: true });
     setValue("email", props.userProfile.email ?? "");
     setValue("phoneNumber", props.userProfile.phoneNumber ?? "");
     setValue("notifyOnNewNote", props.userProfile.notifyOnNewNote);
     setValue("notifyOnStatusNew", props.userProfile.notifyOnStatusNew);
-    setValue("notifyOnStatusProgress", props.userProfile.notifyOnStatusProgress);
+    setValue(
+      "notifyOnStatusProgress",
+      props.userProfile.notifyOnStatusProgress
+    );
     setValue("notifyOnStatusPending", props.userProfile.notifyOnStatusPending);
-    setValue("notifyOnStatusResolved", props.userProfile.notifyOnStatusResolved);
+    setValue(
+      "notifyOnStatusResolved",
+      props.userProfile.notifyOnStatusResolved
+    );
     setValue("notifyOnStatusClosed", props.userProfile.notifyOnStatusClosed);
     setValue("notifyOnMyTicketsOnly", props.userProfile.notifyOnMyTicketsOnly);
     setValue("allowNewsletters", props.userProfile.allowNewsletters);
     setValue("notifyOnNewDocument", props.userProfile.notifyOnNewDocument);
+  }, []);
+
+  useEffect(() => {
+    register("username", {
+      required: { value: true, message: "Username is required" },
+    });
+    register("firstName", {
+      required: { value: true, message: "First Name is required" },
+    });
+    register("lastName", {
+      required: { value: true, message: "Last Name is required" },
+    });
+    register("lang", {
+      required: { value: true, message: "Language is required" },
+    });
   }, []);
 
   const onSubmit = async () => {
@@ -79,34 +102,28 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
   };
 
   return (
-    <Layout style={styles.container} level='1'>
+    <Layout style={styles.container} level="1">
       <ScrollView style={styles.containerCard}>
         <SectionTitle title={t("USER_PROFILE_USER_SETTINGS").toUpperCase()} />
         <Input
+          name="username"
           label={t("USER_PROFILE_USER_LABEL")}
           value={props.userProfile.username}
           error={errors ? errors["username"] : undefined}
-          {...register("username", {
-            required: { value: true, message: "Username is required" },
-          })}
           setValue={setValue}
         />
         <Input
+          name="firstName"
           label={t("USER_PROFILE_FIRST_NAME_LABEL")}
           value={props.userProfile.firstName}
           error={errors ? errors["firstName"] : undefined}
-          {...register("firstName", {
-            required: { value: true, message: "First Name is required" },
-          })}
           setValue={setValue}
         />
         <Input
+          name="lastName"
           label={t("USER_PROFILE_LAST_NAME_LABEL")}
           value={props.userProfile.lastName}
           error={errors ? errors["lastName"] : undefined}
-          {...register("lastName", {
-            required: { value: true, message: "Last Name is required" },
-          })}
           setValue={setValue}
         />
         <Input
@@ -117,18 +134,18 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
           setValue={setValue}
         />
         <Dropdown
+          name="lang"
           label={t("USER_PROFILE_LANGUAGE_LABEL")}
           value={props.userProfile.lang}
           error={errors ? errors["lang"] : undefined}
           placeholder="Select Priority"
           list={languages}
-          {...register("lang", {
-            required: { value: true, message: "Language is required" },
-          })}
           setValue={setValue}
         />
 
-        <SectionTitle title={t("USER_PROFILE_NOTIFICATION_SETTINGS").toUpperCase()} />
+        <SectionTitle
+          title={t("USER_PROFILE_NOTIFICATION_SETTINGS").toUpperCase()}
+        />
 
         <CustCheckbox
           name={"lang"}
@@ -196,13 +213,14 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
         <Button
           style={styles.button}
           onPress={handleSubmit(onSubmit, onInvalid)}
-        >{t("BTN_SUBMIT")}</Button>
-        <Button
-          style={styles.button}
-          onPress={goBack} >{t("BTN_CANCEL")}</Button>
+        >
+          {t("BTN_SUBMIT")}
+        </Button>
+        <Button style={styles.button} onPress={goBack}>
+          {t("BTN_CANCEL")}
+        </Button>
       </ScrollView>
     </Layout>
-
   );
 };
 
@@ -241,19 +259,19 @@ type UserFormErrors = {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    padding: '5%',
-    justifyContent: 'space-between',
+    padding: "5%",
+    justifyContent: "space-between",
   },
   containerCard: {
-    marginBottom: '15%'
+    marginBottom: "15%",
   },
   button: {
-    marginTop: '2%',
-    marginLeft: '5%',
-    marginRight: '5%',
+    marginTop: "2%",
+    marginLeft: "5%",
+    marginRight: "5%",
     borderRadius: 0,
     borderWidth: 1,
-    borderColor: '#000000',
+    borderColor: "#000000",
   },
 });
 export default EditUserContainer;
