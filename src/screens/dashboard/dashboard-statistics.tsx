@@ -4,10 +4,11 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView, Text, View } from "react-native";
-import { Appbar, Card, Title } from 'react-native-paper';
+import { Card, Title } from 'react-native-paper';
 import { RefreshControl } from "react-native-web-refresh-control";
 import { AppStackParamList } from "src/routing/route-screens";
 
+import AppBar from "../../components/appbar/appbar";
 import Carousel from "../../components/carousel/carousel";
 import RoundChart from "../../components/chart/round-chart";
 import Error, { ErrorProps } from "../../components/error";
@@ -171,11 +172,8 @@ const DashboardStatistics = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <Appbar.Header style={{ backgroundColor: '#fff' }}>
-        <Appbar.BackAction disabled />
-        <Appbar.Content title={t("DASHBOARD_TITLE").toUpperCase()} />
-        <Appbar.Action icon="logout" onPress={onLogout} />
-      </Appbar.Header>
+      <AppBar title={t("DASHBOARD_TITLE").toUpperCase()} />
+
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl tintColor="#CCC" />}>
         <Carousel name={t("ARTICLES_TITLE")} data={articleCarouselData ?? []} />
         <Carousel name={t("TICKETS_TITLE")} data={ticketCarouselData ?? []} />

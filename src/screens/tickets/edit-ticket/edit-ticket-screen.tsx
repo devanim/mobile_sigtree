@@ -1,4 +1,5 @@
 import React from "react";
+
 import EditTicket from "./edit-ticket";
 
 const EditTicketScreen = (props: any): JSX.Element => {
@@ -6,7 +7,7 @@ const EditTicketScreen = (props: any): JSX.Element => {
 
   return (
     <>
-      <EditTicket ticket={ticketDetails}/>
+      <EditTicket ticket={ticketDetails} />
     </>
   );
 };

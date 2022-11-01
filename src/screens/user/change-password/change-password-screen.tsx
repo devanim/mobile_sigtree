@@ -15,19 +15,23 @@ const ChangePasswordScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <Appbar.Header style={{ backgroundColor: '#fff' }}>
+      <Appbar.Header style={styles.header}>
         <Appbar.Content title={t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()} />
         <Appbar.Action icon="window-close" onPress={goBack} />
       </Appbar.Header>
       <UserScreenContainer />
-    </Layout>);
+    </Layout>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "space-between",
-    paddingTop: "10%",
+    flex: 1
+  },
+  header: {
+    backgroundColor: '#fff',
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1
   }
 });
 export default ChangePasswordScreen;

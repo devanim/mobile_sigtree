@@ -1,11 +1,11 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { TopNavigation } from "@ui-kitten/components";
-import { Button, Layout } from "@ui-kitten/components/ui";
+import { Button } from "@ui-kitten/components/ui";
 import axios from "axios";
 import React from "react";
 import { useContext, useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
-import { StyleSheet, Text, View } from "react-native";
+import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import Input from "../../../components/form/input";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
@@ -78,34 +78,34 @@ const ChangePasswordContainer = (): JSX.Element => {
   };
 
   return (
-    <Layout style={styles.container} level='1'>
-      <Layout level='1'>
-        <Input
-          label={t("USER_PROFILE_PASSWORD_LABEL")}
-          value={""}
-          secureEntry={true}
-          setValue={setValue}
-        />
-        <Input
-          label={t("USER_PROFILE_CONFIRM_PASSWORD_LABEL")}
-          value={""}
-          secureEntry={true}
-          setValue={setValue}
-        />
-      </Layout>
-      <Layout level='1'>
-        <Button
-          style={styles.submit}
-          children={t("BTN_SUBMIT")}
-          onPress={handleSubmit(onSubmit, onInvalid)}
-        />
-      </Layout>
-      <Text style={styles.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_1")}</Text>
-      <Text style={styles.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_2")}</Text>
-      <Text style={styles.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_3")}</Text>
-      <Text style={styles.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_4")}</Text>
-      {errors ? <Text style={styles.errorMessage}>{t("USER_PROFILE_CHANGE_PASSWORD_ERROR")}</Text> : <></>}
-    </Layout>
+    <KeyboardAwareScrollView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <Input
+            label={t("USER_PROFILE_PASSWORD_LABEL")}
+            value={""}
+            secureEntry={true}
+            setValue={setValue}
+          />
+          <Input
+            label={t("USER_PROFILE_CONFIRM_PASSWORD_LABEL")}
+            value={""}
+            secureEntry={true}
+            setValue={setValue}
+          />
+          <Button
+            style={styles.submit}
+            children={t("BTN_SUBMIT")}
+            onPress={handleSubmit(onSubmit, onInvalid)}
+          />
+          <Text style={styles.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_1")}</Text>
+          <Text style={styles.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_2")}</Text>
+          <Text style={styles.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_3")}</Text>
+          <Text style={styles.passwordRules}>{t("USER_PROFILE_PASSWORD_RULE_4")}</Text>
+          {errors ? <Text style={styles.errorMessage}>{t("USER_PROFILE_CHANGE_PASSWORD_ERROR")}</Text> : <></>}
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -121,9 +121,10 @@ type ChangePasswordFormErrors = {
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: "center",
     flex: 1,
-    justifyContent: "space-between",
-    padding: '5%',
+    paddingHorizontal: "5%",
+    paddingVertical: "5%",
   },
   errorMessage: {
     color: "#FF0000",

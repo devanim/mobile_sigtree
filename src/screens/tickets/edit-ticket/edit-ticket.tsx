@@ -1,9 +1,10 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
-import { View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { StyleSheet } from "react-native";
+import { Appbar } from 'react-native-paper';
 import { Ticket } from "src/models/ticket/ticket";
 
 import Error, { ErrorProps } from "../../../components/error";
@@ -13,13 +14,12 @@ import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import { UserProfile } from "../../../models/user-profile/user-profile";
 import { UserProfilePayload } from "../../../models/user-profile/user-profile-payload";
 import { AppStackParamList } from "../../../routing/route-screens";
-import TicketForm from "../new-ticket/ticket-form";
 import EditTicketForm from "./edit-ticket-form";
-import { editTicketStyles } from "./edit-ticket-styles";
 
 const EditTicket = (props: EditTicketProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+
+  const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   const { token, realm } = useKeycloak();
   const [userProfile, setUserProfile] = useState<UserProfile | undefined>(
     undefined
@@ -69,14 +69,13 @@ const EditTicket = (props: EditTicketProps): JSX.Element => {
   }
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={editTicketStyles.container}
-      style={{ backgroundColor: "" }}
-    >
-      <View style={editTicketStyles.formContainer}>
-        <EditTicketForm ticket={props.ticket} userProfile={userProfile} />
-      </View>
-    </KeyboardAwareScrollView>
+    <Layout style={styles.container} level='1'>
+      <Appbar.Header style={{ backgroundColor: '#fff', borderBottomColor: '#ccc', borderBottomWidth: 1 }}>
+        <Appbar.Content title={t("TICKETS_EDIT_TICKET").toUpperCase()} />
+        <Appbar.Action icon="window-close" onPress={goBack} />
+      </Appbar.Header>
+      <EditTicketForm ticket={props.ticket} userProfile={userProfile} />
+    </Layout>
   );
 };
 
@@ -84,4 +83,9 @@ type EditTicketProps = {
   ticket: Ticket
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
 export default EditTicket;

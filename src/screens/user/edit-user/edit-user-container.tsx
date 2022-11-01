@@ -1,24 +1,24 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { useContext, useEffect, useState } from "react";
 import { Button, Layout } from "@ui-kitten/components";
-import { StyleSheet } from "react-native";
-
-import { ScrollView } from "react-native";
-import { AppStackParamList } from "../../../routing/route-screens";
-import LocalizationContext from "../../../localization/localization-context";
-import { FieldError, useForm } from "react-hook-form";
-import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
-import { useKeycloak } from "../../../keycloak/useKeycloak";
 import axios from "axios";
-import SectionTitle from "../../../components/section-title";
-import CustCheckbox from "../../../components/cust-checkbox";
-import { EditUserPayload } from "../../../models/user-profile/edit-user-payload";
-import { UserProfile } from "src/models/user-profile/user-profile";
-import Input from "../../../components/form/input";
+import { useContext, useEffect, useState } from "react";
 import React from "react";
-import { Language } from "../../../models/language/language";
-import { DropdownValue } from "../../../models/common/dropdown-value";
+import { FieldError, useForm } from "react-hook-form";
+import { StyleSheet } from "react-native";
+import { ScrollView } from "react-native";
+import { UserProfile } from "src/models/user-profile/user-profile";
+
+import CustCheckbox from "../../../components/cust-checkbox";
 import Dropdown from "../../../components/form/dropdown";
+import Input from "../../../components/form/input";
+import SectionTitle from "../../../components/section-title";
+import { useKeycloak } from "../../../keycloak/useKeycloak";
+import LocalizationContext from "../../../localization/localization-context";
+import { DropdownValue } from "../../../models/common/dropdown-value";
+import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
+import { Language } from "../../../models/language/language";
+import { EditUserPayload } from "../../../models/user-profile/edit-user-payload";
+import { AppStackParamList } from "../../../routing/route-screens";
 
 const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
   const {
@@ -211,12 +211,12 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
           setValue={setValue}
         />
         <Button
-          style={styles.button}
+          style={styles.submit}
           onPress={handleSubmit(onSubmit, onInvalid)}
         >
           {t("BTN_SUBMIT")}
         </Button>
-        <Button style={styles.button} onPress={goBack}>
+        <Button style={styles.submit} onPress={goBack}>
           {t("BTN_CANCEL")}
         </Button>
       </ScrollView>
@@ -260,18 +260,16 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: "5%",
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
   containerCard: {
     marginBottom: "15%",
   },
-  button: {
-    marginTop: "2%",
-    marginLeft: "5%",
-    marginRight: "5%",
+  submit: {
+    marginTop: '2%',
     borderRadius: 0,
     borderWidth: 1,
-    borderColor: "#000000",
+    borderColor: '#000',
   },
 });
 export default EditUserContainer;

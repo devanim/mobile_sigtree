@@ -1,28 +1,26 @@
+import * as eva from "@eva-design/eva";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import AssetIconsPack from "assets/AssetIconsPack";
+import * as Localization from 'expo-localization';
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
-import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { patchFlatListProps } from "react-native-web-refresh-control";
 
+import RealmContext from "./src/context/RealmContext";
+import ThemeContext from "./src/context/ThemeContext";
+import useCachedResources from "./src/hooks/useCachedResources";
 import { KeycloakProvider } from "./src/keycloak/KeycloakProvider";
-import * as Localization from 'expo-localization';
-
 import { setI18nConfig } from './src/localization/i18n';
 import LocalizationContext from './src/localization/localization-context';
-
-import * as eva from "@eva-design/eva";
-import { default as darkTheme } from "./src/theme/dark.json";
-import { default as lightTheme } from "./src/theme/light.json";
-import { default as customTheme } from "./src/theme/appTheme.json";
-import { default as customMapping } from "./src/theme/mapping.json";
-import AssetIconsPack from "assets/AssetIconsPack";
-import ThemeContext from "./src/context/ThemeContext";
-import { patchFlatListProps } from "react-native-web-refresh-control";
-import RealmContext from "./src/context/RealmContext";
 import RealmDetails from "./src/models/realm-details";
 import RoutingContainer from "./src/routing/routing-container";
-import useCachedResources from "./src/hooks/useCachedResources";
+import { default as customTheme } from "./src/theme/appTheme.json";
+import { default as darkTheme } from "./src/theme/dark.json";
+import { default as lightTheme } from "./src/theme/light.json";
+import { default as customMapping } from "./src/theme/mapping.json";
 
 patchFlatListProps();
 
@@ -47,7 +45,7 @@ const App = (): JSX.Element => {
   let i18n = setI18nConfig(Localization.locale);
   const localizationCtx = React.useMemo(
     () => ({
-      t: (scope: any, options: any) => i18n.t(scope, { ...options}),
+      t: (scope: any, options: any) => i18n.t(scope, { ...options }),
       locale,
       setLocale,
       handleChange: (language: string) => {

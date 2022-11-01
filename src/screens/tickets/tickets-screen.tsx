@@ -1,32 +1,25 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-import { Appbar } from 'react-native-paper';
-import axios from "axios";
 
+import AppBar from "../../components/appbar/appbar";
+import Error, { ErrorProps } from "../../components/error";
 import { useKeycloak } from "../../keycloak/useKeycloak";
 import LocalizationContext from "../../localization/localization-context";
-import { AppStackParamList } from "../../routing/route-screens";
 import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
-import { UserProfilePayload } from "../../models/user-profile/user-profile-payload";
-import Error, { ErrorProps } from "../../components/error";
 import { UserProfile } from "../../models/user-profile/user-profile";
+import { UserProfilePayload } from "../../models/user-profile/user-profile-payload";
 import TicketContainer from "./ticket-container";
 
 const TicketsScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const { realm, token, logout } = useKeycloak();
-  const { goBack, navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { realm, token } = useKeycloak();
   const [userProfile, setUserProfile] = useState<UserProfile | undefined>(
     undefined
   );
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
 
-  const onLogout = () => {
-    logout();
-    navigate("HomeScreen", { screen: "HomeScreen" });
-  }
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -76,12 +69,8 @@ const TicketsScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <Appbar.Header style={{ backgroundColor: '#fff' }}>
-        <Appbar.BackAction onPress={goBack} />
-        <Appbar.Content title={t("TICKET_TITLE").toUpperCase()} />
-        <Appbar.Action icon="logout" onPress={onLogout} />
-      </Appbar.Header>
-      <TicketContainer roleId={userProfile.role}/>
+      <AppBar title={t("TICKET_TITLE").toUpperCase()} />
+      <TicketContainer roleId={userProfile.role} />
     </Layout>
   )
 };

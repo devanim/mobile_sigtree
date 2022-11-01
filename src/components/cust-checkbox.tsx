@@ -1,7 +1,8 @@
 import Checkbox from "expo-checkbox";
 import React, { useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
-import { Text, View, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+
 import { UserFormData } from "../screens/user/edit-user/edit-user-container";
 
 const CustCheckbox = (props: CustCheckboxProps): JSX.Element => {
@@ -20,7 +21,7 @@ const CustCheckbox = (props: CustCheckboxProps): JSX.Element => {
         value={isChecked}
         onValueChange={onValueChange}
       />
-      <Text style={styles.paragraph}>{props.label}</Text>
+      <Text>{props.label}</Text>
     </View>
   );
 };
@@ -52,10 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  paragraph: {
-    //fontSize: 15,
-    // color: "#000"
-  },
+
   checkbox: {
     margin: '1.5%',
   },

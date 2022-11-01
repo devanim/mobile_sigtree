@@ -3,7 +3,9 @@ import axios from "axios";
 import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
-import { Button, ScrollView, Text, View } from "react-native";
+import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { Button, Text } from "react-native-paper";
 
 import Error, { ErrorProps } from "../../../components/error";
 import Dropdown from "../../../components/form/dropdown";
@@ -20,7 +22,6 @@ import { Building } from "../../../models/user-profile/building";
 import { EditUserPayload } from "../../../models/user-profile/edit-user-payload";
 import { UserProfile } from "../../../models/user-profile/user-profile";
 import { AppStackParamList } from "../../../routing/route-screens";
-//import { ticketCardStyles } from "../ticket-card-styles";
 import editTicketFormStyles from "./edit-ticket-form-styles";
 
 const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
@@ -125,7 +126,6 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
     const categories: DropdownValue[] = [];
 
     console.log(
-      "here building id",
       props.ticket.idbuilding,
       props.userProfile?.resources.buildings
     );
@@ -148,63 +148,70 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   }
 
   return (
-    <View style={editTicketFormStyles.marginTop}>
-      <Button
-        title={t("BTN_SUBMIT")}
-        onPress={handleSubmit(onSubmit, onInvalid)}
-      />
-      <Button title={t("BTN_CANCEL")} onPress={goBack} />
-      <View style={editTicketFormStyles.containerCard}>
-        <Text>{`${props.ticket?.id} - ${props.ticket?.name}`}</Text>
-      </View>
-      <View style={editTicketFormStyles.containerCard}>
-        <Input
-          label="Tags"
-          value={props.ticket?.tags ?? ""}
-          setValue={setValue}
-        />
-      </View>
-      <View style={editTicketFormStyles.twoOnRow}>
-        <Dropdown
-          label="Priority"
-          name="idpriority"
-          value={props.ticket?.idpriority}
-          error={errors ? errors["idpriority"] : undefined}
-          placeholder="Select Priority"
-          list={priorityList}
-          setValue={setValue}
-        />
-        {statuses.length > 0 ? (
-          <Dropdown
-            label="Status"
-            name="idstatus"
-            value={props.ticket?.idstatus}
-            error={errors ? errors["idstatus"] : undefined}
-            placeholder="Select Status"
-            list={statuses}
-            setValue={setValue}
-          />
-        ) : (
-          <></>
-        )}
-      </View>
-      <View style={editTicketFormStyles.spacedView}>
-        {categoryList.length > 0 ? (
-          <Dropdown
-            label="Category"
-            name="idcategory"
-            value={props.ticket?.idcategory}
-            error={errors ? errors["idcategory"] : undefined}
-            placeholder="Select Category"
-            dropdownStyle={editTicketFormStyles.spacedView}
-            list={categoryList}
-            setValue={setValue}
-          />
-        ) : (
-          <></>
-        )}
-      </View>
-    </View>
+    <KeyboardAwareScrollView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={{ paddingBottom: '3%' }}>
+            <Text variant="titleLarge">{props.ticket?.name}</Text>
+            <Text variant="titleMedium">{props.ticket?.idtracking}</Text>
+          </View>
+          <View>
+            <Input
+              label="Tags"
+              value={props.ticket?.tags ?? ""}
+              setValue={setValue}
+            />
+          </View>
+          <View>
+            <Dropdown
+              label="Priority"
+              name="idpriority"
+              value={props.ticket?.idpriority}
+              error={errors ? errors["idpriority"] : undefined}
+              placeholder="Select Priority"
+              list={priorityList}
+              setValue={setValue}
+            />
+            {statuses.length > 0 ? (
+              <Dropdown
+                label="Status"
+                name="idstatus"
+                value={props.ticket?.idstatus}
+                error={errors ? errors["idstatus"] : undefined}
+                placeholder="Select Status"
+                list={statuses}
+                setValue={setValue}
+              />
+            ) : (
+              <></>
+            )}
+          </View>
+          <View>
+            {categoryList.length > 0 ? (
+              <Dropdown
+                label="Category"
+                name="idcategory"
+                value={props.ticket?.idcategory}
+                error={errors ? errors["idcategory"] : undefined}
+                placeholder="Select Category"
+                dropdownStyle={editTicketFormStyles.spacedView}
+                list={categoryList}
+                setValue={setValue}
+              />
+            ) : (
+              <></>
+            )}
+          </View>
+          <Button
+            mode="outlined"
+            onPress={handleSubmit(onSubmit, onInvalid)}
+            style={styles.submit}
+          >
+            {t("BTN_SUBMIT")}
+          </Button>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -225,5 +232,24 @@ type EditTicketFormProps = {
   ticket: Ticket;
   userProfile?: UserProfile;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    flex: 1,
+    paddingHorizontal: "5%",
+    paddingVertical: "5%",
+  },
+  dropdown: {
+    marginVertical: "5%",
+    paddingVertical: 10,
+  },
+  submit: {
+    marginVertical: "10%",
+    borderColor: "#000000",
+    borderWidth: 1,
+    borderRadius: 0,
+  },
+});
 
 export default EditTicketForm;
