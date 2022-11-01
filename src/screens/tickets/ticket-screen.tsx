@@ -19,7 +19,7 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
   const ticketId = props.route.params.params.ticketId;
   const status = props.route.params.params.status;
   const role = props.route.params.params.roleId;
-  
+
   useEffect(() => {
     console.log("status", status, role);
     if (status === "TICKET_NEW" && role === 6) {
@@ -28,7 +28,7 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
   }, []);
 
   const updateTicketStatusToRead = async () => {
-    const vals = {idstatus: 1}
+    const vals = { idstatus: 1 }
     const reqUrl = `${SigtreeConfiguration.getUrl(realm, `${SCREEN_URL.TICKET_URL}/${ticketId}`)}`;
 
     try {
@@ -40,7 +40,7 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
       console.log("error", error);
     }
   }
-  
+
   const onLogout = () => {
     logout();
     navigate("HomeScreen", { screen: "HomeScreen" });
