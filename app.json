@@ -1,7 +1,7 @@
 {
     "expo": {
         "name": "sigtree",
-        "slug": "metmoi",
+        "slug": "helpdesk",
         "version": "1.0.1",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
@@ -24,9 +24,10 @@
                 "foregroundImage": "./assets/images/adaptive-icon.png",
                 "backgroundColor": "#FFFFFF"
             },
-            "package": "dev.timistudio.metmoi",
+            "package": "dev.sigtee",
             "versionCode": 1,
-            "permissions": [],
+            "permissions": ["NOTIFICATIONS"],
+            "useNextNotificationsApi": true,
             "config": {
                 "googleMobileAdsAppId": "ca-app-pub-6106751649082059~5831310011",
                 "googleSignIn": {}
