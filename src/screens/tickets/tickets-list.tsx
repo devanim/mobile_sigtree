@@ -138,6 +138,10 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
     return <ActivityIndicator />;
   }
 
+  if (isLoadingData) {
+    return <ActivityIndicator />
+  }
+
   return (
     <Layout style={{ flex: 1 }} level='1'>
       <ScrollView>
