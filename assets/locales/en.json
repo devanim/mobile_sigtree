@@ -8,6 +8,7 @@
     "TOGGLE_DEBUG_ERROR": "Toggle debug error",
     "FAILED_REQUEST": "Something went wrong when retrieving data",
     "NO_DATA_HTML": "<p>No data</p>",
+    "NO_DATA": "No data",
     "USER_PROFILE_TITLE": "My personal details",
     "USER_PROFILE_EDIT_TITLE": "Edit User Profile",
     "USER_PROFILE_USER_LABEL": "User",

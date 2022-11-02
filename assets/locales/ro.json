@@ -6,6 +6,7 @@
     "TOGGLE_DEBUG_ERROR": "Detalii eroare",
     "FAILED_REQUEST": "Eroare neprevazută la aducerea datelor",
     "NO_DATA_HTML": "<p>Nu există informații</p>",
+    "NO_DATA": "Nu există informații",
     "USER_PROFILE_TITLE": "Detalii personale",
     "USER_PROFILE_EDIT_TITLE": "Actualizați profil utilizator",
     "USER_PROFILE_USER_LABEL": "Utilizator",
