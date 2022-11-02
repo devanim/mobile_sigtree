@@ -1,8 +1,8 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { Appbar } from 'react-native-paper';
+import { ActivityIndicator, Appbar } from 'react-native-paper';
 import axios from "axios";
 
 import { useKeycloak } from "../../keycloak/useKeycloak";
@@ -16,15 +16,17 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { realm, logout, token } = useKeycloak();
   const { goBack, navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const [isLoading, setIsLoading] = useState(true);
   const ticketId = props.route.params.params.ticketId;
   const status = props.route.params.params.status;
   const role = props.route.params.params.roleId;
 
   useEffect(() => {
-    console.log("status", status, role);
+    setIsLoading(true);
     if (status === "TICKET_NEW" && role === 6) {
       updateTicketStatusToRead();
     }
+    setIsLoading(false);
   }, []);
 
   const updateTicketStatusToRead = async () => {
@@ -35,7 +37,6 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
       const response = await axios.put<EditUserPayload>(reqUrl, vals, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("response", response.data);
     } catch (error) {
       console.log("error", error);
     }
@@ -44,6 +45,10 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
   const onLogout = () => {
     logout();
     navigate("HomeScreen", { screen: "HomeScreen" });
+  }
+
+  if (isLoading) {
+    return <ActivityIndicator />
   }
 
   return (
