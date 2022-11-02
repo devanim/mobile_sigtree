@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   tos: {
     flexDirection: 'column',
     flexGrow: 1,
-    padding: '5% 5%',
+    // padding: '5% 5%',
     paddingBottom: '1%',
 
   },
