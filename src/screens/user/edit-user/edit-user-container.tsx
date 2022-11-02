@@ -89,7 +89,6 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
       });
 
       if (response.status == 200) {
-        console.log("response", response);
         goBack();
       }
     } catch (error) {

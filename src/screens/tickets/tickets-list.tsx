@@ -1,4 +1,4 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { NavigationProp, useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React from "react";
@@ -30,14 +30,14 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
   const [resetList, setResetList] = useState(false);
   const [maxId, setMaxId] = useState(0);
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     setIsLoadingData(true);
 
     resetState();
     getTickets();
 
     setIsLoadingData(false);
-  }, [page, selectedStatus]);
+  }, [page, selectedStatus]));
 
   const resetState = () => {
     if (resetList) {
@@ -140,7 +140,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
 
   return (
     <Layout style={{ flex: 1 }} level='1'>
-      {/* <ScrollView> */}
+      <ScrollView>
         {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
         <FlatList
           data={tickets || []}
@@ -154,7 +154,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
           onEndReached={fetchNextPage}
           ListFooterComponent={renderFooter}
         />
-      {/* </ScrollView> */}
+      </ScrollView>
     </Layout>
   );
 };

@@ -1,7 +1,7 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { NavigationProp, useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
 import axios from "axios";
-import React from "react";
+import React, { useCallback } from "react";
 import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { StyleSheet } from "react-native";
@@ -23,9 +23,9 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
   const [ticket, setTicket] = useState<Ticket | undefined>(undefined);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     getTicket();
-  }, []);
+  }, []));
 
   const getTicket = async () => {
     try {

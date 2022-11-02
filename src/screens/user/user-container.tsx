@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Layout, Text } from "@ui-kitten/components";
 import { ActivityIndicator, View, StyleSheet } from "react-native";
 import UserProfile from "./user-profile";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { NavigationProp, useFocusEffect, useNavigation } from "@react-navigation/native";
 import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { UserProfile as UserProfileModel } from "../../models/user-profile/user-profile";
 import { UserProfilePayload } from "../../models/user-profile/user-profile-payload";
@@ -21,14 +21,16 @@ const UserContainer = (): JSX.Element => {
     undefined
   );
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
+  useFocusEffect(useCallback(() => {
+    console.log("executed this method");
+    setIsLoading(true);
 
     getUserProfileDetails();
 
-    return () => source.cancel("Data fetching cancelled");
-  }, []);
+    setIsLoading(false);
+  }, []));
 
   const getUserProfileDetails = async () => {
     try {
@@ -83,6 +85,11 @@ const UserContainer = (): JSX.Element => {
   const hasBuildingsAssigned = (): boolean => {
     return userProfile?.resources?.buildings?.length > 0;
   };
+
+  if(isLoading)
+  {
+    return <ActivityIndicator />
+  }
 
   return (
     <Layout style={styles.container} level='1'>

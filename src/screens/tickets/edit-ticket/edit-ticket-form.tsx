@@ -105,6 +105,7 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
       const response = await axios.put<EditUserPayload>(`${reqUrl}/${props.ticket.id}`, vals, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      
       if (response.status == 200) {
         goBack();
       }
@@ -114,7 +115,6 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   };
 
   const onInvalid = (err: any) => {
-    console.log("eror on invalid", err);
     setErrors(err);
   };
 
@@ -125,10 +125,6 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
       ) ?? undefined;
     const categories: DropdownValue[] = [];
 
-    console.log(
-      props.ticket.idbuilding,
-      props.userProfile?.resources.buildings
-    );
     if (building) {
       building.categories?.forEach((c) => {
         categories.push({ label: c.name, value: c.id });

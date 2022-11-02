@@ -108,7 +108,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     const response = await axios.post<TicketPayload>(reqUrl, vals, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("response add ticket", response.data);
     goBack();
   };
 
