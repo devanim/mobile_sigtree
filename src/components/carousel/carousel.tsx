@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingRight: 16,
+    paddingBottom: 8,
+    paddingTop: 8,
   },
 });
 
