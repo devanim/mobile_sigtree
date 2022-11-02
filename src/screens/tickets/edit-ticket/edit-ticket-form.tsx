@@ -98,14 +98,13 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
     const vals = getValues();
     const reqUrl = `${SigtreeConfiguration.getUrl(
       realm,
-      SCREEN_URL.USER_PROFILE_URL
+      SCREEN_URL.TICKET_URL
     )}`;
 
     try {
-      const response = await axios.put<EditUserPayload>(reqUrl, vals, {
+      const response = await axios.put<EditUserPayload>(`${reqUrl}/${props.ticket.id}`, vals, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
       if (response.status == 200) {
         goBack();
       }
@@ -115,6 +114,7 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
   };
 
   const onInvalid = (err: any) => {
+    console.log("eror on invalid", err);
     setErrors(err);
   };
 

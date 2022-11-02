@@ -140,7 +140,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
 
   return (
     <Layout style={{ flex: 1 }} level='1'>
-      <ScrollView>
+      {/* <ScrollView> */}
         {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
         <FlatList
           data={tickets || []}
@@ -154,7 +154,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
           onEndReached={fetchNextPage}
           ListFooterComponent={renderFooter}
         />
-      </ScrollView>
+      {/* </ScrollView> */}
     </Layout>
   );
 };
