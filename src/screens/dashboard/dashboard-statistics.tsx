@@ -175,32 +175,34 @@ const DashboardStatistics = (): JSX.Element => {
       <AppBar title={t("DASHBOARD_TITLE").toUpperCase()} />
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl tintColor="#CCC" />}>
-        <Carousel name={t("ARTICLES_TITLE")} data={articleCarouselData ?? []} />
-        <Carousel name={t("TICKETS_TITLE")} data={ticketCarouselData ?? []} />
+        <Carousel name={t("ARTICLES_TITLE")} nodata={t("NO_DATA")} data={articleCarouselData ?? []} />
+        <Carousel name={t("TICKETS_TITLE")} nodata={t("NO_DATA")} data={ticketCarouselData ?? []} />
         <Card style={{ margin: '5%', backgroundColor: '#fff' }} mode='contained'>
           <Card.Content>
             <Title>{t("STATISTICS_TITLE")}</Title>
-            {statistics ? <RoundChart data={statistics} /> : <></>}
-            {statistics ?
+            {statistics && statistics.count_all !== 0 ?
               <View style={{ flexDirection: 'column' }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ flex: 1 }}>{t("PRIORITY_LOW_COUNT")}</Text>
-                  <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_low}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ flex: 1 }}>{t("PRIORITY_MEDIUM_COUNT")}</Text>
-                  <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_medium}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ flex: 1 }}>{t("PRIORITY_HIGH_COUNT")}</Text>
-                  <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_high}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ flex: 1, textAlign: 'right', fontWeight: 'bold' }}>{t("TOTAL_TICKETS_COUNT")}</Text>
-                  <Text style={{ flex: 1, textAlign: 'left', fontWeight: 'bold' }}> {statistics.count_all}</Text>
+                <RoundChart data={statistics} />
+                <View style={{ flexDirection: 'column' }}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ flex: 1 }}>{t("PRIORITY_LOW_COUNT")}</Text>
+                    <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_low}</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ flex: 1 }}>{t("PRIORITY_MEDIUM_COUNT")}</Text>
+                    <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_medium}</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ flex: 1 }}>{t("PRIORITY_HIGH_COUNT")}</Text>
+                    <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_high}</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ flex: 1, textAlign: 'right', fontWeight: 'bold' }}>{t("TOTAL_TICKETS_COUNT")}</Text>
+                    <Text style={{ flex: 1, textAlign: 'left', fontWeight: 'bold' }}> {statistics.count_all}</Text>
+                  </View>
                 </View>
               </View>
-              : <></>}
+              : <Text style={{ flex: 1 }}>{t("NO_DATA")}</Text>}
           </Card.Content>
         </Card>
       </ScrollView>
