@@ -25,7 +25,8 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
   const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
-  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [firstRender, setFirstRender] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [resetList, setResetList] = useState(false);
   const [maxId, setMaxId] = useState(0);
@@ -58,6 +59,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
         setTickets(tickets => [...tickets, ...(response.data.data.tickets ?? [])]);
         setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
+        setFirstRender(false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -133,7 +135,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
     );
   }
 
-  if (isLoadingData) {
+  if (isLoadingData || firstRender) {
     return <ActivityIndicator />
   }
 
