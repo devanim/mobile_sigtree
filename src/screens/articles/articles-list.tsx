@@ -137,8 +137,18 @@ const ArticlesList = (): JSX.Element => {
     );
   }
 
+  if (isLoadingData) {
+    return <ActivityIndicator />
+  }
+
   if (!articles || articles.length == 0) {
-    return <ActivityIndicator />;
+    return  (
+      <Layout style={{  flex: 1 }} level='1'>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ flex: 1, textAlign: 'center', paddingTop: 25 }} category='body' >{t("NO_DATA")}</Text>
+        </View>
+      </Layout>
+    )
   }
 
   return (
