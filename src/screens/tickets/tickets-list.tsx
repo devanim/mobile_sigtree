@@ -32,7 +32,6 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
 
   useFocusEffect(useCallback(() => {
     setIsLoadingData(true);
-
     resetState();
     getTickets();
 
@@ -134,13 +133,22 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
     );
   }
 
-  if (!tickets || tickets.length == 0) {
-    return <ActivityIndicator />;
-  }
-
   if (isLoadingData) {
     return <ActivityIndicator />
   }
+
+  if (!tickets || tickets.length == 0) {
+    return  (
+      <Layout style={{  flex: 1 }} level='1'>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ flex: 1, textAlign: 'center', paddingTop: 25 }} category='body' >{t("NO_DATA")}</Text>
+        </View>
+      </Layout>
+    )
+
+  }
+
+
 
   return (
     <Layout style={{ flex: 1 }} level='1'>
