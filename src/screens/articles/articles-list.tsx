@@ -26,22 +26,20 @@ const ArticlesList = (): JSX.Element => {
   const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
-  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const [selectedTag, setSelectedTag] = useState("");
-  const [resetList, setResetList] = useState(false);
+  const [resetList, setResetList] = useState(true);
   const [maxId, setMaxId] = useState(0);
 
   useEffect(() => {
-    setIsLoadingData(true);
-
     resetState();
     getArticles();
-
-    setIsLoadingData(false);
   }, [page, selectedTag]);
 
   const resetState = () => {
     if (resetList) {
+      setIsLoadingData(true);
+
       setArticles([]);
       setMaxId(0);
       setResetList(false);
@@ -58,9 +56,10 @@ const ArticlesList = (): JSX.Element => {
 
       if (response.status == 200) {
         setArticles(articles => [...articles, ...(response.data.data.articles ?? [])]);
-        setArticles(response.data.data.articles ?? []);
+        //setArticles(response.data.data.articles ?? []);
         setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
+        setIsLoadingData(false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
