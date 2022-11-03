@@ -220,8 +220,8 @@ const DashboardStatistics = (): JSX.Element => {
       <AppBar title={t("DASHBOARD_TITLE").toUpperCase()} />
 
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#CCC" />}>
-        <Carousel name={t("ARTICLES_TITLE")} nodata={t("NO_DATA")} data={articleCarouselData ?? []} />
-        <Carousel name={t("TICKETS_TITLE")} nodata={t("NO_DATA")} data={ticketCarouselData ?? []} />
+        <Carousel name={t("ARTICLES_TITLE")} isLoading={isArticleLoadingData} nodata={t("NO_DATA")} data={articleCarouselData ?? []} />
+        <Carousel name={t("TICKETS_TITLE")} isLoading={isTicketsLoadingData} nodata={t("NO_DATA")} data={ticketCarouselData ?? []} />
         <Card style={{ margin: '5%', backgroundColor: '#fff' }} mode='contained'>
           <Card.Content>
             <Title>{t("STATISTICS_TITLE")}</Title>

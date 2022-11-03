@@ -1,7 +1,7 @@
 import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
-import { Card, Paragraph, Title } from 'react-native-paper';
+import { Card, ActivityIndicator, Title } from 'react-native-paper';
 
 import CarouselCard from "./carousel-card";
 
@@ -11,15 +11,15 @@ const Carousel = (props: CarouselProps): JSX.Element => {
       <Card style={{ backgroundColor: '#fff' }} mode='contained'>
         <Card.Content>
           <Title>{props.name}</Title>
-          <Paragraph>
-            {props.data.length > 0 ?
+            {props.isLoading ? <ActivityIndicator /> : <></>}
+            {!props.isLoading && props.data.length == 0 ? <Text style={{ flex: 1 }}>{props.nodata}</Text> : <></> }
+            {!props.isLoading && props.data.length > 0 ?
               <ScrollView horizontal contentContainerStyle={styles.content} showsHorizontalScrollIndicator={false}>
                 {props.data.map((item, idx) => (
                   <CarouselCard key={idx} title={item.title} id={item.id} onItemSelected={item.onItemSelected} />
                 ))}
               </ScrollView>
-            : <Text style={{ flex: 1 }}>{props.nodata}</Text>}
-          </Paragraph>
+            : <></>}
         </Card.Content>
       </Card>
     </Layout>
@@ -29,6 +29,7 @@ const Carousel = (props: CarouselProps): JSX.Element => {
 type CarouselProps = {
   name: string;
   nodata: string;
+  isLoading: boolean;
   data: CarouselData[];
 }
 
