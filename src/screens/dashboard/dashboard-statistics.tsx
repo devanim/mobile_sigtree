@@ -1,7 +1,7 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView, Text, View } from "react-native";
 import { Card, Title } from 'react-native-paper';
@@ -24,34 +24,70 @@ import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 
 const DashboardStatistics = (): JSX.Element => {
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
-  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isArticleLoadingData, setArticleIsLoadingData] = useState(false);
+  const [isTicketsLoadingData, setTicketsIsLoadingData] = useState(false);
+  const [isStatsLoadingData, setStatsIsLoadingData] = useState(false);
+  const [dataChanged, setDataChanged] = useState(false);
+  const [resetData, setResetData] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [articles, setArticles] = useState<ArticleBrief[]>([]);
   const [tickets, setTickets] = useState<TicketBrief[]>([]);
   const [statistics, setStatistics] = useState<Statistics | undefined>(undefined);
 
   useEffect(() => {
-    setIsLoadingData(true);
+    setArticleIsLoadingData(true);
 
     getArticles();
 
-    setIsLoadingData(false);
-  }, []);
+    setArticleIsLoadingData(false);
+
+    return () => {
+      setDataChanged(true)
+    }
+  }, [resetData]);
 
   useEffect(() => {
-    setIsLoadingData(true);
+    setTicketsIsLoadingData(true);
 
     getTickets();
 
-    setIsLoadingData(false);
-  }, []);
+    setTicketsIsLoadingData(false);
+
+    return () => {
+      setDataChanged(true)
+    }
+  }, [resetData]);
 
   useEffect(() => {
-    setIsLoadingData(true);
+    setStatsIsLoadingData(true);
 
     getStatistics();
 
-    setIsLoadingData(false);
-  }, []);
+    setStatsIsLoadingData(false);
+
+    return () => {
+      setDataChanged(true)
+    }
+  }, [resetData]);
+
+  useEffect(() => {
+    if (dataChanged) setDataChanged(false);
+  }, [dataChanged])
+  // useEffect(() => {
+  //   resetState()
+  // })
+
+  const resetState = () => {
+    setArticleIsLoadingData(true);
+    setTicketsIsLoadingData(true);
+    setStatsIsLoadingData(true);
+    setArticles([])
+    setTickets([])
+    setStatistics(undefined)
+    getArticles()
+    getTickets()
+    getStatistics()
+  }
 
   const getArticles = async () => {
     try {
@@ -61,7 +97,8 @@ const DashboardStatistics = (): JSX.Element => {
       });
 
       if (response.status == 200) {
-        setArticles([...articles, ...response.data.data.articles ?? []]);
+        setArticles([...response.data.data.articles ?? []]);
+        setArticleIsLoadingData(false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -86,7 +123,8 @@ const DashboardStatistics = (): JSX.Element => {
       });
 
       if (response.status == 200) {
-        setTickets([...tickets, ...response.data.data.tickets ?? []]);
+        setTickets([...response.data.data.tickets ?? []]);
+        setTicketsIsLoadingData(false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -112,6 +150,7 @@ const DashboardStatistics = (): JSX.Element => {
 
       if (response.status == 200) {
         setStatistics(response.data.data.tickets);
+        setStatsIsLoadingData(false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -127,6 +166,12 @@ const DashboardStatistics = (): JSX.Element => {
       });
     }
   };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    resetState()
+    setRefreshing(false);
+  }, []);
 
   const { t } = useContext(LocalizationContext);
   const { token, realm, logout } = useKeycloak();
@@ -174,13 +219,13 @@ const DashboardStatistics = (): JSX.Element => {
     <Layout style={styles.container} level='1'>
       <AppBar title={t("DASHBOARD_TITLE").toUpperCase()} />
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl tintColor="#CCC" />}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#CCC" />}>
         <Carousel name={t("ARTICLES_TITLE")} nodata={t("NO_DATA")} data={articleCarouselData ?? []} />
         <Carousel name={t("TICKETS_TITLE")} nodata={t("NO_DATA")} data={ticketCarouselData ?? []} />
         <Card style={{ margin: '5%', backgroundColor: '#fff' }} mode='contained'>
           <Card.Content>
             <Title>{t("STATISTICS_TITLE")}</Title>
-            {statistics && statistics.count_all !== 0 ?
+            {statistics && statistics.count_all && statistics.count_all !== 0 ?
               <View style={{ flexDirection: 'column' }}>
                 <RoundChart data={statistics} />
                 <View style={{ flexDirection: 'column' }}>
