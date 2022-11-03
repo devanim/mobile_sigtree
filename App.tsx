@@ -42,15 +42,13 @@ const App = (): JSX.Element => {
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
   const keycloakConfiguration = {
-    clientId: "sigtree",
+    clientId: "sigtree-mobile",
     realm: "customer1",
     url: "https://sso.sigtree.com/auth",
     nativeRedirectPath: "192.168.119.106:19000",
     scheme: "app.myapp.com",
     extraParams: {
-      //password - grant type
-      grant_type: "authorization_code",
-      client_secret: "**********"
+      grant_type: "password"
     }
   };
 

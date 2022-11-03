@@ -1,7 +1,8 @@
 {
     "expo": {
-        "name": "sigtree",
-        "slug": "helpdesk",
+        "name": "sigtree-helpdesk",
+        "slug": "sigtree",
+        "privacy": "unlisted",
         "version": "1.0.1",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
@@ -17,7 +18,8 @@
         },
         "assetBundlePatterns": ["**/*"],
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": true,
+            "bundleIdentifier": "com.sigtree.sigtree-helpdesk"
         },
         "android": {
             "adaptiveIcon": {

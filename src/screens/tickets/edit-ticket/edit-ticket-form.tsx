@@ -98,14 +98,14 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
     const vals = getValues();
     const reqUrl = `${SigtreeConfiguration.getUrl(
       realm,
-      SCREEN_URL.USER_PROFILE_URL
+      SCREEN_URL.TICKET_URL
     )}`;
 
     try {
-      const response = await axios.put<EditUserPayload>(reqUrl, vals, {
+      const response = await axios.put<EditUserPayload>(`${reqUrl}/${props.ticket.id}`, vals, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+      
       if (response.status == 200) {
         goBack();
       }
@@ -125,10 +125,6 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
       ) ?? undefined;
     const categories: DropdownValue[] = [];
 
-    console.log(
-      props.ticket.idbuilding,
-      props.userProfile?.resources.buildings
-    );
     if (building) {
       building.categories?.forEach((c) => {
         categories.push({ label: c.name, value: c.id });
