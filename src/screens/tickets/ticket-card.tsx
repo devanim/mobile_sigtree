@@ -70,7 +70,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
       <DataTable>
         <DataTable.Row>
           <DataTable.Cell style={{ paddingTop: '3%' }}>
-            <Chip icon="" style={{ backgroundColor: '#fff', borderWidth: 1 }}>{'#'}{ticket?.id}{' '}{ticket?.priorityKey}</Chip>
+            <Chip icon="" style={{ backgroundColor: '#fff', borderWidth: 1 }}>{ticket?.idtracking}{' '}{ticket?.priorityKey}</Chip>
           </DataTable.Cell>
 
         </DataTable.Row>
