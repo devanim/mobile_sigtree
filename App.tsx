@@ -1,30 +1,46 @@
 import * as eva from "@eva-design/eva";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import AssetIconsPack from "assets/AssetIconsPack";
 import * as Localization from 'expo-localization';
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { patchFlatListProps } from "react-native-web-refresh-control";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 
-import RealmContext from "./src/context/RealmContext";
-import ThemeContext from "./src/context/ThemeContext";
-import useCachedResources from "./src/hooks/useCachedResources";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+
 import { KeycloakProvider } from "./src/keycloak/KeycloakProvider";
 import { setI18nConfig } from './src/localization/i18n';
 import LocalizationContext from './src/localization/localization-context';
-import RealmDetails from "./src/models/realm-details";
-import RoutingContainer from "./src/routing/routing-container";
-import { default as customTheme } from "./src/theme/appTheme.json";
 import { default as darkTheme } from "./src/theme/dark.json";
 import { default as lightTheme } from "./src/theme/light.json";
+
+import { default as customTheme } from "./src/theme/appTheme.json";
 import { default as customMapping } from "./src/theme/mapping.json";
+import ThemeContext from "./src/context/ThemeContext";
+import { patchFlatListProps } from "react-native-web-refresh-control";
+import RealmContext from "./src/context/RealmContext";
+import RealmDetails from "./src/models/realm-details";
+import RoutingContainer from "./src/routing/routing-container";
+import useCachedResources from "./src/hooks/useCachedResources";
+import * as Notifications from "expo-notifications";
 
 patchFlatListProps();
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: true,
+  }),
+});
+
+
 const App = (): JSX.Element => {
+
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef<any>();
+  const responseListener = useRef<any>();
   const keycloakConfiguration = {
     clientId: "sigtree-mobile",
     realm: "customer1",
@@ -55,6 +71,21 @@ const App = (): JSX.Element => {
     AsyncStorage.getItem("theme").then((value) => {
       if (value === "light" || value === "dark") setTheme(value);
     });
+
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification : any) => {
+      setNotification(notification);
+    });
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
   }, []);
 
   const toggleTheme = () => {
@@ -107,5 +138,7 @@ const App = (): JSX.Element => {
     );
   }
 };
+
+// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.dev/notifications
 
 export default App;

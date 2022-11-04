@@ -1,7 +1,8 @@
 {
     "expo": {
-        "name": "sigtree",
-        "slug": "metmoi",
+        "name": "sigtree-helpdesk",
+        "slug": "sigtree",
+        "privacy": "unlisted",
         "version": "1.0.1",
         "orientation": "portrait",
         "icon": "./assets/images/icon.png",
@@ -17,16 +18,18 @@
         },
         "assetBundlePatterns": ["**/*"],
         "ios": {
-            "supportsTablet": true
+            "supportsTablet": true,
+            "bundleIdentifier": "com.sigtree.sigtree-helpdesk"
         },
         "android": {
             "adaptiveIcon": {
                 "foregroundImage": "./assets/images/adaptive-icon.png",
                 "backgroundColor": "#FFFFFF"
             },
-            "package": "dev.timistudio.metmoi",
+            "package": "dev.sigtee",
             "versionCode": 1,
-            "permissions": [],
+            "permissions": ["NOTIFICATIONS"],
+            "useNextNotificationsApi": true,
             "config": {
                 "googleMobileAdsAppId": "ca-app-pub-6106751649082059~5831310011",
                 "googleSignIn": {}

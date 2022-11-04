@@ -20,10 +20,12 @@ import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import axios from "axios";
 import { UserProfilePayload } from "../../../models/user-profile/user-profile-payload";
 import { DEFAULT_LANGUAGE } from "../../../localization/i18n";
+import { registerForPushNotificationsAsync } from "../../../utils/notificationsUtils";
 
 const RealmContainer = (): JSX.Element => {
-  const { ready, login, realm, token } = useKeycloak();
+  const { ready, login, realm, token: authorizationToken } = useKeycloak();
   const [showRealmSelector, setShowRealmSelector] = useState(false);
+  const [expoPushToken, setExpoPushToken] = useState('');
   const { realmData: realmData, setRealm } = useContext(RealmContext);
   const [storedRealms, setStoredRealms] = useState<RealmDetails[]>([]);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
@@ -97,7 +99,7 @@ const RealmContainer = (): JSX.Element => {
     await login();
     setTimeout(() => { }, 500);
     await setLanguage();
-
+    await initializeNotifiations();
     navigate("DashboardNavigator", { screen: "DashboardScreen" });
   };
 
@@ -105,7 +107,7 @@ const RealmContainer = (): JSX.Element => {
     try {
       const response = await axios.get<UserProfilePayload>(
         SigtreeConfiguration.getUrl(realm, SCREEN_URL.USER_PROFILE_URL),
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${authorizationToken}` } }
       );
 
       if (response.status == 200) {
@@ -119,6 +121,22 @@ const RealmContainer = (): JSX.Element => {
       }
     } catch (error) { }
   };
+
+  const initializeNotifiations = async () => {
+    registerForPushNotificationsAsync().then(async (device) => {
+      if(device?.token != null){
+        await axios.post(
+          SigtreeConfiguration.getUrl(realm, SCREEN_URL.DEVICES),
+          {
+            "deviceid": device?.token,
+            "platform": device?.platform
+          },
+          { headers: { Authorization: `Bearer ${authorizationToken}` } }
+        );
+        return setExpoPushToken(device?.token as string);
+      }
+    });
+  }
 
   const toggleRealmSelectorComponent = () => {
     if (showRealmSelector === true) {

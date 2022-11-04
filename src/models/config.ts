@@ -6,7 +6,8 @@ export const SCREEN_URL = {
   TICKET_URL: "ticket",
   USER_PROFILE_URL: "user",
   STATISTICS_URL: "statistics",
-  LANGUAGES_URL: "languages"
+  LANGUAGES_URL: "languages",
+  DEVICES: "devices"
 }
 
 export const VERSION = "v1";
