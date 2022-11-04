@@ -13,7 +13,7 @@ export const SCREEN_URL = {
 export const VERSION = "v1";
 
 export const CONFIG = {
-  ITEMS_PER_PAGE: "6",
+  ITEMS_PER_PAGE: "12",
   ITEMS_PER_CAROUSEL: "5"
 }
 
