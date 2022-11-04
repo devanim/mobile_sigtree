@@ -7,8 +7,8 @@ const TosBuilding = (props: TosBuildingProps): JSX.Element => {
   return (
     <View style={tosBuildingStyles.container}>
       {
-        props.tosList.map(item => (
-          <Button title={`${item.buildingName} - ${item.name}`} onPress={() => props.onTosSelect(item.url)}/>
+        props.tosList.map((item, idx) => (
+          <Button key={idx} title={`${item.buildingName} - ${item.name}`} onPress={() => props.onTosSelect(item.url)}/>
         ))
       }
     </View>
