@@ -2,7 +2,8 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { ActivityIndicator, Appbar } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
+import AppBar from "../../components/appbar/appbar";
 import axios from "axios";
 
 import { useKeycloak } from "../../keycloak/useKeycloak";
@@ -53,11 +54,7 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <Appbar.Header style={{ backgroundColor: '#fff' }}>
-        <Appbar.BackAction onPress={goBack} />
-        <Appbar.Content title={t("TICKET_TITLE").toUpperCase()} />
-        <Appbar.Action icon="logout" onPress={onLogout} />
-      </Appbar.Header>
+      <AppBar title={t("TICKET_TITLE").toUpperCase()} />
       <TicketCard ticketId={ticketId} />
     </Layout>
   );

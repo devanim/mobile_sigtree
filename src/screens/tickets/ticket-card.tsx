@@ -2,10 +2,10 @@ import { NavigationProp, useFocusEffect, useNavigation } from "@react-navigation
 import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React, { useCallback } from "react";
-import { useContext, useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native-paper";
-import { StyleSheet } from "react-native";
-import { Chip, DataTable, IconButton, MD3Colors } from 'react-native-paper';
+import { useContext, useState } from "react";
+import { ActivityIndicator, TextProps } from "react-native-paper";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import { IconButton, MD3Colors } from 'react-native-paper';
 import { WebView } from "react-native-webview";
 
 import Error, { ErrorProps } from "../../components/error";
@@ -52,6 +52,20 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
     }
   };
 
+  const contentHtml = () => {
+    return `<head>
+    <style rel="stylesheet" type="text/css">
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        </head>
+        <body>${ticket?.content}</body>
+    </html>`
+  }
+
   if (error) {
     return (
       <Error
@@ -61,47 +75,72 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
     );
   }
 
+  const ticketPropList : TicketProperty[] = [
+    {
+        id: '1',
+        label: t('TICKET_CARD_CATEGORY'),
+        valueKey: ticket?.category,
+        color: '#ffffff'
+    },
+    {
+        id: '2',
+        label: t('TICKET_CARD_PRIORITY'),
+        valueKey: ticket?.priorityKey,
+        color: '#ffffff'
+    },
+    {
+        id: '3',
+        label: t('TICKET_CARD_STATUS'),
+        valueKey: ticket?.statusKey,
+        color: SigtreeConfiguration.getTicketStatusColor(ticket?.statusKey ?? "")
+    },
+  ]
+
   if (!ticket) {
     return <ActivityIndicator />;
   }
 
   return (
-    <Layout style={styles.container} level='1'>
-      <DataTable>
-        <DataTable.Row>
-          <DataTable.Cell style={{ paddingTop: '3%' }}>
-            <Chip icon="" style={{ backgroundColor: '#fff', borderWidth: 1 }}>{ticket?.idtracking}{' '}{ticket?.priorityKey}</Chip>
-          </DataTable.Cell>
-
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell style={{ marginLeft: 0 }} >{ticket?.name}</DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell style={{ paddingTop: '3%' }}>
-            <Chip icon="" style={{ backgroundColor: '#fff', borderWidth: 1 }}>{ticket?.category}</Chip>
-            {' '}
-            <Chip icon="list-status" style={{ backgroundColor: '#fff', borderWidth: 1 }}>{ticket?.statusKey}</Chip>
-            {' '}
-            <Chip icon="office-building-marker" style={{ backgroundColor: '#fff', borderWidth: 1 }}>{ticket?.building}</Chip>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <WebView style={styles.content} source={{ html: ticket ? ticket.content : t("NO_DATA_HTML") }} />
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell numeric style={{ paddingRight: 0 }}>
-            <IconButton
-              icon="square-edit-outline"
-              iconColor={MD3Colors.primary0}
-              size={24}
-              onPress={() => navigate("EditTicketScreen", { screen: "EditTicketScreen", ...ticket })}
-            />
-          </DataTable.Cell>
-        </DataTable.Row>
-      </DataTable>
+    <Layout style={style.container} level='1' >
+      <View style={[style.row, style.h10]} >
+        <Text style={[style.title, { flex: 0.9 }]} >{ticket?.name}</Text>
+        <IconButton
+            style={{ flex: 0.1, alignSelf: 'flex-end' }}
+            icon="square-edit-outline"
+            iconColor={MD3Colors.primary0}
+            size={24}
+            onPress={() => navigate("EditTicketScreen", { screen: "EditTicketScreen", ...ticket })}
+          />
+      </View>
+      <View style={[style.row, style.h5]} >
+        <View style={style.col_12} >
+          <Text style={style.ticketId}>{`ID: ${ticket?.idtracking}`}</Text>
+        </View>
+      </View>
+      <View style={[style.row, style.h10]} >
+      <Text style={{ fontWeight: "normal", width: "100%" }}>
+        {t("TICKET_PART_OF")}{' '}
+        <Bold>{ticket?.project} {ticket?.building}</Bold>{'. '}
+        {ticket?.tenant ? `${t("TICKET_TENANT_IS")} ` : ''}
+        {ticket?.tenant ? <Bold>{`${ticket?.tenant}.`}</Bold> : <></>}
+      </Text>
+      </View>
+      <FlatList
+        numColumns={1}
+        scrollEnabled={false}
+        data={ticketPropList}
+        keyExtractor={(i) => i.id}
+        renderItem={renderTicketProperty}
+      />
+      <View style={[style.row, style.h20]}>
+        <View style={style.col_12} >
+          <WebView source={{ html: ticket ? contentHtml() : t("NO_DATA_HTML") }} />
+        </View>
+      </View>
+      <View style={[style.row, style.h30]}>
+        <View style={style.col_12} >
+        </View>
+      </View>
     </Layout>
   );
 };
@@ -109,54 +148,69 @@ type TicketCardProps = {
   ticketId: string;
 }
 
-const styles = StyleSheet.create({
+type TicketProperty = {
+  id: string,
+  label: string,
+  valueKey: string | undefined,
+  color: string
+}
+const renderTicketProperty = ( { item } : { item : TicketProperty} ) => (
+  <View style={[style.row, style.ticketPropertyItem]}>
+    <Text style={{ flex: 1 }} >{item.label}</Text>
+      <View style={[style.row, style.propertyChip, { backgroundColor: item.color}]} >
+        <Text >{item?.valueKey}</Text>
+      </View>
+  </View>
+);
+
+const Bold = (props: TextProps) => <Text style={{fontWeight: 'bold'}}>{props.children}</Text>
+
+const style = StyleSheet.create({
   container: {
-
+    flex: 1,
+    padding: '5%'
   },
-  category: {
-
+  row: {
+    flexDirection: "row",
+    padding: 2,
+    justifyContent: "center",
+    alignItems: "center", 
   },
-  containerCard: {
-    marginTop: 10,
-    height: '15%'
+  h5: {
+    height: '5%'
   },
-  button: {
-    marginTop: 8,
+  h10: {
+    height: '10%'
   },
-  content: {
-    marginTop: 1,
-    height: 350,
-    width: '100%',
-    overflow: 'hidden'
+  h20: {
+    height: '20%'
   },
-  text: {
-    margin: 5,
-    color: "#000",
+  h30: {
+    height: '30%'
+  },
+  col_12: {
+    flex: 1
   },
   title: {
-    margin: 5,
-    color: "#000",
-    fontWeight: "bold"
+    fontWeight: 'bold',
+    fontSize: 20
   },
-  textView: {
-    flex: 2,
-    padding: 1,
-    flexDirection: "row"
+  ticketId: {
+    fontWeight: 'bold',
+    fontSize: 15
   },
-  titleView: {
-    textAlign: "center",
-    width: '100%',
-    fontSize: 25
+  ticketPropertyItem: {
+    marginTop: "5%"
   },
-  twoOnRow: {
-    flex: 2,
-    flexDirection: "row"
-  },
-  titleStyle: {
-    textAlign: "center",
-    width: "100%",
-    fontSize: 25,
-    fontWeight: "bold"
+  propertyChip: {
+    flex: 1,
+    alignSelf: 'flex-end',
+    backgroundColor: '#fff',
+    justifyContent: "center",
+    borderWidth: 0.5,
+    borderRadius: 5,
+    borderColor: '#626262',
+    alignItems: "center",
   }
-});
+})
 export default TicketCard;
