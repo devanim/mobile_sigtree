@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, Image } from "react-native";
+import { Image } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { Text } from 'react-native-paper';
 import { WebView } from "react-native-webview";

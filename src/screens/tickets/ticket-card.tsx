@@ -3,7 +3,7 @@ import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React, { useCallback } from "react";
 import { useContext, useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import { Chip, DataTable, IconButton, MD3Colors } from 'react-native-paper';
 import { WebView } from "react-native-webview";

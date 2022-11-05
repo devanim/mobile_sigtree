@@ -1,7 +1,8 @@
 import { useCallback, useContext, useState } from "react";
 import axios from "axios";
 import { Button, Layout, Text } from "@ui-kitten/components";
-import { ActivityIndicator, StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import UserProfile from "./user-profile";
 import { NavigationProp, useFocusEffect, useNavigation } from "@react-navigation/native";
 import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";

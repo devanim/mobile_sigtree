@@ -3,7 +3,8 @@ import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React from "react";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { FlatList, View } from "react-native";
+import { ActivityIndicator } from "react-native-paper"; 
 import { StyleSheet } from "react-native";
 
 import Error, { ErrorProps } from "../../components/error";

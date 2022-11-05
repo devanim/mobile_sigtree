@@ -1,7 +1,8 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { TopNavigation } from "@ui-kitten/components";
 import axios from "axios";
-import { View, ActivityIndicator } from "react-native";
+import { View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { AppStackParamList } from "../../routing/route-screens";
 
 import NavigationAction from "../../components/navigation-action";

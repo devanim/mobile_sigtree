@@ -1,7 +1,8 @@
 import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 
 import AppBar from "../../components/appbar/appbar";
 import Error, { ErrorProps } from "../../components/error";

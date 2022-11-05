@@ -12,7 +12,7 @@ import RealmDetails from "../../../models/realm-details";
 import RealmContext from "../../../context/RealmContext";
 import { APP_LANGUAGE_KEY, REALMS_KEY } from "../../../utils/constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppStackParamList } from "../../../routing/route-screens";
 import LocalizationContext from "../../../localization/localization-context";
