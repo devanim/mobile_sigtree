@@ -1,5 +1,3 @@
-import { Attachment } from "../attachment"
-
 export class Ticket {
   public id!: number;
   public idtracking: number | null = null;
@@ -8,7 +6,7 @@ export class Ticket {
   public tags!: string;
   public idcategory!: number;
   public category!: string;
-  public attachments!: Attachment[];
+  public attachments!: TicketAttachment[];
   public idstatus!: number;
   public statusKey!: string;
   public idpriority!: number;
@@ -36,4 +34,9 @@ export class Ticket {
   public canClose!: number;
   public idapproval!: number;
   public approvalKey!: string;
+}
+
+export type TicketAttachment = {
+  name: string;
+  content: string;
 }

@@ -1,7 +1,7 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import axios from "axios";
 import { Button, Layout, Text } from "@ui-kitten/components";
-import { ActivityIndicator, View, StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import UserProfile from "./user-profile";
 import { NavigationProp, useFocusEffect, useNavigation } from "@react-navigation/native";
 import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
@@ -66,7 +66,7 @@ const UserContainer = (): JSX.Element => {
       const response = await axios.get<TOSPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });
-console.log("response", response.data);
+
       if (response.status == 200) {
         setTosList(response.data.data);
       } else {

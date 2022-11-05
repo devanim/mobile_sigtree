@@ -6,8 +6,9 @@ import { View } from "react-native";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button } from "react-native-paper";
-import { Building } from "src/models/user-profile/building";
-import { UserProfile } from "src/models/user-profile/user-profile";
+import FilePicker from "../../../components/form/file-picker";
+import { Building } from "../../../models/user-profile/building";
+import { UserProfile } from "../../../models/user-profile/user-profile";
 
 import Dropdown from "../../../components/form/dropdown";
 import Input from "../../../components/form/input";
@@ -16,7 +17,7 @@ import LocalizationContext from "../../../localization/localization-context";
 import { DropdownValue } from "../../../models/common/dropdown-value";
 import { priorityList } from "../../../models/common/priority-list";
 import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
-import { Ticket } from "../../../models/ticket/ticket";
+import { Ticket, TicketAttachment } from "../../../models/ticket/ticket";
 import { TicketPayload } from "../../../models/ticket/ticket-payload";
 import { AppStackParamList } from "../../../routing/route-screens";
 
@@ -249,6 +250,11 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
           ) : (
             <></>
           )}
+          <FilePicker 
+            name="idtenant"
+            label={t("TICKETS_ADD_FORM_ATTACHMENTS")}
+            value={props.ticket?.attachments ?? []}
+            setValue={setValue}/>
           <Button
             mode="outlined"
             onPress={handleSubmit(onSubmit, onInvalid)}
@@ -272,6 +278,7 @@ type FormData = {
   idbuilding: number;
   content: string;
   idtenant?: number;
+  attachments: TicketAttachment[];
 };
 
 type FormErrors = {
