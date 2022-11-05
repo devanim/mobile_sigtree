@@ -60,7 +60,6 @@ const ArticlesList = (): JSX.Element => {
         //setArticles(response.data.data.articles ?? []);
         setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
-        setIsLoadingData(false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -74,6 +73,8 @@ const ArticlesList = (): JSX.Element => {
         friendlyMessage: friendlyMessage,
         errorMessage: JSON.stringify(error),
       });
+    } finally {
+      setIsLoadingData(false);
     }
   };
 

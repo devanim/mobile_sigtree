@@ -55,7 +55,6 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
         setTickets(tickets => [...tickets, ...(response.data.data.tickets ?? [])]);
         setMaxId(Math.max(...(response.data.data.tickets ?? []).map((ticket) => ticket.row_num)));
         setHasNextPage(response.data.data.more ?? false);
-        setIsLoadingData(false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -69,6 +68,8 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
         friendlyMessage: friendlyMessage,
         errorMessage: JSON.stringify(error),
       });
+    } finally {
+      setIsLoadingData(false);
     }
   };
 
