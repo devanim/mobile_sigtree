@@ -69,7 +69,7 @@ const EditUserScreen = (props: EditUserScreenProps): JSX.Element => {
   return (
     <Layout style={styles.container} level='1'>
       <Appbar.Header style={styles.header}>
-        <Appbar.Content title={t("TICKETS_ADD_TICKET").toUpperCase()} />
+        <Appbar.Content title={t("USER_PROFILE_EDIT").toUpperCase()} />
         <Appbar.Action icon="window-close" onPress={goBack} />
       </Appbar.Header>
       <EditUserContainer userProfile={userProfile} languageList={languageList} />

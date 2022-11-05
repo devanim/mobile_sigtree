@@ -24,7 +24,6 @@ const UserContainer = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
 
   useFocusEffect(useCallback(() => {
-    console.log("executed this method");
     setIsLoading(true);
 
     getUserProfileDetails();
