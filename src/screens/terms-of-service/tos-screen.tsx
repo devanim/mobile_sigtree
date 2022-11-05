@@ -17,9 +17,9 @@ import { TOSPayload } from "../../models/tos/tos-payload";
 import TosBuilding from "./tos-building";
 import { BuildingTos } from "../../models/tos/building-tos";
 import { useKeycloak } from "../../keycloak/useKeycloak";
-import React from "react";
+import * as React from "react";
 
-const TOSScreen = () => {
+const TOSScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { goBack } = useNavigation<NavigationProp<AppStackParamList>>();
   const { token, realm } = useKeycloak();
