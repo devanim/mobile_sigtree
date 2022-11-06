@@ -43,6 +43,7 @@
     "TICKETS_ADD_FORM_PROJECT": "Project",
     "TICKETS_ADD_FORM_CATEGORY": "Category",
     "TICKETS_ADD_FORM_TENANT": "Tenant",
+    "TICKETS_ADD_FORM_ATTACHMENTS": "Attachments",
     "TICKETS_ADD_FORM_BUILDING_PLACEHOLDER": "Select building",
     "TICKETS_ADD_FORM_PROJECT_PLACEHOLDER": "Select project",
     "TICKETS_ADD_FORM_FLOOR_PLACEHOLDER": "Select floor",
@@ -99,5 +100,6 @@
     "TICKET_READ": "Read",
     "TICKET_PENDING": "Pending",
     "TICKET_CLOSED": "Closed",
-    "TICKET_RESOLVED": "Resolved"
+    "TICKET_RESOLVED": "Resolved",
+    "TICKET_UPLOAD": "Upload"
 }

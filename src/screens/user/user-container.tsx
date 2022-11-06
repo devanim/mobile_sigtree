@@ -12,9 +12,9 @@ import Error, { ErrorProps } from "../../components/error";
 import LocalizationContext from "../../localization/localization-context";
 import { AppStackParamList } from "../../routing/route-screens";
 import { useKeycloak } from "../../keycloak/useKeycloak";
-import React from "react";
-import { TOSPayload } from "src/models/tos/tos-payload";
-import { BuildingTos } from "src/models/tos/building-tos";
+import * as React from "react";
+import { TOSPayload } from "../../models/tos/tos-payload";
+import { BuildingTos } from "../../models/tos/building-tos";
 
 const UserContainer = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -25,20 +25,14 @@ const UserContainer = (): JSX.Element => {
   );
   const [tos, setTos] = useState<BuildingTos[]>([]); 
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
+  const [tosList, setTosList] = useState<BuildingTos[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useFocusEffect(useCallback(() => {
     setIsLoading(true);
 
     getUserProfileDetails();
-
-    setIsLoading(false);
-  }, []));
-
-  useFocusEffect(useCallback(() => {
-    setIsLoading(true);
-
-    getTOS();
+    getTOSList();
 
     setIsLoading(false);
   }, []));
@@ -68,15 +62,15 @@ const UserContainer = (): JSX.Element => {
     }
   };
 
-  const getTOS = async () => {
+  const getTOSList = async () => {
     try {
-      const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TOS_URL)}/all`
-      const response = await axios.get<TOSPayload>(reqUrl,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TOS_URL)}/all`;
+      const response = await axios.get<TOSPayload>(reqUrl, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       if (response.status == 200) {
-        setTos(response.data.data ?? []);
+        setTosList(response.data.data);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -91,7 +85,7 @@ const UserContainer = (): JSX.Element => {
         errorMessage: JSON.stringify(error),
       });
     }
-  }
+  };
 
   if (error) {
     return (
@@ -118,9 +112,17 @@ const UserContainer = (): JSX.Element => {
     navigate("ChangePasswordScreen", { screen: "ChangePasswordScreen" });
   };
 
-  const hasTosAvailable = (): boolean => {
-    return tos.length > 0;
+  const hasBuildingsAssigned = (): boolean => {
+    return userProfile?.resources?.buildings?.length > 0;
   };
+
+  const hasTos = (): boolean => {
+    if (!tosList || tosList.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
 
   if(isLoading)
   {
@@ -142,7 +144,7 @@ const UserContainer = (): JSX.Element => {
           ><Text style={{}}>{t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()}</Text></Button>
         </Layout>
         <Layout style={styles.tos} level='1'>
-          {hasTosAvailable() ? (
+          {(hasBuildingsAssigned() && hasTos()) ? (
             <Text style={styles.tosIntro}> {t("TOS_INTRO")}
               <Text
                 style={styles.tosLink}

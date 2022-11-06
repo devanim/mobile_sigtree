@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useContext, useEffect, useState } from "react";
-import { ScrollView, Button } from "react-native";
+import { ScrollView, Button, Text } from "react-native";
 import { AppStackParamList } from "../../../routing/route-screens";
 import LocalizationContext from "../../../localization/localization-context";
 import { FieldError, useForm } from "react-hook-form";
@@ -77,16 +77,8 @@ const EditUserForm = (props: EditUserFormProps): JSX.Element => {
       <Button title={t("BTN_CANCEL")} onPress={goBack} />
 
       <SectionTitle title={t("USER_PROFILE_USER_SETTINGS")} />
-
-      <Input
-        label={t("USER_PROFILE_USER_LABEL")}
-        value={props.userProfile.username}
-        error={errors ? errors["username"] : undefined}
-        {...register("username", {
-          required: { value: true, message: "Username is required" },
-        })}
-        setValue={setValue}
-      />
+  
+      <Text>{`Username: ${props.userProfile.username}`}</Text>
       <Input
         label={t("USER_PROFILE_FIRST_NAME_LABEL")}
         value={props.userProfile.firstName}

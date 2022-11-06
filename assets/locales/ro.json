@@ -41,6 +41,7 @@
     "TICKETS_ADD_FORM_PROJECT": "Proiect",
     "TICKETS_ADD_FORM_CATEGORY": "Categorie",
     "TICKETS_ADD_FORM_TENANT": "Chiriaș",
+    "TICKETS_ADD_FORM_ATTACHMENTS": "Atasamente",
     "TICKETS_ADD_FORM_BUILDING_PLACEHOLDER": "Alege clădirea",
     "TICKETS_ADD_FORM_PROJECT_PLACEHOLDER": "Alege proiectul",
     "TICKETS_ADD_FORM_FLOOR_PLACEHOLDER": "Alege etajul",
@@ -94,10 +95,11 @@
     "BTN_CANCEL": "Anulați",
     "DASHBOARD_TITLE": "Rapoarte",
     "LOGIN_BTN": "Logare",
-    "TICKET_IN_PROGRESS": "in_progress",
-    "TICKET_NEW": "new",
-    "TICKET_READ": "read",
-    "TICKET_PENDING": "pending",
-    "TICKET_CLOSED": "closed",
-    "TICKET_RESOLVED": "resolved"
+    "TICKET_IN_PROGRESS": "In Progres",
+    "TICKET_NEW": "Nou",
+    "TICKET_READ": "Citit",
+    "TICKET_PENDING": "In Asteptare",
+    "TICKET_CLOSED": "Inchis",
+    "TICKET_RESOLVED": "Rezolvat",
+    "TICKET_UPLOAD": "Incarcati"
 }

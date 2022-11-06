@@ -1,10 +1,9 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, Layout } from "@ui-kitten/components";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { ScrollView } from "react-native";
 import { UserProfile } from "src/models/user-profile/user-profile";
 
@@ -104,13 +103,7 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
     <Layout style={styles.container} level="1">
       <ScrollView style={styles.containerCard}>
         <SectionTitle title={t("USER_PROFILE_USER_SETTINGS").toUpperCase()} />
-        <Input
-          name="username"
-          label={t("USER_PROFILE_USER_LABEL")}
-          value={props.userProfile.username}
-          error={errors ? errors["username"] : undefined}
-          setValue={setValue}
-        />
+        <Text>{`Username: ${props.userProfile.username}`}</Text>
         <Input
           name="firstName"
           label={t("USER_PROFILE_FIRST_NAME_LABEL")}
