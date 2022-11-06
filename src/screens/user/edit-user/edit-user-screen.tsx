@@ -25,10 +25,10 @@ const EditUserScreen = (props: EditUserScreenProps): JSX.Element => {
 
 
   useEffect(() => {
-    getTicket();
+    getLanguages();
   }, []);
 
-  const getTicket = async () => {
+  const getLanguages = async () => {
     try {
       const reqUrl = SigtreeConfiguration.getUrl(realm, SCREEN_URL.LANGUAGES_URL);
       const response = await axios.get<LanguagesPayload>(reqUrl, {

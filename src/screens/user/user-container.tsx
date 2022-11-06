@@ -3,7 +3,11 @@ import axios from "axios";
 import { Button, Layout, Text } from "@ui-kitten/components";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import UserProfile from "./user-profile";
-import { NavigationProp, useFocusEffect, useNavigation } from "@react-navigation/native";
+import {
+  NavigationProp,
+  useFocusEffect,
+  useNavigation,
+} from "@react-navigation/native";
 import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { UserProfile as UserProfileModel } from "../../models/user-profile/user-profile";
 import { UserProfilePayload } from "../../models/user-profile/user-profile-payload";
@@ -16,7 +20,7 @@ import { TOSPayload } from "../../models/tos/tos-payload";
 import { BuildingTos } from "../../models/tos/building-tos";
 
 const UserContainer = (): JSX.Element => {
-  const { t } = useContext(LocalizationContext);
+  const { t, locale, handleChange } = useContext(LocalizationContext);
   const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   const { token, realm } = useKeycloak();
   const [userProfile, setUserProfile] = useState<UserProfileModel | undefined>(
@@ -26,14 +30,21 @@ const UserContainer = (): JSX.Element => {
   const [tosList, setTosList] = useState<BuildingTos[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  useFocusEffect(useCallback(() => {
-    setIsLoading(true);
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
 
-    getUserProfileDetails();
-    getTOSList();
+      resetState();
+      getUserProfileDetails();
+      getTOSList();
+      // changeLanguage();
+      setIsLoading(false);
+    }, [])
+  );
 
-    setIsLoading(false);
-  }, []));
+  const resetState = () => {
+    setUserProfile(undefined);
+  }
 
   const getUserProfileDetails = async () => {
     try {
@@ -62,7 +73,10 @@ const UserContainer = (): JSX.Element => {
 
   const getTOSList = async () => {
     try {
-      const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TOS_URL)}/all`;
+      const reqUrl = `${SigtreeConfiguration.getUrl(
+        realm,
+        SCREEN_URL.TOS_URL
+      )}/all`;
       const response = await axios.get<TOSPayload>(reqUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -85,6 +99,15 @@ const UserContainer = (): JSX.Element => {
     }
   };
 
+  // const changeLanguage = () => {
+  //   if (!userProfile) {
+  //     return;
+  //   }
+  //   if (locale != userProfile?.lang) {
+  //     handleChange(userProfile?.lang);
+  //   }
+  // }
+
   if (error) {
     return (
       <Error
@@ -94,16 +117,15 @@ const UserContainer = (): JSX.Element => {
     );
   }
 
-  if (!userProfile) {
-    return <ActivityIndicator />;
-  }
-
   const navigateToTOSScreen = () => {
     navigate("TOSScreen", { screen: "TOSScreen" });
   };
 
   const navigateToEditUserProfileScreen = () => {
-    navigate("EditUserScreen", { screen: "EditUserScreen", params: userProfile });
+    navigate("EditUserScreen", {
+      screen: "EditUserScreen",
+      params: userProfile,
+    });
   };
 
   const navigateToChangePasswordScreen = () => {
@@ -111,6 +133,10 @@ const UserContainer = (): JSX.Element => {
   };
 
   const hasBuildingsAssigned = (): boolean => {
+    if (!userProfile) {
+      return false;
+    }
+
     return userProfile?.resources?.buildings?.length > 0;
   };
 
@@ -120,81 +146,91 @@ const UserContainer = (): JSX.Element => {
     }
 
     return true;
-  }
+  };
 
-  if(isLoading)
-  {
-    return <ActivityIndicator />
+  if (isLoading || !userProfile) {
+    return <ActivityIndicator />;
   }
 
   return (
-    <Layout style={styles.container} level='1'>
-      <Layout level='1'>
-        <UserProfile profile={userProfile} />
-        <Button
-          style={styles.button}
-          onPress={navigateToEditUserProfileScreen}
-        >{t("USER_PROFILE_EDIT").toUpperCase()}</Button>
-        <Button
-          style={styles.button}
-          onPress={navigateToChangePasswordScreen}         
-        ><Text style={{}}>{t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()}</Text></Button>
-      </Layout>
-      <Layout style={styles.tos} level='1'>
-        {(hasBuildingsAssigned() && hasTos()) ? (
-          <Text style={styles.tosIntro}> {t("TOS_INTRO")}
-            <Text
-              style={styles.tosLink}
-              onPress={navigateToTOSScreen}
-            >{t("READ_TOS")}</Text>
-          </Text>
-        ) : (
-          <></>
-        )}
-      </Layout>
-    </Layout>
+    <>
+      {!isLoading ? (
+        <Layout style={styles.container} level="1">
+          <Layout level="1">
+            {userProfile ? <UserProfile profile={userProfile} /> : <></>}
+            <Button
+              style={styles.button}
+              onPress={navigateToEditUserProfileScreen}
+            >
+              {t("USER_PROFILE_EDIT").toUpperCase()}
+            </Button>
+            <Button
+              style={styles.button}
+              onPress={navigateToChangePasswordScreen}
+            >
+              <Text style={{}}>
+                {t("USER_PROFILE_CHANGE_PASSWORD").toUpperCase()}
+              </Text>
+            </Button>
+          </Layout>
+          <Layout style={styles.tos} level="1">
+            {hasBuildingsAssigned() && hasTos() ? (
+              <Text style={styles.tosIntro}>
+                {" "}
+                {t("TOS_INTRO")}
+                <Text style={styles.tosLink} onPress={navigateToTOSScreen}>
+                  {t("READ_TOS")}
+                </Text>
+              </Text>
+            ) : (
+              <></>
+            )}
+          </Layout>
+        </Layout>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   tos: {
-    flexDirection: 'column',
+    flexDirection: "column",
     flexGrow: 1,
-    padding: '5% 5%',
-    paddingBottom: '1%',
-
+    padding: "5% 5%",
+    paddingBottom: "1%",
   },
   tosLink: {
-    color: '#000', 
-    textDecorationLine: 'underline',
-    fontWeight:'100',
-    fontStyle: 'normal',
-    fontFamily:'Montserrat-Regular'
+    color: "#000",
+    textDecorationLine: "underline",
+    fontWeight: "100",
+    fontStyle: "normal",
+    fontFamily: "Montserrat-Regular",
   },
   tosIntro: {
-    fontWeight:'100',
-    fontStyle: 'normal',
-    fontFamily:'Montserrat-Regular',
-    textAlign: 'center'
+    fontWeight: "100",
+    fontStyle: "normal",
+    fontFamily: "Montserrat-Regular",
+    textAlign: "center",
   },
   text: {
     marginHorizontal: 8,
     textTransform: "capitalize",
   },
   button: {
-    marginTop: '2%',
-    marginLeft: '5%',
-    marginRight: '5%',
+    marginTop: "2%",
+    marginLeft: "5%",
+    marginRight: "5%",
     borderRadius: 0,
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: "#000",
   },
 });
-
 
 export default UserContainer;

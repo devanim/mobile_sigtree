@@ -40,7 +40,6 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
       shouldValidate: true,
     });
     setValue("lastName", props.userProfile.lastName, { shouldValidate: true });
-    setValue("username", props.userProfile.username, { shouldValidate: true });
     setValue("email", props.userProfile.email ?? "");
     setValue("phoneNumber", props.userProfile.phoneNumber ?? "");
     setValue("notifyOnNewNote", props.userProfile.notifyOnNewNote);
@@ -61,9 +60,6 @@ const EditUserContainer = (props: EditUserFormProps): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    register("username", {
-      required: { value: true, message: "Username is required" },
-    });
     register("firstName", {
       required: { value: true, message: "First Name is required" },
     });
