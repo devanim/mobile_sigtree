@@ -30,7 +30,7 @@ const FilePicker = (props: FilePickerProps): JSX.Element => {
   
   return (
     <>
-      <Text>Mumu mimi</Text>
+      <Text>{t("TICKETS_ADD_FORM_ATTACHMENTS")}</Text>
       {
         valuesList.map((val, idx) => {
           return (
