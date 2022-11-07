@@ -5,20 +5,20 @@ import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from 'expo-file-system';
 import { DocumentResult } from "expo-document-picker";
 import LocalizationContext from "../../localization/localization-context";
+import { TicketAttachment } from "../../models/ticket/ticket";
 
 const FilePicker = (props: FilePickerProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
-  const [valuesList, setValuesList] = useState<any[]>([]);
+  const [valuesList, setValuesList] = useState<TicketAttachment[]>([]);
 
-  const showUploadButton = async () => {
+  const uploadDocument = async () => {
     const result: DocumentResult = await DocumentPicker.getDocumentAsync({});
     if (result.type === "success") {
       const name = result.name;
       const fileBase64 = await FileSystem.readAsStringAsync(result.uri,{ encoding: "base64" });
-      setValuesList(valuesList => [...valuesList, {name: name, fileBase64: fileBase64}]);
-      console.log("value here 123", name);
+      setValuesList(valuesList => [...valuesList, {name: name, content: fileBase64}]);
+      props.setValue(props.name, valuesList);
     }
-    console.log(result);
   };
 
   const removeUpload = (fileName: string) => {
@@ -30,7 +30,7 @@ const FilePicker = (props: FilePickerProps): JSX.Element => {
   
   return (
     <>
-      <Text>Mumu mimi</Text>
+      <Text>{t("TICKETS_ADD_FORM_ATTACHMENTS")}</Text>
       {
         valuesList.map((val, idx) => {
           return (
@@ -43,7 +43,7 @@ const FilePicker = (props: FilePickerProps): JSX.Element => {
       }
       <Button
         mode="outlined"
-        onPress={showUploadButton}
+        onPress={uploadDocument}
         style={styles.submit}
       >
         {t("TICKET_UPLOAD")}
@@ -54,10 +54,10 @@ const FilePicker = (props: FilePickerProps): JSX.Element => {
 
 interface FilePickerProps {
   name: string;
-  value: any[];
+  value: TicketAttachment[];
   label?: string;
   secureEntry?: boolean;
-  setValue: (name: any, value: string, validate?: boolean) => void;
+  setValue: (name: string, value: TicketAttachment[], validate?: boolean) => void;
 }
 
 const styles = StyleSheet.create({

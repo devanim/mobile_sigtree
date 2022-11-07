@@ -1,15 +1,22 @@
 import Checkbox from "expo-checkbox";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
 import { StyleSheet, Text, View } from "react-native";
 
 import { UserFormData } from "../screens/user/edit-user/edit-user-container";
 
 const CustCheckbox = (props: CustCheckboxProps): JSX.Element => {
-  const [isChecked, setChecked] = useState(props.isChecked);
+  const [isChecked, setChecked] = useState<boolean|undefined>();
+  
+  useEffect(() => {
+    setChecked(props.isChecked);
+  }, [props.isChecked]);
 
   const onValueChange = (val: boolean) => {
-    props.setValue(props.name, val, { shouldValidate: true });
+    if (props.setValue) {
+      props.setValue(props.name, val, { shouldValidate: true });
+    }
+
     setChecked(val);
   };
 
@@ -46,7 +53,7 @@ type CustCheckboxProps = {
   isChecked: boolean;
   isDisabled?: boolean;
   label: string;
-  setValue: UseFormSetValue<UserFormData>;
+  setValue?: UseFormSetValue<UserFormData>;
 };
 const styles = StyleSheet.create({
   section: {

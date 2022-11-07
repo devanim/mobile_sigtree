@@ -65,12 +65,8 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
         message: t("TICKETS_ADD_FORM_CATEGORY_ERROR"),
       },
     });
-    register("idtenant", {
-      required: {
-        value: true,
-        message: t("TICKETS_ADD_FORM_TENANT_ERROR"),
-      },
-    });
+    register("idtenant");
+    register("attachments");
   }, []);
 
   const getProjectList = (): DropdownValue[] => {
@@ -102,6 +98,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
 
   const onSubmit = async () => {
     const vals = getValues();
+
     const reqUrl = `${SigtreeConfiguration.getUrl(
       realm,
       SCREEN_URL.TICKET_URL
@@ -113,6 +110,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   };
 
   const onInvalid = (err: any) => {
+
     setErrors(err);
   };
 
@@ -251,7 +249,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
             <></>
           )}
           <FilePicker 
-            name="idtenant"
+            name="attachments"
             label={t("TICKETS_ADD_FORM_ATTACHMENTS")}
             value={props.ticket?.attachments ?? []}
             setValue={setValue}/>
