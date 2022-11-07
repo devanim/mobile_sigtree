@@ -6,6 +6,7 @@ import { FieldError, useForm } from "react-hook-form";
 import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button, Text } from "react-native-paper";
+import ChipInput from "../../../components/form/chip-input";
 
 import Error, { ErrorProps } from "../../../components/error";
 import Dropdown from "../../../components/form/dropdown";
@@ -61,6 +62,7 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
     register("idcategory", {
       required: { value: true, message: "Category is required" },
     });
+    register("tags");
   }, []);
 
   const getPossibleStatuses = async () => {
@@ -152,9 +154,11 @@ const EditTicketForm = (props: EditTicketFormProps): JSX.Element => {
             <Text variant="titleMedium">{props.ticket?.idtracking}</Text>
           </View>
           <View>
-            <Input
-              label="Tags"
-              value={props.ticket?.tags ?? ""}
+            <ChipInput
+              name="tags"
+              tags={props.ticket?.tagsArray ?? []}
+              inputValue={""}
+              label={t("TICKETS_ADD_FORM_TAG")}
               setValue={setValue}
             />
           </View>

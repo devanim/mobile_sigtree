@@ -10,9 +10,12 @@ const ChipInput = (props: ChipInputProps): JSX.Element => {
   const removeTag = (item: string) => {
     const newTags = [...tags];
     const index = newTags.indexOf(item, 0);
+    
     if (index > -1) {
       newTags.splice(index, 1);
     }
+
+    props.setValue(props.name, newTags.join(","));
     setTags(newTags);
   };
   
@@ -23,6 +26,7 @@ const ChipInput = (props: ChipInputProps): JSX.Element => {
       setInputValue("");
       return;
     }
+
     const newTags = [...tags, e.nativeEvent.text];
     setTags(newTags);
     props.setValue(props.name, newTags.join(","));
