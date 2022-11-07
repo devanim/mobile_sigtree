@@ -21,9 +21,12 @@ export const webviewContent = (content: string): string => {
     </head>
     <body><div id="height-calculator">${content}</div></body>
     <script>
-      var calculator = document.getElementById("height-calculator");
-      document.title = calculator.clientHeight;
-      window.ReactNativeWebView.postMessage(calculator.clientHeight);
+      setTimeout(function() { 
+        var calculator = document.getElementById("height-calculator");
+        document.title = calculator.clientHeight;
+        window.ReactNativeWebView.postMessage(calculator.clientHeight);
+      }, 500);
+      true;
     </script>
   </html>`
 }

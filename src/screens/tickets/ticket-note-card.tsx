@@ -19,7 +19,7 @@ const TicketNoteCard = (props: TicketNoteCardProps): JSX.Element => {
     // TODO 
     // remove 0.6 multiplier and figure out why reported height is wrong
     // check height on ios
-    setWebViewHeight(Number(event.nativeEvent.data) * 0.6)
+    setWebViewHeight(Number(event.nativeEvent.data))
   }
 
   const content = useCallback(() => {
@@ -27,7 +27,7 @@ const TicketNoteCard = (props: TicketNoteCardProps): JSX.Element => {
   }, [props])
 
   return (
-    <Card style={{ backgroundColor: '#fff', margin: 10}} mode='elevated'>
+    <Card style={{ backgroundColor: '#fff', margin: 10 }} mode='elevated'>
       <Card.Title title={props.note.username} />
       <Card.Content>
         <View style={{ flex: 1 }}>
