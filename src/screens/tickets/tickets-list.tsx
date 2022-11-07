@@ -27,13 +27,16 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedBuilding, setSelectedBuilding] = useState("");
+  const [selectedProject, setSelectedProject] = useState("");
+  const [selectedTenant, setSelectedTenant] = useState("");
   const [maxId, setMaxId] = useState(0);
 
   useFocusEffect(useCallback(() => {
     resetState();
     getTickets();
-
-  }, [selectedStatus]));
+    console.log("called this method");
+  }, [selectedStatus, selectedBuilding, selectedProject, selectedTenant]));
 
   const resetState = () => {
     setIsLoadingData(true);
@@ -85,6 +88,21 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
     resetState()
   };
 
+  const onSelectedBuilding = (building: string) => {
+    setSelectedBuilding(building);
+    resetState();
+  }
+
+  const onSelectedProject = (project: string) => {
+    setSelectedProject(project);
+    resetState();
+  }
+
+  const onSelectedTenant = (tenant: string) => {
+    setSelectedTenant(tenant);
+    resetState();
+  }
+
   const onCancelFiltering = () => {
     setSelectedStatus("");
     resetState()
@@ -104,6 +122,9 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
         ticketBrief={item}
         onTicketSelected={onTicketSelected}
         onSelectedStatus={onSelectedStatus}
+        onSelectedBuilding={onSelectedBuilding}
+        onSelectedProject={onSelectedProject}
+        onSelectedTenant={onSelectedTenant}
       />
     );
   }, []);
