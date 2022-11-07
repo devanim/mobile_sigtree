@@ -1,8 +1,9 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { ActivityIndicator } from 'react-native-paper';
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AppBar from "../../components/appbar/appbar";
 import axios from "axios";
 
@@ -12,6 +13,7 @@ import { AppStackParamList } from "../../routing/route-screens";
 import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { EditUserPayload } from "../../models/user-profile/edit-user-payload";
 import TicketCard from "./ticket-card";
+import TicketNotes from "./ticket-notes";
 
 const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -55,7 +57,18 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
   return (
     <Layout style={styles.container} level='1'>
       <AppBar title={t("TICKET_TITLE").toUpperCase()} />
-      <TicketCard ticketId={ticketId} />
+      <KeyboardAwareScrollView>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={{ flex: 1, flexDirection: 'column'}}>
+            <TicketCard ticketId={ticketId} />
+            <TicketNotes
+              count={4}
+              ticketId={ticketId}
+              roleId={role}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
     </Layout>
   );
 }

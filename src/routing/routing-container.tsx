@@ -23,15 +23,20 @@ const RoutingContainer = (): ReactElement => {
         screenOptions={{ headerShown: false }}
         initialRouteName="HomeScreen"
       >
+        {/* 
+            Disable animation to fix a crash on android related to webview and navigation
+            See https://github.com/react-navigation/react-navigation/issues/9061#issuecomment-927279484
+        */}
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="TOSScreen" component={TOSScreen} />
         <Stack.Screen name="NewTicketScreen" component={NewTicketScreen} />
-        <Stack.Screen name="EditTicketScreen" component={EditTicketScreen} />
+        <Stack.Screen name="EditTicketScreen" component={EditTicketScreen} options={{animation:'none'}} />
         <Stack.Screen name="ArticleScreen" component={ArticleScreen} />
         <Stack.Screen name="UserScreen" component={UserScreen} />
         <Stack.Screen name="EditUserScreen" component={EditUserScreen} />
         <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-        <Stack.Screen name="TicketScreen" component={TicketScreen} />
+
+        <Stack.Screen name="TicketScreen" component={TicketScreen} options={{animation:'none'}} />
         <Stack.Screen name="DashboardNavigator" component={DashboardNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
