@@ -20,6 +20,7 @@ import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import { Ticket, TicketAttachment } from "../../../models/ticket/ticket";
 import { TicketPayload } from "../../../models/ticket/ticket-payload";
 import { AppStackParamList } from "../../../routing/route-screens";
+import ChipInput from "../../../components/form/chip-input";
 
 const TicketForm = (props: TicketFormProps): JSX.Element => {
   const { register, handleSubmit, getValues, setValue } = useForm<FormData>();
@@ -67,6 +68,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     });
     register("idtenant");
     register("attachments");
+    register("tags");
   }, []);
 
   const getProjectList = (): DropdownValue[] => {
@@ -98,7 +100,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
 
   const onSubmit = async () => {
     const vals = getValues();
-
+    console.log("values in form", vals);
     const reqUrl = `${SigtreeConfiguration.getUrl(
       realm,
       SCREEN_URL.TICKET_URL
@@ -110,7 +112,6 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
   };
 
   const onInvalid = (err: any) => {
-
     setErrors(err);
   };
 
@@ -151,9 +152,11 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
               error={errors ? errors["name"] : undefined}
               setValue={setValue}
             />
-            <Input
+            <ChipInput
+              name="tags"
+              tags={[]}
+              inputValue={""}
               label={t("TICKETS_ADD_FORM_TAG")}
-              value={props.ticket?.tags ?? ""}
               setValue={setValue}
             />
             <Input
@@ -248,11 +251,12 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
           ) : (
             <></>
           )}
-          <FilePicker 
+          <FilePicker
             name="attachments"
             label={t("TICKETS_ADD_FORM_ATTACHMENTS")}
             value={props.ticket?.attachments ?? []}
-            setValue={setValue}/>
+            setValue={setValue}
+          />
           <Button
             mode="outlined"
             onPress={handleSubmit(onSubmit, onInvalid)}

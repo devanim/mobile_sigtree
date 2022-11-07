@@ -4,6 +4,7 @@ export class Ticket {
   public idscheduler!: number;
   public name!: string;
   public tags!: string;
+  public tagsArray!: string[];
   public idcategory!: number;
   public category!: string;
   public attachments!: TicketAttachment[];
