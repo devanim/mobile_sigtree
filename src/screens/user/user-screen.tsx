@@ -5,13 +5,14 @@ import { StyleSheet } from "react-native";
 import AppBar from "../../components/appbar/appbar";
 import LocalizationContext from "../../localization/localization-context";
 import UserContainer from "./user-container";
+import { CapitalizeFirstLowercaseRest } from "../../utils/text";
 
 const UserScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
 
   return (
     <Layout style={styles.container} level='1'>
-      <AppBar title={t("USER_PROFILE_TITLE").toUpperCase()} />
+      <AppBar title={CapitalizeFirstLowercaseRest(t("USER_PROFILE_TITLE"))} />
       <UserContainer />
     </Layout>
   );
