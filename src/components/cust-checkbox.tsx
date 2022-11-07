@@ -28,7 +28,7 @@ const CustCheckbox = (props: CustCheckboxProps): JSX.Element => {
         value={isChecked}
         onValueChange={onValueChange}
       />
-      <Text>{props.label}</Text>
+      <Text style={{ width: "95%" }} >{props.label}</Text>
     </View>
   );
 };

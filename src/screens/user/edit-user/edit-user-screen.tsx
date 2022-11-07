@@ -3,7 +3,7 @@ import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { Appbar } from 'react-native-paper';
 import { Language } from "src/models/language/language";
 import { LanguagesPayload } from "src/models/language/languages-payload";

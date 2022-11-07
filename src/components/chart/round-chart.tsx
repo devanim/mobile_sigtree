@@ -28,7 +28,7 @@ const RoundChart = (props: RoundChartProps): JSX.Element => {
     });
 
     data.push({
-      name: t("PRIORITY_LOW"), 
+      name: t("PRIORITY_HIGH"), 
       value: props.data?.pct_high ?? 0, 
       color: 'red', 
       legendFontColor: '#7F7F7F', 

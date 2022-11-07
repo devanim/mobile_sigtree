@@ -1,8 +1,9 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { StyleSheet } from "react-native";
+import { ActivityIndicator } from "react-native-paper"; 
 import { ScrollView, Text, View } from "react-native";
 import { Card, Title } from 'react-native-paper';
 import { RefreshControl } from "react-native-web-refresh-control";
@@ -24,34 +25,31 @@ import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 
 const DashboardStatistics = (): JSX.Element => {
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
-  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isArticleLoadingData, setArticleIsLoadingData] = useState(true);
+  const [isTicketsLoadingData, setTicketsIsLoadingData] = useState(true);
+  const [isStatsLoadingData, setStatsIsLoadingData] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [articles, setArticles] = useState<ArticleBrief[]>([]);
   const [tickets, setTickets] = useState<TicketBrief[]>([]);
   const [statistics, setStatistics] = useState<Statistics | undefined>(undefined);
 
   useEffect(() => {
-    setIsLoadingData(true);
-
-    getArticles();
-
-    setIsLoadingData(false);
-  }, []);
+    if (isArticleLoadingData) getArticles();
+  }, [isArticleLoadingData]);
 
   useEffect(() => {
-    setIsLoadingData(true);
-
-    getTickets();
-
-    setIsLoadingData(false);
-  }, []);
+    if (isTicketsLoadingData) getTickets();
+  }, [isTicketsLoadingData]);
 
   useEffect(() => {
-    setIsLoadingData(true);
+    if (isStatsLoadingData) getStatistics();
+  }, [isStatsLoadingData]);
 
-    getStatistics();
-
-    setIsLoadingData(false);
-  }, []);
+  const resetState = () => {
+    setArticleIsLoadingData(true);
+    setTicketsIsLoadingData(true);
+    setStatsIsLoadingData(true);
+  }
 
   const getArticles = async () => {
     try {
@@ -61,7 +59,7 @@ const DashboardStatistics = (): JSX.Element => {
       });
 
       if (response.status == 200) {
-        setArticles([...articles, ...response.data.data.articles ?? []]);
+        setArticles([...response.data.data.articles ?? []]);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -75,6 +73,8 @@ const DashboardStatistics = (): JSX.Element => {
         friendlyMessage: friendlyMessage,
         errorMessage: JSON.stringify(error),
       });
+    } finally {
+      setArticleIsLoadingData(false);
     }
   };
 
@@ -86,7 +86,7 @@ const DashboardStatistics = (): JSX.Element => {
       });
 
       if (response.status == 200) {
-        setTickets([...tickets, ...response.data.data.tickets ?? []]);
+        setTickets([...response.data.data.tickets ?? []]);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -100,6 +100,8 @@ const DashboardStatistics = (): JSX.Element => {
         friendlyMessage: friendlyMessage,
         errorMessage: JSON.stringify(error),
       });
+    } finally {
+      setTicketsIsLoadingData(false);
     }
   };
 
@@ -125,8 +127,16 @@ const DashboardStatistics = (): JSX.Element => {
         friendlyMessage: friendlyMessage,
         errorMessage: JSON.stringify(error),
       });
+    } finally {
+      setStatsIsLoadingData(false);
     }
   };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    resetState()
+    setRefreshing(false);
+  }, []);
 
   const { t } = useContext(LocalizationContext);
   const { token, realm, logout } = useKeycloak();
@@ -140,7 +150,7 @@ const DashboardStatistics = (): JSX.Element => {
     navigate("TicketScreen", { screen: "TicketScreen", params: { ticketId: ticketId } });
   }
 
-  const articleCarouselData = articles?.map((article: ArticleBrief, idx: number) => {
+  const articleCarouselData = articles?.map((article: ArticleBrief) => {
     return {
       id: article.id,
       title: article.title,
@@ -148,7 +158,7 @@ const DashboardStatistics = (): JSX.Element => {
     }
   });
 
-  const ticketCarouselData = tickets?.map((ticket: TicketBrief, idx: number) => {
+  const ticketCarouselData = tickets?.map((ticket: TicketBrief) => {
     return {
       id: ticket.id,
       title: ticket.idtracking,
@@ -174,33 +184,36 @@ const DashboardStatistics = (): JSX.Element => {
     <Layout style={styles.container} level='1'>
       <AppBar title={t("DASHBOARD_TITLE").toUpperCase()} />
 
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl tintColor="#CCC" />}>
-        <Carousel name={t("ARTICLES_TITLE")} data={articleCarouselData ?? []} />
-        <Carousel name={t("TICKETS_TITLE")} data={ticketCarouselData ?? []} />
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#CCC" />}>
+        <Carousel name={t("ARTICLES_TITLE")} isLoading={isArticleLoadingData} nodata={t("NO_DATA")} data={articleCarouselData ?? []} />
+        <Carousel name={t("TICKETS_TITLE")} isLoading={isTicketsLoadingData} nodata={t("NO_DATA")} data={ticketCarouselData ?? []} />
         <Card style={{ margin: '5%', backgroundColor: '#fff' }} mode='contained'>
           <Card.Content>
             <Title>{t("STATISTICS_TITLE")}</Title>
-            {statistics ? <RoundChart data={statistics} /> : <></>}
-            {statistics ?
+            { isStatsLoadingData ? <ActivityIndicator />
+             : statistics && statistics.count_all && statistics.count_all !== 0 ?
               <View style={{ flexDirection: 'column' }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ flex: 1 }}>{t("PRIORITY_LOW_COUNT")}</Text>
-                  <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_low}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ flex: 1 }}>{t("PRIORITY_MEDIUM_COUNT")}</Text>
-                  <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_medium}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ flex: 1 }}>{t("PRIORITY_HIGH_COUNT")}</Text>
-                  <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_high}</Text>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={{ flex: 1, textAlign: 'right', fontWeight: 'bold' }}>{t("TOTAL_TICKETS_COUNT")}</Text>
-                  <Text style={{ flex: 1, textAlign: 'left', fontWeight: 'bold' }}> {statistics.count_all}</Text>
+                <RoundChart data={statistics} />
+                <View style={{ flexDirection: 'column' }}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ flex: 1 }}>{t("PRIORITY_LOW_COUNT")}</Text>
+                    <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_low}</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ flex: 1 }}>{t("PRIORITY_MEDIUM_COUNT")}</Text>
+                    <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_medium}</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ flex: 1 }}>{t("PRIORITY_HIGH_COUNT")}</Text>
+                    <Text style={{ flex: 1, textAlign: 'left' }}> {statistics.count_high}</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ flex: 1, textAlign: 'right', fontWeight: 'bold' }}>{t("TOTAL_TICKETS_COUNT")}</Text>
+                    <Text style={{ flex: 1, textAlign: 'left', fontWeight: 'bold' }}> {statistics.count_all}</Text>
+                  </View>
                 </View>
               </View>
-              : <></>}
+              : <Text style={{ flex: 1 }}>{t("NO_DATA")}</Text>}
           </Card.Content>
         </Card>
       </ScrollView>

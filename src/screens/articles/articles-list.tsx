@@ -3,7 +3,8 @@ import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React from "react";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { FlatList, View } from "react-native";
+import { ActivityIndicator } from "react-native-paper"; 
 import { StyleSheet } from "react-native";
 
 import Error, { ErrorProps } from "../../components/error";
@@ -26,22 +27,20 @@ const ArticlesList = (): JSX.Element => {
   const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
-  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const [selectedTag, setSelectedTag] = useState("");
-  const [resetList, setResetList] = useState(false);
+  const [resetList, setResetList] = useState(true);
   const [maxId, setMaxId] = useState(0);
 
   useEffect(() => {
-    setIsLoadingData(true);
-
     resetState();
     getArticles();
-
-    setIsLoadingData(false);
   }, [page, selectedTag]);
 
   const resetState = () => {
     if (resetList) {
+      setIsLoadingData(true);
+
       setArticles([]);
       setMaxId(0);
       setResetList(false);
@@ -58,7 +57,7 @@ const ArticlesList = (): JSX.Element => {
 
       if (response.status == 200) {
         setArticles(articles => [...articles, ...(response.data.data.articles ?? [])]);
-        setArticles(response.data.data.articles ?? []);
+        //setArticles(response.data.data.articles ?? []);
         setMaxId(getMaximumIdFromCurrentState());
         setHasNextPage(response.data.data.more ?? false);
       } else {
@@ -74,6 +73,8 @@ const ArticlesList = (): JSX.Element => {
         friendlyMessage: friendlyMessage,
         errorMessage: JSON.stringify(error),
       });
+    } finally {
+      setIsLoadingData(false);
     }
   };
 
@@ -137,8 +138,18 @@ const ArticlesList = (): JSX.Element => {
     );
   }
 
+  if (isLoadingData) {
+    return <ActivityIndicator />
+  }
+
   if (!articles || articles.length == 0) {
-    return <ActivityIndicator />;
+    return  (
+      <Layout style={{  flex: 1 }} level='1'>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ flex: 1, textAlign: 'center', paddingTop: 25 }} category='body' >{t("NO_DATA")}</Text>
+        </View>
+      </Layout>
+    )
   }
 
   return (

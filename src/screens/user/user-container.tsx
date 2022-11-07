@@ -1,7 +1,8 @@
 import { useCallback, useContext, useState } from "react";
 import axios from "axios";
 import { Button, Layout, Text } from "@ui-kitten/components";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import UserProfile from "./user-profile";
 import {
   NavigationProp,
@@ -26,6 +27,7 @@ const UserContainer = (): JSX.Element => {
   const [userProfile, setUserProfile] = useState<UserProfileModel | undefined>(
     undefined
   );
+  const [tos, setTos] = useState<BuildingTos[]>([]); 
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [tosList, setTosList] = useState<BuildingTos[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -153,7 +155,7 @@ const UserContainer = (): JSX.Element => {
   }
 
   return (
-    <>
+    <ScrollView>
       {!isLoading ? (
         <Layout style={styles.container} level="1">
           <Layout level="1">
@@ -190,7 +192,7 @@ const UserContainer = (): JSX.Element => {
       ) : (
         <></>
       )}
-    </>
+    </ScrollView>
   );
 };
 
@@ -203,8 +205,8 @@ const styles = StyleSheet.create({
   tos: {
     flexDirection: "column",
     flexGrow: 1,
-    padding: "5% 5%",
-    paddingBottom: "1%",
+    padding: '5%',
+    paddingBottom: '1%',
   },
   tosLink: {
     color: "#000",

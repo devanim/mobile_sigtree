@@ -2,8 +2,9 @@ import { NavigationProp, useFocusEffect, useNavigation } from "@react-navigation
 import { Layout } from "@ui-kitten/components";
 import axios from "axios";
 import React from "react";
-import { useCallback, useContext, useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, ScrollView, View } from "react-native";
+import { useCallback, useContext, useState } from "react";
+import { FlatList, View } from "react-native";
+import { ActivityIndicator } from "react-native-paper"; 
 import { StyleSheet } from "react-native";
 
 import Error, { ErrorProps } from "../../components/error";
@@ -22,32 +23,27 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
   const { navigate } = useNavigation<NavigationProp<TicketParamList>>();
   const { token, realm } = useKeycloak();
   const [tickets, setTickets] = useState<TicketBrief[]>([]);
-  const [page, setPage] = useState(0);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
-  const [isLoadingData, setIsLoadingData] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState("");
-  const [resetList, setResetList] = useState(false);
   const [maxId, setMaxId] = useState(0);
 
   useFocusEffect(useCallback(() => {
-    setIsLoadingData(true);
-
     resetState();
     getTickets();
 
-    setIsLoadingData(false);
-  }, [page, selectedStatus]));
+  }, [selectedStatus]));
 
   const resetState = () => {
-    if (resetList) {
-      setTickets([]);
-      setMaxId(0);
-      setResetList(false);
-    }
+    setIsLoadingData(true);
+    setTickets([]);
+    setMaxId(0);
+    setHasNextPage(true);
   }
 
   const getTickets = async () => {
+    if (!hasNextPage) return
     try {
       const filteringStatus = selectedStatus.length > 0 ? `status=${t(selectedStatus)}&` : "";
       const reqUrl = `${SigtreeConfiguration.getUrl(realm, SCREEN_URL.TICKETS_URL)}?${filteringStatus}fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
@@ -57,7 +53,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
 
       if (response.status == 200) {
         setTickets(tickets => [...tickets, ...(response.data.data.tickets ?? [])]);
-        setMaxId(getMaximumIdFromCurrentState());
+        setMaxId(Math.max(...(response.data.data.tickets ?? []).map((ticket) => ticket.row_num)));
         setHasNextPage(response.data.data.more ?? false);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
@@ -72,8 +68,11 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
         friendlyMessage: friendlyMessage,
         errorMessage: JSON.stringify(error),
       });
+    } finally {
+      setIsLoadingData(false);
     }
   };
+
   const onTicketSelected = (ticketId: number, status: string) => {
     navigate("TicketScreen", {
       screen: "TicketScreen",
@@ -83,29 +82,13 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
 
   const onSelectedStatus = (status: string) => {
     setSelectedStatus(status);
-    setResetList(true);
-    setMaxId(0);
+    resetState()
   };
 
   const onCancelFiltering = () => {
-    setResetList(true);
     setSelectedStatus("");
-    setMaxId(0);
+    resetState()
   }
-
-  const fetchNextPage = () => {
-    if (hasNextPage) {
-      setPage(page + 1);
-    }
-  };
-
-  const getMaximumIdFromCurrentState = () => {
-    if (tickets.length === 0) {
-      return 0;
-    }
-
-    return Math.max(...tickets.map((ticket) => ticket.row_num));
-  };
 
   const renderFooter = () => (
     <View style={styles.footer}>
@@ -134,31 +117,38 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
     );
   }
 
-  if (!tickets || tickets.length == 0) {
-    return <ActivityIndicator />;
-  }
-
   if (isLoadingData) {
     return <ActivityIndicator />
   }
 
+  if (!tickets || tickets.length == 0) {
+    return  (
+      <Layout style={{  flex: 1 }} level='1'>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={{ flex: 1, textAlign: 'center', paddingTop: 25 }} category='body' >{t("NO_DATA")}</Text>
+        </View>
+      </Layout>
+    )
+
+  }
+
+
+
   return (
     <Layout style={{ flex: 1 }} level='1'>
-      <ScrollView>
-        {selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
         <FlatList
           data={tickets || []}
           renderItem={renderItem}
           keyExtractor={(i, index) => index.toString()}
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={true}
           scrollEventThrottle={16}
           scrollEnabled={true}
           contentContainerStyle={styles.container}
-          onEndReachedThreshold={0.2}
-          onEndReached={fetchNextPage}
+          onEndReachedThreshold={1}
+          onEndReached={getTickets}
+          ListHeaderComponent={selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
           ListFooterComponent={renderFooter}
         />
-      </ScrollView>
     </Layout>
   );
 };
@@ -170,7 +160,6 @@ type TicketListProps = {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: '5%',
-    flex: 1
   },
   footer: {
     flex: 1,
