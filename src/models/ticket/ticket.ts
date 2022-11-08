@@ -7,7 +7,7 @@ export class Ticket {
   public tagsArray!: string[];
   public idcategory!: number;
   public category!: string;
-  public attachments!: TicketAttachment[];
+  public attachmentsArray!: TicketAttachment[];
   public idstatus!: number;
   public statusKey!: string;
   public idpriority!: number;
@@ -39,5 +39,6 @@ export class Ticket {
 
 export type TicketAttachment = {
   name: string;
-  content: string;
+  url: string;
+  data: string;
 }

@@ -136,6 +136,15 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
           />
         </View>  
       </View>
+      <View>
+        {ticket?.attachmentsArray?.map((att, idx) => {
+          return (<View  key={idx}>
+            <Text>{att.name}</Text>
+            <Text>{att.url}</Text>
+            {/* <Button onPress={() => removeUpload(val.name)}>X</Button> */}
+          </View>)
+        })}
+      </View>
     </Layout>
   );
 };

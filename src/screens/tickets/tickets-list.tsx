@@ -17,8 +17,8 @@ import { TicketBrief } from "../../models/ticket/ticket-brief";
 import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 import { TicketParamList } from "../../routing/route-screens";
 import TicketBriefCard from "./ticket-brief-card";
-import { FilterElement } from "src/models/ticket/filter-element";
-import { FilteringOptions } from "src/models/ticket/filtering-options-enum";
+import { FilterElement } from "../../models/ticket/filter-element";
+import { FilteringOptions } from "../../models/ticket/filtering-options-enum";
 
 const TicketsList = (props: TicketListProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);

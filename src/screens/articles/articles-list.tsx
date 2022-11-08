@@ -17,7 +17,7 @@ import ArticleListPayload from "../../models/article/article-list-payload";
 import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { ArticleParamList } from "../../routing/route-screens";
 import ArticleBriefCard from "./article-brief-card";
-import { FilteringOptions } from "src/models/ticket/filtering-options-enum";
+import { FilteringOptions } from "../../models/ticket/filtering-options-enum";
 
 const ArticlesList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
