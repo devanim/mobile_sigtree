@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useContext, useState, useCallback } from "react";
 import { View, Text, StyleSheet } from 'react-native';
-import { WebView } from "react-native-webview";
+import { WebView, WebViewMessageEvent } from "react-native-webview";
 import LocalizationContext from "../../localization/localization-context";
 import { webviewContent } from "../../utils/content";
 import { Card } from "react-native-paper";
@@ -14,11 +14,7 @@ const TicketNoteCard = (props: TicketNoteCardProps): JSX.Element => {
   const localizedDate = new Date(props.note.timestamp).toLocaleDateString();
   const localizedTS = new Date(props.note.timestamp).toLocaleTimeString();
 
-  const onGetHeight = (event) => {
-    console.log(`noteid: ${props.note.id} h: ${event.nativeEvent.data}`)
-    // TODO 
-    // remove 0.6 multiplier and figure out why reported height is wrong
-    // check height on ios
+  const onGetHeight = (event: WebViewMessageEvent) => {
     setWebViewHeight(Number(event.nativeEvent.data))
   }
 

@@ -26,7 +26,6 @@ export const webviewContent = (content: string): string => {
         document.title = calculator.clientHeight;
         window.ReactNativeWebView.postMessage(calculator.clientHeight);
       }, 500);
-      true;
     </script>
   </html>`
 }

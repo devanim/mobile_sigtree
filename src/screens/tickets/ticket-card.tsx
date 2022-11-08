@@ -6,7 +6,7 @@ import { useContext, useState, useCallback } from "react";
 import { ActivityIndicator, TextProps } from "react-native-paper";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { IconButton, MD3Colors } from 'react-native-paper';
-import { WebView } from "react-native-webview";
+import { WebView, WebViewMessageEvent } from "react-native-webview";
 
 import Error, { ErrorProps } from "../../components/error";
 import { useKeycloak } from "../../keycloak/useKeycloak";
@@ -54,8 +54,7 @@ const TicketCard = (props: TicketCardProps): JSX.Element => {
     }
   };
 
-  const onGetHeight = (event) => {
-    console.log(`ticket ${event.nativeEvent.data}`)
+  const onGetHeight = (event: WebViewMessageEvent) => {
     setWebViewHeight(Number(event.nativeEvent.data))
   }
 
