@@ -8,7 +8,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { StyleSheet } from "react-native";
 
 import Error, { ErrorProps } from "../../components/error";
-import ListFiltering from "../../components/list-filtering/list-filtering";
+import ListFilteringChip from "../../components/list-filtering/list-filtering-chip";
 import Text from "../../components/text";
 import { useKeycloak } from "../../keycloak/useKeycloak";
 import LocalizationContext from "../../localization/localization-context";
@@ -17,6 +17,8 @@ import { TicketBrief } from "../../models/ticket/ticket-brief";
 import { TicketListPayload } from "../../models/ticket/ticket-list-payload";
 import { TicketParamList } from "../../routing/route-screens";
 import TicketBriefCard from "./ticket-brief-card";
+import { FilterElement } from "src/models/ticket/filter-element";
+import { FilteringOptions } from "src/models/ticket/filtering-options-enum";
 
 const TicketsList = (props: TicketListProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -30,6 +32,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
   const [selectedBuilding, setSelectedBuilding] = useState("");
   const [selectedProject, setSelectedProject] = useState("");
   const [selectedTenant, setSelectedTenant] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState<FilterElement[]>([]);
   const [maxId, setMaxId] = useState(0);
 
   useFocusEffect(useCallback(() => {
@@ -167,7 +170,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
           contentContainerStyle={styles.container}
           onEndReachedThreshold={1}
           onEndReached={getTickets}
-          ListHeaderComponent={selectedStatus ? <ListFiltering tag={selectedStatus} onCancel={onCancelFiltering} /> : <></>}
+          ListHeaderComponent={selectedStatus ? <ListFilteringChip tag={selectedStatus} onCancel={onCancelFiltering} filteringType={FilteringOptions.STATUS}/> : <></>}
           ListFooterComponent={renderFooter}
         />
     </Layout>
