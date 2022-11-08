@@ -8,7 +8,7 @@ import { ActivityIndicator } from "react-native-paper";
 import { StyleSheet } from "react-native";
 
 import Error, { ErrorProps } from "../../components/error";
-import ListFiltering from "../../components/list-filtering/list-filtering";
+import ListFilteringChip from "../../components/list-filtering/list-filtering-chip";
 import Text from "../../components/text";
 import { useKeycloak } from "../../keycloak/useKeycloak";
 import LocalizationContext from "../../localization/localization-context";
@@ -17,6 +17,7 @@ import ArticleListPayload from "../../models/article/article-list-payload";
 import { CONFIG, SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { ArticleParamList } from "../../routing/route-screens";
 import ArticleBriefCard from "./article-brief-card";
+import { FilteringOptions } from "src/models/ticket/filtering-options-enum";
 
 const ArticlesList = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -154,7 +155,7 @@ const ArticlesList = (): JSX.Element => {
 
   return (
     <Layout level='1'>
-      {selectedTag ? <ListFiltering tag={selectedTag} onCancel={onCancelFiltering} /> : <></>}
+      {selectedTag ? <ListFilteringChip tag={selectedTag} onCancel={onCancelFiltering} filteringType={FilteringOptions.TAG} /> : <></>}
       <FlatList
         data={articles || []}
         renderItem={renderItem}
