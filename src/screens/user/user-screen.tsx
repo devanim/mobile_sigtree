@@ -6,6 +6,8 @@ import AppBar from "../../components/appbar/appbar";
 import LocalizationContext from "../../localization/localization-context";
 import UserContainer from "./user-container";
 import { CapitalizeFirstLowercaseRest } from "../../utils/text";
+import BottomNavigation from "../../components/bottom-navigation";
+import { NavigationType } from "../../models/dashboard/navigation-enum";
 
 const UserScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -14,6 +16,7 @@ const UserScreen = (): JSX.Element => {
     <Layout style={styles.container} level='1'>
       <AppBar title={CapitalizeFirstLowercaseRest(t("USER_PROFILE_TITLE"))} />
       <UserContainer />
+      <BottomNavigation type={NavigationType.USER}/>
     </Layout>
   );
 };

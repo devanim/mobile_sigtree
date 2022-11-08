@@ -3,6 +3,8 @@ import { Layout } from "@ui-kitten/components";
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { Appbar } from 'react-native-paper';
+import { NavigationType } from "../../../models/dashboard/navigation-enum";
+import BottomNavigation from "../../../components/bottom-navigation";
 
 import LocalizationContext from "../../../localization/localization-context";
 import { AppStackParamList } from "../../../routing/route-screens";
@@ -20,6 +22,7 @@ const NewTicketScreen = (): JSX.Element => {
         <Appbar.Action icon="window-close" onPress={goBack} />
       </Appbar.Header>
       <NewTicket />
+      <BottomNavigation type={NavigationType.ADD_TICKET}/>
     </Layout>
   );
 };

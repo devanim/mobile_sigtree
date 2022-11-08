@@ -19,6 +19,8 @@ import TosBuilding from "./tos-building";
 import { BuildingTos } from "../../models/tos/building-tos";
 import { useKeycloak } from "../../keycloak/useKeycloak";
 import * as React from "react";
+import BottomNavigation from "../../components/bottom-navigation";
+import { NavigationType } from "../../models/dashboard/navigation-enum";
 
 const TOSScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -75,19 +77,22 @@ const TOSScreen = (): JSX.Element => {
   }
 
   return (
-    <Container style={tosScreenStyles.container}>
-      <TopNavigation
-        accessoryLeft={() => <NavigationAction onPress={goBack} />}
-        title={t("TOS_TITLE")}
-      />
-      <View style={tosScreenStyles.container}>
-        <TosBuilding
-          tosList={tosList}
-          onTosSelect={onTosSelect}
+    <>
+      <Container style={tosScreenStyles.container}>
+        <TopNavigation
+          accessoryLeft={() => <NavigationAction onPress={goBack} />}
+          title={t("TOS_TITLE")}
         />
-      </View>
-      {tosUrl ? (<PdfReader sourceUrl={tosUrl} />) : (<></>)}
-    </Container>
+        <View style={tosScreenStyles.container}>
+          <TosBuilding
+            tosList={tosList}
+            onTosSelect={onTosSelect}
+          />
+        </View>
+        {tosUrl ? (<PdfReader sourceUrl={tosUrl} />) : (<></>)}
+      </Container>
+      <BottomNavigation type={NavigationType.USER}/>
+    </>
   );
 };
 

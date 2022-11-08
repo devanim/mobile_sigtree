@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
+import BottomNavigation from "../../components/bottom-navigation";
 import AppBar from "../../components/appbar/appbar";
 import Error, { ErrorProps } from "../../components/error";
 import { useKeycloak } from "../../keycloak/useKeycloak";
@@ -12,6 +13,7 @@ import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { UserProfile } from "../../models/user-profile/user-profile";
 import { UserProfilePayload } from "../../models/user-profile/user-profile-payload";
 import TicketContainer from "./ticket-container";
+import { NavigationType } from "../../models/dashboard/navigation-enum";
 
 const TicketsScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -72,6 +74,7 @@ const TicketsScreen = (): JSX.Element => {
     <Layout style={styles.container} level='1'>
       <AppBar title={t("TICKET_TITLE").toUpperCase()} />
       <TicketContainer roleId={userProfile.role} />
+      <BottomNavigation type={NavigationType.TICKETS}/>
     </Layout>
   )
 };

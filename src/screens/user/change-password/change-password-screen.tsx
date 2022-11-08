@@ -4,6 +4,8 @@ import React from "react";
 import { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { Appbar } from 'react-native-paper';
+import { NavigationType } from "../../../models/dashboard/navigation-enum";
+import BottomNavigation from "../../../components/bottom-navigation";
 
 import LocalizationContext from "../../../localization/localization-context";
 import { AppStackParamList } from "../../../routing/route-screens";
@@ -20,6 +22,7 @@ const ChangePasswordScreen = (): JSX.Element => {
         <Appbar.Action icon="window-close" onPress={goBack} />
       </Appbar.Header>
       <UserScreenContainer />
+      <BottomNavigation type={NavigationType.USER}/>
     </Layout>
   );
 };

@@ -14,11 +14,13 @@ import { SCREEN_URL, SigtreeConfiguration } from "../../models/config";
 import { EditUserPayload } from "../../models/user-profile/edit-user-payload";
 import TicketCard from "./ticket-card";
 import TicketNotes from "./ticket-notes";
+import BottomNavigation from "../../components/bottom-navigation";
+import { NavigationType } from "../../models/dashboard/navigation-enum";
 
 const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
   const { realm, logout, token } = useKeycloak();
-  const { goBack, navigate } = useNavigation<NavigationProp<AppStackParamList>>();
+  const { navigate } = useNavigation<NavigationProp<AppStackParamList>>();
   const [isLoading, setIsLoading] = useState(true);
   const ticketId = props.route.params.params.ticketId;
   const status = props.route.params.params.status;
@@ -69,6 +71,7 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
+      <BottomNavigation type={NavigationType.TICKETS}/>
     </Layout>
   );
 }

@@ -5,15 +5,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { Appbar } from 'react-native-paper';
-import { Language } from "src/models/language/language";
-import { LanguagesPayload } from "src/models/language/languages-payload";
-import { AppStackParamList } from "src/routing/route-screens";
+import BottomNavigation from "../../../components/bottom-navigation";
+import { Language } from "../../../models/language/language";
+import { LanguagesPayload } from "../../../models/language/languages-payload";
+import { AppStackParamList } from "../../../routing/route-screens";
 
 import Error, { ErrorProps } from "../../../components/error";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
 import LocalizationContext from "../../../localization/localization-context";
 import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import EditUserContainer from "./edit-user-container";
+import { NavigationType } from "../../../models/dashboard/navigation-enum";
 
 const EditUserScreen = (props: EditUserScreenProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -73,6 +75,7 @@ const EditUserScreen = (props: EditUserScreenProps): JSX.Element => {
         <Appbar.Action icon="window-close" onPress={goBack} />
       </Appbar.Header>
       <EditUserContainer userProfile={userProfile} languageList={languageList} />
+      <BottomNavigation type={NavigationType.USER}/>
     </Layout>
   );
 }
