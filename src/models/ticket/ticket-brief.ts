@@ -10,10 +10,13 @@ export class TicketBrief {
   public priorityKey!: string;
   public user!: string;
   public project!: string;
+  public idproject!: number;
   public building!: string;
+  public idbuilding!: number;
   public supplier!: string;
   public floor!: string;
   public tenant!: string;
+  public idtenant!: number;
   public timestamp!: string;
   public approvalKey!: string;
 }

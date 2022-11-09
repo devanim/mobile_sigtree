@@ -4,6 +4,7 @@ export class TicketNote {
   public id!: number;
   public type!: string;
   public username!: string;
+  public role!: string;
   public timestamp!: string;
   public content!: string;
   public internalForTypes!: number[];
