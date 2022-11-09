@@ -153,7 +153,7 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
     let filters = "";
 
     selectedFilters.forEach(filter => {
-      filters += `${filter.type}=${filter.value}&`;
+      filters += `${filter.type}=${filter.key}&`;
     });
 
     const reqUrl = `${baseUrl}?${filters}fromId=${maxId}&count=${CONFIG.ITEMS_PER_PAGE}`;
