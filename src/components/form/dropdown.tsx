@@ -34,7 +34,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
       {/* {props.label && <Text style={[styles.label, props.labelStyle]}>{props.label}</Text>} */}
       <DropDownPicker
         // label={props.label}
-        style={[styles.dropdownStyle, { borderRadius: 0, borderColor: props.error ? "#f23543" : "#00000012", backgroundColor: props.error ? 'rgba(245, 87, 83, 0.1)' : 'transparent' },]}
+        style={[styles.dropdownStyle, { borderRadius: 0, borderColor: props.error ? "rgba(245, 87, 83, 0.1)" : "#00000012", backgroundColor: props.error ? 'rgba(245, 87, 83, 0.1)' : 'transparent' },]}
         open={open}
         value={dropdownValue ?? ""}
         items={valuesList}

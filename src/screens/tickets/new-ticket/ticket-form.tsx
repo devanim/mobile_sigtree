@@ -2,10 +2,8 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
-import { View } from "react-native";
-import { Keyboard, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, StyleSheet, TouchableWithoutFeedback, Pressable, View, Text } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Button } from "react-native-paper";
 import FilePicker from "../../../components/form/file-picker";
 import { Building } from "../../../models/user-profile/building";
 import { UserProfile } from "../../../models/user-profile/user-profile";
@@ -145,7 +143,8 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     <KeyboardAwareScrollView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <View>
+          
+          <View style={{ paddingBottom: 10 }}>
             <Input
               name="name"
               label={t("TICKETS_ADD_FORM_TITLE")}
@@ -153,6 +152,8 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
               error={errors ? errors["name"] : undefined}
               setValue={setValue}
             />
+          </View>
+          <View style={{ paddingBottom: 10 }}>
             <Input
               name="content"
               label={t("TICKETS_ADD_FORM_DESCRIPTION")}
@@ -161,6 +162,8 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
               multiline={true}
               setValue={setValue}
             />
+          </View>
+          <View style={{ paddingBottom: 10 }}>
             <ChipInput
               name="tags"
               tags={[]}
@@ -169,17 +172,20 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
               setValue={setValue}
             />
           </View>
-          <Dropdown
-            name="idpriority"
-            label={t("TICKETS_ADD_FORM_PRIORITY")}
-            value={props.ticket?.priorityKey ?? ""}
-            error={errors ? errors["idpriority"] : undefined}
-            placeholder={t("TICKETS_ADD_FORM_PRIORITY_PLACEHOLDER")}
-            list={priorityList}
-            setValue={setValue}
-          />
+          <View style={{ paddingBottom: 10 }}>
+            <Dropdown
+              name="idpriority"
+              label={t("TICKETS_ADD_FORM_PRIORITY")}
+              value={props.ticket?.priorityKey ?? ""}
+              error={errors ? errors["idpriority"] : undefined}
+              placeholder={t("TICKETS_ADD_FORM_PRIORITY_PLACEHOLDER")}
+              list={priorityList}
+              setValue={setValue}
+            />
+          </View>
+            
           {buildingsList.length > 0 ? (
-            <>
+            <View style={{ paddingBottom: 10 }}>
               <Dropdown
                 name="idbuilding"
                 label={t("TICKETS_ADD_FORM_BUILDING")}
@@ -190,24 +196,26 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
                 onChange={onBuildingChange}
                 setValue={setValue}
               />
-            </>
+            </View>
           ) : (
             <></>
           )}
           {selectedBuilding > 0 && floorList.length > 0 ? (
-            <Dropdown
-              name="floor"
-              label={t("TICKETS_ADD_FORM_FLOOR")}
-              value={props.ticket?.floor ?? ""}
-              placeholder={t("TICKETS_ADD_FORM_FLOOR_PLACEHOLDER")}
-              list={floorList}
-              setValue={setValue}
-            />
+            <View style={{ paddingBottom: 10 }}>
+              <Dropdown
+                name="floor"
+                label={t("TICKETS_ADD_FORM_FLOOR")}
+                value={props.ticket?.floor ?? ""}
+                placeholder={t("TICKETS_ADD_FORM_FLOOR_PLACEHOLDER")}
+                list={floorList}
+                setValue={setValue}
+              />
+            </View>
           ) : (
             <></>
           )}
           {projectList?.length > 0 ? (
-            <>
+            <View style={{ paddingBottom: 10 }}>
               <Dropdown
                 name="idproject"
                 label={t("TICKETS_ADD_FORM_PROJECT")}
@@ -217,12 +225,12 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
                 list={projectList}
                 setValue={setValue}
               />
-            </>
+            </View>
           ) : (
             <></>
           )}
           {selectedBuilding > 0 && categoryList.length > 0 ? (
-            <>
+            <View style={{ paddingBottom: 10 }}>
               <Dropdown
                 name="idcategory"
                 label={t("TICKETS_ADD_FORM_CATEGORY")}
@@ -232,12 +240,12 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
                 list={categoryList}
                 setValue={setValue}
               />
-            </>
+            </View>
           ) : (
             <></>
           )}
           {props.userProfile?.role == 5 ? (
-            <>
+            <View style={{ paddingBottom: 10 }}>
               <Dropdown
                 name="idtenant"
                 label={t("TICKETS_ADD_FORM_TENANT")}
@@ -248,23 +256,24 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
                 list={priorityList}
                 setValue={setValue}
               />
-            </>
+            </View>
           ) : (
             <></>
           )}
-          <FilePicker
-            name="attachments"
-            label={t("TICKETS_ADD_FORM_ATTACHMENTS")}
-            value={props.ticket?.attachments ?? []}
-            setValue={setValue}
-          />
-          <Button
-            mode="outlined"
-            onPress={handleSubmit(onSubmit, onInvalid)}
-            style={styles.submit}
-          >
-            {t("BTN_SUBMIT")}
-          </Button>
+          
+          <View style={{ backgroundColor: 'transparent', paddingBottom: 30 }}>
+            <FilePicker
+              name="attachments"
+              label={""}
+              value={props.ticket?.attachments ?? []}
+              setValue={setValue}
+            />
+          </View>
+          <View style={{ justifyContent: "center", alignItems: 'center', flex: 1, backgroundColor: 'transparent' }}>
+            <Pressable style={styles.button} onPress={handleSubmit(onSubmit, onInvalid)} >
+              <Text style={styles.text}>{t("BTN_SUBMIT")}</Text>
+            </Pressable>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
@@ -304,19 +313,24 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     flex: 1,
-    paddingHorizontal: "5%",
-    paddingVertical: "5%",
+    padding: 15,
   },
-  dropdown: {
-    marginVertical: "5%",
+  button: {
+    // alignItems: 'center',
+    // justifyContent: 'center',
     paddingVertical: 10,
+    paddingHorizontal: 50,
+    borderRadius: 3,
+    elevation: 3,
+    backgroundColor: 'black',
   },
-  submit: {
-    marginVertical: "10%",
-    borderColor: "#000000",
-    borderWidth: 1,
-    borderRadius: 0,
-  },
+  text: {
+    // fontFamily: "Arial",
+    color: '#ffffff',
+    fontSize: 16,
+    // fontWeight: "normal",
+    // letterSpacing: 0.01
+  }
 });
 
 export default TicketForm;

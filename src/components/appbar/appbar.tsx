@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import * as React from 'react';
-import { StyleSheet, Image, Text } from "react-native";
+import { StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import { Appbar } from 'react-native-paper';
 
 import { useKeycloak } from "../../keycloak/useKeycloak";
@@ -22,8 +22,27 @@ const AppBar = (props: AppBarProps): React.ReactElement => {
     <Appbar.Header style={styles.header}>
       {
         props.noBack ?
-        <Text style={{ color: '#fff', fontFamily: 'Pages-icon', fontSize: 30 }} >{'\u{e629}'}</Text> :
-        <Text style={{ fontFamily: 'Pages-icon', fontSize: 30 }} onPress={goBack}>{'\u{e629}'}</Text>
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            paddingRight: 10
+          }}
+          activeOpacity={0.7}
+        >
+          <Text style={{ color: '#fff', fontFamily: 'Pages-icon', fontSize: 30 }} >{'\u{e629}'}</Text> 
+        </TouchableOpacity> :
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            paddingRight: 10
+          }}
+          activeOpacity={0.7}
+          onPress={goBack}
+        >
+          <Text style={{ fontFamily: 'Pages-icon', fontSize: 30, paddingVertical: 20 }}>{'\u{e629}'}</Text>
+        </TouchableOpacity>
       }
       {
         image ? 
@@ -32,8 +51,28 @@ const AppBar = (props: AppBarProps): React.ReactElement => {
       }
       {
         props.logout ?
-        <Text style={{ fontFamily: 'Pages-icon2', fontSize: 30 }} onPress={onLogout}>{'\u{e900}'}</Text> :
-        <Text style={{ color: '#fff', fontFamily: 'Pages-icon2', fontSize: 30 }} >{'\u{e900}'}</Text> 
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            paddingLeft: 10
+          }}
+          activeOpacity={0.7}
+          onPress={onLogout}
+        >
+          <Text style={{ fontFamily: 'Pages-icon2', fontSize: 30 }} >{'\u{e900}'}</Text> 
+        </TouchableOpacity> :
+        <TouchableOpacity
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            paddingLeft: 10
+          }}
+          activeOpacity={0.7}
+        >
+          <Text style={{ color: '#fff', fontFamily: 'Pages-icon2', fontSize: 30 }} >{'\u{e900}'}</Text> 
+        </TouchableOpacity>
+        
       }
     </Appbar.Header>
   );
@@ -50,7 +89,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#00000033',
+    borderBottomColor: 'rgba(230, 230, 230, 0.7)',
     // borderBottomColor: '#ccc',
     // borderBottomWidth: 1,
     // elevation: 20,

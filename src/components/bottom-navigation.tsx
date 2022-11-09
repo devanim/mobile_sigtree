@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Layout } from "@ui-kitten/components";
 
@@ -84,6 +84,8 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: "white",
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(230, 230, 230, 0.7)',
     height: 'auto'
   }
 });

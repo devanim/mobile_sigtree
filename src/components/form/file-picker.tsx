@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, Pressable, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from 'expo-file-system';
@@ -30,24 +30,19 @@ const FilePicker = (props: FilePickerProps): JSX.Element => {
   
   return (
     <>
-      <Text>{t("TICKETS_ADD_FORM_ATTACHMENTS")}</Text>
+      {/* <Text>{t("TICKETS_ADD_FORM_ATTACHMENTS")}</Text> */}
       {
         valuesList.map((val, idx) => {
           return (
             <View  key={idx}>
-              <Text>{val.name}</Text>
-              <Button onPress={() => removeUpload(val.name)}>X</Button>
+              <Text>{val.name} <Button onPress={() => removeUpload(val.name)}>X</Button></Text>
             </View>
           );
         })
       }
-      <Button
-        mode="outlined"
-        onPress={uploadDocument}
-        style={styles.submit}
-      >
-        {t("TICKET_UPLOAD")}
-      </Button>
+      <Pressable style={styles.button} onPress={uploadDocument} >
+        <Text style={styles.text}>{t("TICKETS_ADD_FORM_ATTACHMENTS")}</Text>
+      </Pressable>
     </>
   )
 };
@@ -62,21 +57,25 @@ interface FilePickerProps {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    flex: 1,
-    paddingHorizontal: "5%",
-    paddingVertical: "5%",
+    flex: 1
   },
-  dropdown: {
-    marginVertical: "5%",
-    paddingVertical: 10,
-  },
-  submit: {
-    marginVertical: "10%",
-    borderColor: "#000000",
+  button: {
+    // borderRadius: 3,
+    elevation: 3,
+    backgroundColor: '#F0F4FD',
     borderWidth: 1,
-    borderRadius: 0,
+    borderColor: 'rgba(230, 230, 230, 0.7)',
+    height: 50,
+    flex: 1, flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center'
   },
+  text: {
+    color: '#000000',
+    fontSize: 16,
+    textAlign: "center",
+  }
+
 });
 
 export default FilePicker;

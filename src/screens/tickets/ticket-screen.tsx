@@ -16,6 +16,7 @@ import TicketCard from "./ticket-card";
 import TicketNotes from "./ticket-notes";
 import BottomNavigation from "../../components/bottom-navigation";
 import { NavigationType } from "../../models/dashboard/navigation-enum";
+import { CapitalizeFirstLowercaseRest } from "../../utils/text";
 
 const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -58,7 +59,7 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <AppBar title={t("TICKET_TITLE").toUpperCase()} />
+      <AppBar title={CapitalizeFirstLowercaseRest(t("TICKET_TITLE"))} />
       <KeyboardAwareScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={{ flex: 1, flexDirection: 'column'}}>

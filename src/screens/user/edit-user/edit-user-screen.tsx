@@ -4,11 +4,11 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-import { Appbar } from 'react-native-paper';
 import BottomNavigation from "../../../components/bottom-navigation";
 import { Language } from "../../../models/language/language";
 import { LanguagesPayload } from "../../../models/language/languages-payload";
 import { AppStackParamList } from "../../../routing/route-screens";
+import AppBar from "../../../components/appbar/appbar";
 
 import Error, { ErrorProps } from "../../../components/error";
 import { useKeycloak } from "../../../keycloak/useKeycloak";
@@ -16,6 +16,7 @@ import LocalizationContext from "../../../localization/localization-context";
 import { SCREEN_URL, SigtreeConfiguration } from "../../../models/config";
 import EditUserContainer from "./edit-user-container";
 import { NavigationType } from "../../../models/dashboard/navigation-enum";
+import { CapitalizeFirstLowercaseRest } from "../../../utils/text";
 
 const EditUserScreen = (props: EditUserScreenProps): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -70,10 +71,7 @@ const EditUserScreen = (props: EditUserScreenProps): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <Appbar.Header style={styles.header}>
-        <Appbar.Content title={t("USER_PROFILE_EDIT").toUpperCase()} />
-        <Appbar.Action icon="window-close" onPress={goBack} />
-      </Appbar.Header>
+      <AppBar title={CapitalizeFirstLowercaseRest(t("USER_PROFILE_EDIT"))} />
       <EditUserContainer userProfile={userProfile} languageList={languageList} />
       <BottomNavigation type={NavigationType.USER}/>
     </Layout>

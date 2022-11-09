@@ -7,6 +7,7 @@ import AppBar from "../../components/appbar/appbar";
 import LocalizationContext from "../../localization/localization-context";
 import ArticleContainer from "./article-container";
 import { NavigationType } from "../../models/dashboard/navigation-enum";
+import { CapitalizeFirstLowercaseRest } from "../../utils/text";
 
 const ArticlesScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -14,7 +15,7 @@ const ArticlesScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <AppBar title={t("ARTICLES_TITLE").toUpperCase()} />
+      <AppBar title={CapitalizeFirstLowercaseRest(t("ARTICLES_TITLE"))} />
       <ArticleContainer />
       <BottomNavigation type={NavigationType.ARTICLES}/>
     </Layout>

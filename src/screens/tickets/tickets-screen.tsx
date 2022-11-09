@@ -14,6 +14,7 @@ import { UserProfile } from "../../models/user-profile/user-profile";
 import { UserProfilePayload } from "../../models/user-profile/user-profile-payload";
 import TicketContainer from "./ticket-container";
 import { NavigationType } from "../../models/dashboard/navigation-enum";
+import { CapitalizeFirstLowercaseRest } from "../../utils/text";
 
 const TicketsScreen = (): JSX.Element => {
   const { t } = useContext(LocalizationContext);
@@ -72,16 +73,16 @@ const TicketsScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <AppBar title={t("TICKET_TITLE").toUpperCase()} />
+      <AppBar title={CapitalizeFirstLowercaseRest(t("TICKETS_TITLE"))} />
       <TicketContainer roleId={userProfile.role} />
-      <BottomNavigation type={NavigationType.TICKETS}/>
+      <BottomNavigation type={NavigationType.TICKETS} />
     </Layout>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   }
 });
 
