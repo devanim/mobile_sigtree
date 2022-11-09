@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button, Layout, Text } from "@ui-kitten/components";
 import { StyleSheet, ScrollView } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserProfile from "./user-profile";
 import {
   NavigationProp,
@@ -19,6 +20,7 @@ import { useKeycloak } from "../../keycloak/useKeycloak";
 import * as React from "react";
 import { TOSPayload } from "../../models/tos/tos-payload";
 import { BuildingTos } from "../../models/tos/building-tos";
+import { APP_LANGUAGE_KEY } from "../../utils/constants";
 
 const UserContainer = (): JSX.Element => {
   const { t, locale, handleChange } = useContext(LocalizationContext);
@@ -27,7 +29,6 @@ const UserContainer = (): JSX.Element => {
   const [userProfile, setUserProfile] = useState<UserProfileModel | undefined>(
     undefined
   );
-  const [tos, setTos] = useState<BuildingTos[]>([]); 
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [tosList, setTosList] = useState<BuildingTos[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,6 +42,7 @@ const UserContainer = (): JSX.Element => {
       getTOSList();
       // changeLanguage();
       setIsLoading(false);
+      console.log("Called this method", userProfile?.lang, locale);
     }, [])
   );
 
@@ -54,9 +56,10 @@ const UserContainer = (): JSX.Element => {
         SigtreeConfiguration.getUrl(realm, SCREEN_URL.USER_PROFILE_URL),
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
       if (response.status == 200) {
         setUserProfile(response.data.data);
+        changeLanguage(response.data.data.lang);
+        console.log("profile details", response.data.data.lang, locale);
       } else {
         const friendlyMessage = t("FAILED_REQUEST");
         setError({
@@ -101,14 +104,12 @@ const UserContainer = (): JSX.Element => {
     }
   };
 
-  // const changeLanguage = () => {
-  //   if (!userProfile) {
-  //     return;
-  //   }
-  //   if (locale != userProfile?.lang) {
-  //     handleChange(userProfile?.lang);
-  //   }
-  // }
+  const changeLanguage = (language: string) => {
+    if (locale != language) {
+      handleChange(language);
+      AsyncStorage.setItem(APP_LANGUAGE_KEY, language);
+    }
+  }
 
   if (error) {
     return (
