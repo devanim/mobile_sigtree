@@ -69,6 +69,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
     register("idtenant");
     register("attachments");
     register("tags");
+    register("floor");
   }, []);
 
   const getProjectList = (): DropdownValue[] => {
@@ -152,20 +153,19 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
               error={errors ? errors["name"] : undefined}
               setValue={setValue}
             />
-            <ChipInput
-              name="tags"
-              tags={[]}
-              inputValue={""}
-              label={t("TICKETS_ADD_FORM_TAG")}
-              setValue={setValue}
-            />
             <Input
               name="content"
               label={t("TICKETS_ADD_FORM_DESCRIPTION")}
               value={props.ticket?.content ?? ""}
               error={errors ? errors["content"] : undefined}
               multiline={true}
-              numberOfLines={4}
+              setValue={setValue}
+            />
+            <ChipInput
+              name="tags"
+              tags={[]}
+              inputValue={""}
+              label={t("TICKETS_ADD_FORM_TAG")}
               setValue={setValue}
             />
           </View>
@@ -196,6 +196,7 @@ const TicketForm = (props: TicketFormProps): JSX.Element => {
           )}
           {selectedBuilding > 0 && floorList.length > 0 ? (
             <Dropdown
+              name="floor"
               label={t("TICKETS_ADD_FORM_FLOOR")}
               value={props.ticket?.floor ?? ""}
               placeholder={t("TICKETS_ADD_FORM_FLOOR_PLACEHOLDER")}

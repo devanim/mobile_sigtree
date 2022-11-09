@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import { FieldError } from "react-hook-form";
-import { TextStyle, View } from "react-native";
+import { TextStyle, View, Text } from "react-native";
 import { HelperText, TextInput } from 'react-native-paper';
 
 interface InputProps {
@@ -28,25 +28,32 @@ const Input = (props: InputProps): React.ReactElement => {
     return error && error.message && error?.message?.length > 0;
   };
   return (
-    <View style={{ flex: 1 }}>
+    // <Text style={{ color: '#f23543', fontSize: 20 }}>*</Text>
+    <View style={{ flex: 1, borderColor: hasErrors() ? "#f23543" : "#000", backgroundColor: hasErrors() ? 'rgba(245, 87, 83, 0.1)' : 'transparent' }}>
       <TextInput
-        label={label}
+        label={<Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: 14, letterSpacing: 0.96, textTransform: "uppercase", fontWeight: '400', color: "#000" }}>{label}</Text>}
         autoCapitalize="none"
         style={[
           {
-            borderColor: hasErrors() ? "#fc6d47" : "#c0cbd3", backgroundColor: '#FFFFFF'
-          },
-          props.inputStyle,
+            backgroundColor: 'transparent'
+          }
         ]}
-        mode="outlined"
+        underlineColor="#000"
+        selectionColor="#000"
+        mode="flat"
         {...inputProps}
         secureTextEntry={props.secureEntry ?? false}
         value={inputValue}
         onChangeText={onChange}
+        theme={{
+          colors: {
+            text: "#000", primary: '#626262' 
+          } 
+        }}
       />
-      <HelperText type="error" visible={hasErrors()}>
+      {/* <HelperText type="error" visible={hasErrors()}>
         {error && error.message}
-      </HelperText>
+      </HelperText> */}
     </View>
   );
 };

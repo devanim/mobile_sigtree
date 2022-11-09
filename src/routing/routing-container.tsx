@@ -37,7 +37,7 @@ const RoutingContainer = (): ReactElement => {
         <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
 
         <Stack.Screen name="TicketScreen" component={TicketScreen} options={{animation:'none'}} />
-        <Stack.Screen name="DashboardNavigator" component={DashboardNavigator} />
+        <Stack.Screen name="DashboardNavigator" options={{ gestureEnabled: false }} component={DashboardNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );

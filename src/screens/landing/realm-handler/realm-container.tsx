@@ -1,8 +1,7 @@
-import { Button, Layout } from "@ui-kitten/components";
+import { Layout } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Text, Pressable, ImageBackground } from "react-native";
 
-import { realmHandlerStyles } from "./realm-container-styles";
 import RealmSelector, {
   BarcodeReadPayload,
 } from "../../../components/realm-selector/realm-selector";
@@ -21,6 +20,7 @@ import axios from "axios";
 import { UserProfilePayload } from "../../../models/user-profile/user-profile-payload";
 import { DEFAULT_LANGUAGE } from "../../../localization/i18n";
 import { registerForPushNotificationsAsync } from "../../../utils/notificationsUtils";
+import { assetCache } from "../../../components/asset-cache/assetCache";
 
 const RealmContainer = (): JSX.Element => {
   const { ready, login, realm, token: authorizationToken } = useKeycloak();
@@ -150,12 +150,9 @@ const RealmContainer = (): JSX.Element => {
 
     if (storedRealms.length == 1) {
       return (
-        <Button
-          style={realmHandlerStyles.button}
-          children={t("LOGIN_BTN")}
-          onPress={onLogin}
-          size={"small"}
-        />
+        <Pressable style={styles.button} onPress={onLogin} >
+          <Text style={styles.text}>{t("LOGIN_BTN")}</Text>
+        </Pressable >
       );
     }
 
@@ -170,29 +167,52 @@ const RealmContainer = (): JSX.Element => {
 
   if (!ready) return <ActivityIndicator />;
 
+  const image = assetCache.getItem("hero-image")
+
   return (
     <Layout style={styles.container} level='1'>
-      <Button
-        style={realmHandlerStyles.button}
+      {/* <Button
+        style={styles.button}
         children={"Add new realm"}
         onPress={() => setShowRealmSelector(true)}
         size={"small"}
-      />
-      <Button
-        style={realmHandlerStyles.button}
-        children={"Login with default realm"}
-        onPress={onLogin}
-        size={"small"}
-      />
-      {toggleRealmSelectorComponent()}
+      /> */}
+      <ImageBackground source={{ uri: image }} resizeMode="cover" style={styles.image}>
+        <View style={{ justifyContent: "center", alignItems: 'center', flex: 1, backgroundColor: 'transparent' }}>
+          <Pressable style={styles.button} onPress={onLogin} >
+            <Text style={styles.text}>{t("LOGIN_BTN")}</Text>
+          </Pressable>
+        </View>
+      </ImageBackground>
+      {/* {toggleRealmSelectorComponent()} */}
     </Layout>
   );
 };
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  button: {
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 50,
+    borderRadius: 3,
+    elevation: 3,
+    backgroundColor: 'black',
+    
+  },
+  text: {
+    // fontFamily: "Arial",
+    color: '#ffffff',
+    fontSize: 16,
+    // fontWeight: "normal",
+    // letterSpacing: 0.01
+  },
+  image: {
     flex: 1,
-    justifyContent: "space-between",
-    paddingTop: "10%",
+    justifyContent: "center",
+    // backgroundColor: 'black'
   }
 });
 

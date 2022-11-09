@@ -15,13 +15,13 @@ const TicketContainer = (props: TicketContainerProps): JSX.Element => {
   return (
     <>
       <TicketsList roleId={props.roleId} />
-      <FAB
+      {/* <FAB
         icon="plus"
         style={styles.fab}
         onPress={() => navigate("NewTicketScreen", { screen: "NewTicketScreen" })}
         variant='primary'
         color='#fff'
-      />
+      /> */}
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { UseFormSetValue } from "react-hook-form/dist/types/form";
-import { NativeSyntheticEvent, StyleSheet, TextInputSubmitEditingEventData, View } from "react-native";
-import { Chip, TextInput } from 'react-native-paper';
+import { NativeSyntheticEvent, StyleSheet, TextInputSubmitEditingEventData, View, Text } from "react-native";
+import { Chip, TextInput, HelperText } from 'react-native-paper';
 
 const ChipInput = (props: ChipInputProps): JSX.Element => {
   const [tags, setTags] = useState<string[]>(props.tags);
@@ -38,24 +38,34 @@ const ChipInput = (props: ChipInputProps): JSX.Element => {
   }
 
   return (
-    <>
-      <View style={styles.tagsContainer}>
-        {tags.map((item, idx) => (
-          <Chip key={idx} closeIcon="close" onClose={() => removeTag(item)} style={styles.chip}>{item}</Chip>
-        ))}
-      </View>
-      <View>
+      <View  style={{ flex: 1 }} >
         <TextInput
-          label={props.label}
+          label={<Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: 14, letterSpacing: 0.96, textTransform: "uppercase", fontWeight: '400', color: "#000" }}>{props.label}</Text>}
           autoCapitalize="none"
-          style={[{ borderColor: "#c0cbd3", backgroundColor: '#FFFFFF'}]}
-          mode="outlined"
+          style={[
+            {
+              // borderColor: hasErrors() ? "#f23543" : "#000", backgroundColor: hasErrors() ? 'rgba(245, 87, 83, 0.1)' : 'transparent'
+              borderColor: "#000", backgroundColor: 'transparent'
+            }
+          ]}
+          underlineColor="#000"
+          selectionColor="#000"
+          mode="flat"
           value={inputValue}
           onChangeText={onChangeText}
+          theme={{
+            colors: {
+              text: "#000", primary: '#626262'
+            }
+          }}
           onSubmitEditing={(e) => onSubmitText(e)}
         />
+      <View style={styles.tagsContainer}>
+        {tags.map((item, idx) => (
+          <Chip key={idx} closeIcon="close" selectedColor="white" onClose={() => removeTag(item)} style={styles.chip}>{item}</Chip>
+        ))}
       </View>
-    </>
+    </View>
   );
 };
 
@@ -78,10 +88,12 @@ const styles = StyleSheet.create({
   chip: {
     flex: 4,
     flexDirection: "row",
-    marginHorizontal: '2%',
-    backgroundColor: '#fff',
-    borderRadius: 0,
-    borderColor: '#ccc',
+    marginRight: 5,
+    marginBottom: 5,
+    backgroundColor: 'black',
+    color: 'white',
+    borderRadius: 3,
+    borderColor: '#000',
     borderWidth: 1
   }
 });

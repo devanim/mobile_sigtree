@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Icon, TopNavigationAction, useTheme } from "@ui-kitten/components";
 import { EvaStatus } from "@ui-kitten/components/devsupport";
 import React, { memo } from "react";
-import { ColorValue, StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
+import { ColorValue, StyleProp, StyleSheet, TouchableOpacity, ViewStyle, View } from "react-native";
 
 import Text from "./text";
 
@@ -22,6 +22,9 @@ type NavigationActionProps = {
   size?: "giant" | "large" | "medium" | "small"; // giant-58-icon-24 large-48-icon-24  medium-40-icon-24  small-32-icon-16
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
+  fontFamily?: string;
+  fontSize?: number;
+  color?: string | ColorValue;
 }
 
 const NavigationAction = memo(
@@ -41,6 +44,9 @@ const NavigationAction = memo(
     disabled,
     backgroundColor,
     style,
+    fontFamily,
+    fontSize,
+    color,
   }: NavigationActionProps) => {
     const themes = useTheme();
 
@@ -54,7 +60,7 @@ const NavigationAction = memo(
     }, [onPress, goBack]);
 
     const getIconColor = (
-      status: "basic" | "primary" | "snow" | "blue" | "opacity"|"secondary"
+      status: "basic" | "primary" | "snow" | "blue" | "opacity"| "secondary"
     ): string => {
       switch (status) {
         case "basic":
@@ -125,11 +131,20 @@ const NavigationAction = memo(
 
     return title ? (
       <TouchableOpacity
+        style={{
+          flex: 1, 
+          flexDirection: 'row', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          backgroundColor: backgroundColor, 
+          borderRadius: 3
+         }}
         disabled={disabled}
         activeOpacity={0.7}
         onPress={_onPress}
       >
-        <Text category="body" status={titleStatus}>
+        <Text style={{
+          fontFamily: fontFamily, fontSize: fontSize, lineHeight: fontSize, paddingVertical: 10, color: color }} category="body" status={titleStatus}>
           {title}
         </Text>
       </TouchableOpacity>

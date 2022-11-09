@@ -31,9 +31,10 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
   };
   return (
     <View style={{ flex: 1 }}>
-      {props.label && <Text style={[styles.label, props.labelStyle]}>{props.label}</Text>}
+      {/* {props.label && <Text style={[styles.label, props.labelStyle]}>{props.label}</Text>} */}
       <DropDownPicker
-        style={[props.dropdownStyle, { borderRadius: 3, borderColor: props.error ? "#fc6d47" : "#c0cbd3" },]}
+        // label={props.label}
+        style={[styles.dropdownStyle, { borderRadius: 0, borderColor: props.error ? "#f23543" : "#00000012", backgroundColor: props.error ? 'rgba(245, 87, 83, 0.1)' : 'transparent' },]}
         open={open}
         value={dropdownValue ?? ""}
         items={valuesList}
@@ -47,10 +48,28 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
         zIndex={300}
         zIndexInverse={100}
         dropDownDirection="TOP"
+        dropDownContainerStyle={{
+          backgroundColor: "#fafafa",
+          borderRadius: 0,
+          borderColor: "#00000012",
+          borderWidth: 1,
+          zIndex: 1000,
+          // paddingLeft: 5
+        }}
+        // listItemLabel={{ 
+        //   fontWeight: "bold",
+        //   color: "pink"
+        // }}
+        selectedItemLabelStyle={{
+          fontWeight: "bold"
+        }}
+        selectedItemContainerStyle={{
+          backgroundColor: "#f0f0f0"
+        }}
       />
-      <HelperText type="error" visible={hasErrors()}>
+      {/* <HelperText type="error" visible={hasErrors()}>
         {props.error && props.error.message}
-      </HelperText>
+      </HelperText> */}
     </View>
   );
 };
@@ -71,11 +90,20 @@ type DropdownProps = {
 }
 
 const styles = StyleSheet.create({
-  label: {
-    paddingVertical: '2%',
+  // label: {
+    // paddingVertical: '2%',
+  // }, 
+  dropdownStyle: {
+    borderWidth: 1
   },
   placeholderStyles: {
     color: "#cccccc",
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 14,
+    letterSpacing: 0.96,
+    textTransform: "uppercase",
+    fontWeight: '400',
+    paddingLeft: 5
   },
 });
 

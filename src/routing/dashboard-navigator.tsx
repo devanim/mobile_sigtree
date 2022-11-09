@@ -13,7 +13,7 @@ const DashboardNavigator = (): Stack.Navigator => {
   return (
     <>
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="DashboardScreen" >
-        <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
+        <Stack.Screen options={{ gestureEnabled: false }} name="DashboardScreen" component={DashboardScreen} />
         <Stack.Screen name="ArticlesScreen" component={ArticlesScreen} />
         <Stack.Screen name="TicketsScreen" component={TicketsScreen} />
         <Stack.Screen name="UserScreen" component={UserScreen} />

@@ -3,9 +3,10 @@ import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { useContext } from "react";
 import { StyleSheet } from "react-native";
-import { Appbar } from 'react-native-paper';
+import AppBar from "../../components/appbar/appbar";
 import { NavigationType } from "../../models/dashboard/navigation-enum";
 import BottomNavigation from "../../components/bottom-navigation";
+import { CapitalizeFirstLowercaseRest } from "../../utils/text";
 
 import LocalizationContext from "../../localization/localization-context";
 import { AppStackParamList } from "../../routing/route-screens";
@@ -18,10 +19,7 @@ const ArticleScreen = (props: ArticleScreenProps): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <Appbar.Header style={styles.header}>
-        <Appbar.Content title={t("ARTICLE_TITLE").toUpperCase()} />
-        <Appbar.Action icon="window-close" onPress={goBack} />
-      </Appbar.Header>
+      <AppBar title={CapitalizeFirstLowercaseRest(t("ARTICLE_TITLE"))} />
       <ArticleCard articleId={articleId} />
       <BottomNavigation type={NavigationType.ARTICLES}/>
     </Layout>

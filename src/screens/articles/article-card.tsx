@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Image } from "react-native";
+import { Image, ScrollView } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { Text } from 'react-native-paper';
-import { WebView } from "react-native-webview";
+import { WebView, WebViewMessageEvent } from "react-native-webview";
+import { webviewContent } from "../../utils/content"
 
 import Error, { ErrorProps } from "../../components/error";
 import { useKeycloak } from "../../keycloak/useKeycloak";
@@ -18,6 +19,11 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
   const { token, realm } = useKeycloak();
   const [error, setError] = useState<ErrorProps | undefined>(undefined);
   const [article, setArticle] = useState<Article | undefined>(undefined);
+  const [webViewHeight, setWebViewHeight] = React.useState(20);
+
+  const onGetHeight = (event: WebViewMessageEvent) => {
+    setWebViewHeight(Number(event.nativeEvent.data))
+  }
 
   useEffect(() => {
     getArticle();
@@ -65,9 +71,19 @@ const ArticleCard = (props: ArticleCardProps): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Text variant="headlineMedium" style={{ flex: 0.1 }}>{article?.title}</Text>
-      <Image style={styles.image} source={{ uri: `${article?.image}` }} />
-      <WebView style={styles.content} source={{ html: article ? article.content : t("NO_DATA_HTML") }} />
+      <ScrollView>
+        <Text variant="headlineMedium" style={{ flex: 0.1 }}>{article?.title}</Text>
+        <Image style={styles.image} source={{ uri: `${article?.image}` }} />
+        <View>
+          <WebView 
+            scrollEnabled={false}
+            javaScriptEnabled={true}
+            scalesPageToFit={true}
+            onMessage={onGetHeight} 
+            style={[styles.content, { flexGrow: 1, height: webViewHeight }]} 
+            source={{ html: article ? webviewContent(article.content) : t("NO_DATA_HTML") }} />
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -78,14 +94,15 @@ type ArticleCardProps = {
 
 const styles = StyleSheet.create({
   container: {
-    alignContent: "center",
-    flexGrow: 1,
-    flexDirection: "column",
-    marginHorizontal: '5%'
+    padding: 15
+    // alignContent: "center",
+    // flexGrow: 1,
+    // flexDirection: "column",
+    // marginHorizontal: '5%'
   },
   image: {
-    flex: 0.2,
-    alignContent: "center",
+    // flex: 0.2,
+    // alignContent: "center",
     minHeight: 200,
     width: '100%',
     resizeMode: 'contain',

@@ -2,6 +2,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
+import { assetCache } from "../components/asset-cache/assetCache";
+import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system';
 
 const useCachedResources = () => {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -16,16 +19,24 @@ const useCachedResources = () => {
         await Font.loadAsync({
           ...FontAwesome.font,
           "OpenSans-ExtraBold": require("../../assets/fonts/OpenSans/OpenSans-ExtraBold.ttf"),
-          "Space-Mono": require("../../assets/fonts/SpaceMono-Regular.ttf"),
-          "Overpass-Bold": require("../../assets/fonts/Overpass-Bold.ttf"),
-          "Overpass-Regular": require("../../assets/fonts/Overpass-Regular.ttf"),
+          "OpenSans-Medium": require("../../assets/fonts/OpenSans/OpenSans-Regular.ttf"),
           "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
-          "Roboto-BlackItalic": require("../../assets/fonts/Roboto-BlackItalic.ttf"),
-          "Overpass-Extrabold": require("../../assets/fonts/Overpass-Extrabold-Italic.otf"),
-          "SFPro-Display-Heavy-Italic": require("../../assets/fonts/SFPro-Display-Heavy-Italic.otf"),
-          "SFPro-Display-Bold": require("../../assets/fonts/SFPro-Display-Bold.otf"),
-          // "Pages-icon": require("../../assets/fonts/Pages/pages2-icon.ttf"),
+          "Montserrat-SemiBold": require("../../assets/fonts/Montserrat/Montserrat-SemiBold.ttf"),
+          "Pages-icon": require("../../assets/fonts/Pages/pages-icon.ttf"),
+          "Pages-icon2": require("../../assets/fonts/Pages/pages2-icon.ttf"),
         });
+
+        const assets: [string, string, string][] = [
+          [ "hero-image", require("../../assets/images/hero.png"), 'png' ],
+          [ "background-image", require("../../assets/images/background.jpg"), 'jpg' ],
+          [ "logo-image", require("../../assets/images/logo.png"), 'png' ]
+        ]
+        assets.forEach( async r => { 
+          const expoAsset = await Asset.fromModule(r[1]).downloadAsync();
+          const c = await FileSystem.readAsStringAsync(expoAsset.localUri ?? "", { encoding: "base64" })
+          await assetCache.setItem(r[0], `data:image/${r[2]};base64,${c}`) 
+        } )
+
       } catch (e) {
         console.warn(e);
       } finally {
