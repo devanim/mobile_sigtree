@@ -16,16 +16,16 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
     props.onSelectedStatus(status);
   };
 
-  const onSelectedBuilding = (building: string) => {
-    props.onSelectedBuilding(building);
+  const onSelectedBuilding = (buildingId: number, building: string) => {
+    props.onSelectedBuilding(buildingId, building);
   }
 
-  const onSelectedProject = (project: string) => {
-    props.onSelectedProject(project);
+  const onSelectedProject = (projectId: number, project: string) => {
+    props.onSelectedProject(projectId, project);
   }
 
-  const onSelectedTenant = (tenant: string) => {
-    props.onSelectedTenant(tenant);
+  const onSelectedTenant = (tenantId: number, tenant: string) => {
+    props.onSelectedTenant(tenantId, tenant);
   }
 
   return (
@@ -117,7 +117,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
                 mode="outlined"
                 style={{ backgroundColor: "#fff", borderWidth: 1, borderRadius: 0 }}
                 icon="filter-plus"
-                onPress={() => onSelectedBuilding(props.ticketBrief.building)}
+                onPress={() => onSelectedBuilding(props.ticketBrief.idbuilding, props.ticketBrief.building)}
               >
                 {props.ticketBrief?.building}
               </Chip>
@@ -129,7 +129,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
                 mode="outlined"
                 style={{ backgroundColor: "#fff", borderWidth: 1, borderRadius: 0 }}
                 icon="filter-plus"
-                onPress={() => onSelectedProject(props.ticketBrief.project)}
+                onPress={() => onSelectedProject(props.ticketBrief.idproject, props.ticketBrief.project)}
               >
                 {props.ticketBrief?.project}
               </Chip>
@@ -139,7 +139,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
                 mode="outlined"
                 style={{ backgroundColor: "#fff", borderWidth: 1, borderRadius: 0 }}
                 icon="filter-plus"
-                onPress={() => onSelectedTenant(props.ticketBrief.tenant)}
+                onPress={() => onSelectedTenant(props.ticketBrief.idtenant, props.ticketBrief.tenant)}
               >
                 {props.ticketBrief?.tenant}
               </Chip>
@@ -155,9 +155,9 @@ type TicketBriefCardProps = {
   ticketBrief: TicketBrief;
   onTicketSelected: (ticketId: number, status: string) => void;
   onSelectedStatus: (status: string) => void;
-  onSelectedBuilding: (building: string) => void;
-  onSelectedProject: (project: string) => void;
-  onSelectedTenant: (tenant: string) => void;
+  onSelectedBuilding: (buildingId: number, building: string) => void;
+  onSelectedProject: (projectId: number, project: string) => void;
+  onSelectedTenant: (tenantId: number, tenant: string) => void;
 };
 
 export default TicketBriefCard;

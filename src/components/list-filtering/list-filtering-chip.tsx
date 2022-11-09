@@ -1,10 +1,10 @@
 import React from "react";
 import { Chip, Text } from "react-native-paper";
-import { FilteringOptions } from "src/models/ticket/filtering-options-enum";
+import { FilterElement } from "../../models/ticket/filter-element";
 
 const ListFilteringChip = (props: ListFilteringProps): JSX.Element => {
   const onCancel = () => {
-    props.onCancel(props.filteringType);
+    props.onCancel(props.elem);
   };
 
   return (
@@ -14,15 +14,14 @@ const ListFilteringChip = (props: ListFilteringProps): JSX.Element => {
       closeIcon="close"
       style={{ maxWidth: "45%", marginLeft: "5%", marginBottom: "5%" }}
     >
-      <Text>{props.tag}</Text>
+      <Text>{props.elem.value}</Text>
     </Chip>
   );
 };
 
 type ListFilteringProps = {
-  tag: string;
-  filteringType: FilteringOptions;
-  onCancel: (selectedType: FilteringOptions) => void;
+  elem: FilterElement;
+  onCancel: (elem: FilterElement) => void;
 };
 
 export default ListFilteringChip;
