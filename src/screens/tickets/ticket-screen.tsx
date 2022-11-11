@@ -65,7 +65,7 @@ const TicketScreen = (props: ArticleScreenProps): JSX.Element => {
           <View style={{ flex: 1, flexDirection: 'column'}}>
             <TicketCard ticketId={ticketId} />
             <TicketNotes
-              count={4}
+              count={2}
               ticketId={ticketId}
               roleId={role}
             />

@@ -13,6 +13,7 @@ import TicketScreen from "../screens/tickets/ticket-screen";
 import UserScreen from "../screens/user/user-screen";
 import EditUserScreen from "../screens/user/edit-user/edit-user-screen";
 import ChangePasswordScreen from "../screens/user/change-password/change-password-screen";
+import TicketNotesScreen from "../screens/tickets/ticket-notes-screen";
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
@@ -31,6 +32,7 @@ const RoutingContainer = (): ReactElement => {
         <Stack.Screen name="TOSScreen" component={TOSScreen} />
         <Stack.Screen name="NewTicketScreen" component={NewTicketScreen} />
         <Stack.Screen name="EditTicketScreen" component={EditTicketScreen} options={{animation:'none'}} />
+        <Stack.Screen name="TicketNotesScreen" component={TicketNotesScreen} options={{animation:'none'}} />
         <Stack.Screen name="ArticleScreen" component={ArticleScreen} />
         <Stack.Screen name="UserScreen" component={UserScreen} />
         <Stack.Screen name="EditUserScreen" component={EditUserScreen} />

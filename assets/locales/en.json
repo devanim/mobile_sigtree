@@ -61,6 +61,8 @@
     "CANCEL_EDIT": "Cancel Edit",
     "TICKET_PART_OF": "This tichet is part of",
     "TICKET_TENANT_IS": "The space is",
+    "ALL": "All",
+    "NOTES": "Notes",
     "TICKET_CARD_CATEGORY": "Category",
     "TICKET_CARD_STATUS": "Status",
     "TICKET_CARD_PRIORITY": "Priority",

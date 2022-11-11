@@ -22,10 +22,15 @@ const TicketNoteCard = (props: TicketNoteCardProps): JSX.Element => {
     return webviewContent(props.note.content)
   }, [props])
 
+  // TODO Webview for messages has bad performance, investigate alternatives
   return (
-    <Card style={{ backgroundColor: '#fff', margin: 10 }} mode='elevated'>
-      <Card.Title title={props.note.username} />
+    <Card style={{ backgroundColor: '#fff', margin: 5 }} mode='elevated'>
+        
       <Card.Content>
+        <View style={{ flex: 1, flexDirection: "row", marginBottom: 5, alignItems: 'center', justifyContent: 'space-between' }}>
+          <Text style={{ padding: 0, margin: 0, textAlignVertical: 'center', textAlign: 'center' }}>{props.note.username}</Text>
+          <Text style={{ padding: 0, margin: 0, color: '#B2B2B2', textAlignVertical: 'center', textAlign: 'center' }}>{props.note.role}</Text>
+        </View>
         <View style={{ flex: 1 }}>
           <WebView
             scrollEnabled={false}

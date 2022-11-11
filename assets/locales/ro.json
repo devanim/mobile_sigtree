@@ -59,6 +59,8 @@
     "CANCEL_EDIT": "Anulati Actualizarea",
     "TICKET_PART_OF": "Acest tichet aparține",
     "TICKET_TENANT_IS": "Spațiul este",
+    "ALL": "Toate",
+    "NOTES": "Notele",
     "TICKET_CARD_CATEGORY": "Categorie",
     "TICKET_CARD_STATUS": "Status",
     "TICKET_CARD_PRIORITY": "Prioritate",

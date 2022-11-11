@@ -6,6 +6,7 @@ export type AppStackParamList = {
   NewTicketScreen: NavigatorScreenParams<AuthenticatedParamList>;
   EditTicketScreen: NavigatorScreenParams<AuthenticatedParamList>;
   TicketScreen: NavigatorScreenParams<TicketParamList>;
+  TicketNotesScreen: NavigatorScreenParams<TicketParamList>;
   TOSScreen: NavigatorScreenParams<UnauthenticatedParamList>;
   ArticleScreen: NavigatorScreenParams<ArticleParamList>;
   UserScreen: NavigatorScreenParams<AuthenticatedParamList>;
@@ -21,6 +22,7 @@ export type AuthenticatedParamList = {
   TicketsScreen: undefined;
   NewTicketScreen: undefined;
   EditTicketScreen: undefined;
+  TicketNotesScreen: undefined;
   UserScreen: undefined;
   EditUserScreen: undefined;
   ChangePasswordScreen: undefined;
