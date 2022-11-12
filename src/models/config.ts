@@ -7,7 +7,8 @@ export const SCREEN_URL = {
   USER_PROFILE_URL: "user",
   STATISTICS_URL: "statistics",
   LANGUAGES_URL: "languages",
-  DEVICES: "devices"
+  DEVICES: "devices",
+  LANGUAGE_URL: "language"
 }
 
 export const VERSION = "v1";

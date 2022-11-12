@@ -24,6 +24,10 @@ import RealmDetails from "./src/models/realm-details";
 import RoutingContainer from "./src/routing/routing-container";
 import useCachedResources from "./src/hooks/useCachedResources";
 import * as Notifications from "expo-notifications";
+import axios from "axios";
+import { LanguageDataPayload } from "./src/models/language/language-data-payload";
+import { SCREEN_URL, SigtreeConfiguration } from "./src/models/config";
+import { LanguagesHandler } from "./src/models/language/languages-handler";
 
 patchFlatListProps();
 
@@ -68,10 +72,15 @@ const App = (): JSX.Element => {
     }), []);
 
   React.useEffect(() => {
+    const langHandler = new LanguagesHandler();
+
     AsyncStorage.getItem("theme").then((value) => {
       if (value === "light" || value === "dark") setTheme(value);
     });
 
+    langHandler.getAvailableLanguages(keycloakConfiguration.realm);
+    langHandler.getLanguageData(keycloakConfiguration.realm, Localization.locale);
+    
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener((notification : any) => {
       setNotification(notification);
