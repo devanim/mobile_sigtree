@@ -73,7 +73,7 @@ const TicketsScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <AppBar title={CapitalizeFirstLowercaseRest(t("TICKETS_TITLE"))} />
+      <AppBar title={CapitalizeFirstLowercaseRest(t("TICKETS_TITLE"))} noBack={true} />
       <TicketContainer roleId={userProfile.role} />
       <BottomNavigation type={NavigationType.TICKETS} />
     </Layout>

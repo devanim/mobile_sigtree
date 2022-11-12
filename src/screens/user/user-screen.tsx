@@ -14,7 +14,7 @@ const UserScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <AppBar title={CapitalizeFirstLowercaseRest(t("USER_PROFILE_TITLE"))} />
+      <AppBar title={CapitalizeFirstLowercaseRest(t("USER_PROFILE_TITLE"))} noBack={true} />
       <UserContainer />
       <BottomNavigation type={NavigationType.USER}/>
     </Layout>

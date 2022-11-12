@@ -15,7 +15,7 @@ const ArticlesScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <AppBar title={CapitalizeFirstLowercaseRest(t("ARTICLES_TITLE"))} />
+      <AppBar title={CapitalizeFirstLowercaseRest(t("ARTICLES_TITLE"))} noBack={true} />
       <ArticleContainer />
       <BottomNavigation type={NavigationType.ARTICLES}/>
     </Layout>

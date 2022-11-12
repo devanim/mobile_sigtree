@@ -4,6 +4,7 @@ import ArticlesScreen from "../screens/articles/articles-screen";
 import DashboardScreen from "../screens/dashboard/dashboard-screen";
 import NotificationsScreen from "../screens/notifications/notifications-screen";
 import TicketsScreen from "../screens/tickets/tickets-screen";
+import NewTicketScreen from "../screens/tickets/new-ticket/new-ticket-screen";
 import UserScreen from "../screens/user/user-screen";
 import { AuthenticatedParamList } from "./route-screens";
 
@@ -18,6 +19,7 @@ const DashboardNavigator = (): Stack.Navigator => {
         <Stack.Screen name="TicketsScreen" component={TicketsScreen} />
         <Stack.Screen name="UserScreen" component={UserScreen} />
         <Stack.Screen name="NotificationsScreen" component={NotificationsScreen} />
+        <Stack.Screen name="NewTicketScreen" component={NewTicketScreen} />
       </Stack.Navigator>
     </>
   );

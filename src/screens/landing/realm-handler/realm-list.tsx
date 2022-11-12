@@ -1,11 +1,10 @@
 import { useCallback } from "react";
 import RealmDetails from "../../../models/realm-details";
 import { realmListStyles } from "./realm-list-styles";
-import AdMob from "../../../components/ad-mob";
 import { FlatList } from "react-native";
 import { Button } from "@ui-kitten/components";
 import { View } from "react-native";
-import React from "react";
+import * as React from 'react';
 
 const RealmList = (props: RealmListProps): JSX.Element => {
   const realmList: LandingPageRealms[] = [];
@@ -19,14 +18,12 @@ const RealmList = (props: RealmListProps): JSX.Element => {
   });
 
   const renderItem = useCallback(({ item }) => {
-    return item.ads ? 
-      ( <AdMob marginTop={8} /> ) : 
-      (
-        <View style={realmListStyles.horizontalView}>
-          <Button style={realmListStyles.button} {...item} size={'small'}/>
-          <Button style={realmListStyles.button} children={"X"} onPress={() => item.onCancel(item.children)} size={'small'}/>
-        </View>
-      );
+    return (
+      <View style={realmListStyles.horizontalView}>
+        <Button style={realmListStyles.button} {...item} size={'small'}/>
+        <Button style={realmListStyles.button} children={"X"} onPress={() => item.onCancel(item.children)} size={'small'}/>
+      </View>
+    );
   }, []);
 
   return <FlatList

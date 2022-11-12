@@ -1,19 +1,44 @@
-import { Dimensions, Platform, PixelRatio } from 'react-native';
+import { PixelRatio, Dimensions } from 'react-native';
 
-const {
-  width: SCREEN_WIDTH,
-  height: SCREEN_HEIGHT,
-} = Dimensions.get('window');
+const ratio = PixelRatio.get();
 
-// based on iphone 13 PRO MAX
-const scale = SCREEN_WIDTH / 1284;
+const normalize = (size) => {
+  const { width, height } = Dimensions.get('window');
 
-export function Normalize(size: number) {
+  if (ratio >= 2 && ratio < 3) {
+    if (width < 360) {
+      return size * 0.95;
+    } else if (height < 667) {
+      return size;
+    } else if (height >= 667 && height <= 735) {
+      return size * 1.15;
+    }
+
+    return size * 1.25;
+  } else if (ratio >= 3 && ratio < 3.5) {
+    if (width < 360) {
+      return size;
+    } else if (height < 667) {
+      return size * 1.15;
+    } else if (height >= 667 && height <= 735) {
+      return size * 1.2;
+    }
+
+    return size * 1.27;
+  } else if (ratio >= 3.5) {
+    if (width < 360) {
+      return size;
+    } else if (height < 667) {
+      return size * 1.2;
+    } else if (height >= 667 && height <= 735) {
+      return size * 1.25;
+    }
+
+    return size * 1.4;
+  }
+
   return size;
-  // const newSize = size * scale
-  // if (Platform.OS === 'ios') {
-  //   return Math.round(PixelRatio.roundToNearestPixel(newSize))
-  // } else {
-  //   return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
-  // }
-}
+};
+
+
+export default normalize;

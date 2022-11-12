@@ -3,14 +3,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ReactElement } from "react";
 import { AppStackParamList } from "./route-screens";
 
-import NewTicketScreen from "../screens/tickets/new-ticket/new-ticket-screen";
 import HomeScreen from "../screens/landing/home-screen";
 import DashboardNavigator from "./dashboard-navigator";
 import EditTicketScreen from "../screens/tickets/edit-ticket/edit-ticket-screen";
 import TOSScreen from "../screens/terms-of-service/tos-screen";
 import ArticleScreen from "../screens/articles/article-screen";
 import TicketScreen from "../screens/tickets/ticket-screen";
-import UserScreen from "../screens/user/user-screen";
 import EditUserScreen from "../screens/user/edit-user/edit-user-screen";
 import ChangePasswordScreen from "../screens/user/change-password/change-password-screen";
 import TicketNotesScreen from "../screens/tickets/ticket-notes-screen";
@@ -30,14 +28,11 @@ const RoutingContainer = (): ReactElement => {
         */}
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="TOSScreen" component={TOSScreen} />
-        <Stack.Screen name="NewTicketScreen" component={NewTicketScreen} />
         <Stack.Screen name="EditTicketScreen" component={EditTicketScreen} options={{animation:'none'}} />
         <Stack.Screen name="TicketNotesScreen" component={TicketNotesScreen} options={{animation:'none'}} />
         <Stack.Screen name="ArticleScreen" component={ArticleScreen} />
-        <Stack.Screen name="UserScreen" component={UserScreen} />
         <Stack.Screen name="EditUserScreen" component={EditUserScreen} />
         <Stack.Screen name="ChangePasswordScreen" component={ChangePasswordScreen} />
-
         <Stack.Screen name="TicketScreen" component={TicketScreen} options={{animation:'none'}} />
         <Stack.Screen name="DashboardNavigator" options={{ gestureEnabled: false }} component={DashboardNavigator} />
       </Stack.Navigator>

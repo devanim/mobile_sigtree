@@ -2,6 +2,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import * as React from 'react';
 import { StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import { Appbar } from 'react-native-paper';
+import normalize from '../../utils/normalize';
 
 import { useKeycloak } from "../../keycloak/useKeycloak";
 import { AppStackParamList } from "../../routing/route-screens";
@@ -26,22 +27,22 @@ const AppBar = (props: AppBarProps): React.ReactElement => {
           style={{
             flexDirection: 'row',
             justifyContent: 'flex-start',
-            paddingRight: 10
+            paddingRight: 10, paddingVertical:10
           }}
           activeOpacity={0.7}
         >
-          <Text style={{ color: '#fff', fontFamily: 'Pages-icon', fontSize: 30 }} >{'\u{e629}'}</Text> 
+          <Text style={{ color: '#fff', fontFamily: 'Pages-icon', fontSize: normalize(20), lineHeight: normalize(20), height: normalize(20) }} >{'\u{e629}'}</Text> 
         </TouchableOpacity> :
         <TouchableOpacity
           style={{
             flexDirection: 'row',
             justifyContent: 'flex-start',
-            paddingRight: 10
+            paddingRight: 10, paddingVertical:10
           }}
           activeOpacity={0.7}
           onPress={goBack}
         >
-          <Text style={{ fontFamily: 'Pages-icon', fontSize: 30, paddingVertical: 20 }}>{'\u{e629}'}</Text>
+          <Text style={{ fontFamily: 'Pages-icon', fontSize: normalize(20), lineHeight: normalize(20), height: normalize(20) }}>{'\u{e629}'}</Text>
         </TouchableOpacity>
       }
       {
@@ -55,22 +56,22 @@ const AppBar = (props: AppBarProps): React.ReactElement => {
           style={{
             flexDirection: 'row',
             justifyContent: 'flex-end',
-            paddingLeft: 10
+            paddingLeft: 10, paddingVertical:10
           }}
           activeOpacity={0.7}
           onPress={onLogout}
         >
-          <Text style={{ fontFamily: 'Pages-icon2', fontSize: 30 }} >{'\u{e900}'}</Text> 
+          <Text style={{ fontFamily: 'Pages-icon2', fontSize: normalize(20), lineHeight: normalize(20), height: normalize(20) }} >{'\u{e900}'}</Text> 
         </TouchableOpacity> :
         <TouchableOpacity
           style={{
             flexDirection: 'row',
             justifyContent: 'flex-end',
-            paddingLeft: 10
+            paddingLeft: 10, paddingVertical:10
           }}
           activeOpacity={0.7}
         >
-          <Text style={{ color: '#fff', fontFamily: 'Pages-icon2', fontSize: 30 }} >{'\u{e900}'}</Text> 
+          <Text style={{ color: '#fff', fontFamily: 'Pages-icon2', fontSize: normalize(20), lineHeight: normalize(20), height: normalize(20) }} >{'\u{e900}'}</Text> 
         </TouchableOpacity>
         
       }
@@ -110,12 +111,12 @@ const styles = StyleSheet.create({
   titleStyle: {
     textAlign: "center",
     width: "100%",
-    fontSize: 24,
+    fontSize: normalize(20),
     fontWeight: '900',
     fontFamily: "OpenSans-ExtraBold"
   },
   imageProperties: {
-    height: 30,
+    height: normalize(25),
     flex: 1,
     alignItems: 'center',
     alignContent: 'center',

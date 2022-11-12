@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FieldError } from "react-hook-form";
 import { TextStyle, View, Text } from "react-native";
 import { HelperText, TextInput } from 'react-native-paper';
+import normalize from '../../utils/normalize';
 
 interface InputProps {
   name: any;
@@ -31,7 +32,7 @@ const Input = (props: InputProps): React.ReactElement => {
     // <Text style={{ color: '#f23543', fontSize: 20 }}>*</Text>
     <View style={{ flex: 1, borderColor: hasErrors() ? "#f23543" : "#000", backgroundColor: hasErrors() ? 'rgba(245, 87, 83, 0.1)' : 'transparent' }}>
       <TextInput
-        label={<Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: 14, letterSpacing: 0.96, textTransform: "uppercase", fontWeight: '400', color: "#000" }}>{label}</Text>}
+        label={<Text style={{ fontFamily: 'Montserrat-SemiBold', fontSize: normalize(11), letterSpacing: normalize(0.96), textTransform: "uppercase", fontWeight: '400', color: "#000" }}>{label}</Text>}
         autoCapitalize="none"
         style={[
           {

@@ -48,28 +48,10 @@ const styles = StyleSheet.create({
     paddingTop: 30
   },
   contentView: {
-    // height: 200,
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   img: {
-    // borderRadius: 8,
-    // marginRight: 16,
     backgroundColor: 'transparent',
-    // marginLeft: '5%',
-    // marginTop: '1%',
-    // marginRight: '5%',
-    // marginBottom: '1%',
-  },
-  // img: {
-    // borderRadius: 8,
-    // marginRight: 16,
-  // },
-  content: {
-    // paddingRight: 16,
-    // paddingBottom: 8,
-    // paddingTop: 8,
   },
 });
 

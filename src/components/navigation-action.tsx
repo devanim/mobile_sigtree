@@ -3,6 +3,7 @@ import { Icon, TopNavigationAction, useTheme } from "@ui-kitten/components";
 import { EvaStatus } from "@ui-kitten/components/devsupport";
 import React, { memo } from "react";
 import { ColorValue, StyleProp, StyleSheet, TouchableOpacity, ViewStyle, View } from "react-native";
+import normalize from '../utils/normalize';
 
 import Text from "./text";
 
@@ -25,6 +26,7 @@ type NavigationActionProps = {
   fontFamily?: string;
   fontSize?: number;
   color?: string | ColorValue;
+  action?: string;
 }
 
 const NavigationAction = memo(
@@ -47,6 +49,7 @@ const NavigationAction = memo(
     fontFamily,
     fontSize,
     color,
+    action
   }: NavigationActionProps) => {
     const themes = useTheme();
 
@@ -59,77 +62,7 @@ const NavigationAction = memo(
       }
     }, [onPress, goBack]);
 
-    const getIconColor = (
-      status: "basic" | "primary" | "snow" | "blue" | "opacity"| "secondary"
-    ): string => {
-      switch (status) {
-        case "basic":
-          return themes["icon-basic-color"];
-        case "primary":
-          return themes["color-primary-100"];
-        case "snow":
-          return themes["text-snow-color"];
-        case "blue":
-          return themes["text-blue-color"];
-        case "opacity":
-          return themes["color-basic-1500"];
-        case "secondary":
-          return themes["color-basic-700"];
-        default:
-          return themes["color-primary-100"];
-      }
-    };
-
-    const getSize = (size: "giant" | "large" | "medium" | "small"): number => {
-      switch (size) {
-        case "giant":
-          return 58;
-        case "large":
-          return 48;
-        case "medium":
-          return 40;
-        case "small":
-          return 32;
-        default:
-          return 32;
-      }
-    };
-
-    const getSizeIcon = (
-      size: "giant" | "large" | "medium" | "small"
-    ): number => {
-      switch (size) {
-        case "giant":
-          return 24;
-        case "large":
-          return 20;
-        case "medium":
-          return 20;
-        case "small":
-          return 16;
-        default:
-          return 24;
-      }
-    };
-
-    const getBorderRadius = (
-      size: "giant" | "large" | "medium" | "small"
-    ): number => {
-      switch (size) {
-        case "giant":
-          return 48;
-        case "large":
-          return 24;
-        case "medium":
-          return 24;
-        case "small":
-          return 8;
-        default:
-          return 0;
-      }
-    };
-
-    return title ? (
+    return (
       <TouchableOpacity
         style={{
           flex: 1, 
@@ -144,47 +77,23 @@ const NavigationAction = memo(
         onPress={_onPress}
       >
         <Text style={{
-          fontFamily: fontFamily, fontSize: fontSize, lineHeight: fontSize, paddingVertical: 10, color: color }} category="body" status={titleStatus}>
+          fontFamily: fontFamily, fontSize: normalize(fontSize), lineHeight: normalize(fontSize), paddingVertical: normalize(10), color: color }} category="body" status={titleStatus}>
           {title}
         </Text>
-      </TouchableOpacity>
-    ) : (
-      <TopNavigationAction
-        onPress={_onPress}
-        disabled={disabled}
-        activeOpacity={0.7}
-        style={[
-          styles.container,
-          style,
+        <View style={styles.tabContainer}>
           {
-            marginBottom: marginBottom,
-            marginTop: marginTop,
-            marginLeft: marginLeft,
-            marginRight: marginRight,
-            marginHorizontal: marginHorizontal,
-            marginVertical: marginVertical,
-            height: getSize(size),
-            width: getSize(size),
-            borderRadius: getBorderRadius(size),
-            backgroundColor: backgroundColor,
-          },
-        ]}
-        icon={(props) => (
-          <Icon
-            {...props}
-            pack="assets"
-            name={icon || "arrowLeft"}
-            style={[
-              {
-                height: getSizeIcon(size),
-                width: getSizeIcon(size),
-              },
-              { tintColor: getIconColor(status) },
-            ]}
-          />
-        )}
-      />
-    );
+            /// logic to get new tickets count
+            action == 'tickets' && false ?
+            <View style={styles.tabBadge}>
+              <Text style={styles.tabBadgeText}>
+                2
+              </Text>
+            </View>
+            : null
+          }
+        </View>
+      </TouchableOpacity>
+    )
   }
 );
 
@@ -194,5 +103,23 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  tabContainer: {
+    position: 'relative',
+  },
+  tabBadge: {
+    position: 'absolute',
+    top: normalize(-15),
+    right: normalize(-22),
+    backgroundColor: '#DF474A',
+    borderRadius: 100,
+    paddingHorizontal: normalize(6),
+    paddingVertical: normalize(0),
+    zIndex: 2,
+  },
+  tabBadgeText: {
+    color: 'white',
+    fontSize: normalize(11),
+    fontWeight: '600',
   },
 });

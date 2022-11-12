@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import RealmDetails from 'src/models/realm-details';
 
 type Realm = {

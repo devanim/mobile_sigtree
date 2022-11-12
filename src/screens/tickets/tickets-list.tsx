@@ -38,7 +38,6 @@ const TicketsList = (props: TicketListProps): JSX.Element => {
   useFocusEffect(useCallback(() => {
     resetState();
     getTickets();
-    console.log("called this method");
   }, [selectedStatus, selectedBuilding, selectedProject, selectedTenant]));
 
   const resetState = () => {

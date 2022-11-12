@@ -17,7 +17,7 @@ const NewTicketScreen = (): JSX.Element => {
 
   return (
     <Layout style={styles.container} level='1'>
-      <AppBar title={CapitalizeFirstLowercaseRest(t("TICKETS_ADD_TICKET"))} />
+      <AppBar title={CapitalizeFirstLowercaseRest(t("TICKETS_ADD_TICKET"))} noBack={true} />
       <NewTicket />
       <BottomNavigation type={NavigationType.ADD_TICKET}/>
     </Layout>

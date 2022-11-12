@@ -16,7 +16,7 @@ const RoundChart = (props: RoundChartProps): JSX.Element => {
       value: props.data?.pct_low ?? 0, 
       color: 'rgba(131, 167, 234, 1)', 
       legendFontColor: '#7F7F7F', 
-      legendFontSize: 15
+      legendFontSize: 14
     });
 
     data.push({
@@ -24,7 +24,7 @@ const RoundChart = (props: RoundChartProps): JSX.Element => {
       value: props.data?.pct_medium ?? 0, 
       color: 'blue', 
       legendFontColor: '#7F7F7F', 
-      legendFontSize: 15
+      legendFontSize: 14
     });
 
     data.push({
@@ -32,10 +32,10 @@ const RoundChart = (props: RoundChartProps): JSX.Element => {
       value: props.data?.pct_high ?? 0, 
       color: 'red', 
       legendFontColor: '#7F7F7F', 
-      legendFontSize: 15
+      legendFontSize: 14
     });
   }
-  const screenWidth = Dimensions.get('window').width * 0.9;
+  const screenWidth = Dimensions.get('window').width - 30;
   const chartConfig = {
     backgroundColor: '#e26a00',
     backgroundGradientFrom: '#fb8c00',
@@ -54,11 +54,11 @@ const RoundChart = (props: RoundChartProps): JSX.Element => {
       <PieChart
         data={data}
         width={screenWidth}
-        height={250}
+        height={70}
         chartConfig={chartConfig}
         accessor="value"
         backgroundColor="transparent"
-        paddingLeft="15"
+        paddingLeft="0"
       />
     </View>
   );

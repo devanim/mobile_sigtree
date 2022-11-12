@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F4FD',
     borderWidth: 1,
     borderColor: 'rgba(230, 230, 230, 0.7)',
-    height: 50,
+    // height: 50,
     flex: 1, flexDirection: 'row', 
     justifyContent: 'center', 
     alignItems: 'center'

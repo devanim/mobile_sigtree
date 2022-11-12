@@ -42,7 +42,7 @@ const UserContainer = (): JSX.Element => {
       getTOSList();
       // changeLanguage();
       setIsLoading(false);
-      console.log("Called this method", userProfile?.lang, locale);
+      // console.log("Called this method", userProfile?.lang, locale);
     }, [])
   );
 

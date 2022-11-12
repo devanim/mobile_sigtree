@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from "react";
 import { FieldError } from "react-hook-form";
-import { Text, TextStyle, View } from "react-native";
+import { TextStyle, View } from "react-native";
 import { StyleSheet } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { HelperText } from 'react-native-paper';
 import { DropdownValue } from "src/models/common/dropdown-value";
+import normalize from '../../utils/normalize'; 
 
 const Dropdown = (props: DropdownProps): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -34,6 +34,7 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
       {/* {props.label && <Text style={[styles.label, props.labelStyle]}>{props.label}</Text>} */}
       <DropDownPicker
         // label={props.label}
+        listMode="SCROLLVIEW"
         style={[styles.dropdownStyle, { borderRadius: 0, borderColor: props.error ? "rgba(245, 87, 83, 0.1)" : "#00000012", backgroundColor: props.error ? 'rgba(245, 87, 83, 0.1)' : 'transparent' },]}
         open={open}
         value={dropdownValue ?? ""}
@@ -54,7 +55,8 @@ const Dropdown = (props: DropdownProps): JSX.Element => {
           borderColor: "#00000012",
           borderWidth: 1,
           zIndex: 1000,
-          // paddingLeft: 5
+          paddingLeft: 5,
+          paddingRight: 5
         }}
         // listItemLabel={{ 
         //   fontWeight: "bold",
@@ -94,16 +96,16 @@ const styles = StyleSheet.create({
     // paddingVertical: '2%',
   // }, 
   dropdownStyle: {
-    borderWidth: 1
+    borderWidth: 1,
+    paddingLeft: 16
   },
   placeholderStyles: {
-    color: "#cccccc",
+    color: "#000",
     fontFamily: 'Montserrat-SemiBold',
-    fontSize: 14,
-    letterSpacing: 0.96,
+    fontSize: normalize(11),
+    letterSpacing: normalize(0.96),
     textTransform: "uppercase",
-    fontWeight: '400',
-    paddingLeft: 5
+    fontWeight: '400'
   },
 });
 

@@ -1,5 +1,7 @@
-import React from "react";
-import { Card, Chip, DataTable, Text } from "react-native-paper";
+import * as React from "react";
+import { Card, Chip, DataTable } from "react-native-paper";
+import {View, Text } from "react-native";
+import normalize from '../../utils/normalize';
 
 import { TicketBrief } from "../../models/ticket/ticket-brief";
 
@@ -49,58 +51,37 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
         // elevation: 5
       }}
     >
-      <Card.Title
-        subtitle={props.ticketBrief?.name}
-        titleVariant="titleMedium"
-        title={
-          <Text variant="titleMedium">{props.ticketBrief?.idtracking}</Text>
-        }
-      />
-      <Card.Content style={{ paddingHorizontal: 0 }}>
+      <Card.Content style={{ paddingHorizontal: 15 }}>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ fontFamily: "Montserrat-Bold", fontWeight: '800', paddingBottom: 10 }}>{props.ticketBrief?.idtracking}</Text>
+          <Text style={{ fontFamily: "Montserrat-Bold", fontWeight: '800', paddingBottom: 10 }}><Text style={{ fontFamily: 'Pages-icon2', fontSize: normalize(18), lineHeight: normalize(18), height: normalize(18) }} >{'\u{e983}'}</Text> {props.ticketBrief?.priorityKey}</Text>
+        </View>
+
+        <Text style={{ fontFamily: "OpenSans-Bold", fontWeight: '800', paddingBottom: 10, paddingTop: 10, fontSize: 22 }}>{props.ticketBrief?.name}</Text>
+        
+
+        <Text style={{ paddingBottom: 10 }}>{"Acest tichet aparține North Gate, Sun Offices. ETAJ: 9. Utilizator: SIGTREE ADMIN.Furnizor: IT GURUS."}</Text>
+        
+
+        <Chip
+          mode="flat"
+          style={{
+            backgroundColor: "#fff",
+            marginLeft: 2,
+            borderWidth: 1,
+            borderRadius: 0,
+          }}
+        >
+          {props.ticketBrief?.category}
+        </Chip>
+        
         <DataTable>
-          <DataTable.Row>
-            <DataTable.Cell><></></DataTable.Cell>
-            <DataTable.Cell numeric style={{ paddingVertical: 7 }}>
-              <Chip
-                mode="flat"
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 0,
-                  backgroundColor: `${(() => {
-                    if (props.ticketBrief?.priorityKey == "LOW") {
-                      return "#008000";
-                    } else {
-                      if (props.ticketBrief?.priorityKey == "MEDIUM") {
-                        return "#FF8800";
-                      } else {
-                        return "#ff0000";
-                      }
-                    }
-                  })()}`,
-                }}
-              >
-                <Text style={{ color: "#fff" }}>
-                  {props.ticketBrief?.priorityKey}
-                </Text>
-              </Chip>
-              <Chip
-                mode="flat"
-                style={{
-                  backgroundColor: "#fff",
-                  marginLeft: 2,
-                  borderWidth: 1,
-                  borderRadius: 0,
-                }}
-              >
-                {props.ticketBrief?.category}
-              </Chip>
-            </DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
+          
+          <DataTable.Row style={{ borderBottomWidth: 0 }}>
             <DataTable.Cell>{props.ticketBrief?.building}</DataTable.Cell>
             <DataTable.Cell numeric>{localizedDate}</DataTable.Cell>
           </DataTable.Row>
-          <DataTable.Row>
+          <DataTable.Row style={{ borderBottomWidth: 0 }}>
             <DataTable.Cell>{props.ticketBrief?.user}</DataTable.Cell>
             <DataTable.Cell numeric>
               {props.ticketBrief?.supplier}
@@ -110,7 +91,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
       </Card.Content>
       <Card.Actions>
         <DataTable>
-          <DataTable.Row>
+          <DataTable.Row style={{ borderBottomWidth: 0 }}>
             <DataTable.Cell>
               <Chip
                 mode="outlined"
@@ -132,7 +113,7 @@ const TicketBriefCard = (props: TicketBriefCardProps): JSX.Element => {
               </Chip>
             </DataTable.Cell>
           </DataTable.Row>
-          <DataTable.Row>
+          <DataTable.Row style={{ borderBottomWidth: 0 }}>
             <DataTable.Cell>
               <Chip
                 mode="outlined"
