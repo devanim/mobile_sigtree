@@ -72,14 +72,13 @@ const App = (): JSX.Element => {
     }), []);
 
   React.useEffect(() => {
-    const langHandler = new LanguagesHandler();
-
+    
     AsyncStorage.getItem("theme").then((value) => {
       if (value === "light" || value === "dark") setTheme(value);
     });
-
-    langHandler.getAvailableLanguages(keycloakConfiguration.realm);
-    langHandler.getLanguageData(keycloakConfiguration.realm, Localization.locale);
+    
+    const langHandler = new LanguagesHandler(keycloakConfiguration.realm);
+    langHandler.runLanguageUpdate();
     
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener((notification : any) => {

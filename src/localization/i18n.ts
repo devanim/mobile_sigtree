@@ -1,6 +1,8 @@
 import {I18nManager} from 'react-native';
 import { I18n } from 'i18n-js';
 import { memoize } from 'lodash';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { APP_TRANSLATIONS_KEY } from '../utils/constants';
 
 //TODO - move to conviguration file
 export const DEFAULT_LANGUAGE = 'en';
@@ -25,6 +27,12 @@ const getLanguageDef = (codeLang: string | null): LanguageDef => {
   const {languageTag, isRTL} = lang ? lang : fallback;
 
   return {tag: languageTag, isRTL};
+}
+
+export const getStoredTranslations = (): any => {
+  AsyncStorage.getItem(APP_TRANSLATIONS_KEY).then(data => {
+    console.log("translations", JSON.parse(data ?? "{}"));
+  });
 }
 
 export const setI18nConfig = (codeLang: string | null = null): I18n => {
